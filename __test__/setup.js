@@ -1,3 +1,4 @@
+// Jest `setupFiles` file - Runs before all tests
 import fs from 'fs'
 import path from 'path'
 

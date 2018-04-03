@@ -16,21 +16,33 @@
     "devtools": "react-devtools",
     "log-android": "react-native log-android",
     "log-ios": "react-native log-ios",
-    "test": "node node_modules/jest/bin/jest.js"
+    "test": "yarn test:unit && yarn test:e2e",
+    "test:unit": "jest --config __test__/unit/jest.config.js",
+    "test:e2e": "./scripts/test.e2e.sh",
+    "test:e2e:ios": "yarn test:e2e ios",
+    "test:e2e:android": "yarn test e2e android"
   },
-  "jest": {
-    "preset": "react-native",
-    "automock": false,
-    "unmockedModulePathPatterns": ["/node_modules/"],
-    "setupFiles": ["./__test__/setup.js"],
-    "setupTestFrameworkScriptFile": "./__test__/setup.framework.js",
-    "transformIgnorePatterns": [
-      "/node_modules/(?!(jest-)?react-native|react-navigation)/"
-    ],
-    "modulePathIgnorePatterns": [
-      "/redux/__mocks__",
-      "/lib/graphql/__mocks__"
-    ]
+  "detox": {
+    "specs": "__test__/e2e",
+    "test-runner": "jest",
+    "runner-config": "./__test__/e2e/jest.config.js",
+    "configurations": {
+      "ios.debug": {
+        "binaryPath":
+          "ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app",
+        "build":
+          "xcodebuild -project ios/EmCasa.xcodeproj -scheme EmCasa -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+        "type": "ios.simulator",
+        "name": "iPhone 7"
+      },
+      "android.debug": {
+        "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
+        "build":
+          "pushd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && popd",
+        "type": "android.emulator",
+        "name": "Nexus_5X_API_24_-_GPlay"
+      }
+    }
   },
   "dependencies": {
     "@fortawesome/fontawesome-pro-light": "^5.0.10",
@@ -87,9 +99,12 @@
     "babel-jest": "^22.4.3",
     "babel-plugin-module-resolver": "^3.1.1",
     "babel-plugin-react-require": "^3.0.0",
-    "babel-plugin-transform-inline-environment-variables": "^0.4.1",
+    "babel-plugin-transform-inline-environment-variables": "^0.3.0",
+    "babel-preset-es2015": "^6.24.1",
     "babel-preset-react-native-stage-0": "^1.0.1",
-    "jest": "^22.4.3",
+    "detox": "^7.3.2",
+    "jest": "^22.4.2",
+    "jest-plugin-context": "^2.7.0",
     "jest-react-native": "^18.0.0",
     "patch-package": "^5.1.1",
     "postinstall-prepare": "^1.0.1",

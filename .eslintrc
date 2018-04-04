@@ -51,6 +51,8 @@
   },
   "globals": {
     "process": true,
+    "__dirname": true,
+    "__filename": true,
     "__DEV__": true
   }
 }

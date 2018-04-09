@@ -18,15 +18,15 @@
     "log-android": "react-native log-android",
     "log-ios": "react-native log-ios",
     "test": "yarn test:unit && yarn test:e2e",
-    "test:unit": "jest --config __test__/unit/jest.config.js",
-    "test:e2e": "./scripts/test.e2e.sh",
+    "test:unit": "jest --config __test__/jest.config.js",
+    "test:e2e": "./__e2e__/run",
     "test:e2e:ios": "yarn test:e2e ios",
     "test:e2e:android": "yarn test e2e android"
   },
   "detox": {
-    "specs": "__test__/e2e",
+    "specs": "__e2e__",
     "test-runner": "jest",
-    "runner-config": "./__test__/e2e/jest.config.js",
+    "runner-config": "./__e2e__/jest.config.js",
     "configurations": {
       "ios.debug": {
         "binaryPath":

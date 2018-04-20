@@ -2,6 +2,7 @@ import {Component} from 'react'
 
 import Shell from '@/containers/shared/Shell'
 import Screen from '@/components/listings/Search/Screen'
+import Header from './Header'
 
 export default class SearchScreenApp extends Component {
   onSubmit = () => {
@@ -11,7 +12,7 @@ export default class SearchScreenApp extends Component {
 
   render() {
     return (
-      <Shell header={null}>
+      <Shell header={<Header />}>
         <Screen {...this.props} onSubmit={this.onSubmit} />
       </Shell>
     )

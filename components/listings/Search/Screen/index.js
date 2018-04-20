@@ -1,6 +1,5 @@
-import {View, ScrollView, TouchableOpacity} from 'react-native'
+import {View, ScrollView} from 'react-native'
 
-import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
 import styles from './styles'
 

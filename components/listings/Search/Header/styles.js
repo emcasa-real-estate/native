@@ -15,7 +15,7 @@ export default StyleSheet.create({
     ...padding(15 + offset, 10, 15)
   },
   icon: {
-    fontSize: 28
+    fontSize: 40
   },
   title: {
     flex: 1,

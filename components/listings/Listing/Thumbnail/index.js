@@ -5,9 +5,6 @@ import Matterport from '@/components/listings/Matterport'
 import Image from '../../Image'
 import styles from './styles'
 
-const WIDTH = Dimensions.get('window').width
-const HEIGHT = WIDTH * 0.64
-
 const ActionButton = ({title, icon, onPress}) => (
   <View style={styles.button}>
     <TouchableOpacity
@@ -23,14 +20,16 @@ const ActionButton = ({title, icon, onPress}) => (
 
 export default function ListingThumbnail({images, matterport_code, onOpen}) {
   const image = images[0] || {}
+  let {width, height} = Dimensions.get('window')
+  height = width * 0.64
   return (
     <View style={styles.container}>
       <View
         onMoveShouldSetResponder={() => true}
         onStartShouldSetResponder={() => true}
       >
-        <Matterport code={matterport_code} width={WIDTH} height={HEIGHT}>
-          <Image thumbnail {...image} width={WIDTH} height={HEIGHT} />
+        <Matterport code={matterport_code} width={width} height={height}>
+          <Image thumbnail {...image} width={width} height={height} />
         </Matterport>
       </View>
       <View style={styles.actions}>

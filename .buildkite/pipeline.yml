@@ -42,11 +42,9 @@ steps:
   - buildkite-agent artifact download "android/app/build.zip" . --step "build:android"
   - (cd android/app && unzip -q build.zip)
   - .buildkite/run android setup,bump,deploy --profile production
-  branches: master
 - label: 'release:ios'
   command:
   - buildkite-agent artifact download "ios/build/EmCasa.xcarchive.zip" . --step "build:ios"
   - (cd ios/build && unzip -q EmCasa.xcarchive.zip)
   - buildkite-agent artifact download "ios/build/EmCasa.xcarchive/Info.plist" . --step "build:ios"
   - .buildkite/run ios setup,sign,deploy --profile production
-  branches: master

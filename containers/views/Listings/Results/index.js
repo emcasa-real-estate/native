@@ -18,10 +18,11 @@ export default class ListingsScreen extends Component {
     const {navigation} = this.props
 
     return (
-      <Shell root borderless title="Início" header={<Header />}>
+      <Shell root overlay title="Início" header={<Header />}>
         <View style={styles.container}>
           <Listings
             type="search"
+            style={styles.feed}
             params={navigation.state.params}
             as={InfiniteScroll}
             ListHeaderComponent={Results}

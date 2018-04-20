@@ -11,10 +11,7 @@ export default StyleSheet({
     position: 'relative'
   },
   container: {
-    flex: 1,
-    ':overlay': {
-      paddingTop: Platform.OS === 'ios' ? 20 : null
-    }
+    flex: 1
   },
   main: {
     flex: 1,

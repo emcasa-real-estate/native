@@ -25,7 +25,11 @@ export default StyleSheet({
     width: '100%',
     borderColor: colors.gray.lighter,
     borderBottomWidth: 0.8,
+    ':borderless': {
+      borderBottomWidth: 0
+    },
     ':overlay': {
+      borderBottomWidth: 0,
       position: 'absolute',
       zIndex: 1
     }

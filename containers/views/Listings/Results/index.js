@@ -18,7 +18,7 @@ export default class ListingsScreen extends Component {
     const {navigation} = this.props
 
     return (
-      <Shell root title="Início" header={<Header />}>
+      <Shell root borderless title="Início" header={<Header />}>
         <View style={styles.container}>
           <Listings
             type="search"

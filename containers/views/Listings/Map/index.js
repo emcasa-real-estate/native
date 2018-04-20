@@ -11,6 +11,7 @@ const zoom = ({longitudeDelta}) => Math.PI * _.round(longitudeDelta, 10) / 180
 
 export default class MapScreen extends Component {
   state = {
+    active: undefined,
     zoom: zoom({longitudeDelta: 0.09999999999993747})
   }
 
@@ -19,9 +20,8 @@ export default class MapScreen extends Component {
   }, 200)
 
   onSelect = (id) => {
-    const {navigation} = this.props
-    if (id === this.activeId) navigation.setParams({id: null})
-    else navigation.setParams({id})
+    const {active} = this.state
+    this.setState({active: id === active ? null : id})
   }
 
   onDismiss = () => {
@@ -29,17 +29,12 @@ export default class MapScreen extends Component {
     navigation.goBack(null)
   }
 
-  get activeId() {
-    return this.props.navigation.state.params.id
-  }
-
   get params() {
     return _.omitBy(this.props.navigation.state.params, 'id')
   }
 
   render() {
-    const {zoom} = this.state
-    const active = this.activeId
+    const {active, zoom} = this.state
 
     return (
       <Shell overlay>

@@ -8,6 +8,16 @@ import InterestType from './Fields/InterestType'
 import Fields from './Fields'
 import styles from './styles'
 
+const Divider = ({children}) => {
+  return (
+    <View style={styles.divider}>
+      <View style={styles.line} />
+      {children && <Text style={styles.dividerText}>{children}</Text>}
+      {children && <View style={styles.line} />}
+    </View>
+  )
+}
+
 export default class InterestForm extends Component {
   state = {
     activeType: undefined
@@ -35,14 +45,14 @@ export default class InterestForm extends Component {
           <Button raised color="lightgreen" onPress={onOpenCalendly}>
             Agendamento Online
           </Button>
-          <View style={styles.separator}>
-            <Text style={styles.separatorText}>OU</Text>
+          <Divider>OU</Divider>
+          <View style={styles.field}>
+            <InterestType
+              types={types}
+              value={this.state.activeType}
+              onChange={this.onChangeType}
+            />
           </View>
-          <InterestType
-            types={types}
-            value={this.state.activeType}
-            onChange={this.onChangeType}
-          />
           {activeType && <Fields type={activeType} />}
         </View>
       </Form>

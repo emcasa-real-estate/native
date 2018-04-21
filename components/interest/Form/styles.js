@@ -14,15 +14,24 @@ export default StyleSheet.create({
     ...padding(10, 40)
   },
   field: {
-    paddingTop: 20
+    marginBottom: 15
   },
-  separator: {
-    marginTop: 20
+  divider: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 15
   },
-  validation: {
+  line: {
+    flex: 1,
+    height: 1,
+    backgroundColor: colors.gray.lighter
+  },
+  dividerText: {
     fontSize: 12,
     fontWeight: '500',
-    color: colors.red.medium,
-    marginTop: 5
+    paddingLeft: 10,
+    paddingRight: 10,
+    color: colors.gray.lighter
   }
 })

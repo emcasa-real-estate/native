@@ -14,7 +14,7 @@ function renderElement(Element, props = {}) {
 export default function ShellApp({lock, children, header, footer, ...props}) {
   return (
     <Lock to={lock}>
-      <Shell>
+      <Shell {...props}>
         {children}
         {header && (
           <Gateway into="header">{renderElement(header, props)}</Gateway>

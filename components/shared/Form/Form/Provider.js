@@ -62,7 +62,7 @@ export default class FormProvider extends PureComponent {
 
   onUnsubscribe = (name, node) => {
     if (node !== this.state.fields[name]) return
-    this.setState(({fields}) => ({fields: _.without(name)(fields)}))
+    this.setState(({fields}) => ({fields: _.omit(name)(fields)}))
   }
 
   onValidate = () => {

@@ -1,6 +1,7 @@
 import {Fragment} from 'react'
 
-import {Email, Phone} from '@/components/shared/Form'
+import Email from '@/components/shared/Form/Email'
+import Phone from '@/components/shared/Form/Phone'
 import Time from './Name'
 import Name from './Name'
 import Message from './Message'

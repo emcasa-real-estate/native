@@ -9,12 +9,9 @@ export default class InterestFormScreen extends Component {
     navigation.goBack(null)
   }
 
-  onSubmit = () => {
+  onSuccess = () => {
     const {navigation} = this.props
-    if (this.form.onValidate()) {
-      this.form.onSubmit()
-      navigation.navigate('message')
-    }
+    navigation.navigate('success')
   }
 
   onOpenCalendly = () => {
@@ -29,7 +26,7 @@ export default class InterestFormScreen extends Component {
       <Shell scroll>
         <Form
           id={navigation.state.params.id}
-          onClose={this.onClose}
+          onSuccess={this.onSuccess}
           onOpenCalendly={this.onOpenCalendly}
         />
       </Shell>

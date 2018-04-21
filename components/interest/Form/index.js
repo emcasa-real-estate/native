@@ -1,9 +1,8 @@
 import {Component} from 'react'
-import {KeyboardAvoidingView, View} from 'react-native'
+import {View} from 'react-native'
 
 import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
-import Separator from '@/components/shared/Separator'
 import Form from '@/components/shared/Form'
 import InterestType from './Fields/InterestType'
 import Fields from './Fields'

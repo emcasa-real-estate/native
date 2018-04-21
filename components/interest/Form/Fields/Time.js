@@ -1,7 +1,9 @@
 import _ from 'lodash'
 import {Picker} from 'react-native'
 
-export default function Time({onChange, value, interval, ...props}) {
+import {field} from '@/components/shared/Form/Field'
+
+function Time({onChange, value, interval, ...props}) {
   return (
     <Picker selectedValue={value} onValueChange={onChange} {...props}>
       {interval.map((time) => (
@@ -20,3 +22,5 @@ Time.format = (t) => {
 Time.defaultProps = {
   interval: _.range(8, 20).map(Time.format)
 }
+
+export default field()(Time)

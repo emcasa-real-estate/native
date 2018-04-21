@@ -1,7 +1,9 @@
+import {required} from '@/lib/validations'
+import {field} from '@/components/shared/Form/Field'
 import TextInput from '@/components/shared/TextInput'
 import styles from '../styles'
 
-export default function Name({onChange, ...props}) {
+function Name({onChange, ...props}) {
   return (
     <TextInput
       style={styles.input}
@@ -12,7 +14,6 @@ export default function Name({onChange, ...props}) {
   )
 }
 
-Name.validate = (value) => {
-  if (!value) return 'O nome é obrigatório'
-  return null
-}
+export default field({
+  validations: [required('O nome é obrigatório')]
+})(Name)

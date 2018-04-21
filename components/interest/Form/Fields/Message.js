@@ -1,7 +1,8 @@
+import {field} from '@/components/shared/Form/Field'
 import TextInput from '@/components/shared/TextInput'
 import styles from '../styles'
 
-export default function Message({onChange, ...props}) {
+function Message({onChange, ...props}) {
   return (
     <TextInput
       autoCorrect
@@ -14,3 +15,5 @@ export default function Message({onChange, ...props}) {
     />
   )
 }
+
+export default field()(Message)

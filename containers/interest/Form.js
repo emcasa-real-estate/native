@@ -10,7 +10,7 @@ class InterestFormApp extends Component {
   componentDidUpdate(prev) {
     const {onSuccess, loading, error} = this.props
     const finishedLoading = prev.loading && !loading
-    if (finishedLoading && error && onSuccess) onSuccess()
+    if (finishedLoading && !error && onSuccess) onSuccess()
   }
 
   onSubmit = (params) => {

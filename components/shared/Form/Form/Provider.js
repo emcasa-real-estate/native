@@ -41,6 +41,14 @@ export default class FormProvider extends PureComponent {
     if (props.defaultValue) this.state.value = props.defaultValue
   }
 
+  static getDerivedStateFromProps({value}, state) {
+    if (value && !_.isEqual(value, state.valid)) return {value, valid: false}
+  }
+
+  componentDidUpdate() {
+    if (typeof this.state.valid === 'undefined') this.onValidate()
+  }
+
   onSubscribe = (name, node) => {
     this.setState(({fields}) => ({fields: {...fields, [name]: node}}))
   }

@@ -3,12 +3,14 @@ import {Component, Fragment} from 'react'
 import {View, Dimensions} from 'react-native'
 import MultiSlider from '@ptomasroos/react-native-multi-slider'
 
+import {field} from '@/components/shared/Form/Field'
 import Text from '@/components/shared/Text'
 import Price from '@/components/shared/Price'
 import styles from './styles'
 
 const SLIDER_WIDTH = Dimensions.get('window').width - 120
 
+@field()
 export default class SlideRangeField extends Component {
   static defaultProps = {
     min: 0,

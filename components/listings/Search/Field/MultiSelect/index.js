@@ -2,11 +2,13 @@ import {Component} from 'react'
 import {TouchableOpacity, View} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import {field} from '@/components/shared/Form/Field'
 import Text from '@/components/shared/Text'
 import Options from './Options'
 import Button from './Button'
 import styles from './styles'
 
+@field()
 export default class MultiSelectField extends Component {
   static Options = Options
 

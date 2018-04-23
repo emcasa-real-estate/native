@@ -1,20 +1,16 @@
 import {StackNavigator} from 'react-navigation'
 
-import Header from './Header'
-import * as filter from './Filter'
+import * as form from './Form'
 import * as neighborhoods from './Neighborhoods'
 
 export const screen = StackNavigator(
   {
-    filter,
+    form,
     neighborhoods
   },
   {
-    initialRouteName: 'filter',
+    initialRouteName: 'form',
     initialRouteParams: {},
-    headerMode: 'float',
-    navigationOptions: {
-      header: (props) => <Header {...props} />
-    }
+    headerMode: 'none'
   }
 )

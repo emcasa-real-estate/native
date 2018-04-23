@@ -17,11 +17,13 @@ export default class FormView extends PureComponent {
   }
 
   render() {
-    const {children, label, style, ...props} = this.props
+    const {children, label, style, onSubmit, ...props} = this.props
     return (
       <View style={[styles.container].concat(style)}>
         {children}
-        <SubmitButton label={label} onPress={this.onSubmit} {...props} />
+        {onSubmit && (
+          <SubmitButton label={label} onPress={this.onSubmit} {...props} />
+        )}
       </View>
     )
   }

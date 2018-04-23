@@ -48,7 +48,8 @@ export default class FormProvider extends PureComponent {
   }
 
   static getDerivedStateFromProps({value}, state) {
-    if (value && !_.isEqual(value, state.valid)) return {value, valid: false}
+    if (value && !_.isEqual(value, state.value)) return {value, valid: false}
+    return null
   }
 
   componentDidUpdate() {

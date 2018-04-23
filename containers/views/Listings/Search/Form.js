@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import {Component} from 'react'
 import {NavigationActions} from 'react-navigation'
 
@@ -11,7 +12,14 @@ export default class SearchFormScreen extends Component {
     navigation.setParams(params)
   }
 
-  onReset = () => this.onChange({})
+  onReset = () => {
+    const {navigation} = this.props
+    const {params} = this.props.navigation.state
+    navigation.setParams({
+      ..._.mapValues(params, () => undefined),
+      parent: params.parent
+    })
+  }
 
   onReturn = () => {
     const {navigation} = this.props

@@ -110,7 +110,7 @@ export default class FormProvider extends PureComponent {
       onChangeField: this.onChangeField,
       onValidateField: this.onValidateField,
       onValidate: this.onValidate,
-      onSubmit: this.onSubmit
+      onSubmit: this.props.onSubmit && this.onSubmit
     }
   }
 

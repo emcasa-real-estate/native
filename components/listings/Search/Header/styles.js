@@ -14,7 +14,7 @@ export default StyleSheet.create({
   title: {
     flex: 1,
     display: 'flex',
-    paddingRight: 40,
+    paddingLeft: 10,
     fontSize: 20,
     textAlign: 'center',
     color: colors.gray.dark
@@ -22,5 +22,11 @@ export default StyleSheet.create({
   buttonIcon: {
     fontSize: 40,
     color: colors.gray.mediumDark
+  },
+  resetButton: {
+    fontSize: 14,
+    color: colors.blue.medium,
+    fontWeight: '500',
+    marginRight: 15
   }
 })

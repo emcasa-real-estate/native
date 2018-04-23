@@ -17,9 +17,15 @@ export const form = (Target) => ({
   onChange,
   onValidate,
   onSubmit,
+  value,
   ...props
 }) => (
-  <FormProvider onChange={onChange} onValidate={onValidate} onSubmit={onSubmit}>
+  <FormProvider
+    onChange={onChange}
+    onValidate={onValidate}
+    onSubmit={onSubmit}
+    value={value}
+  >
     <Consumer>{(ctx) => <Target {...props} {...ctx} />}</Consumer>
   </FormProvider>
 )

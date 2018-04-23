@@ -1,4 +1,3 @@
-import update from 'immutability-helper'
 import {Component} from 'react'
 
 import Form from '@/components/shared/Form/Form'
@@ -9,7 +8,7 @@ import PriceLabel from '../Field/SlideRange/PriceLabel'
 export default class SearchForm extends Component {
   onReset = (field) => () => {
     const {onChange, value} = this.props
-    onChange(update(value, {$remove: [field]}))
+    onChange({...value, [field]: undefined})
   }
 
   render() {

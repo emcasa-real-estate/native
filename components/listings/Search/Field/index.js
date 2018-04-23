@@ -1,7 +1,6 @@
 import {View, TouchableOpacity} from 'react-native'
 
 import Text from '@/components/shared/Text'
-import Price from '@/components/shared/Price'
 import styles from './styles'
 
 export default function SearchField({children, title, onReset}) {

@@ -1,16 +1,47 @@
-import {Neighborhoods} from '@/containers/listings/Search'
-import createFilter from './createFilter'
-import Screen from './Screen'
+import {Component} from 'react'
+import {NavigationActions} from 'react-navigation'
 
-const NeighborhoodFilter = createFilter({name: 'neighborhoods'})(
-  Neighborhoods.Options
-)
+import {MultiSelectOptions} from '@/components/listings/Search/Field'
+import {withNeighborhoods} from '@/containers/neighborhoods/Loader'
+import Shell from '@/containers/shared/Shell'
 
-export default function NeighborhoodScreen(props) {
-  return (
-    <Screen {...props}>
-      <NeighborhoodFilter />
-    </Screen>
-  )
+@withNeighborhoods
+export default class NeighborhoodsScreen extends Component {
+  onChange = (value) => {
+    const {navigation} = this.props
+    const {parent, ...params} = navigation.state.params
+    const nextParams = {...params, neighborhoods: value}
+    navigation.setParams(nextParams)
+    navigation.dispatch(
+      NavigationActions.setParams({
+        params: nextParams,
+        key: parent
+      })
+    )
+  }
+
+  get value() {
+    const {params} = this.props.navigation.state
+    return params ? params.neighborhoods : undefined
+  }
+
+  get options() {
+    const {neighborhoods} = this.props
+    if (!neighborhoods) return []
+    return neighborhoods.map((value) => ({label: value, value}))
+  }
+
+  render() {
+    return (
+      <Shell scroll>
+        <MultiSelectOptions
+          value={this.value}
+          options={this.options}
+          onChange={this.onChange}
+        />
+      </Shell>
+    )
+  }
 }
-export const screen = NeighborhoodScreen
+
+export const screen = NeighborhoodsScreen

@@ -3,7 +3,7 @@ import {Component} from 'react'
 import Shell from '@/containers/shared/Shell'
 import Form from '@/components/listings/Search/Form'
 
-export default class FormScreen extends Component {
+export default class SearchFormScreen extends Component {
   onChange = (params) => {
     const {navigation} = this.props
     navigation.setParams(params)
@@ -11,7 +11,8 @@ export default class FormScreen extends Component {
 
   onPressNeighborhoods = () => {
     const {navigation} = this.props
-    navigation.navigate('neighborhoods')
+    const {params, key} = navigation.state
+    navigation.navigate('neighborhoods', {...params, parent: key})
   }
 
   render() {
@@ -29,4 +30,4 @@ export default class FormScreen extends Component {
   }
 }
 
-export const screen = FormScreen
+export const screen = SearchFormScreen

@@ -13,20 +13,21 @@ export default StyleSheet.create({
   },
   label: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'flex-end'
+  },
+  labelText: {
+    fontSize: 18
+  },
+  labelSuffix: {
+    fontSize: 14
   },
   body: {
     margin: 60
   },
-  separator: {
+  divider: {
     fontSize: 14,
     ...margin(5, 10, null)
-  },
-  text: {
-    fontSize: 18
-  },
-  suffix: {
-    fontSize: 14
   },
   slider: {
     height: null

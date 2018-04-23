@@ -3,6 +3,8 @@ import {Component} from 'react'
 
 import Form from '@/components/shared/Form/Form'
 import Field, {SelectRange, SlideRange, MultiSelect} from '../Field'
+import AreaLabel from '../Field/SlideRange/AreaLabel'
+import PriceLabel from '../Field/SlideRange/PriceLabel'
 
 export default class SearchForm extends Component {
   onReset = (field) => () => {
@@ -24,13 +26,14 @@ export default class SearchForm extends Component {
         <Field title="Preço" onReset={this.onReset('price')}>
           <SlideRange
             name="price"
-            min={10000}
+            step={100000}
+            min={100000}
             max={10000000}
-            renderLabel={SlideRange.priceLabel}
+            Label={PriceLabel}
           />
         </Field>
         <Field title="Área" onReset={this.onReset('area')}>
-          <SlideRange name="area" max={1000} step={10} suffix="m²" />
+          <SlideRange name="area" max={1000} step={10} Label={AreaLabel} />
         </Field>
         <Field title="Quartos" onReset={this.onReset('rooms')}>
           <SelectRange

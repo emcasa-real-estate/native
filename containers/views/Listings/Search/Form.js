@@ -2,9 +2,9 @@ import _ from 'lodash'
 import {Component} from 'react'
 import {NavigationActions} from 'react-navigation'
 
-import Shell from '@/containers/shared/Shell'
-import Form from '@/components/listings/Search/Form'
+import Shell, {Footer} from '@/containers/shared/Shell'
 import Header from '@/components/listings/Search/Header'
+import Form from '@/components/listings/Search/Form'
 
 export default class SearchFormScreen extends Component {
   onChange = (params) => {
@@ -47,6 +47,7 @@ export default class SearchFormScreen extends Component {
             onReset={this.onReset}
           />
         }
+        footer={<Footer label="Filtrar resultados" onPress={this.onReturn} />}
       >
         <Form
           onChange={this.onChange}

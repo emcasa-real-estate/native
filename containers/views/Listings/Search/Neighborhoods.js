@@ -3,8 +3,8 @@ import {NavigationActions} from 'react-navigation'
 
 import {MultiSelectOptions} from '@/components/listings/Search/Field'
 import {withNeighborhoods} from '@/containers/neighborhoods/Loader'
+import Shell, {Footer} from '@/containers/shared/Shell'
 import Header from '@/components/listings/Search/Header'
-import Shell from '@/containers/shared/Shell'
 
 @withNeighborhoods
 export default class NeighborhoodsScreen extends Component {
@@ -45,6 +45,7 @@ export default class NeighborhoodsScreen extends Component {
             onReset={this.onReset}
           />
         }
+        footer={<Footer label="Selecionar" onPress={this.onReturn} />}
       >
         <MultiSelectOptions
           value={this.value}

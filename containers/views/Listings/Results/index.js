@@ -5,6 +5,7 @@ import Shell from '@/containers/shared/Shell'
 import Listings, {Results} from '@/containers/listings/Feed'
 import InfiniteScroll from '@/components/shared/InfiniteScroll'
 import MapButton from '@/components/listings/Map/Button'
+import Header from './Header'
 import styles from './styles'
 
 export default class ListingsScreen extends Component {
@@ -17,10 +18,11 @@ export default class ListingsScreen extends Component {
     const {navigation} = this.props
 
     return (
-      <Shell root title="Buscar imóveis">
+      <Shell root overlay header={<Header />}>
         <View style={styles.container}>
           <Listings
             type="search"
+            style={styles.feed}
             params={navigation.state.params}
             as={InfiniteScroll}
             ListHeaderComponent={Results}

@@ -7,7 +7,7 @@ import * as map from './Map'
 export const screen = StackNavigator(
   {results, search, map},
   {
-    initialRouteName: 'results',
+    initialRouteName: 'search',
     initialRouteParams: {},
     headerMode: 'none'
   }

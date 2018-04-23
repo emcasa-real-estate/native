@@ -5,7 +5,7 @@ import Shell from '@/containers/shared/Shell'
 import Listings, {Results} from '@/containers/listings/Feed'
 import InfiniteScroll from '@/components/shared/InfiniteScroll'
 import MapButton from '@/components/listings/Map/Button'
-import Header from './Header'
+import Header from '../Header'
 import styles from './styles'
 
 export default class ListingsScreen extends Component {

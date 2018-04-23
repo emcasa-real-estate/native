@@ -3,7 +3,6 @@ import {View} from 'react-native'
 
 import SubmitButton from '../SubmitButton'
 import {form} from './Provider'
-import styles from './styles'
 
 @form
 export default class FormView extends PureComponent {
@@ -19,7 +18,7 @@ export default class FormView extends PureComponent {
   render() {
     const {children, label, style, onSubmit, ...props} = this.props
     return (
-      <View style={[styles.container].concat(style)}>
+      <View style={style}>
         {children}
         {onSubmit && (
           <SubmitButton label={label} onPress={this.onSubmit} {...props} />

@@ -31,7 +31,7 @@ const Name = field({validations: [required('O nome é obrigatório')]})(
 export default function SignUpForm({onSubmit, error}) {
   const errorMessage = getError(error)
   return (
-    <Form onSubmit={onSubmit}>
+    <Form style={styles.container} onSubmit={onSubmit}>
       {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
       <Name name="name" placeholder="Nome" />
       <Email name="email" />

@@ -53,6 +53,10 @@ export const field = (Target) =>
   )
 
 export default class FieldProvider extends PureComponent {
+  static defaultProps = {
+    validations: []
+  }
+
   componentDidMount() {
     const {name, onSubscribe} = this.props
     onSubscribe(name, this)

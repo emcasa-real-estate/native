@@ -14,20 +14,25 @@ export default StyleSheet.create({
     borderWidth: 0.8,
     borderRadius: 5,
     ...margin(10, 20),
-    ...padding(5, 15),
+    ...padding(7, 10),
     ...elevation(6)
   },
-  filters: {
-    flex: 1
+  text: {
+    flex: 1,
+    color: colors.gray.light,
+    ...margin(null, 15)
+  },
+  textActive: {
+    color: colors.gray.dark
   },
   icon: {
-    fontSize: 30,
+    fontSize: 24,
     color: colors.gray.mediumDark,
     marginTop: 2,
     marginBottom: -2
   },
   button: {
-    fontSize: 14,
+    fontSize: 13,
     color: colors.blue.medium
   }
 })

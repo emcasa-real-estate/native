@@ -1,7 +1,7 @@
 import {Component} from 'react'
 import withNavigation from 'react-navigation/src/views/withNavigation'
 
-import Header from '@/components/listings/Search/Results'
+import Header from '@/components/listings/Search/ResultsHeader'
 
 @withNavigation
 export default class ResultsHeaderApp extends Component {

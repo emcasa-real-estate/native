@@ -20,7 +20,11 @@ export default class ListingsScreen extends Component {
     return (
       <Shell root overlay header={<Header navigation={navigation} />}>
         <View style={styles.container}>
-          <Listings type="search" params={navigation.state.params} />
+          <Listings
+            type="search"
+            style={styles.feed}
+            params={navigation.state.params}
+          />
           <MapButton style={styles.mapButton} onPress={this.onOpenMap} />
         </View>
       </Shell>

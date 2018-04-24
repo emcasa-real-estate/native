@@ -11,10 +11,7 @@ export default StyleSheet({
     position: 'relative'
   },
   container: {
-    flex: 1,
-    ':overlay': {
-      paddingTop: Platform.OS === 'ios' ? 20 : null
-    }
+    flex: 1
   },
   main: {
     flex: 1,
@@ -25,7 +22,11 @@ export default StyleSheet({
     width: '100%',
     borderColor: colors.gray.lighter,
     borderBottomWidth: 0.8,
+    ':borderless': {
+      borderBottomWidth: 0
+    },
     ':overlay': {
+      borderBottomWidth: 0,
       position: 'absolute',
       zIndex: 1
     }

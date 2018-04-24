@@ -23,7 +23,7 @@ export default function LoginForm({
 }) {
   const errorMessage = getError(error)
   return (
-    <Form onSubmit={onSubmit}>
+    <Form style={styles.container} onSubmit={onSubmit}>
       {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
       <Email name="email" />
       <Password name="password" />

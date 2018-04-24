@@ -1,8 +1,16 @@
 import _ from 'lodash/fp'
 import {PureComponent} from 'react'
 
-import validate, {OK} from '@/lib/validations/validate'
 import {withForm} from '../Form/Provider'
+
+const OK = {valid: true, errors: []}
+
+const validate = (validations) => (value) =>
+  validations.reduce(({valid, errors}, fun) => {
+    const error = fun(value)
+    if (error) return {valid: false, errors: errors.concat(error)}
+    else return {valid, errors}
+  }, OK)
 
 export const withField = (Target) =>
   withForm(({name, value, validation, ...props}) => (
@@ -15,24 +23,38 @@ export const withField = (Target) =>
     />
   ))
 
-export const field = (Target) => ({children, ...props}) => (
-  <FieldProvider {...props}>
-    {(ctx) => <Target {...ctx}>{children}</Target>}
-  </FieldProvider>
-)
+export const field = (Target) =>
+  withField(
+    ({
+      children,
+      onSubscribe,
+      onUnsubscribe,
+      onChangeField,
+      onValidateField,
+      validations,
+      ...props
+    }) => (
+      <FieldProvider
+        name={props.name}
+        value={props.value}
+        validations={validations}
+        onSubscribe={onSubscribe}
+        onUnsubscribe={onUnsubscribe}
+        onChangeField={onChangeField}
+        onValidateField={onValidateField}
+      >
+        {(ctx) => (
+          <Target {...props} {...ctx}>
+            {children}
+          </Target>
+        )}
+      </FieldProvider>
+    )
+  )
 
-const childProps = _.omit([
-  'onSubscribe',
-  'onUnsubscribe',
-  'onValidateField',
-  'onChangeField'
-])
-
-@withField
 export default class FieldProvider extends PureComponent {
   static defaultProps = {
-    valid: true,
-    errors: []
+    validations: []
   }
 
   componentDidMount() {
@@ -61,10 +83,9 @@ export default class FieldProvider extends PureComponent {
   }
 
   render() {
-    const {children, ...props} = this.props
+    const {children} = this.props
 
     return children({
-      ...childProps(props),
       onValidate: this.onValidate,
       onChange: this.onChange
     })

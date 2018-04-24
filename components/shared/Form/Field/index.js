@@ -23,15 +23,12 @@ export default class FieldView extends PureComponent {
       <KeyboardAvoidingView>
         <View style={styles.container}>
           {this.renderInput()}
-          {!valid && (
-            <View style={styles.errors}>
-              {errors.map((message, i) => (
-                <Text key={i} style={styles.text}>
-                  {message}
-                </Text>
-              ))}
-            </View>
-          )}
+          {!valid &&
+            errors.map((message, i) => (
+              <Text key={i} style={styles.error}>
+                {message}
+              </Text>
+            ))}
         </View>
       </KeyboardAvoidingView>
     )

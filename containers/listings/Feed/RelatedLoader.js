@@ -31,8 +31,9 @@ export class RelatedLoader extends PureComponent {
   }
 }
 
-const props = (...args) => ({
-  data: getRelatedListings(...args)
+const props = (state, props) => ({
+  online: state.network.isConnected,
+  data: getRelatedListings(state, props)
 })
 
 const actions = {

@@ -6,7 +6,7 @@ export default StyleSheet.create({
   container: {
     marginBottom: 15
   },
-  text: {
+  error: {
     fontSize: 12,
     fontWeight: '500',
     color: colors.red.medium,

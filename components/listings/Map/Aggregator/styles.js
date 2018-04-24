@@ -2,7 +2,7 @@ import StyleSheet from '@/assets/StyleSheet'
 import * as colors from '@/assets/colors'
 import {elevation} from '@/assets/styles'
 
-const SIZE = 30
+const SIZE = 28
 
 export default StyleSheet({
   container: {
@@ -13,10 +13,12 @@ export default StyleSheet({
     width: SIZE,
     height: SIZE,
     backgroundColor: colors.blue.medium,
+    borderColor: 'white',
+    borderWidth: 2,
     ...elevation(2)
   },
   text: {
     color: 'white',
-    fontWeight: '600'
+    fontWeight: '500'
   }
 })

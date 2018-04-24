@@ -1,6 +1,7 @@
 import {AsyncStorage} from 'react-native'
 import {combineReducers} from 'redux'
 import {persistReducer} from 'redux-persist'
+import {reducer as network} from 'react-native-offline'
 
 import auth from './auth'
 import listings from './listings'
@@ -18,6 +19,7 @@ const persistent = (reducer, options = {}) =>
   )
 
 export default combineReducers({
+  network,
   auth: persistent(auth, {whitelist: ['user']}),
   listings,
   interest,

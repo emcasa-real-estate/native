@@ -1,6 +1,6 @@
 import {required} from '@/lib/validations'
 import TextInput from '@/components/shared/TextInput'
-import {field} from '../Field'
+import {field} from './Field'
 
 export default field({
   validations: [required('A senha é obrigatória')]

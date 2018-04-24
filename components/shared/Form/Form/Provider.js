@@ -10,14 +10,25 @@ const isValid = _.flow(
 )
 
 export const withForm = (Target) => (props) => (
-  <Consumer>{({...ctx}) => <Target {...props} {...ctx} />}</Consumer>
+  <Consumer>{(ctx) => <Target {...props} {...ctx} />}</Consumer>
 )
 
-export const form = _.flow(withForm, (Target) => (props) => (
-  <FormProvider {...props}>
-    <Target {...props} />
+export const form = (Target) => ({
+  onChange,
+  onValidate,
+  onSubmit,
+  value,
+  ...props
+}) => (
+  <FormProvider
+    onChange={onChange}
+    onValidate={onValidate}
+    onSubmit={onSubmit}
+    value={value}
+  >
+    <Consumer>{(ctx) => <Target {...props} {...ctx} />}</Consumer>
   </FormProvider>
-))
+)
 
 export default class FormProvider extends PureComponent {
   static defaultProps = {
@@ -34,6 +45,15 @@ export default class FormProvider extends PureComponent {
   constructor(props) {
     super(props)
     if (props.defaultValue) this.state.value = props.defaultValue
+  }
+
+  static getDerivedStateFromProps({value}, state) {
+    if (value && !_.isEqual(value, state.value)) return {value, valid: false}
+    return null
+  }
+
+  componentDidUpdate() {
+    if (typeof this.state.valid === 'undefined') this.onValidate()
   }
 
   onSubscribe = (name, node) => {
@@ -76,6 +96,12 @@ export default class FormProvider extends PureComponent {
     if (onChange) onChange(result)
   }
 
+  onSubmit = () => {
+    const {onSubmit} = this.props
+    const {value} = this.state
+    if (onSubmit) onSubmit(value)
+  }
+
   get value() {
     return {
       ..._.omit(['fields'])(this.state),
@@ -83,7 +109,8 @@ export default class FormProvider extends PureComponent {
       onUnsubscribe: this.onUnsubscribe,
       onChangeField: this.onChangeField,
       onValidateField: this.onValidateField,
-      onValidate: this.onValidate
+      onValidate: this.onValidate,
+      onSubmit: this.onSubmit
     }
   }
 

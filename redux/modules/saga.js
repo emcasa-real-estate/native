@@ -1,3 +1,5 @@
+import {networkEventsListenerSaga} from 'react-native-offline'
+
 import {fork, all} from 'redux-saga/effects'
 import fabric from './fabric/saga'
 import auth from './auth/saga'
@@ -11,6 +13,10 @@ export default function* root() {
     fork(auth),
     fork(listings),
     fork(interest),
-    fork(neighborhoods)
+    fork(neighborhoods),
+    fork(networkEventsListenerSaga, {
+      timeout: 2000,
+      checkConnectionInterval: 20000
+    })
   ])
 }

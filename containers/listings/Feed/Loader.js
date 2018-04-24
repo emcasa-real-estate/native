@@ -38,10 +38,11 @@ export class FeedLoader extends PureComponent {
   }
 }
 
-const props = (...args) => ({
-  data: getListings(...args),
-  pagination: getPagination(...args),
-  loading: isLoading(...args)
+const props = (state, props) => ({
+  online: state.network.isConnected,
+  data: getListings(state, props),
+  pagination: getPagination(state, props),
+  loading: isLoading(state, props)
 })
 
 const actions = {

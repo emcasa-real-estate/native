@@ -35,9 +35,9 @@ export default class MultiSelectField extends Component {
 
     return (
       <View>
-        {value.length && (
+        {value.length ? (
           <View style={styles.options}>{value.map(this.renderOption)}</View>
-        )}
+        ) : null}
         <TouchableOpacity onPress={onPress}>
           <View style={styles.button}>
             <Text style={styles.buttonText}>{title}</Text>

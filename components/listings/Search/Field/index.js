@@ -19,5 +19,4 @@ export default function SearchField({children, title, onReset}) {
 
 export {default as MultiSelect} from './MultiSelect'
 export {default as MultiSelectOptions} from './MultiSelect/Options'
-export {default as SelectRange} from './SelectRange'
 export {default as SlideRange} from './SlideRange'

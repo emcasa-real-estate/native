@@ -1,7 +1,7 @@
 import {Component} from 'react'
 
 import Form from '@/components/shared/Form/Form'
-import Field, {SelectRange, SlideRange, MultiSelect} from '../Field'
+import Field, {SlideRange, MultiSelect} from '../Field'
 import Label from './Label'
 import AreaLabel from './AreaLabel'
 import PriceLabel from './PriceLabel'
@@ -41,15 +41,11 @@ export default class SearchForm extends Component {
           <SlideRange name="area" max={1000} step={10} Label={AreaLabel} />
         </Field>
         <Field title="Quartos" onReset={this.onReset('rooms')}>
-          <SelectRange
-            name="rooms"
-            options={[
-              {value: 1, label: '1'},
-              {value: 2, label: '2'},
-              {value: 3, label: '3'},
-              {value: 4, label: '+4'}
-            ]}
+          <Label
+            min={rooms.min || 1}
+            max={rooms.max && rooms.max < 4 ? rooms.max : '4+'}
           />
+          <SlideRange name="rooms" min={1} max={4} />
         </Field>
       </Form>
     )

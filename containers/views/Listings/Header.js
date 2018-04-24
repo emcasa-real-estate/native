@@ -10,6 +10,8 @@ export default class ResultsHeaderApp extends Component {
   }
 
   render() {
-    return <Header onPress={this.onPress} />
+    const {...params} = this.props.navigation.state.params
+    delete params.parent
+    return <Header value={params} onPress={this.onPress} />
   }
 }

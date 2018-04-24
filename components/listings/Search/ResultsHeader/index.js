@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import {View, TouchableOpacity} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -10,7 +11,7 @@ export default function ResultsHeader({onPress, value}) {
       <View style={styles.container}>
         <Icon style={styles.icon} name="filter-outline" />
         <Text style={[styles.text, value && styles.textActive]}>
-          {value ? 'Filtros aplicados' : 'Sem filtros'}
+          {!_.isEmpty(value) ? 'Filtros aplicados' : 'Sem filtros'}
         </Text>
         <Text style={styles.button}>Filtrar</Text>
       </View>

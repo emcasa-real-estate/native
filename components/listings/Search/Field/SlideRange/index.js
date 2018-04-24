@@ -4,8 +4,6 @@ import {View, Dimensions} from 'react-native'
 import MultiSlider from '@ptomasroos/react-native-multi-slider'
 
 import {field} from '@/components/shared/Form/Field'
-import Text from '@/components/shared/Text'
-import Label from './Label'
 import styles from './styles'
 
 const SLIDER_WIDTH = Dimensions.get('window').width - 120
@@ -14,8 +12,7 @@ const SLIDER_WIDTH = Dimensions.get('window').width - 120
 export default class SlideRangeField extends Component {
   static defaultProps = {
     min: 0,
-    value: {},
-    Label
+    value: {}
   }
 
   onChangeSlider = _.debounce(
@@ -46,15 +43,6 @@ export default class SlideRangeField extends Component {
     )
   }
 
-  renderLabel(type) {
-    const {Label} = this.props
-    return (
-      <View style={styles.label}>
-        <Label>{this.displayValue[type]}</Label>
-      </View>
-    )
-  }
-
   renderSlider() {
     const {min, max, step} = this.props
     const value = this.displayValue
@@ -78,11 +66,6 @@ export default class SlideRangeField extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          {this.renderLabel('min')}
-          <Text style={styles.divider}>{String.fromCharCode(0x2500)}</Text>
-          {this.renderLabel('max')}
-        </View>
         <View style={styles.body}>{this.renderSlider()}</View>
       </View>
     )

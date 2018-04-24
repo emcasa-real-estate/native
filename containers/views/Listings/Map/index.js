@@ -4,7 +4,7 @@ import {View} from 'react-native'
 
 import Shell from '@/containers/shared/Shell'
 import Map from '@/containers/listings/Map'
-import Feed from './Feed'
+import Feed from '@/containers/listings/Feed/Map'
 import styles from './styles'
 
 const zoom = ({longitudeDelta}) => Math.PI * _.round(longitudeDelta, 10) / 180
@@ -42,7 +42,7 @@ export default class MapScreen extends Component {
           <Map
             onRegionChange={this.onRegionChange}
             onSelect={this.onSelect}
-            distance={1000 * zoom}
+            distance={400 * zoom}
             aggregate={zoom > 0.0007}
             active={active}
             type="search"

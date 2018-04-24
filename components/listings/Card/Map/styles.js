@@ -2,7 +2,6 @@ import {StyleSheet} from 'react-native'
 
 import $StyleSheet from '@/assets/StyleSheet'
 import * as colors from '@/assets/colors'
-import {elevation} from '@/assets/styles'
 
 export default $StyleSheet({
   container: {
@@ -13,13 +12,6 @@ export default $StyleSheet({
     borderRadius: 5,
     ':active': {
       backgroundColor: colors.gray.offWhite
-    },
-    ':raised': {
-      backgroundColor: 'white',
-      padding: 0,
-      paddingTop: 0,
-      borderBottomWidth: 0,
-      ...elevation(4)
     }
   },
   thumbnail: {
@@ -35,10 +27,6 @@ export default $StyleSheet({
       borderColor: colors.blue.medium,
       backgroundColor: colors.blue.medium,
       marginTop: -4
-    },
-    ':raised': {
-      borderBottomLeftRadius: 0,
-      borderBottomRightRadius: 0
     }
   },
   image: {
@@ -46,10 +34,7 @@ export default $StyleSheet({
   },
   body: {
     marginTop: 10,
-    marginBottom: 10,
-    ':raised': {
-      margin: 20
-    }
+    marginBottom: 10
   },
   row: {
     display: 'flex',
@@ -60,15 +45,12 @@ export default $StyleSheet({
   street: {
     color: colors.gray.darker,
     flex: 1,
-    fontSize: 20,
+    fontSize: 14,
     marginRight: 15
-  },
-  neighborhood: {
-    color: colors.gray.mediumDark,
-    fontWeight: '600'
   },
   priceText: {
     fontWeight: '300',
+    fontSize: 16,
     color: colors.gray.darker
   }
 })

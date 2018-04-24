@@ -3,15 +3,15 @@ import React, {Component} from 'react'
 export default class InfiniteScroll extends Component {
   static defaultProps = {
     threshold: 1500,
-    layout: 'vertical'
+    direction: 'vertical'
   }
 
   onLoad = () => this.props.onLoad()
 
   isOverThreshold = ({contentOffset, contentSize, layoutMeasurement}) => {
-    const {threshold, layout} = this.props
+    const {threshold, direction} = this.props
     let offset, length
-    if (layout === 'vertical') {
+    if (direction === 'vertical') {
       offset = contentOffset.y
       length = contentSize.height - layoutMeasurement.height
     } else {

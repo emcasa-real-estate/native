@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import {PureComponent} from 'react'
+import withNavigation from 'react-navigation/src/views/withNavigation'
 import {connect} from 'react-redux'
 
 import {load} from '@/redux/modules/listings/feed'
@@ -10,6 +11,7 @@ import {
 } from '@/redux/modules/listings/feed/selectors'
 import Loader from '@/containers/shared/Loader'
 
+@withNavigation
 export class FeedLoader extends PureComponent {
   static defaultProps = {
     length: 15
@@ -26,6 +28,11 @@ export class FeedLoader extends PureComponent {
     if (!loading) load(type, this.params)
   }
 
+  onSelect = (id) => {
+    const {navigation} = this.props
+    navigation.navigate('listing', {id})
+  }
+
   onLoad = this.onInitialLoad
 
   get params() {
@@ -34,14 +41,22 @@ export class FeedLoader extends PureComponent {
   }
 
   render() {
-    return <Loader {...this.props} params={this.params} onLoad={this.onLoad} />
+    return (
+      <Loader
+        {...this.props}
+        params={this.params}
+        onLoad={this.onLoad}
+        props={{onSelect: this.onSelect}}
+      />
+    )
   }
 }
 
-const props = (...args) => ({
-  data: getListings(...args),
-  pagination: getPagination(...args),
-  loading: isLoading(...args)
+const props = (state, props) => ({
+  online: state.network.isConnected,
+  data: getListings(state, props),
+  pagination: getPagination(state, props),
+  loading: isLoading(state, props)
 })
 
 const actions = {

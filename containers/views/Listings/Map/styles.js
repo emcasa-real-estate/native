@@ -14,6 +14,5 @@ export default StyleSheet.create({
     width: '100%',
     bottom: 0,
     zIndex: 1
-  },
-  listings: {}
+  }
 })

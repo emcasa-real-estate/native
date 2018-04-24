@@ -2899,6 +2899,10 @@ hoek@4.x.x:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.2.1.tgz#9634502aa12c445dd5a7c5734b572bb8738aacbb"
 
+hoist-non-react-statics@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
+
 hoist-non-react-statics@^2.2.0, hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.0.tgz#d2ca2dfc19c5a91c5a6615ce8e564ef0347e2a40"
@@ -4879,6 +4883,14 @@ react-native-material-textfield@^0.12.0:
   resolved "https://registry.yarnpkg.com/react-native-material-textfield/-/react-native-material-textfield-0.12.0.tgz#3fba19d76ab89f67052c81e082152fc243d82a3f"
   dependencies:
     prop-types "^15.5.9"
+
+react-native-offline@^3.7.3:
+  version "3.7.3"
+  resolved "https://registry.yarnpkg.com/react-native-offline/-/react-native-offline-3.7.3.tgz#95edcb793359c58abf121fe4b5b4ee16e861dd7c"
+  dependencies:
+    hoist-non-react-statics "^1.2.0"
+    lodash "^4.17.4"
+    redux-saga "^0.16.0"
 
 react-native-orientation@^3.1.3:
   version "3.1.3"

@@ -2,8 +2,9 @@ import {Component} from 'react'
 
 import Form from '@/components/shared/Form/Form'
 import Field, {SelectRange, SlideRange, MultiSelect} from '../Field'
-import AreaLabel from '../Field/SlideRange/AreaLabel'
-import PriceLabel from '../Field/SlideRange/PriceLabel'
+import Label from './Label'
+import AreaLabel from './AreaLabel'
+import PriceLabel from './PriceLabel'
 
 export default class SearchForm extends Component {
   onReset = (field) => () => {
@@ -13,6 +14,9 @@ export default class SearchForm extends Component {
 
   render() {
     const {value, onChange, onSubmit, onPressNeighborhoods} = this.props
+    const price = value.price || {}
+    const area = value.area || {}
+    const rooms = value.rooms || {}
     return (
       <Form onChange={onChange} onSubmit={onSubmit} value={value}>
         <Field title="Bairros" onReset={this.onReset('neighborhoods')}>
@@ -23,6 +27,7 @@ export default class SearchForm extends Component {
           />
         </Field>
         <Field title="Preço" onReset={this.onReset('price')}>
+          <PriceLabel min={price.min || 100000} max={price.max || 10000000} />
           <SlideRange
             name="price"
             step={100000}
@@ -32,6 +37,7 @@ export default class SearchForm extends Component {
           />
         </Field>
         <Field title="Área" onReset={this.onReset('area')}>
+          <AreaLabel min={area.min} max={area.max || 100} />
           <SlideRange name="area" max={1000} step={10} Label={AreaLabel} />
         </Field>
         <Field title="Quartos" onReset={this.onReset('rooms')}>

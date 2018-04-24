@@ -3,12 +3,12 @@ import {View, TouchableOpacity} from 'react-native'
 import Text from '@/components/shared/Text'
 import styles from './styles'
 
-export default function SearchField({children, title, onClear}) {
+export default function SearchField({children, title, onReset}) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>{title.toUpperCase()}</Text>
-        <TouchableOpacity onPress={onClear}>
+        <TouchableOpacity onPress={onReset}>
           <Text style={styles.button}>Limpar</Text>
         </TouchableOpacity>
       </View>
@@ -18,5 +18,6 @@ export default function SearchField({children, title, onClear}) {
 }
 
 export {default as MultiSelect} from './MultiSelect'
+export {default as MultiSelectOptions} from './MultiSelect/Options'
 export {default as SelectRange} from './SelectRange'
 export {default as SlideRange} from './SlideRange'

@@ -1,9 +1,11 @@
 import {Component} from 'react'
 import {View} from 'react-native'
 
+import {field} from '@/components/shared/Form/Field'
 import Button from './Button'
 import styles from './styles'
 
+@field()
 export default class SelectRangeInput extends Component {
   static defaultProps = {
     value: {}

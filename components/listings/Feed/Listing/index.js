@@ -18,12 +18,12 @@ const Header = () => (
 
 const createHandler = (fun, ...args) => fun && (() => fun(...args))
 
-export default function ListingFeed({onSelect, loading, pagination, ...props}) {
+export default function ListingFeed({onSelect, pagination, ...props}) {
   return (
     <FlatList
       {...props}
       pagination={pagination}
-      ListEmptyComponent={loading ? null : Empty}
+      ListEmptyComponent={<Empty {...props} />}
       ListHeaderComponent={pagination.totalCount ? Header : null}
       keyExtractor={keyExtractor}
       renderItem={({item}) => (

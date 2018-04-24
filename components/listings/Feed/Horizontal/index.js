@@ -45,7 +45,7 @@ export default class HorizontalFeed extends Component {
         inactiveSlideScale={1}
         activeSlideAlignment={loop ? 'center' : 'start'}
         containerCustomStyle={[{flex: null}, style]}
-        ListEmptyComponent={Empty}
+        ListEmptyComponent={<Empty {...props} />}
         sliderWidth={width}
         ref={this.slider}
         {...props}

@@ -41,12 +41,13 @@ export class FeedLoader extends PureComponent {
   }
 
   render() {
+    const {online, ...props} = this.props
     return (
       <Loader
-        {...this.props}
+        {...props}
         params={this.params}
         onLoad={this.onLoad}
-        props={{onSelect: this.onSelect}}
+        props={{onSelect: this.onSelect, online}}
       />
     )
   }

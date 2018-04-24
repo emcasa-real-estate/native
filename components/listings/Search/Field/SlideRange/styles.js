@@ -4,30 +4,8 @@ import * as colors from '@/assets/colors'
 import {elevation, margin} from '@/assets/styles'
 
 export default StyleSheet.create({
-  header: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: '100%',
-    marginBottom: -10
-  },
-  label: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'flex-end'
-  },
-  labelText: {
-    fontSize: 18
-  },
-  labelSuffix: {
-    fontSize: 14
-  },
   body: {
     margin: 60
-  },
-  divider: {
-    fontSize: 14,
-    ...margin(5, 10, null)
   },
   slider: {
     height: null

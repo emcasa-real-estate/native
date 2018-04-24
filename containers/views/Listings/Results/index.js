@@ -11,14 +11,15 @@ import styles from './styles'
 export default class ListingsScreen extends Component {
   onOpenMap = () => {
     const {navigation} = this.props
-    navigation.navigate('map', navigation.state.params)
+    const {params, key} = navigation.state
+    navigation.navigate('map', {...params, parent: key})
   }
 
   render() {
     const {navigation} = this.props
 
     return (
-      <Shell root overlay header={<Header />}>
+      <Shell root overlay header={<Header navigation={navigation} />}>
         <View style={styles.container}>
           <Listings
             type="search"

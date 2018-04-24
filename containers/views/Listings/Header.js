@@ -1,13 +1,12 @@
 import {Component} from 'react'
-import withNavigation from 'react-navigation/src/views/withNavigation'
 
 import Header from '@/components/listings/Search/ResultsHeader'
 
-@withNavigation
 export default class ResultsHeaderApp extends Component {
   onPress = () => {
     const {navigation} = this.props
-    navigation.navigate('search')
+    const {params, key} = navigation.state
+    navigation.navigate('search', {...params, parent: key})
   }
 
   render() {

@@ -3,7 +3,7 @@ import {withNavigationFocus} from 'react-navigation'
 
 import Shell, {Section, Footer} from '@/containers/shared/Shell'
 import Listing, {Price} from '@/containers/listings/Listing'
-import RelatedListings from './Related'
+import RelatedListings from '@/containers/listings/Feed/Related'
 
 export default class ListingScreen extends Component {
   onInterest = () => {

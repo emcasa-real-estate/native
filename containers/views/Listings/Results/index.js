@@ -2,8 +2,7 @@ import {Component} from 'react'
 import {View} from 'react-native'
 
 import Shell from '@/containers/shared/Shell'
-import Listings, {Results} from '@/containers/listings/Feed'
-import InfiniteScroll from '@/components/shared/InfiniteScroll'
+import Listings from '@/containers/listings/Feed/Listing'
 import MapButton from '@/components/listings/Map/Button'
 import styles from './styles'
 
@@ -19,12 +18,7 @@ export default class ListingsScreen extends Component {
     return (
       <Shell root title="Buscar imóveis">
         <View style={styles.container}>
-          <Listings
-            type="search"
-            params={navigation.state.params}
-            as={InfiniteScroll}
-            ListHeaderComponent={Results}
-          />
+          <Listings type="search" params={navigation.state.params} />
           <MapButton style={styles.mapButton} onPress={this.onOpenMap} />
         </View>
       </Shell>

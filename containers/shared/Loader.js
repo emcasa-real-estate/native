@@ -16,10 +16,16 @@ export default class Loader extends Component {
     return _.pick(this.props, 'pagination', 'loading', 'error', 'data')
   }
 
+  get childProps() {
+    return {
+      ...this.status,
+      ...this.props.props
+    }
+  }
   renderChildren() {
     const {children} = this.props
-    if (_.isFunction(children)) return children(this.status)
-    return React.cloneElement(React.Children.only(children), this.status)
+    if (_.isFunction(children)) return children(this.childProps)
+    return React.cloneElement(React.Children.only(children), this.childProps)
   }
 
   render() {

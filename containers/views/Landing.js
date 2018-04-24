@@ -1,5 +1,5 @@
 import Shell from '@/containers/shared/Shell'
-import Listings from '@/containers/listings/Feed'
+import Listings from '@/containers/listings/Feed/Listing'
 
 export default function LandingScreen() {
   return (

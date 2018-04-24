@@ -4,7 +4,7 @@ import {View} from 'react-native'
 
 import Shell from '@/containers/shared/Shell'
 import Map from '@/containers/listings/Map'
-import Feed from './Feed'
+import Feed from '@/containers/listings/Feed/Map'
 import styles from './styles'
 
 const zoom = ({longitudeDelta}) => Math.PI * _.round(longitudeDelta, 10) / 180

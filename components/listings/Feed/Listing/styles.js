@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native'
 import * as colors from '@/assets/colors'
 
 export default StyleSheet.create({
-  container: {
+  header: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -12,9 +12,9 @@ export default StyleSheet.create({
     marginBottom: 5
   },
   text: {
-    width: '70%',
+    width: '80%',
     margin: 2,
-    fontSize: 18,
+    fontSize: 19,
     fontWeight: '300',
     textAlign: 'center',
     color: colors.gray.dark

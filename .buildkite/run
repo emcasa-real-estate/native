@@ -3,13 +3,28 @@
 export ROOT=${BUILDKITE_BUILD_CHECKOUT_PATH:-$PWD}
 export PATH=$PATH:$ROOT/node_modules/.bin
 
-if [[ "$1" =~ ^(android|ios)$ ]]; then PLATFORM=$1; shift; fi
+if [[ "$1" =~ ^(android|ios)$ ]]; then PLATFORM=$1; shift;
+else echo "Invalid platform $1"; exit 1; fi
 if [[ "$1" =~ ^[a-z,]+$ ]]; then SCRIPTS=$1; shift;
 else echo "Invalid script $1"; exit 1; fi
+
+ARGS=$@
+
+export PROFILE=beta
+
+while true; do
+case $1 in
+  -p|--profile)
+  export PROFILE=$2
+  shift; shift;;
+  '') break;;
+  *) shift;;
+esac
+done
 
 for script in $(echo $SCRIPTS | sed -e "s/\([^,]*\)/\1,$PLATFORM\/\1/g" | tr "," " "); do
   if [[ -f $ROOT/.buildkite/$script.sh ]]; then
     set +eu
-    source $ROOT/.buildkite/$script.sh $@
+    source $ROOT/.buildkite/$script.sh $ARGS
   fi
 done

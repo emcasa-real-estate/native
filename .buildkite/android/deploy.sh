@@ -1,6 +1,6 @@
 set -e
 
-case $RELEASE_PROFILE in
+case $PROFILE in
   beta)
     bundle exec fastlane android beta bin:$ROOT/android/app/build/outputs/apk/app-release.apk groups:"$TESTER_GROUPS"
     ;;

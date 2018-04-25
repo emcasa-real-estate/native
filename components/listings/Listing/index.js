@@ -15,7 +15,7 @@ export default class ListingView extends Component {
     view: undefined
   }
 
-  onOpen = (view) => () => this.setState({view})
+  onOpen = (view) => this.setState({view})
 
   onClose = () => this.setState({view: undefined})
 

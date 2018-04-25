@@ -13,7 +13,10 @@ export default function Navigation({user, navigation, onLogout}) {
       <Button icon="plus-outline" onPress={navigateTo('create')}>
         Anunciar
       </Button>
-      <Button icon="heart-outline" onPress={navigateTo('favorites')}>
+      <Button
+        icon="heart-outline"
+        onPress={navigateTo(user ? 'favorites' : 'auth')}
+      >
         Salvos
       </Button>
       {user ? (

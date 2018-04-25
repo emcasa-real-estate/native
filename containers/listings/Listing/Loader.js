@@ -3,7 +3,7 @@ import {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import {graphql, compose} from 'react-apollo'
 
-import {VISUALIZE_TOUR} from '@/lib/mutations/listings'
+import {VISUALIZE_TOUR} from '@/lib/graphql/mutations/listings'
 import {load} from '@/redux/modules/listings/data'
 import {getData, isLoading} from '@/redux/modules/listings/data/selectors'
 import Loader from '@/containers/shared/Loader'

@@ -2,7 +2,7 @@ import {Component} from 'react'
 import {ApolloProvider} from 'react-apollo'
 import {connect} from 'react-redux'
 
-import createClient from '@/lib/apollo'
+import createClient from '@/lib/graphql/client'
 import {getToken} from '@/redux/modules/auth/selectors'
 
 class AppApolloProvider extends Component {
@@ -12,14 +12,16 @@ class AppApolloProvider extends Component {
 
   constructor(props) {
     super(props)
-    this.state.client = createClient({request: this.request})
+    this.state.client = createClient({fetch: this.fetch})
   }
 
-  request = (operation) => {
+  fetch = async (uri, options) => {
     const {jwt} = this.props
-    operation.setContext({
+    return window.fetch(uri, {
+      ...options,
       headers: {
-        authorization: jwt ? `Token ${jwt}` : undefined
+        ...options.headers,
+        Authorization: jwt ? `Token ${jwt}` : undefined
       }
     })
   }

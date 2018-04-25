@@ -31,7 +31,7 @@ export default class ListingThumbnail extends Component {
   onViewTour = _.after(50, _.once(this.props.onViewTour))
 
   render() {
-    const {images, matterport_code} = this.props
+    const {images, favorite, matterport_code, onFavorite} = this.props
     const image = images[0] || {}
     let {width, height} = Dimensions.get('window')
     height = width * 0.64
@@ -47,19 +47,30 @@ export default class ListingThumbnail extends Component {
             <Image thumbnail {...image} width={width} height={height} />
           </Matterport>
         </View>
-        <View style={styles.actions}>
-          <ActionButton
-            title="Ver Imagens"
-            icon="camera"
-            onPress={this.onOpenGallery}
-          />
-          {matterport_code && (
+        <View style={styles.actionRow}>
+          <View style={styles.actionCell}>
             <ActionButton
-              title="Ver em Tela Cheia"
-              icon="fullscreen"
-              onPress={this.onOpenTour}
+              title={
+                favorite ? 'Adicionar aos favoritos' : 'Remover dos favoritos'
+              }
+              icon={favorite ? 'heart' : 'heart-outline'}
+              onPress={onFavorite}
             />
-          )}
+          </View>
+          <View style={styles.actionCell}>
+            <ActionButton
+              title="Ver imagens"
+              icon="camera"
+              onPress={this.onOpenGallery}
+            />
+            {matterport_code && (
+              <ActionButton
+                title="Ver em tela cheia"
+                icon="fullscreen"
+                onPress={this.onOpenTour}
+              />
+            )}
+          </View>
         </View>
       </View>
     )

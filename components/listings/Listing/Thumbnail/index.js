@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import {Component} from 'react'
 import {View, TouchableOpacity, Dimensions} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -27,6 +28,8 @@ export default class ListingThumbnail extends Component {
     this.props.onViewTour()
   }
 
+  onViewTour = _.after(50, _.once(this.props.onViewTour))
+
   render() {
     const {images, matterport_code} = this.props
     const image = images[0] || {}
@@ -38,6 +41,7 @@ export default class ListingThumbnail extends Component {
         <View
           onMoveShouldSetResponder={() => true}
           onStartShouldSetResponder={() => true}
+          onResponderMove={this.onViewTour}
         >
           <Matterport code={matterport_code} width={width} height={height}>
             <Image thumbnail {...image} width={width} height={height} />

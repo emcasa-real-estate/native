@@ -13,25 +13,21 @@ export default class Loader extends Component {
   }
 
   get status() {
-    return _.pick(this.props, 'pagination', 'loading', 'error', 'data')
+    return _.omit(this.props, ['children', 'as', 'onLoad'])
   }
 
-  get childProps() {
-    return {
-      ...this.status,
-      ...this.props.props
-    }
-  }
   renderChildren() {
-    const {children} = this.props
-    if (_.isFunction(children)) return children(this.childProps)
-    return React.cloneElement(React.Children.only(children), this.childProps)
+    return this.props.children(this.status)
   }
 
   render() {
-    const {as: TargetComponent, ...props} = this.props
+    const {as: TargetComponent, onLoad} = this.props
     const children = this.renderChildren()
     if (!TargetComponent) return children
-    return <TargetComponent {...props}>{children}</TargetComponent>
+    return (
+      <TargetComponent onLoad={onLoad} {...this.status}>
+        {children}
+      </TargetComponent>
+    )
   }
 }

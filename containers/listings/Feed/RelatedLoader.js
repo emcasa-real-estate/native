@@ -1,4 +1,5 @@
 import {PureComponent} from 'react'
+import _ from 'lodash'
 import withNavigation from 'react-navigation/src/views/withNavigation'
 import {connect} from 'react-redux'
 
@@ -18,14 +19,20 @@ export class RelatedLoader extends PureComponent {
     navigation.navigate('listing', {id})
   }
 
+  get status() {
+    return _.pick(this.props, ['online', 'data'])
+  }
+
   render() {
     const {id} = this.props
     return (
       <Loader
-        {...this.props}
+        as={this.props.as}
+        children={this.props.children}
         params={id}
         onLoad={this.onLoad}
-        props={{onSelect: this.onSelect}}
+        onSelect={this.onSelect}
+        {...this.status}
       />
     )
   }

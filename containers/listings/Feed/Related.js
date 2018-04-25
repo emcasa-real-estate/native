@@ -4,7 +4,7 @@ import Loader from './RelatedLoader'
 export default function RelatedFeedApp({id, ...props}) {
   return (
     <Loader id={id} {...props}>
-      <Feed {...props} />
+      {(state) => <Feed {...props} {...state} />}
     </Loader>
   )
 }

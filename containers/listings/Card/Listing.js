@@ -7,7 +7,7 @@ import {
 function ListingCardApp(props) {
   return (
     <FavoritesMutation {...props}>
-      {(onFavorite) => <Card {...props} onFavorite={onFavorite} />}
+      {(onFavorite) => <Card {...props} onFavorite={() => onFavorite()} />}
     </FavoritesMutation>
   )
 }

@@ -9,12 +9,16 @@ export default StyleSheet.create({
     borderColor: colors.gray.lighter,
     width: '100%'
   },
-  actions: {
+  actionRow: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 5
+  },
+  actionCell: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   icon: {
     padding: 10,

@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import {PureComponent} from 'react'
-import {connect, compose} from 'react-redux'
-import {graphql} from 'react-apollo'
+import {connect} from 'react-redux'
+import {graphql, compose} from 'react-apollo'
 
 import {VISUALIZE_TOUR} from '@/lib/mutations/listings'
 import {load} from '@/redux/modules/listings/data'
@@ -34,6 +34,7 @@ export class ListingLoader extends PureComponent {
       <Loader
         children={this.props.children}
         onLoad={this.onLoad}
+        onViewTour={this.onViewTour}
         {...this.status}
       />
     )

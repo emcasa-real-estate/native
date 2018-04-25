@@ -5,7 +5,7 @@ import Loader from './FeedLoader'
 export default function ListingFeedApp({type, ...props}) {
   return (
     <Loader as={InfiniteScroll} type={type} {...props}>
-      <Feed {...props} />
+      {(state) => <Feed {...props} {...state} />}
     </Loader>
   )
 }

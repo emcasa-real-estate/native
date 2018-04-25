@@ -40,14 +40,19 @@ export class FeedLoader extends PureComponent {
     return {...params, pageSize: length}
   }
 
+  get status() {
+    return _.pick(this.props, ['online', 'data', 'pagination', 'loading'])
+  }
+
   render() {
-    const {online, ...props} = this.props
     return (
       <Loader
-        {...props}
+        as={this.props.as}
+        children={this.props.children}
         params={this.params}
         onLoad={this.onLoad}
-        props={{onSelect: this.onSelect, online}}
+        onSelect={this.onSelect}
+        {...this.status}
       />
     )
   }

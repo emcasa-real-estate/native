@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import {PureComponent} from 'react'
 import {connect} from 'react-redux'
 
@@ -11,8 +12,18 @@ export class ListingLoader extends PureComponent {
     load(id)
   }
 
+  get status() {
+    return _.pick(this.props, ['data', 'loading'])
+  }
+
   render() {
-    return <Loader {...this.props} onLoad={this.onLoad} />
+    return (
+      <Loader
+        children={this.props.children}
+        onLoad={this.onLoad}
+        {...this.status}
+      />
+    )
   }
 }
 

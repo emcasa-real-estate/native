@@ -15,10 +15,7 @@ export default class SlideRangeField extends Component {
     value: {}
   }
 
-  onChangeSlider = _.debounce(
-    ([min, max]) => this.props.onChange({min, max}),
-    300
-  )
+  onChangeSlider = ([min, max]) => this.props.onChange({min, max})
 
   parseValue = (value) => Number(value)
 

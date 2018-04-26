@@ -52,7 +52,7 @@ export default function ResultsHeader({onPress, value}) {
           numberOfLines={1}
           minimumFontScale={0.85}
         >
-          {hasFilters ? activeFilters(filters) : 'Sem filtros'}
+          {hasFilters ? activeFilters(filters) : 'Sem filtros aplicados'}
         </Text>
         <Text style={styles.button}>Filtrar</Text>
       </View>

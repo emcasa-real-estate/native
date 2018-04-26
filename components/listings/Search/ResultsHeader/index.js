@@ -34,18 +34,19 @@ activeFilters.neighborhoods = ([...value]) => {
 
 export default function ResultsHeader({onPress, value}) {
   const filters = omitEmpty(value)
+  const hasFilters = !_.isEmpty(filters)
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
         <Icon style={styles.icon} name="filter-outline" />
         <Text
-          style={[styles.text, value && styles.textActive]}
+          style={[styles.text, hasFilters && styles.textActive]}
           allowFontScaling
           adjustsFontSizeToFit
           numberOfLines={1}
           minimumFontScale={0.85}
         >
-          {!_.isEmpty(filters) ? activeFilters(filters) : 'Sem filtros'}
+          {hasFilters ? activeFilters(filters) : 'Sem filtros'}
         </Text>
         <Text style={styles.button}>Filtrar</Text>
       </View>

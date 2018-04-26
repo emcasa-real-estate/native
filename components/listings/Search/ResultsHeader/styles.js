@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native'
 
 import * as colors from '@/assets/colors'
-import {elevation, margin, padding} from '@/assets/styles'
+import {elevation, margin} from '@/assets/styles'
 
 export default StyleSheet.create({
   container: {
@@ -13,23 +13,22 @@ export default StyleSheet.create({
     borderColor: colors.gray.lighter,
     borderWidth: 0.8,
     borderRadius: 5,
+    padding: 10,
     ...margin(10, 20),
-    ...padding(7, 10),
     ...elevation(6)
   },
   text: {
     flex: 1,
+    fontSize: 16,
     color: colors.gray.light,
-    ...margin(null, 15)
+    ...margin(null, 16)
   },
   textActive: {
     color: colors.gray.dark
   },
   icon: {
-    fontSize: 24,
-    color: colors.gray.mediumDark,
-    marginTop: 2,
-    marginBottom: -2
+    marginTop: 6,
+    marginBottom: 6
   },
   button: {
     fontSize: 13,

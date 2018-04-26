@@ -1,6 +1,5 @@
 import _ from 'lodash/fp'
-import {View, TouchableOpacity} from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import {View, Image, TouchableOpacity} from 'react-native'
 
 import {abbrevPrice} from '@/assets/format'
 import Text from '@/components/shared/Text'
@@ -32,13 +31,20 @@ activeFilters.neighborhoods = ([...value]) => {
   return result
 }
 
+const Icon = () => (
+  <Image
+    style={[styles.icon, {width: 20, height: 33 * 20 / 54}]}
+    source={require('@/assets/img/filter-icon.png')}
+  />
+)
+
 export default function ResultsHeader({onPress, value}) {
   const filters = omitEmpty(value)
   const hasFilters = !_.isEmpty(filters)
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
-        <Icon style={styles.icon} name="filter-outline" />
+        <Icon />
         <Text
           style={[styles.text, hasFilters && styles.textActive]}
           allowFontScaling

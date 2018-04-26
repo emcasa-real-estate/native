@@ -13,16 +13,16 @@ const activeFilters = _.flow(
   _.join(', ')
 )
 
-activeFilters.rooms = ({min, max}) =>
-  `${min || 1}-${!max || max >= 4 ? '4+' : max} quartos`
+activeFilters.rooms = ({min, max}) => {
+  if (!max || max >= 4) return `${min}+ quartos`
+  return `${min}-${max >= 4 ? '4+' : max} quartos`
+}
 activeFilters.price = ({min, max}) => {
-  if (!min || min <= 100000) return `≤R$${abbrevPrice(max)}`
-  if (!max || max >= 10000000) return `≥R$${abbrevPrice(min)}`
+  if (!max || max >= 10000000) return `R$${abbrevPrice(min)}+`
   return `R$${abbrevPrice(min)}-${abbrevPrice(max)}`
 }
 activeFilters.area = ({min, max}) => {
-  if (!min) return `≤${max}m²`
-  if (!max || max >= 1000) return `≥${min}m²`
+  if (!max || max >= 1000) return `${min}m²+`
   return `${min}-${max}m²`
 }
 activeFilters.neighborhoods = ([...value]) => {

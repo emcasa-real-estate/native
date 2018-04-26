@@ -23,7 +23,7 @@ activeFilters.price = ({min, max}) => {
 }
 activeFilters.area = ({min, max}) => {
   if (!min) return `≤${max}m²`
-  if (!max || max >= 10000) return `≥${min}m²`
+  if (!max || max >= 1000) return `≥${min}m²`
   return `${min}-${max}m²`
 }
 activeFilters.neighborhoods = ([...value]) => {

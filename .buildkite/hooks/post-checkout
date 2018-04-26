@@ -25,5 +25,4 @@ fi
 
 # Clean pods
 
-git clean -fxdq ios/Pods
-
+rm -rf ios/Pods

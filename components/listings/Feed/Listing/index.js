@@ -24,7 +24,7 @@ export default function ListingFeed({onSelect, pagination, Card, ...props}) {
       {...props}
       pagination={pagination}
       ListEmptyComponent={<Empty {...props} />}
-      ListHeaderComponent={pagination.totalCount ? Header : null}
+      ListHeaderComponent={pagination && pagination.totalCount ? Header : null}
       keyExtractor={keyExtractor}
       renderItem={({item}) => (
         <Card onPress={createHandler(onSelect, item.id)} {...item} />

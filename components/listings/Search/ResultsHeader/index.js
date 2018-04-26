@@ -2,18 +2,49 @@ import _ from 'lodash/fp'
 import {View, TouchableOpacity} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import {abbrevPrice} from '@/assets/format'
 import Text from '@/components/shared/Text'
 import styles from './styles'
 
 const isEmpty = _.flow(_.pickBy(_.identity), _.isEmpty)
+
+const activeFilters = _.flow(
+  _.entries,
+  _.map(([name, value]) => activeFilters[name].call(null, value)),
+  _.join(', ')
+)
+
+activeFilters.rooms = ({min, max}) =>
+  `${min || 1}-${!max || max >= 4 ? '4+' : max} quartos`
+activeFilters.price = ({min, max}) => {
+  if (!max) return `R$${abbrevPrice(min)}+`
+  if (!min) return `R$${abbrevPrice(max)}-`
+  return `R$${abbrevPrice(min)}-${abbrevPrice(max)}`
+}
+activeFilters.area = ({min, max}) => {
+  if (!max) return `${min}+m²`
+  if (!min) return `${max}-m²`
+  return `${min}-${max}m²`
+}
+activeFilters.neighborhoods = ([...value]) => {
+  const result = value.pop()
+  if (value.length) return `${result} e ${value.length}+`
+  return result
+}
 
 export default function ResultsHeader({onPress, value}) {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
         <Icon style={styles.icon} name="filter-outline" />
-        <Text style={[styles.text, value && styles.textActive]}>
-          {!isEmpty(value) ? 'Filtros aplicados' : 'Sem filtros'}
+        <Text
+          style={[styles.text, value && styles.textActive]}
+          allowFontScaling
+          adjustsFontSizeToFit
+          numberOfLines={1}
+          minimumFontSize={12}
+        >
+          {!isEmpty(value) ? activeFilters(value) : 'Sem filtros'}
         </Text>
         <Text style={styles.button}>Filtrar</Text>
       </View>

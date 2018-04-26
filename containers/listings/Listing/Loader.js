@@ -13,6 +13,18 @@ import {load} from '@/redux/modules/listings/data'
 import {getData, isLoading} from '@/redux/modules/listings/data/selectors'
 import Loader from '@/containers/shared/Loader'
 
+export function FavoritesMutation({children, id, favorite}) {
+  return (
+    <Mutation
+      mutation={favorite ? UNFAVORITE : FAVORITE}
+      variables={{id}}
+      refetchQueries={[{query: GET_FAVORITE_LISTINGS_IDS}]}
+    >
+      {children}
+    </Mutation>
+  )
+}
+
 export class ListingLoader extends PureComponent {
   state = {
     visualizedTour: false
@@ -35,25 +47,20 @@ export class ListingLoader extends PureComponent {
   }
 
   render() {
-    const {data: {id}, favorite} = this.props
+    const {id, favorite} = this.props
 
     return (
-      <Mutation mutation={favorite ? UNFAVORITE : FAVORITE}>
+      <FavoritesMutation id={id} favorite={favorite}>
         {(onFavorite) => (
           <Loader
             children={this.props.children}
             onLoad={this.onLoad}
             onViewTour={this.onViewTour}
-            onFavorite={() =>
-              onFavorite({
-                refetchQueries: [{query: GET_FAVORITE_LISTINGS_IDS}],
-                variables: {id}
-              })
-            }
+            onFavorite={() => onFavorite()}
             {...this.status}
           />
         )}
-      </Mutation>
+      </FavoritesMutation>
     )
   }
 }
@@ -67,9 +74,9 @@ const actions = {
   load
 }
 
-const withRestData = connect(props, actions)
+export const withRestData = connect(props, actions)
 
-const withGqlData = graphql(GET_FAVORITE_LISTINGS_IDS, {
+export const withGqlData = graphql(GET_FAVORITE_LISTINGS_IDS, {
   props: ({data, ownProps: {id}}) => ({
     favorite:
       data.favoritedListings &&
@@ -77,7 +84,7 @@ const withGqlData = graphql(GET_FAVORITE_LISTINGS_IDS, {
   })
 })
 
-const withMutations = graphql(VISUALIZE_TOUR, {
+export const withMutations = graphql(VISUALIZE_TOUR, {
   options: ({id}) => ({
     variables: {id}
   }),

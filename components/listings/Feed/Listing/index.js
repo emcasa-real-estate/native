@@ -18,7 +18,7 @@ const Header = () => (
 
 const createHandler = (fun, ...args) => fun && (() => fun(...args))
 
-export default function ListingFeed({onSelect, pagination, ...props}) {
+export default function ListingFeed({onSelect, pagination, Card, ...props}) {
   return (
     <FlatList
       {...props}
@@ -31,4 +31,8 @@ export default function ListingFeed({onSelect, pagination, ...props}) {
       )}
     />
   )
+}
+
+ListingFeed.defaultProps = {
+  Card
 }

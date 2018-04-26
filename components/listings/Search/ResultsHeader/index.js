@@ -6,7 +6,7 @@ import {abbrevPrice} from '@/assets/format'
 import Text from '@/components/shared/Text'
 import styles from './styles'
 
-const isEmpty = _.flow(_.pickBy(_.identity), _.isEmpty)
+const omitEmpty = _.omitBy(_.isEmpty)
 
 const activeFilters = _.flow(
   _.entries,
@@ -17,13 +17,13 @@ const activeFilters = _.flow(
 activeFilters.rooms = ({min, max}) =>
   `${min || 1}-${!max || max >= 4 ? '4+' : max} quartos`
 activeFilters.price = ({min, max}) => {
-  if (!max) return `R$${abbrevPrice(min)}+`
-  if (!min) return `R$${abbrevPrice(max)}-`
+  if (!min || min <= 100000) return `≤R$${abbrevPrice(max)}`
+  if (!max || max >= 10000000) return `≥R$${abbrevPrice(min)}`
   return `R$${abbrevPrice(min)}-${abbrevPrice(max)}`
 }
 activeFilters.area = ({min, max}) => {
-  if (!max) return `${min}+m²`
-  if (!min) return `${max}-m²`
+  if (!min) return `≤${max}m²`
+  if (!max || max >= 10000) return `≥${min}m²`
   return `${min}-${max}m²`
 }
 activeFilters.neighborhoods = ([...value]) => {
@@ -33,6 +33,7 @@ activeFilters.neighborhoods = ([...value]) => {
 }
 
 export default function ResultsHeader({onPress, value}) {
+  const filters = omitEmpty(value)
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
@@ -42,9 +43,9 @@ export default function ResultsHeader({onPress, value}) {
           allowFontScaling
           adjustsFontSizeToFit
           numberOfLines={1}
-          minimumFontSize={12}
+          minimumFontScale={0.85}
         >
-          {!isEmpty(value) ? activeFilters(value) : 'Sem filtros'}
+          {!_.isEmpty(filters) ? activeFilters(filters) : 'Sem filtros'}
         </Text>
         <Text style={styles.button}>Filtrar</Text>
       </View>

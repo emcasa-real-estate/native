@@ -3,11 +3,11 @@
   "version": "1.0.1",
   "private": true,
   "rnpm": {
-    "assets": [
-      "./assets/fonts"
-    ]
+    "assets": ["./assets/fonts"]
   },
   "scripts": {
+    "postinstall":
+      "sed -i '' '/RUN_CLANG_STATIC_ANALYZER/d;/CLANG_STATIC_ANALYZER_MODE/d;/CLANG_ANALYZER_NONNULL/d' ./node_modules/react-native/React/React.xcodeproj/project.pbxproj",
     "prepare": "patch-package",
     "start": "react-native start",
     "android": "react-native run-android",
@@ -22,12 +22,8 @@
   "jest": {
     "preset": "react-native",
     "automock": false,
-    "unmockedModulePathPatterns": [
-      "/node_modules/"
-    ],
-    "setupFiles": [
-      "./__test__/setup.js"
-    ],
+    "unmockedModulePathPatterns": ["/node_modules/"],
+    "setupFiles": ["./__test__/setup.js"],
     "transformIgnorePatterns": [
       "/node_modules/(?!(jest-)?react-native|react-navigation)/"
     ]

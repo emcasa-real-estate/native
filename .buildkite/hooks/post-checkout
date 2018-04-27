@@ -2,8 +2,8 @@ set -e
 
 # Setup certificates
 
-mkdir tmp
-mkdir tmp/logs
+rm -rf tmp
+mkdir -p tmp/logs
 
 export SECRETS_DIR=$PWD/tmp/.secrets
 export ANDROID_KEYSTORE_FILE=$SECRETS_DIR/android/keystore.jks

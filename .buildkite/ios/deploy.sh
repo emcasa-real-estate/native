@@ -5,7 +5,7 @@ PATH="$PATH:$(dirname "$(xcode-select -p)")/Applications/Application Loader.app/
 export FASTLANE_USER=$APPLE_ID
 export FASTLANE_PASSWORD=$APPLE_PASSWORD
 
-case $PROFILE in
+case $BUILD_PROFILE in
   beta)
     bundle exec fastlane run crashlytics \
       ipa_path:$IPA_FILE \

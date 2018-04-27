@@ -1,4 +1,4 @@
-if [[ $PROFILE == production ]];
+if [[ $BUILD_PROFILE == production ]];
 then export CODESIGN_PROFILE=app-store;
 else export CODESIGN_PROFILE=ad-hoc; fi
 

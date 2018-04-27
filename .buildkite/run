@@ -9,12 +9,12 @@ else echo "Invalid script $1"; exit 1; fi
 
 ARGS=$@
 
-export PROFILE=beta
+export BUILD_PROFILE=beta
 
 while true; do
 case $1 in
   -p|--profile)
-  export PROFILE=$2
+  export BUILD_PROFILE=$2
   shift; shift;;
   '') break;;
   *) shift;;

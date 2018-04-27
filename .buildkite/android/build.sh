@@ -1,6 +1,6 @@
 set -e
 
-case $PROFILE in
+case $BUILD_PROFILE in
   debug)
     cd android && ./gradlew assembleDebug
     ;;

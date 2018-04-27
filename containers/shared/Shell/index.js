@@ -29,8 +29,7 @@ export default function ShellApp({lock, children, header, footer, ...props}) {
 
 ShellApp.defaultProps = {
   lock: 'portrait',
-  header: Header,
-  footer: Navigation
+  header: Header
 }
 
 export {Section, Header, Footer, Navigation}

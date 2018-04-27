@@ -6,10 +6,14 @@ OPTIONS=(CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=)
 
 if [[ ! -z "$IOS_XCCONFIG_FILE" ]]; then ARGS+=(-xcconfig "$IOS_XCCONFIG_FILE"); fi
 
+SCHEME=EmCasa
 case $PROFILE in
   debug) CONFIGURATION=Debug;;
-  beta) CONFIGURATION=Beta;;
   production) CONFIGURATION=Release;;
+  beta)
+    CONFIGURATION=Beta
+    SCHEME=EmCasa-Beta
+    ;;
 esac
 
 cd $ROOT/ios && xcodebuild \

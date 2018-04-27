@@ -283,6 +283,13 @@
 			remoteGlobalIDString = 6463C84C1EBA12A60095B8CD;
 			remoteInfo = "SMXCrashlytics-tvOS";
 		};
+		C325D5CC2092A65E00380225 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 83CBBA2D1A601D0E00E9B192;
+			remoteInfo = React;
+		};
 		C33522C12063422100AF766A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 75507F174CF7438483601C83 /* RNPhotoView.xcodeproj */;
@@ -791,6 +798,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C325D5CD2092A65E00380225 /* PBXTargetDependency */,
 			);
 			name = EmCasa;
 			productName = "Hello World";
@@ -1483,6 +1491,11 @@
 			target = 2D02E47A1E0B4A5D006451C7 /* EmCasa-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
+		C325D5CD2092A65E00380225 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = React;
+			targetProxy = C325D5CC2092A65E00380225 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -1856,14 +1869,19 @@
 				DEVELOPMENT_TEAM = 8C6H76958R;
 				FABRIC_API_KEY = "";
 				FABRIC_BUILD_SECRET = "";
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GOOGLE_MAPS_API_KEY = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
+					"$(BUILD_DIR)/Release-$(PLATFORM_NAME)/include",
 				);
 				INFOPLIST_FILE = EmCasa/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+          "$(BUILD_DIR)/Release-$(PLATFORM_NAME)",
+        );
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

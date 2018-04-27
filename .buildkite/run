@@ -3,7 +3,7 @@
 export ROOT=${BUILDKITE_BUILD_CHECKOUT_PATH:-$PWD}
 export PATH=$PATH:$ROOT/node_modules/.bin
 
-if [[ "$1" =~ ^(android|ios)$ ]]; then PLATFORM=$1; shift; fi
+if [[ "$1" =~ ^(android|ios)$ ]]; then export PLATFORM=$1; shift; fi
 if [[ "$1" =~ ^[a-z,]+$ ]]; then SCRIPTS=$1; shift;
 else echo "Invalid script $1"; exit 1; fi
 
@@ -21,9 +21,19 @@ case $1 in
 esac
 done
 
-for script in $(echo $SCRIPTS | sed -e "s/\([^,]*\)/\1,$PLATFORM\/\1/g" | tr "," " "); do
+set -x
+
+run() {
+  set +eu
+  script=$1; shift;
   if [[ -f $ROOT/.buildkite/$script.sh ]]; then
-    set +eu
-    source $ROOT/.buildkite/$script.sh $ARGS
+    source $ROOT/.buildkite/$script.sh $@
   fi
-done
+  if [[ $PLATFORM && -f $ROOT/.buildkite/$PLATFORM/$script.sh ]]; then
+    $ROOT/.buildkite/$PLATFORM/$script.sh $@
+  fi
+}
+
+export -f run
+
+echo $SCRIPTS | tr "," " " | xargs -n1 -I{} bash -c "run \$@ $ARGS" - {}

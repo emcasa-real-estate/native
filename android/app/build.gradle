@@ -187,6 +187,7 @@ repositories {
 }
 
 dependencies {
+    compile project(':react-native-svg')
     compile project(':react-native-orientation')
     compile project(':react-native-photo-view')
     compile project(':react-native-maps')

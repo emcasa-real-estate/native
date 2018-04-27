@@ -46,6 +46,7 @@
 		B19C244ACB3D472EB10421F2 /* libSMXCrashlytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 225DE1D715094D96B64BE883 /* libSMXCrashlytics.a */; };
 		C38112FA207E8AD500A82158 /* libRCTOrientation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C38112DD207E8A8D00A82158 /* libRCTOrientation.a */; };
 		C3D3B5C0205C4AB20004FBF1 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D3B598205C4AAA0004FBF1 /* libAirMaps.a */; };
+		C3E6462A2093CD2000CABB50 /* libRNPhotoView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C33522C22063422100AF766A /* libRNPhotoView.a */; };
 		DD38508A522671808AAB45C4 /* Pods_EmCasa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9B0A2BDB982F6C676D60BC /* Pods_EmCasa.framework */; };
 		E58E3BD668E147E88B11A36E /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1628E5320CD54949AD213729 /* OpenSans-Bold.ttf */; };
 		E85C9CB2634347619F34FCDA /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E58918718EB94278B0A51F78 /* OpenSans-Regular.ttf */; };
@@ -438,6 +439,7 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+				C3E6462A2093CD2000CABB50 /* libRNPhotoView.a in Frameworks */,
 				DD38508A522671808AAB45C4 /* Pods_EmCasa.framework in Frameworks */,
 				B19C244ACB3D472EB10421F2 /* libSMXCrashlytics.a in Frameworks */,
 				53FA17B8F54C4A6B907D089C /* libRNPhotoView.a in Frameworks */,

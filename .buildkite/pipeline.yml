@@ -25,19 +25,27 @@ steps:
   - .buildkite/run ios setup,assets,bump,build,sign,deploy --profile beta
   env:
     API_URL: https://em-casa-backend-staging.herokuapp.com
+  agents:
+    queue: deploy
 - label: 'beta:android'
   command:
   - .buildkite/run android setup,assets,bump,build,deploy --profile beta
   env:
     API_URL: https://em-casa-backend-staging.herokuapp.com
+  agents:
+    queue: deploy
 - block: ":rocket: Release"
 - label: 'release:ios'
   command:
   - .buildkite/run ios setup,assets,bump,build,sign,deploy --profile production
   env:
     API_URL: https://em-casa-backend.herokuapp.com
+  agents:
+    queue: deploy
 - label: "release:android"
   command:
   - .buildkite/run android setup,assets,bump,build,deploy --profile production
   env:
     API_URL: https://em-casa-backend.herokuapp.com
+  agents:
+    queue: deploy

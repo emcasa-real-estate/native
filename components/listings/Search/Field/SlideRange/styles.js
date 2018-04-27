@@ -14,7 +14,7 @@ export default StyleSheet.create({
     height: 5
   },
   trackActive: {
-    backgroundColor: colors.blue.pastel
+    backgroundColor: colors.gray.medium
   },
   trackInactive: {
     backgroundColor: colors.gray.$f0f0
@@ -27,8 +27,9 @@ export default StyleSheet.create({
     width: 30,
     borderRadius: 30,
     borderWidth: 1,
-    borderColor: colors.gray.lighter,
-    backgroundColor: colors.gray.$f0f0,
+    borderColor: colors.blue.dark,
+    backgroundColor: colors.blue.medium,
+    marginBottom: -2.5,
     ...elevation(3)
   }
 })

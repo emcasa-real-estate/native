@@ -3,8 +3,7 @@
 export ROOT=${BUILDKITE_BUILD_CHECKOUT_PATH:-$PWD}
 export PATH=$PATH:$ROOT/node_modules/.bin
 
-if [[ "$1" =~ ^(android|ios)$ ]]; then PLATFORM=$1; shift;
-else echo "Invalid platform $1"; exit 1; fi
+if [[ "$1" =~ ^(android|ios)$ ]]; then PLATFORM=$1; shift; fi
 if [[ "$1" =~ ^[a-z,]+$ ]]; then SCRIPTS=$1; shift;
 else echo "Invalid script $1"; exit 1; fi
 

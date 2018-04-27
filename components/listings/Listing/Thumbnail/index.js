@@ -48,15 +48,7 @@ export default class ListingThumbnail extends Component {
           </Matterport>
         </View>
         <View style={styles.actionRow}>
-          <View style={styles.actionCell}>
-            <ActionButton
-              title={
-                favorite ? 'Adicionar aos favoritos' : 'Remover dos favoritos'
-              }
-              icon={favorite ? 'heart' : 'heart-outline'}
-              onPress={onFavorite}
-            />
-          </View>
+          <View style={styles.actionCell} />
           <View style={styles.actionCell}>
             <ActionButton
               title="Ver imagens"

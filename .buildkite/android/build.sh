@@ -1,5 +1,7 @@
 set -e
 
+echo "Building apk for $BUILD_PROFILE"
+
 case $BUILD_PROFILE in
   debug)
     cd android && ./gradlew assembleDebug

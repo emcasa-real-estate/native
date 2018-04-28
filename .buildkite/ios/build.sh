@@ -15,7 +15,7 @@ case $BUILD_PROFILE in
     ;;
 esac
 
-export SKIP_BUNDLING=true
+echo "Building ipa for ${BUILD_PROFILE}"
 
 cd $ROOT/ios && xcodebuild \
   -scheme EmCasa \

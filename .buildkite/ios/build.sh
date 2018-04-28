@@ -18,7 +18,7 @@ esac
 echo "Building ipa for ${BUILD_PROFILE}"
 
 cd $ROOT/ios && xcodebuild \
-  -scheme EmCasa \
+  -scheme $SCHEME \
   -archivePath $ROOT/ios/build/EmCasa.xcarchive \
   -workspace $ROOT/ios/EmCasa.xcworkspace \
   -configuration $CONFIGURATION \

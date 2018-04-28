@@ -3,10 +3,9 @@ set -o pipefail
 
 ARGS=()
 OPTIONS=(CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=)
+SCHEME=EmCasa
 
 if [[ ! -z "$IOS_XCCONFIG_FILE" ]]; then ARGS+=(-xcconfig "$IOS_XCCONFIG_FILE"); fi
-
-SCHEME=EmCasa
 case $BUILD_PROFILE in
   debug) CONFIGURATION=Debug;;
   production) CONFIGURATION=Release;;
@@ -16,6 +15,8 @@ case $BUILD_PROFILE in
     ;;
 esac
 
+export SKIP_BUNDLING=true
+
 cd $ROOT/ios && xcodebuild \
   -scheme EmCasa \
   -archivePath $ROOT/ios/build/EmCasa.xcarchive \
@@ -23,4 +24,4 @@ cd $ROOT/ios && xcodebuild \
   -configuration $CONFIGURATION \
   -destination "generic/platform=iOS" \
   ${ARGS[*]} ${OPTIONS[*]} \
-  archive | tee $ROOT/tmp/logs/ios.build.log | xcpretty
+  clean archive | tee $ROOT/tmp/logs/ios.build.log | xcpretty

@@ -18,13 +18,5 @@ export default StyleSheet.create({
     alignItems: 'center',
     bottom: 10,
     width: '100%'
-  },
-  icon: {
-    color: 'white',
-    fontSize: 10,
-    margin: 5
-  },
-  iconActive: {
-    fontSize: 15
   }
 })

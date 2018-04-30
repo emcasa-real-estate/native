@@ -14,7 +14,7 @@ const FA_STYLES = {
   solid: 'fas'
 }
 
-export default function Icon({name, size, color, type, ...props}) {
+export default function Icon({name, size, color, type, style, ...props}) {
   const prefix = FA_STYLES[type]
   let icon = fontawesome.findIconDefinition({prefix, iconName: name})
   if (!icon)
@@ -28,7 +28,7 @@ export default function Icon({name, size, color, type, ...props}) {
   const viewBox = [0, 0, data[0], data[1]].join(' ')
 
   return (
-    <View>
+    <View style={style}>
       <Svg
         height={size}
         version="1.1"

@@ -3,9 +3,7 @@
   "version": "1.0.1",
   "private": true,
   "rnpm": {
-    "assets": [
-      "./assets/fonts"
-    ]
+    "assets": ["./assets/fonts"]
   },
   "scripts": {
     "prepare": "patch-package",
@@ -22,12 +20,8 @@
   "jest": {
     "preset": "react-native",
     "automock": false,
-    "unmockedModulePathPatterns": [
-      "/node_modules/"
-    ],
-    "setupFiles": [
-      "./__test__/setup.js"
-    ],
+    "unmockedModulePathPatterns": ["/node_modules/"],
+    "setupFiles": ["./__test__/setup.js"],
     "transformIgnorePatterns": [
       "/node_modules/(?!(jest-)?react-native|react-navigation)/"
     ]
@@ -59,7 +53,6 @@
     "react-native-photo-view": "^1.5.2",
     "react-native-snap-carousel": "^3.6.0",
     "react-native-svg": "^6.3.1",
-    "react-native-vector-icons": "^4.5.0",
     "react-native-webkit-webview": "0.10.7",
     "react-navigation": "^1.5.8",
     "react-redux": "^5.0.7",

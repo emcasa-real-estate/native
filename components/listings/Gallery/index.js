@@ -1,8 +1,8 @@
 import {Component} from 'react'
 import {View} from 'react-native'
 import SwipeableView from 'react-swipeable-views-native/lib/SwipeableViews.scroll'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import Icon from '@/components/shared/Icon'
 import {withOrientation} from '@/containers/shared/Orientation/Provider/Context'
 import Image from '../Image'
 import styles from './styles'
@@ -40,8 +40,10 @@ export default class ListingGallery extends Component {
     return this.items.map((image, index) => (
       <Icon
         key={image.id}
+        type="solid"
         name="circle"
-        style={[styles.icon, position === index && styles.iconActive]}
+        color="white"
+        size={position === index ? 14 : 10}
       />
     ))
   }

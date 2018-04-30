@@ -7,12 +7,13 @@ export default StyleSheet.create({
     display: 'flex'
   },
   body: {
-    flex: 1
+    flex: 1,
+    position: 'relative'
   },
-  actionButton: {
+  button: {
     position: 'absolute',
-    width: '100%',
-    bottom: 0,
+    bottom: 20,
+    right: 20,
     zIndex: 1
   }
 })

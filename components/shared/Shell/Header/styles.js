@@ -24,8 +24,9 @@ export default StyleSheet({
     fontSize: 20,
     color: colors.gray.dark
   },
-  buttonIcon: {
-    fontSize: 40,
-    color: colors.gray.mediumDark
+  button: {
+    marginLeft: 10
   }
 })
+
+export const iconColor = colors.gray.mediumDark

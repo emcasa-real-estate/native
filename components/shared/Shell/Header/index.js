@@ -1,8 +1,8 @@
 import {View, TouchableOpacity} from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import Icon from '@/components/shared/Icon'
 import Text from '@/components/shared/Text'
-import $styles from './styles'
+import $styles, {iconColor} from './styles'
 
 function renderTitle(title) {
   if (!title) return undefined
@@ -17,7 +17,7 @@ function Header({styles, title, root, onReturn}) {
       {!root && (
         <View style={styles.button}>
           <TouchableOpacity onPress={onReturn}>
-            <Icon style={styles.buttonIcon} name="chevron-left" />
+            <Icon name="chevron-left" color={iconColor} size={22} />
           </TouchableOpacity>
         </View>
       )}

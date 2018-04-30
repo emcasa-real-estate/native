@@ -5,12 +5,11 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
 import com.facebook.react.ReactApplication;
+import com.horcrux.svg.SvgPackage;
 import com.github.yamill.orientation.OrientationPackage;
 import com.reactnative.photoview.PhotoViewPackage;
 import com.airbnb.android.react.maps.MapsPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
 import com.smixx.fabric.FabricPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -36,10 +35,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new SvgPackage(),
           new OrientationPackage(),
           new PhotoViewPackage(),
           new MapsPackage(),
-          new VectorIconsPackage(),
           new FabricPackage(),
           new CrosswalkWebViewPackage()
       );

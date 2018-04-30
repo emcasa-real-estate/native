@@ -1,15 +1,20 @@
 import {TouchableOpacity, View} from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import Icon from '@/components/shared/Icon'
 import Text from '@/components/shared/Text'
-import {button as styles} from './styles'
+import {button as styles, iconColor} from './styles'
 
 export default function MultiSelectOption({label, onPress}) {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
         <Text style={styles.text}>{label}</Text>
-        <Icon style={[styles.text, styles.icon]} name="close" />
+        <Icon
+          name="times-circle"
+          color={iconColor.option}
+          style={styles.icon}
+          size={18}
+        />
       </View>
     </TouchableOpacity>
   )

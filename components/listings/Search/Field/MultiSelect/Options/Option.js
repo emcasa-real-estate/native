@@ -1,18 +1,19 @@
 import {TouchableHighlight, View} from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import Icon from '@/components/shared/Icon'
 import Text from '@/components/shared/Text'
-import $styles, {highlightColor} from './styles'
+import styles, {highlightColor, iconColor} from './styles'
 
-function MultiSelectOption({styles, label, onPress}) {
+function MultiSelectOption({label, active, onPress}) {
+  const color = active ? iconColor.active : iconColor.default
   return (
     <TouchableHighlight underlayColor={highlightColor} onPress={onPress}>
       <View style={styles.container}>
-        <Text style={styles.text}>{label}</Text>
-        <Icon style={$styles.all(styles.text, styles.icon)} name="check" />
+        <Text style={[styles.text, active && {color}]}>{label}</Text>
+        <Icon name="check" color={color} />
       </View>
     </TouchableHighlight>
   )
 }
 
-export default $styles.inject()(MultiSelectOption)
+export default MultiSelectOption

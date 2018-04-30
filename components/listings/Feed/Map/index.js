@@ -8,6 +8,7 @@ export default function MapFeed({active, ...props}) {
   return (
     <HorizontalFeed
       {...props}
+      active={active}
       itemWidth={width / 1.5}
       renderItem={(item) => (
         <Card primary={active === item.id} width={width / 1.5} {...item} />

@@ -347,6 +347,12 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.1.4"
 
+"@fortawesome/fontawesome-pro-solid@^5.0.10":
+  version "5.0.10"
+  resolved "https://npm.fontawesome.com/B7CFEF0D-FBC4-491C-A30F-FED994A2CB16/@fortawesome/fontawesome-pro-solid/-/fontawesome-pro-solid-5.0.10.tgz#b0b1c1cd13cd751148828f319fc756536bf72ef7"
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.1.4"
+
 "@fortawesome/fontawesome@^1.1.3":
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome/-/fontawesome-1.1.5.tgz#c7cfafdd3364245626293cc670357f9fb8487170"

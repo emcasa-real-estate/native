@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-pro-light": "^5.0.10",
+    "@fortawesome/fontawesome-pro-solid": "^5.0.10",
     "@ptomasroos/react-native-multi-slider": "^0.0.12",
     "apollo-boost": "^0.1.4",
     "babel-plugin-lodash": "^3.3.2",

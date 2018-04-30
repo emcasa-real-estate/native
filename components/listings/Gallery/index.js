@@ -48,8 +48,13 @@ export default class ListingGallery extends Component {
     ))
   }
 
-  renderImages() {
-    return this.items.map((image) => (
+  renderImage = (image, index) => {
+    const {position} = this.state
+    const {dimensions} = this.props
+    // Placeholder
+    if (Math.abs(index - position) > 2)
+      return <View key={image.id} style={dimensions} />
+    return (
       <Image
         layout="scalable"
         key={image.id}
@@ -57,7 +62,7 @@ export default class ListingGallery extends Component {
         height={650}
         {...image}
       />
-    ))
+    )
   }
 
   render() {
@@ -70,7 +75,7 @@ export default class ListingGallery extends Component {
           style={styles.gallery}
           onChangeIndex={this.onChange}
         >
-          {this.renderImages()}
+          {this.items.map(this.renderImage)}
         </SwipeableView>
         <View style={styles.pagination}>{this.renderPagination()}</View>
       </View>

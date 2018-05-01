@@ -20,9 +20,9 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
-  icon: {
-    padding: 10,
-    fontSize: 25,
-    color: colors.gray.dark
+  button: {
+    padding: 10
   }
 })
+
+export const iconColor = colors.gray.dark

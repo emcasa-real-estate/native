@@ -19,14 +19,15 @@ export default StyleSheet.create({
     textAlign: 'center',
     color: colors.gray.dark
   },
-  buttonIcon: {
-    fontSize: 40,
-    color: colors.gray.mediumDark
-  },
   resetButton: {
     fontSize: 14,
     color: colors.blue.medium,
     fontWeight: '500',
     marginRight: 15
+  },
+  button: {
+    marginLeft: 10
   }
 })
+
+export const iconColor = colors.gray.mediumDark

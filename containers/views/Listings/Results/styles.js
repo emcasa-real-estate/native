@@ -5,9 +5,6 @@ export default StyleSheet.create({
     flex: 1,
     position: 'relative'
   },
-  feed: {
-    paddingTop: 60
-  },
   mapButton: {
     position: 'absolute',
     right: 20,

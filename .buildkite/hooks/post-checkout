@@ -1,6 +1,9 @@
 set -e
 
-rm -rf tmp
+# Clean build
+
+rm -rf tmp ios/Pods
+
 mkdir -p tmp/logs
 
 # Setup certificates
@@ -23,6 +26,3 @@ if [[ "$BUILDKITE_BRANCH" && "$BUILDKITE_BRANCH" != "master" ]]; then
   export VERSION_TAG="$BUILDKITE_BRANCH"
 fi
 
-# Clean pods
-
-rm -rf ios/Pods

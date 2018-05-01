@@ -1,16 +1,16 @@
 import {View, TouchableOpacity} from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import Icon from '@/components/shared/Icon'
 import Text from '@/components/shared/Text'
 import Link from '@/components/shared/Link'
-import styles from './styles'
+import styles, {iconColor} from './styles'
 
 export default function Header({title, onReturn, onReset}) {
   return (
     <View style={styles.container}>
       <View style={styles.button}>
         <TouchableOpacity onPress={onReturn}>
-          <Icon style={styles.buttonIcon} name="chevron-left" />
+          <Icon name="chevron-left" size={22} color={iconColor} />
         </TouchableOpacity>
       </View>
       <Text style={styles.title}>{title}</Text>

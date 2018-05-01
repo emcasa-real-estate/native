@@ -1,12 +1,12 @@
 import {Component} from 'react'
 import {TouchableOpacity, View} from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import Icon from '@/components/shared/Icon'
 import {field} from '@/components/shared/Form/Field'
 import Text from '@/components/shared/Text'
 import Options from './Options'
 import Button from './Button'
-import styles from './styles'
+import styles, {iconColor} from './styles'
 
 @field()
 export default class MultiSelectField extends Component {
@@ -41,7 +41,12 @@ export default class MultiSelectField extends Component {
         <TouchableOpacity onPress={onPress}>
           <View style={styles.button}>
             <Text style={styles.buttonText}>{title}</Text>
-            <Icon style={styles.buttonIcon} name="chevron-right" />
+            <Icon
+              name="chevron-right"
+              color={iconColor.button}
+              stroke={iconColor.button}
+              strokeWidth={30}
+            />
           </View>
         </TouchableOpacity>
       </View>

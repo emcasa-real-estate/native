@@ -20,7 +20,11 @@ export default StyleSheet.create({
     textAlign: 'center',
     fontSize: 11,
     fontWeight: '700',
-    color: colors.gray.light
+    color: colors.gray.light,
+    marginTop: 3
+  },
+  icon: {
+    margin: 5
   }
 })
 

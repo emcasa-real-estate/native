@@ -55,12 +55,5 @@ export default $StyleSheet({
     zIndex: 1,
     top: 15,
     right: 15
-  },
-  icon: {
-    color: 'white',
-    fontSize: 25,
-    textShadowOffset: {width: 0, height: 1},
-    textShadowColor: colors.gray.dark,
-    textShadowRadius: 5
   }
 })

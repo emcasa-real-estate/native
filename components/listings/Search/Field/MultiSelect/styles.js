@@ -18,10 +18,6 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: colors.blue.medium
-  },
-  buttonIcon: {
-    fontSize: 20,
-    color: colors.blue.medium
   }
 })
 
@@ -41,15 +37,11 @@ export const button = StyleSheet.create({
     color: colors.gray.mediumDark
   },
   icon: {
-    width: 20,
-    height: 20,
-    fontSize: 13,
-    lineHeight: 18,
-    textAlign: 'center',
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: colors.gray.mediumDark,
-    color: colors.gray.mediumDark,
-    marginLeft: 10
+    marginLeft: 5
   }
 })
+
+export const iconColor = {
+  option: colors.gray.mediumDark,
+  button: colors.blue.medium
+}

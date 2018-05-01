@@ -52,11 +52,9 @@
       </dict>
     </dict>
     <key>NSLocationWhenInUseUsageDescription</key>
-    <string></string>
+    <string/>
     <key>UIAppFonts</key>
     <array>
-      <string>MaterialCommunityIcons.ttf</string>
-      <string>MaterialIcons.ttf</string>
       <string>OpenSans-Bold.ttf</string>
       <string>OpenSans-ExtraBold.ttf</string>
       <string>OpenSans-Light.ttf</string>

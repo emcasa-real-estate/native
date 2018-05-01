@@ -27,9 +27,7 @@ export default StyleSheet.create({
     color: colors.gray.mediumDark
   },
   icon: {
-    color: colors.gray.dark,
-    paddingRight: 15,
-    fontSize: 20
+    paddingRight: 15
   },
   value: {
     display: 'flex',
@@ -38,3 +36,5 @@ export default StyleSheet.create({
     alignItems: 'flex-end'
   }
 })
+
+export const iconColor = colors.gray.dark

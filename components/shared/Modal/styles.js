@@ -21,14 +21,8 @@ export default StyleSheet({
       top: Platform.OS === 'ios' ? 20 : 0
     }
   },
-  closeIcon: {
-    fontSize: 35,
-    ':contrast': {
-      color: 'white',
-      textShadowColor: colors.gray.darker,
-      textShadowRadius: 6,
-      textShadowOffset: {width: 0, height: 1}
-    }
+  closeButton: {
+    marginTop: 10
   },
   title: {
     flex: 1,

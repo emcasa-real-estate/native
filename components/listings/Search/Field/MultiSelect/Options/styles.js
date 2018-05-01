@@ -1,7 +1,8 @@
-import StyleSheet from '@/assets/StyleSheet'
+import {StyleSheet} from 'react-native'
+
 import * as colors from '@/assets/colors'
 
-export default StyleSheet({
+export default StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
@@ -12,18 +13,13 @@ export default StyleSheet({
     borderColor: colors.gray.$f0f0
   },
   text: {
-    fontSize: 18,
-    ':active': {
-      color: colors.blue.medium
-    }
-  },
-  icon: {
-    fontSize: 20,
-    color: colors.gray.lighter,
-    ':active': {
-      color: colors.blue.medium
-    }
+    fontSize: 18
   }
 })
 
 export const highlightColor = colors.gray.$f0f0
+
+export const iconColor = {
+  default: colors.gray.lighter,
+  active: colors.blue.medium
+}

@@ -1,13 +1,14 @@
 import _ from 'lodash'
 import {Component} from 'react'
 import {View, TouchableOpacity, Dimensions} from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import BaseIcon from '@/components/shared/Icon'
+import LikeIcon from '@/components/listings/LikeIcon'
 import Matterport from '@/components/listings/Matterport'
 import Image from '../../Image'
-import styles from './styles'
+import styles, {iconColor} from './styles'
 
-const ActionButton = ({title, icon, onPress}) => (
+const ActionButton = ({children, title, onPress}) => (
   <View style={styles.button}>
     <TouchableOpacity
       accessible
@@ -15,10 +16,12 @@ const ActionButton = ({title, icon, onPress}) => (
       accessibilityTraits="button"
       onPress={onPress}
     >
-      <Icon name={icon} style={styles.icon} />
+      {children}
     </TouchableOpacity>
   </View>
 )
+
+const Icon = (props) => <BaseIcon size={20} color={iconColor} {...props} />
 
 export default class ListingThumbnail extends Component {
   onOpenGallery = () => this.props.onOpen('gallery')
@@ -53,22 +56,23 @@ export default class ListingThumbnail extends Component {
               title={
                 favorite ? 'Adicionar aos favoritos' : 'Remover dos favoritos'
               }
-              icon={favorite ? 'heart' : 'heart-outline'}
               onPress={onFavorite}
-            />
+            >
+              <LikeIcon active={favorite} size={22} />
+            </ActionButton>
           </View>
           <View style={styles.actionCell}>
-            <ActionButton
-              title="Ver imagens"
-              icon="camera"
-              onPress={this.onOpenGallery}
-            />
+            <ActionButton title="Ver imagens" onPress={this.onOpenGallery}>
+              <Icon name="image" />
+            </ActionButton>
             {matterport_code && (
               <ActionButton
                 title="Ver em tela cheia"
                 icon="fullscreen"
                 onPress={this.onOpenTour}
-              />
+              >
+                <Icon name="expand" />
+              </ActionButton>
             )}
           </View>
         </View>

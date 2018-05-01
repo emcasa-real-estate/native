@@ -1,6 +1,6 @@
 import {View, TouchableOpacity} from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import LikeIcon from '@/components/listings/LikeIcon'
 import Text from '@/components/shared/Text'
 import Price from '@/components/shared/Price'
 import Image from '@/components/listings/Image'
@@ -28,10 +28,7 @@ function ListingCard({
     <View style={styles.container.concat(style, {width})} {...props}>
       <View style={styles.thumbnail}>
         <TouchableOpacity style={styles.iconButton} onPress={onFavorite}>
-          <Icon
-            name={favorite ? 'heart' : 'heart-outline'}
-            style={styles.icon}
-          />
+          <LikeIcon contrast active={favorite} />
         </TouchableOpacity>
         <Image thumbnail style={styles.image} {...image} {...imageSize} />
       </View>

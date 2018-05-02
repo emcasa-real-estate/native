@@ -6,14 +6,8 @@ import client from '@/lib/graphql/client'
 import {getToken} from '@/redux/modules/auth/selectors'
 
 class AppApolloProvider extends Component {
-  componentDidMount() {
-    if (!this.props.jwt) this.authQueue.close()
-  }
-
   componentDidUpdate({jwt}) {
-    if (jwt === this.props.jwt) return
-    if (!this.props.jwt) this.authQueue.close()
-    else this.authQueue.open()
+    if (jwt === this.props.jwt && this.props.jwt) this.authQueue.dispatch()
   }
 
   get authQueue() {

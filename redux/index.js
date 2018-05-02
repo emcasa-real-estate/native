@@ -1,5 +1,6 @@
 import {createStore, applyMiddleware, compose} from 'redux'
 import {persistStore} from 'redux-persist'
+import {offlineActionTypes} from 'react-native-offline'
 import createSagaMiddleware, {END} from 'redux-saga'
 
 import reducer from './modules/reducer'
@@ -9,7 +10,15 @@ export default function create() {
   const sagaMiddleware = createSagaMiddleware()
   const middleware = [sagaMiddleware]
   if (__DEV__) {
-    middleware.push(require('redux-logger').default)
+    const {createLogger} = require('redux-logger')
+    const ignoreActions = Object.values(offlineActionTypes)
+    middleware.push(
+      createLogger({
+        predicate: (getState, action) =>
+          ignoreActions.findIndex((type) => action.type === type) === -1,
+        collapsed: true
+      })
+    )
   }
   const finalCreateStore = compose(applyMiddleware(...middleware))(createStore)
   const store = finalCreateStore(reducer)

@@ -3,7 +3,9 @@
   "version": "1.0.1",
   "private": true,
   "rnpm": {
-    "assets": ["./assets/fonts"]
+    "assets": [
+      "./assets/fonts"
+    ]
   },
   "scripts": {
     "prepare": "patch-package",
@@ -20,8 +22,12 @@
   "jest": {
     "preset": "react-native",
     "automock": false,
-    "unmockedModulePathPatterns": ["/node_modules/"],
-    "setupFiles": ["./__test__/setup.js"],
+    "unmockedModulePathPatterns": [
+      "/node_modules/"
+    ],
+    "setupFiles": [
+      "./__test__/setup.js"
+    ],
     "transformIgnorePatterns": [
       "/node_modules/(?!(jest-)?react-native|react-navigation)/"
     ]
@@ -30,11 +36,19 @@
     "@fortawesome/fontawesome-pro-light": "^5.0.10",
     "@fortawesome/fontawesome-pro-solid": "^5.0.10",
     "@ptomasroos/react-native-multi-slider": "^0.0.12",
-    "apollo-boost": "^0.1.4",
+    "apollo-cache-inmemory": "^1.1.12",
+    "apollo-client": "^2.2.8",
+    "apollo-link": "^1.2.2",
+    "apollo-link-context": "^1.0.8",
+    "apollo-link-error": "^1.0.9",
+    "apollo-link-http": "^1.5.4",
+    "apollo-link-queue": "^2.0.1",
+    "apollo-link-state": "^0.4.1",
     "babel-plugin-lodash": "^3.3.2",
     "email-validator": "^1.1.1",
     "es6-error": "^4.1.1",
     "graphql": "^0.13.2",
+    "graphql-tag": "^2.9.2",
     "immutability-helper": "^2.6.6",
     "lodash": "^4.17.5",
     "number-abbreviate": "^2.0.0",

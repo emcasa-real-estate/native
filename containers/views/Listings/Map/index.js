@@ -5,6 +5,7 @@ import {View} from 'react-native'
 import Shell from '@/containers/shared/Shell'
 import Map from '@/containers/listings/Map'
 import Feed from '@/containers/listings/Feed/Map'
+import ListButton from '@/components/listings/Feed/Button'
 import styles from './styles'
 
 const zoom = ({longitudeDelta}) => Math.PI * _.round(longitudeDelta, 10) / 180
@@ -24,7 +25,7 @@ export default class MapScreen extends Component {
     this.setState({active: id === active ? null : id})
   }
 
-  onDismiss = () => {
+  onReturn = () => {
     const {navigation} = this.props
     navigation.goBack(null)
   }
@@ -39,6 +40,7 @@ export default class MapScreen extends Component {
     return (
       <Shell overlay title="Buscar imóveis" footer={null}>
         <View style={styles.body}>
+          <ListButton style={styles.button} onPress={this.onReturn} />
           <Map
             onRegionChange={this.onRegionChange}
             onSelect={this.onSelect}

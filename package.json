@@ -45,6 +45,7 @@
     "apollo-link-queue": "^2.0.1",
     "apollo-link-state": "^0.4.1",
     "babel-plugin-lodash": "^3.3.2",
+    "camelcase-keys-deep": "^0.1.0",
     "email-validator": "^1.1.1",
     "es6-error": "^4.1.1",
     "graphql": "^0.13.2",

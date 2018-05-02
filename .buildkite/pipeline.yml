@@ -14,37 +14,38 @@ steps:
 - wait
 - label: 'build:ios'
   command:
-  - .buildkite/run ios setup,assets,bump,build
-  - (cd ios/build && zip -qr EmCasa.xcarchive.zip EmCasa.xcarchive)
-  - buildkite-agent artifact upload "ios/build/EmCasa.xcarchive.zip"
-  - buildkite-agent artifact upload "ios/build/EmCasa.xcarchive/Info.plist"
+  - .buildkite/run ios setup,build --profile debug
 - label: 'build:android'
   command:
-  - .buildkite/run android setup,assets,bump,build
-  - (cd android/app && zip -qr build.zip build)
-  - buildkite-agent artifact upload "android/app/build.zip"
-- wait
+  - .buildkite/run android setup,build --profile debug
+- block: "Beta"
+  branches: "!master"
 - label: 'beta:ios'
   command:
-  - buildkite-agent artifact download "ios/build/EmCasa.xcarchive.zip" . --step "build:ios"
-  - (cd ios/build && unzip -q EmCasa.xcarchive.zip)
-  - buildkite-agent artifact download "ios/build/EmCasa.xcarchive/Info.plist" . --step "build:ios"
-  - .buildkite/run ios setup,sign,deploy --profile beta
+  - .buildkite/run ios setup,assets,bump,build,sign,deploy --profile beta
+  env:
+    API_URL: https://em-casa-backend-staging.herokuapp.com
+  agents:
+    queue: deploy
 - label: 'beta:android'
   command:
-  - buildkite-agent artifact download "android/app/build.zip" . --step "build:android"
-  - (cd android/app && unzip -q build.zip build/outputs/apk/app-release.apk)
-  - .buildkite/run setup
-  - .buildkite/run android deploy --profile beta
+  - .buildkite/run android setup,assets,bump,build,deploy --profile beta
+  env:
+    API_URL: https://em-casa-backend-staging.herokuapp.com
+  agents:
+    queue: deploy
 - block: ":rocket: Release"
-- label: "release:android"
-  command:
-  - buildkite-agent artifact download "android/app/build.zip" . --step "build:android"
-  - (cd android/app && unzip -q build.zip)
-  - .buildkite/run android setup,bump,deploy --profile production
 - label: 'release:ios'
   command:
-  - buildkite-agent artifact download "ios/build/EmCasa.xcarchive.zip" . --step "build:ios"
-  - (cd ios/build && unzip -q EmCasa.xcarchive.zip)
-  - buildkite-agent artifact download "ios/build/EmCasa.xcarchive/Info.plist" . --step "build:ios"
-  - .buildkite/run ios setup,sign,deploy --profile production
+  - .buildkite/run ios setup,assets,bump,build,sign,deploy --profile production
+  env:
+    API_URL: https://em-casa-backend.herokuapp.com
+  agents:
+    queue: deploy
+- label: "release:android"
+  command:
+  - .buildkite/run android setup,assets,bump,build,deploy --profile production
+  env:
+    API_URL: https://em-casa-backend.herokuapp.com
+  agents:
+    queue: deploy

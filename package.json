@@ -6,6 +6,7 @@
     "assets": ["./assets/fonts"]
   },
   "scripts": {
+    "postinstall": "sed -i '' '/RUN_CLANG_STATIC_ANALYZER/d;/CLANG_STATIC_ANALYZER_MODE/d;/CLANG_ANALYZER_NONNULL/d' ./node_modules/react-native/React/React.xcodeproj/project.pbxproj",
     "prepare": "patch-package",
     "start": "react-native start",
     "android": "react-native run-android",
@@ -85,6 +86,7 @@
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.7.0",
-    "react-devtools": "^3.1.0"
+    "react-devtools": "^3.1.0",
+    "react-native-port-patcher": "^1.0.3"
   }
 }

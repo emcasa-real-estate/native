@@ -141,6 +141,10 @@ android {
         debug {
             ext.enableCrashlytics = !!fabricApiKey
         }
+        staging {
+            signingConfig signingConfigs.release
+            applicationIdSuffix '.beta'
+        }
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"

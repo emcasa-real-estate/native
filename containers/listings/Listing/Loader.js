@@ -1,14 +1,15 @@
 import _ from 'lodash'
 import {PureComponent} from 'react'
 import {connect} from 'react-redux'
-import {graphql, compose} from 'react-apollo'
+import {graphql} from 'react-apollo'
+import {compose, mapProps} from 'recompose'
 
 import {VISUALIZE_TOUR} from '@/lib/graphql/mutations/listings'
-import {GET_FAVORITE_LISTINGS_IDS} from '@/lib/graphql/queries/favorites'
 import {load} from '@/redux/modules/listings/data'
 import {getData, isLoading} from '@/redux/modules/listings/data/selectors'
 import Loader from '@/containers/shared/Loader'
-import FavoritesMutation from './FavoritesMutation'
+import FavoritesMutation from '@/containers/listings/FavoritesMutation'
+import {withFavoriteListingIDs} from '@/containers/listings/FavoritesQuery'
 
 export class ListingLoader extends PureComponent {
   state = {
@@ -61,14 +62,15 @@ const actions = {
 
 export const withRestData = connect(props, actions)
 
-export const withGqlData = graphql(GET_FAVORITE_LISTINGS_IDS, {
-  options: () => ({fetchPolicy: 'cache-and-network'}),
-  props: ({data, ownProps: {id}}) => ({
+export const withGqlData = compose(
+  withFavoriteListingIDs,
+  mapProps(({favorites, ...props}) => ({
+    ...props,
     favorite:
-      data.favoritedListings &&
-      data.favoritedListings.findIndex((fav) => fav.id == id) !== -1
-  })
-})
+      favorites.data &&
+      favorites.data.findIndex((fav) => fav.id == props.id) !== -1
+  }))
+)
 
 export const withMutations = graphql(VISUALIZE_TOUR, {
   options: ({id}) => ({

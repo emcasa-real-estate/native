@@ -1,5 +1,5 @@
 import Card from '@/components/listings/Card/Listing'
-import FavoritesMutation from '@/containers/listings/Listing/FavoritesMutation'
+import FavoritesMutation from '@/containers/listings/FavoritesMutation'
 import {withGqlData} from '@/containers/listings/Listing/Loader'
 
 function ListingCardApp(props) {

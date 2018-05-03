@@ -1,25 +1,24 @@
 import {Component} from 'react'
 import {graphql} from 'react-apollo'
 import {connect} from 'react-redux'
+import {mapProps} from 'recompose'
 import withNavigation from 'react-navigation/src/views/withNavigation'
 
-import {GET_FAVORITE_LISTINGS} from '@/lib/graphql/queries/favorites'
 import {getToken} from '@/redux/modules/auth/selectors'
 import Feed from '@/components/listings/Feed/Listing'
 import Card from '@/containers/listings/Card/Listing'
+import {withFavoriteListings} from '@/containers/listings/FavoritesQuery'
 
 @withNavigation
 @connect((state) => ({
   online: state.network.isConnected,
   jwt: getToken(state)
 }))
-@graphql(GET_FAVORITE_LISTINGS, {
-  options: () => ({fetchPolicy: 'cache-and-network'}),
-  props: ({data}) => ({
-    data: data.favoritedListings || [],
-    loading: data.loading
-  })
-})
+@withFavoriteListings
+@mapProps(({favorites, ...props}) => ({
+  ...props,
+  ...favorites
+}))
 export default class FavoritesFeedApp extends Component {
   componentDidMount() {
     this.redirectGuests()

@@ -6,12 +6,14 @@ import {GET_FAVORITE_LISTINGS_IDS} from '@/lib/graphql/queries/favorites'
 import {getToken} from '@/redux/modules/auth/selectors'
 
 function FavoritesMutation({children, id, favorite, jwt}) {
-  const query = {queue: !jwt}
+  const query = {cache: !jwt}
   return (
     <Mutation
       mutation={favorite ? UNFAVORITE(query) : FAVORITE(query)}
       variables={{id}}
-      refetchQueries={jwt ? [{query: GET_FAVORITE_LISTINGS_IDS}] : undefined}
+      refetchQueries={
+        jwt ? [{query: GET_FAVORITE_LISTINGS_IDS(query)}] : undefined
+      }
     >
       {children}
     </Mutation>

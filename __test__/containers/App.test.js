@@ -1,6 +1,7 @@
 import renderer from 'react-test-renderer'
 
 jest.mock('@/redux')
+jest.mock('@/lib/graphql/links')
 
 import Provider from '@/containers/Provider'
 import App from '@/containers/App'

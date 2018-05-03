@@ -77,6 +77,7 @@ const actions = {
 export const withRestData = connect(props, actions)
 
 export const withGqlData = graphql(GET_FAVORITE_LISTINGS_IDS, {
+  fetchPolicy: 'cache-and-network',
   props: ({data, ownProps: {id}}) => ({
     favorite:
       data.favoritedListings &&

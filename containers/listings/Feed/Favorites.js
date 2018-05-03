@@ -14,6 +14,7 @@ import Card from '@/containers/listings/Card/Listing'
   jwt: getToken(state)
 }))
 @graphql(GET_FAVORITE_LISTINGS, {
+  fetchPolicy: 'cache-and-network',
   props: ({data}) => ({
     data: data.favoritedListings || [],
     loading: data.loading

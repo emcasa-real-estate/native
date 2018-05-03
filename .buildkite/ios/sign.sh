@@ -22,6 +22,7 @@ sed \
   -e "s/\$PROVISIONING_NAME/$IOS_PROVISIONING_NAME/g" \
   -e "s/\$PROVISIONING_UUID/$IOS_PROVISIONING_UUID/g" \
   -e "s/\$CODESIGN_IDENTITY/$IOS_CODESIGN_IDENTITY/g" \
+  -e "s/\$BUNDLE_ID_SUFFIX/${BUNDLE_ID_SUFFIX:-}/g" \
   $ROOT/.buildkite/ios/templates/exportOptions.plist > \
   $ROOT/tmp/release.plist
 

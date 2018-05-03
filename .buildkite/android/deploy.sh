@@ -1,8 +1,8 @@
 set -e
 
-case $RELEASE_PROFILE in
+case $BUILD_PROFILE in
   beta)
-    bundle exec fastlane android beta bin:$ROOT/android/app/build/outputs/apk/app-release.apk groups:"$TESTER_GROUPS"
+    bundle exec fastlane android beta bin:$ROOT/android/app/build/outputs/apk/app-staging.apk groups:"$TESTER_GROUPS"
     ;;
   production)
     cd android && ./gradlew publishApkRelease

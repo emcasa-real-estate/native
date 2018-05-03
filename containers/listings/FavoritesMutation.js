@@ -1,7 +1,7 @@
 import {Mutation} from 'react-apollo'
 import {connect} from 'react-redux'
 
-import {FAVORITE, UNFAVORITE} from '@/lib/graphql/mutations/listings'
+import {FAVORITE, UNFAVORITE} from '@/lib/graphql/mutations/favorites'
 import {GET_FAVORITE_LISTINGS_IDS} from '@/lib/graphql/queries/favorites'
 import {getToken} from '@/redux/modules/auth/selectors'
 

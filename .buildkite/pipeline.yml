@@ -18,6 +18,7 @@ steps:
 - label: 'build:android'
   command:
   - .buildkite/run android setup,build --profile debug
+- wait
 - block: "Beta"
   branches: "!master"
 - label: 'beta:ios'

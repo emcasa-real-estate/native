@@ -3,11 +3,12 @@
   "version": "1.0.1",
   "private": true,
   "rnpm": {
-    "assets": ["./assets/fonts"]
+    "assets": [
+      "./assets/fonts"
+    ]
   },
   "scripts": {
-    "postinstall":
-      "sed -i '' '/RUN_CLANG_STATIC_ANALYZER/d;/CLANG_STATIC_ANALYZER_MODE/d;/CLANG_ANALYZER_NONNULL/d' ./node_modules/react-native/React/React.xcodeproj/project.pbxproj",
+    "postinstall": "sed -i '' '/RUN_CLANG_STATIC_ANALYZER/d;/CLANG_STATIC_ANALYZER_MODE/d;/CLANG_ANALYZER_NONNULL/d' ./node_modules/react-native/React/React.xcodeproj/project.pbxproj",
     "prepare": "patch-package",
     "start": "react-native start",
     "android": "react-native run-android",
@@ -22,18 +23,26 @@
   "jest": {
     "preset": "react-native",
     "automock": false,
-    "unmockedModulePathPatterns": ["/node_modules/"],
-    "setupFiles": ["./__test__/setup.js"],
+    "unmockedModulePathPatterns": [
+      "/node_modules/"
+    ],
+    "setupFiles": [
+      "./__test__/setup.js"
+    ],
     "transformIgnorePatterns": [
       "/node_modules/(?!(jest-)?react-native|react-navigation)/"
     ],
-    "modulePathIgnorePatterns": ["/redux/__mocks__", "/lib/graphql/__mocks__"]
+    "modulePathIgnorePatterns": [
+      "/redux/__mocks__",
+      "/lib/graphql/__mocks__"
+    ]
   },
   "dependencies": {
     "@fortawesome/fontawesome-pro-light": "^5.0.10",
     "@fortawesome/fontawesome-pro-solid": "^5.0.10",
     "@ptomasroos/react-native-multi-slider": "^0.0.12",
     "apollo-cache-inmemory": "^1.1.12",
+    "apollo-cache-persist": "^0.1.1",
     "apollo-client": "^2.2.8",
     "apollo-link": "^1.2.2",
     "apollo-link-context": "^1.0.8",

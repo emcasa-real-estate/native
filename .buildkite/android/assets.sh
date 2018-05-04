@@ -1,3 +1,3 @@
 set -e
 
-app-icon generate -i $ROOT/assets/img/icon-android.png --platforms android
+app-icon generate -i $ICON_PATH --platforms android

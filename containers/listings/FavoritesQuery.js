@@ -12,7 +12,10 @@ const props = (state) => ({jwt: getToken(state)})
 const FavoritesQuery = connect(props)(({children, jwt, query}) => {
   const options = {cache: !jwt}
   return (
-    <Query query={query(options)} fetchPolicy="cache-and-network">
+    <Query
+      query={query(options)}
+      fetchPolicy={jwt ? 'cache-and-network' : 'cache-first'}
+    >
       {children}
     </Query>
   )

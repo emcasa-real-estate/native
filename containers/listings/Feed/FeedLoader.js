@@ -41,7 +41,7 @@ export class FeedLoader extends PureComponent {
   }
 
   get status() {
-    return _.pick(this.props, ['online', 'data', 'pagination', 'loading'])
+    return _.pick(this.props, ['data', 'pagination', 'loading'])
   }
 
   render() {
@@ -59,7 +59,6 @@ export class FeedLoader extends PureComponent {
 }
 
 const props = (state, props) => ({
-  online: state.network.isConnected,
   data: getListings(state, props),
   pagination: getPagination(state, props),
   loading: isLoading(state, props)

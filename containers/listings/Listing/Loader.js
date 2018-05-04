@@ -12,7 +12,7 @@ import FavoritesMutation from '@/containers/listings/FavoritesMutation'
 import {withFavoriteListingIDs} from '@/containers/listings/FavoritesQuery'
 
 export class ListingLoader extends PureComponent {
-  stateLink = {
+  state = {
     visualizedTour: false
   }
 
@@ -22,7 +22,7 @@ export class ListingLoader extends PureComponent {
   }
 
   onViewTour = () => {
-    if (!this.stateLink.visualizedTour) {
+    if (!this.state.visualizedTour) {
       this.setState({visualizedTour: true})
       this.props.onViewTour()
     }

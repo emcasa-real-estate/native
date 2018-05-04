@@ -8,7 +8,7 @@ export default function Navigation({user, navigation, onLogout}) {
   return (
     <View style={styles.container}>
       <Button icon="search" onPress={navigateTo('listings')}>
-        Busca
+        Buscar
       </Button>
       <Button icon="heart" onPress={navigateTo('favorites')}>
         Salvos

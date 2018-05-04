@@ -8,7 +8,7 @@ export default function NavButton({children, icon, ...props}) {
   return (
     <TouchableOpacity style={styles.buttonContainer} {...props}>
       <Icon name={icon} color={iconColor} style={styles.icon} />
-      <Text style={styles.buttonText}>{children.toUpperCase()}</Text>
+      <Text style={styles.buttonText}>{children}</Text>
     </TouchableOpacity>
   )
 }

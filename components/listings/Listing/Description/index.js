@@ -12,7 +12,7 @@ const Section = ({children, title, nested}) => (
 )
 
 export default function ListingDescrition(props) {
-  const {maintenance_fee, property_tax} = props
+  const {maintenanceFee, propertyTax} = props
   return (
     <View style={styles.container}>
       <Section title="O Imóvel">
@@ -23,10 +23,10 @@ export default function ListingDescrition(props) {
       </Section>
       <View style={styles.sectionContainer}>
         <Section nested title="Condomínio">
-          <Price nullable>{maintenance_fee}</Price>
+          <Price nullable>{maintenanceFee}</Price>
         </Section>
         <Section nested title="IPTU">
-          <Price nullable>{property_tax}</Price>
+          <Price nullable>{propertyTax}</Price>
         </Section>
       </View>
     </View>

@@ -26,7 +26,7 @@ export default class ListingView extends Component {
       case 'gallery':
         return <Gallery>{images}</Gallery>
       case 'matterport':
-        return <Matterport code={this.props.matterport_code} />
+        return <Matterport code={this.props.matterportCode} />
       default:
         return undefined
     }

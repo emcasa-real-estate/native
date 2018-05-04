@@ -25,7 +25,7 @@ export default function ListingProperties(props) {
       </View>
       <View style={styles.row}>
         <Property icon="car">№ Vagas</Property>
-        <Text style={styles.value}>{props.garage_spots}</Text>
+        <Text style={styles.value}>{props.garageSpots}</Text>
       </View>
       <View style={styles.row}>
         <Property icon="building">Andar</Property>

@@ -34,7 +34,7 @@ export default class ListingThumbnail extends Component {
   onViewTour = _.after(50, _.once(this.props.onViewTour))
 
   render() {
-    const {images, favorite, matterport_code, onFavorite} = this.props
+    const {images, favorite, matterportCode, onFavorite} = this.props
     const image = images[0] || {}
     let {width, height} = Dimensions.get('window')
     height = width * 0.64
@@ -46,7 +46,7 @@ export default class ListingThumbnail extends Component {
           onStartShouldSetResponder={() => true}
           onResponderMove={this.onViewTour}
         >
-          <Matterport code={matterport_code} width={width} height={height}>
+          <Matterport code={matterportCode} width={width} height={height}>
             <Image thumbnail {...image} width={width} height={height} />
           </Matterport>
         </View>
@@ -65,7 +65,7 @@ export default class ListingThumbnail extends Component {
             <ActionButton title="Ver imagens" onPress={this.onOpenGallery}>
               <Icon name="image" />
             </ActionButton>
-            {matterport_code && (
+            {matterportCode && (
               <ActionButton
                 title="Ver em tela cheia"
                 icon="fullscreen"

@@ -17,7 +17,7 @@ import * as actions from './index'
 import {getOptions, getListingIds} from './selectors'
 
 const pagination = (res, req) => ({
-  remainingCount: res.remaining_count || 0,
+  remainingCount: res.remainingCount || 0,
   pageSize: req.pageSize || 10
 })
 

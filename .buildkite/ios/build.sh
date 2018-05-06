@@ -16,6 +16,7 @@ case $BUILD_PROFILE in
 esac
 
 echo "Building ipa for ${BUILD_PROFILE}"
+echo "Using backend server \"$API_URL\""
 
 cd $ROOT/ios && xcodebuild \
   -scheme $SCHEME \

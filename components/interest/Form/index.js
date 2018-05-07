@@ -7,8 +7,6 @@ import InterestType from './Fields/InterestType'
 import Fields from './Fields'
 import styles from './styles'
 
-const CALENDLY_ID = 5
-
 export default class InterestForm extends Component {
   state = {
     activeType: undefined
@@ -19,10 +17,7 @@ export default class InterestForm extends Component {
     this.state.activeType = props.types[0].id
   }
 
-  onChangeType = (id) => {
-    this.setState({activeType: id})
-    if (id === CALENDLY_ID) requestAnimationFrame(this.props.onOpenCalendly)
-  }
+  onChangeType = (id) => this.setState({activeType: id})
 
   render() {
     const {types, onSubmit} = this.props

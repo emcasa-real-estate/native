@@ -1,11 +1,26 @@
 import React, {Component} from 'react'
+import {View} from 'react-native'
 import Dropdown from 'react-native-modal-dropdown'
 
 import {field} from '../Field'
+import styles from './styles'
 
 @field()
 export default class FormDropdown extends Component {
+  static defaultProps = {
+    width: null
+  }
+
+  state = {
+    width: null
+  }
+
   dropdown = React.createRef()
+
+  static getDerivedStateFromProps({width}) {
+    if (width) return {width}
+    return null
+  }
 
   componentDidUpdate(prev) {
     const {value} = this.props
@@ -13,6 +28,8 @@ export default class FormDropdown extends Component {
   }
 
   onChange = (i) => this.props.onChange(this.props.options[i].value)
+
+  onLayout = ({nativeEvent: {layout: {width}}}) => this.setState({width})
 
   get selectedId() {
     const {value, options} = this.props
@@ -30,14 +47,19 @@ export default class FormDropdown extends Component {
 
   render() {
     const {placeholder} = this.props
+    const {width} = this.state
 
     return (
-      <Dropdown
-        ref={this.dropdown}
-        options={this.options}
-        onSelect={this.onChange}
-        defaultValue={placeholder}
-      />
+      <View onLayout={width ? undefined : this.onLayout}>
+        <Dropdown
+          ref={this.dropdown}
+          options={this.options}
+          onSelect={this.onChange}
+          defaultValue={placeholder}
+          style={{width}}
+          dropdownStyle={{width}}
+        />
+      </View>
     )
   }
 }

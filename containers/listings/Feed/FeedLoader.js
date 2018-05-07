@@ -37,7 +37,7 @@ export class FeedLoader extends PureComponent {
 
   get params() {
     const {length, params} = this.props
-    return {...params, pageSize: length}
+    return {...params, page_size: length}
   }
 
   get status() {

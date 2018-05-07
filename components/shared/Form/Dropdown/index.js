@@ -10,11 +10,11 @@ import $styles, {buttonIconColor} from './styles'
 const buttonText = ({placeholder, value}) => (value ? value.label : placeholder)
 
 const StyledDropdown = $styles.inject()(
-  ({styles, width, dropdownRef, ...props}) => (
+  ({styles, width, height, dropdownRef, ...props}) => (
     <Dropdown
       ref={dropdownRef}
       style={[styles.container, {width}]}
-      dropdownStyle={[styles.dropdown, {width}]}
+      dropdownStyle={[styles.dropdown, {width, height}]}
       renderRow={(value) => (
         <View style={styles.option}>
           <Text
@@ -82,6 +82,10 @@ export default class ControlledDropdown extends PureComponent {
     return this.props.options.map((opt) => opt.label)
   }
 
+  get height() {
+    return this.props.options.length * 50
+  }
+
   render() {
     const {width} = this.state
 
@@ -93,6 +97,7 @@ export default class ControlledDropdown extends PureComponent {
           dropdownRef={this.dropdown}
           options={this.options}
           value={this.value}
+          height={this.height}
           onSelect={this.onChange}
           onDropdownWillShow={this.onToggle(true)}
           onDropdownWillHide={this.onToggle(false)}

@@ -20,13 +20,13 @@ export default StyleSheet({
     }
   },
   dropdown: {
-    height: 5 * 50,
     borderWidth: 1,
     borderColor: colors.gray.light,
     borderBottomLeftRadius: 4,
     borderBottomRightRadius: 4,
     marginTop: -2,
     marginLeft: -1,
+    overflow: 'hidden',
     ':active': {
       borderColor: colors.blue.pastel
     }

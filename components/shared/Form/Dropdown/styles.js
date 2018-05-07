@@ -12,7 +12,36 @@ export default StyleSheet({
     margin: 0,
     ':value': {
       borderColor: colors.blue.pastel
+    },
+    ':active': {
+      borderColor: colors.blue.pastel,
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0
     }
+  },
+  dropdown: {
+    height: 5 * 50,
+    borderWidth: 1,
+    borderColor: colors.gray.light,
+    borderBottomLeftRadius: 4,
+    borderBottomRightRadius: 4,
+    marginTop: -2,
+    marginLeft: -1,
+    ':active': {
+      borderColor: colors.blue.pastel
+    }
+  },
+  option: {
+    display: 'flex',
+    justifyContent: 'center',
+    height: 50,
+    paddingLeft: 10,
+    paddingRight: 10
+  },
+  optionText: {
+    fontSize: 18,
+    padding: 10,
+    color: colors.gray.dark
   },
   button: {
     display: 'flex',

@@ -15,6 +15,17 @@ const StyledDropdown = $styles.inject()(
       ref={dropdownRef}
       style={[styles.container, {width}]}
       dropdownStyle={[styles.dropdown, {width}]}
+      renderRow={(value) => (
+        <View style={styles.option}>
+          <Text
+            style={styles.optionText}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {value}
+          </Text>
+        </View>
+      )}
       {...props}
     >
       <View style={styles.button}>

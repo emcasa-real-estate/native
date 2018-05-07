@@ -39,6 +39,10 @@ export default StyleSheet({
     paddingRight: 10,
     backgroundColor: 'white'
   },
+  lastOption: {
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8
+  },
   optionText: {
     fontSize: 18,
     padding: 10,
@@ -64,3 +68,5 @@ export default StyleSheet({
 
 export const buttonIconColor = ({active, value}) =>
   active || value ? colors.blue.medium : colors.gray.dark
+
+export const underlayColor = colors.gray.lighter

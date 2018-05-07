@@ -1,13 +1,23 @@
 import React, {PureComponent} from 'react'
-import {View} from 'react-native'
+import {View, TouchableHighlight} from 'react-native'
 import Dropdown from 'react-native-modal-dropdown'
 
 import Text from '@/components/shared/Text'
 import Icon from '@/components/shared/Icon'
 import {field} from '../Field'
-import $styles, {buttonIconColor} from './styles'
+import $styles, {buttonIconColor, underlayColor} from './styles'
 
 const buttonText = ({placeholder, value}) => (value ? value.label : placeholder)
+
+const renderOption = (value) => (
+  <TouchableHighlight underlayColor={underlayColor}>
+    <View style={[$styles.option]}>
+      <Text style={$styles.optionText} numberOfLines={1} ellipsizeMode="tail">
+        {value}
+      </Text>
+    </View>
+  </TouchableHighlight>
+)
 
 const StyledDropdown = $styles.inject()(
   ({styles, width, height, dropdownRef, ...props}) => (
@@ -15,17 +25,7 @@ const StyledDropdown = $styles.inject()(
       ref={dropdownRef}
       style={[styles.container, {width}]}
       dropdownStyle={[styles.dropdown, {width, height}]}
-      renderRow={(value) => (
-        <View style={styles.option}>
-          <Text
-            style={styles.optionText}
-            numberOfLines={1}
-            ellipsizeMode="tail"
-          >
-            {value}
-          </Text>
-        </View>
-      )}
+      renderRow={renderOption}
       {...props}
     >
       <View style={styles.button}>

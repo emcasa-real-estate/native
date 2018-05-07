@@ -23,7 +23,7 @@ export default class InterestFormScreen extends Component {
     const {navigation} = this.props
 
     return (
-      <Shell scroll>
+      <Shell scroll title="Marcar visita">
         <Form
           id={navigation.state.params.id}
           onSuccess={this.onSuccess}

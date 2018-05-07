@@ -11,7 +11,7 @@ export default class CalendlyScreen extends Component {
 
   render() {
     return (
-      <Shell footer={null}>
+      <Shell footer={null} title="Agendamento online">
         <Calendly onDismiss={this.onDismiss} />
       </Shell>
     )

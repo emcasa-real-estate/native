@@ -46,13 +46,11 @@ export default class InterestForm extends Component {
             Agendamento Online
           </Button>
           <Divider>OU</Divider>
-          <View style={styles.field}>
-            <InterestType
-              types={types}
-              value={this.state.activeType}
-              onChange={this.onChangeType}
-            />
-          </View>
+          <InterestType
+            types={types}
+            value={this.state.activeType}
+            onChange={this.onChangeType}
+          />
           {activeType && <Fields type={activeType} />}
         </View>
       </Form>

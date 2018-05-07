@@ -56,8 +56,9 @@ export default class FormDropdown extends Component {
           options={this.options}
           onSelect={this.onChange}
           defaultValue={placeholder}
-          style={{width}}
-          dropdownStyle={{width}}
+          style={[styles.container, {width}]}
+          textStyle={styles.text}
+          dropdownStyle={[styles.dropdown, {width}]}
         />
       </View>
     )

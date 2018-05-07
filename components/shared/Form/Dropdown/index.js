@@ -2,28 +2,39 @@ import React, {PureComponent} from 'react'
 import {View} from 'react-native'
 import Dropdown from 'react-native-modal-dropdown'
 
+import Text from '@/components/shared/Text'
+import Icon from '@/components/shared/Icon'
 import {field} from '../Field'
 import $styles from './styles'
+
+const buttonText = ({placeholder, value}) => (value ? value.label : placeholder)
 
 const StyledDropdown = $styles.inject()(
   ({styles, width, dropdownRef, ...props}) => (
     <Dropdown
       ref={dropdownRef}
       style={[styles.container, {width}]}
-      textStyle={styles.text}
       dropdownStyle={[styles.dropdown, {width}]}
       {...props}
-    />
+    >
+      <View style={styles.button}>
+        <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail">
+          {buttonText(props)}
+        </Text>
+        <Icon name="caret-down" type="solid" />
+      </View>
+    </Dropdown>
   )
 )
 
 @field()
-export default class FormDropdown extends PureComponent {
+export default class ControlledDropdown extends PureComponent {
   static defaultProps = {
     width: null
   }
 
   state = {
+    active: false,
     width: null
   }
 
@@ -42,6 +53,8 @@ export default class FormDropdown extends PureComponent {
 
   onChange = (i) => this.props.onChange(this.props.options[i].value)
 
+  onToggle = (active) => () => this.setState({active})
+
   onLayout = ({nativeEvent: {layout: {width}}}) => this.setState({width})
 
   get selectedId() {
@@ -59,19 +72,19 @@ export default class FormDropdown extends PureComponent {
   }
 
   render() {
-    const {placeholder, value} = this.props
-    const {active, width} = this.state
+    const {width} = this.state
 
     return (
       <View onLayout={width ? undefined : this.onLayout}>
         <StyledDropdown
-          active={active}
-          value={value}
-          width={width}
+          {...this.props}
+          {...this.state}
           dropdownRef={this.dropdown}
           options={this.options}
+          value={this.value}
           onSelect={this.onChange}
-          defaultValue={placeholder}
+          onDropdownWillShow={this.onToggle(true)}
+          onDropdownWillHide={this.onToggle(false)}
         />
       </View>
     )

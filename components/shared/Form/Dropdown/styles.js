@@ -14,10 +14,20 @@ export default StyleSheet({
       borderColor: colors.blue.pastel
     }
   },
-  text: {
+  button: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: 50,
+    paddingLeft: 14,
+    paddingRight: 14
+  },
+  buttonText: {
+    flex: 1,
     color: colors.gray.dark,
     lineHeight: Platform.OS === 'ios' ? null : 18,
     fontSize: 18,
-    padding: 14
+    marginRight: 5
   }
 })

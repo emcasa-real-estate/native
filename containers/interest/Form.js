@@ -7,6 +7,12 @@ import {request} from '@/redux/modules/interest/form'
 import Form from '@/components/interest/Form'
 
 class InterestFormApp extends Component {
+  componentDidUpdate(prev) {
+    const {onSuccess, loading, error} = this.props
+    const finishedLoading = prev.loading && !loading
+    if (finishedLoading && !error && onSuccess) onSuccess()
+  }
+
   onSubmit = (params) => {
     const {request, id, loading} = this.props
     if (!loading) request(id, params)

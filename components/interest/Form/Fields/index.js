@@ -1,13 +1,19 @@
+import {Fragment} from 'react'
+
+import Email from '@/components/shared/Form/Email'
+import Phone from '@/components/shared/Form/Phone'
+import Time from './Name'
 import Name from './Name'
-import Email from './Email'
-import Phone from './Phone'
-import Time from './Time'
 import Message from './Message'
 
-export default {
-  name: Name,
-  email: Email,
-  phone: Phone,
-  time: Time,
-  message: Message
+export default function InterestFormFields({type}) {
+  return (
+    <Fragment>
+      <Name name="name" />
+      {type === 3 && <Email name="email" />}
+      {type !== 3 && <Phone name="phone" />}
+      {type === 2 && <Time name="time" />}
+      {type === 3 && <Message name="message" />}
+    </Fragment>
+  )
 }

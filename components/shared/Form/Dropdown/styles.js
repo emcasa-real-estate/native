@@ -1,14 +1,18 @@
-import {StyleSheet, Platform} from 'react-native'
+import {Platform} from 'react-native'
 
+import StyleSheet from '@/assets/StyleSheet'
 import * as colors from '@/assets/colors'
 
-export default StyleSheet.create({
+export default StyleSheet({
   container: {
     borderWidth: 1,
     borderRadius: 4,
     borderColor: colors.gray.light,
     height: 50,
-    margin: 0
+    margin: 0,
+    ':value': {
+      borderColor: colors.blue.pastel
+    }
   },
   text: {
     color: colors.gray.dark,

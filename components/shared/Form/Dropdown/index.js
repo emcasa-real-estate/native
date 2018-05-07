@@ -1,12 +1,24 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import {View} from 'react-native'
 import Dropdown from 'react-native-modal-dropdown'
 
 import {field} from '../Field'
-import styles from './styles'
+import $styles from './styles'
+
+const StyledDropdown = $styles.inject()(
+  ({styles, width, dropdownRef, ...props}) => (
+    <Dropdown
+      ref={dropdownRef}
+      style={[styles.container, {width}]}
+      textStyle={styles.text}
+      dropdownStyle={[styles.dropdown, {width}]}
+      {...props}
+    />
+  )
+)
 
 @field()
-export default class FormDropdown extends Component {
+export default class FormDropdown extends PureComponent {
   static defaultProps = {
     width: null
   }
@@ -24,7 +36,8 @@ export default class FormDropdown extends Component {
 
   componentDidUpdate(prev) {
     const {value} = this.props
-    if (value !== prev.value) this.dropdown.value.select(this.selectedId)
+    if (value !== prev.value && this.dropdown.value)
+      this.dropdown.value.select(this.selectedId)
   }
 
   onChange = (i) => this.props.onChange(this.props.options[i].value)
@@ -46,19 +59,19 @@ export default class FormDropdown extends Component {
   }
 
   render() {
-    const {placeholder} = this.props
-    const {width} = this.state
+    const {placeholder, value} = this.props
+    const {active, width} = this.state
 
     return (
       <View onLayout={width ? undefined : this.onLayout}>
-        <Dropdown
-          ref={this.dropdown}
+        <StyledDropdown
+          active={active}
+          value={value}
+          width={width}
+          dropdownRef={this.dropdown}
           options={this.options}
           onSelect={this.onChange}
           defaultValue={placeholder}
-          style={[styles.container, {width}]}
-          textStyle={styles.text}
-          dropdownStyle={[styles.dropdown, {width}]}
         />
       </View>
     )

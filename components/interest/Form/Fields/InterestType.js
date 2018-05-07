@@ -10,7 +10,7 @@ export default function InterestTypeField({types, value, onChange}) {
       placeholder="Como fazemos?"
       options={mapInterestTypes(types)}
       value={value}
-      onChangeText={onChange}
+      onChange={onChange}
     />
   )
 }

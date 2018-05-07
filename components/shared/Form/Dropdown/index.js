@@ -5,7 +5,7 @@ import Dropdown from 'react-native-modal-dropdown'
 import Text from '@/components/shared/Text'
 import Icon from '@/components/shared/Icon'
 import {field} from '../Field'
-import $styles from './styles'
+import $styles, {buttonIconColor} from './styles'
 
 const buttonText = ({placeholder, value}) => (value ? value.label : placeholder)
 
@@ -32,7 +32,7 @@ const StyledDropdown = $styles.inject()(
         <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="tail">
           {buttonText(props)}
         </Text>
-        <Icon name="caret-down" type="solid" />
+        <Icon name="caret-down" type="solid" color={buttonIconColor(props)} />
       </View>
     </Dropdown>
   )

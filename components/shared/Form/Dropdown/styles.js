@@ -36,7 +36,8 @@ export default StyleSheet({
     justifyContent: 'center',
     height: 50,
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10,
+    backgroundColor: 'white'
   },
   optionText: {
     fontSize: 18,
@@ -60,3 +61,6 @@ export default StyleSheet({
     marginRight: 5
   }
 })
+
+export const buttonIconColor = ({active, value}) =>
+  active || value ? colors.blue.medium : colors.gray.dark

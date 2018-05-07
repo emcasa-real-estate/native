@@ -38,8 +38,7 @@ const StyledDropdown = $styles.inject()(
   )
 )
 
-@field()
-export default class ControlledDropdown extends PureComponent {
+export class ControlledDropdown extends PureComponent {
   static defaultProps = {
     width: null
   }
@@ -106,3 +105,5 @@ export default class ControlledDropdown extends PureComponent {
     )
   }
 }
+
+export default field()(ControlledDropdown)

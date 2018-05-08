@@ -1,26 +1,13 @@
 import _ from 'lodash/fp'
 import React, {Component} from 'react'
-import {View} from 'react-native'
+import geolib from 'geolib'
 
 import Marker from './Marker'
 
-const {sin, cos, pow, sqrt, atan2} = Math
-// Radius of the earth in Km
-const R = 6372.8
-const angle2rad = (x) => Math.PI * x / 180
-const coord2rad = ({lat, lng}) => ({lat: angle2rad(lat), lng: angle2rad(lng)})
-const hav = (x) => pow(sin(x / 2), 2)
-// Haversine distance between a and b in Km
-const distance = _.flow(
-  ([a, b]) => [coord2rad(a), coord2rad(b)],
-  ([a, b]) => hav(a.lat - b.lat) + hav(a.lng - b.lng) * cos(a.lat) * cos(b.lat),
-  (x) => atan2(sqrt(x, 2), sqrt(1 - x, 2)) * 2 * R
-)
+const coord = ({lat, lng}) => ({latitude: lat, longitude: lng})
 
-const average = (a, b) => ({
-  lat: (a.lat + b.lat) / 2,
-  lng: (a.lng + b.lng) / 2
-})
+const distance = (a, b) => geolib.getDistance(coord(a), coord(b))
+const center = (a, b) => geolib.getCenter(coord(a), coord(b))
 
 export default class MarkerAggregator extends Component {
   static defaultProps = {
@@ -35,16 +22,16 @@ export default class MarkerAggregator extends Component {
       const {lat, lng} = address
       let min
       const distances = groups.map((group, index) => ({
-        value: distance([address, group]),
+        value: distance(address, group),
         index
       }))
       for (const {value, index} of distances) {
-        if (value <= diameter && (!min || value < min.value))
+        if (value <= diameter && (!min || value <= min.value))
           min = {value, index}
       }
       if (min) {
         groups[min.index] = {
-          ...average(address, groups[min.index]),
+          ...center(address, groups[min.index]),
           children: groups[min.index].children.concat(i)
         }
       } else groups.push({lat, lng, children: [i]})

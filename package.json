@@ -53,6 +53,7 @@
     "camelcase-keys-deep": "^0.1.0",
     "email-validator": "^1.1.1",
     "es6-error": "^4.1.1",
+    "geolib": "^2.0.24",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
     "immutability-helper": "^2.6.6",

@@ -10,7 +10,7 @@ export default function LikeIcon({active, contrast, size, ...props}) {
       type="solid"
       size={size - 2}
       stroke={border}
-      strokeWidth={active ? 0 : size}
+      strokeWidth={active && !contrast ? 0 : size}
       strokeLinecap="round"
       color={active ? colors.red.medium : color}
       fillOpacity={active ? 1 : 0.2}

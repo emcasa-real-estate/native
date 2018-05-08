@@ -1,39 +1,38 @@
 import {StyleSheet} from 'react-native'
 
 import * as colors from '@/assets/colors'
-import {padding} from '@/assets/styles'
 
 export default StyleSheet.create({
   container: {
-    display: 'flex',
-    backgroundColor: 'white',
-    ...padding(10, 20)
+    backgroundColor: colors.gray.$f0f0,
+    paddingTop: 5,
+    paddingBottom: 5
   },
   row: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
-    ...padding(7, null)
+    alignItems: 'flex-start',
+    justifyContent: 'center'
   },
   property: {
+    flex: 1 / 3,
+    display: 'flex',
+    alignItems: 'center',
+    paddingTop: 15,
+    paddingBottom: 15
+  },
+  propertyBody: {
     flex: 1,
     display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center'
+    flexDirection: 'row'
   },
   propertyText: {
-    fontSize: 15,
-    fontWeight: '700',
-    color: colors.gray.mediumDark
+    fontSize: 14,
+    fontWeight: '500',
+    color: colors.gray.dark
   },
   icon: {
-    paddingRight: 15
-  },
-  value: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end'
+    marginBottom: 7
   }
 })
 

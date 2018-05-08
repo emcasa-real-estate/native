@@ -6,6 +6,8 @@ import {isLoading, getError} from '@/redux/modules/interest/form/selectors'
 import {request} from '@/redux/modules/interest/form'
 import Form from '@/components/interest/Form'
 
+const CALENDLY_ID = 5
+
 class InterestFormApp extends Component {
   componentDidUpdate(prev) {
     const {onSuccess, loading, error} = this.props
@@ -14,28 +16,18 @@ class InterestFormApp extends Component {
   }
 
   onSubmit = (params) => {
-    const {request, id, loading} = this.props
-    if (!loading) request(id, params)
-  }
-
-  onOpenCalendly = () => {
-    const {request, id, onOpenCalendly} = this.props
-    request(id, {
-      name: 'Calendly',
-      message:
+    const {request, id, loading, onOpenCalendly} = this.props
+    if (loading) return
+    if (params.interest_type_id === CALENDLY_ID) {
+      params.message =
         'Esta mensagem está sendo enviada porque algum usuário tentou agendar uma visita pelo Calendly neste imóvel.'
-    })
-    if (onOpenCalendly) onOpenCalendly()
+      if (onOpenCalendly) onOpenCalendly()
+    }
+    request(id, params)
   }
 
   render() {
-    return (
-      <Form
-        {...this.props}
-        onSubmit={this.onSubmit}
-        onOpenCalendly={this.onOpenCalendly}
-      />
-    )
+    return <Form {...this.props} onSubmit={this.onSubmit} />
   }
 }
 

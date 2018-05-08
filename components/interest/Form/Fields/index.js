@@ -11,7 +11,7 @@ export default function InterestFormFields({type}) {
     <Fragment>
       <Name name="name" />
       {type === 3 && <Email name="email" />}
-      {type !== 3 && <Phone name="phone" />}
+      {(type !== 3 || type === 5) && <Phone name="phone" />}
       {type === 2 && <Time name="time" />}
       {type === 3 && <Message name="message" />}
     </Fragment>

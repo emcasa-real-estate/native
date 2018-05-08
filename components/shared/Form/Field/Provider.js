@@ -42,6 +42,7 @@ export const field = (Target) =>
         onUnsubscribe={onUnsubscribe}
         onChangeField={onChangeField}
         onValidateField={onValidateField}
+        onChange={props.onChange}
       >
         {(ctx) => (
           <Target {...props} {...ctx}>
@@ -78,8 +79,9 @@ export default class FieldProvider extends PureComponent {
   }
 
   onChange = (value) => {
-    const {onChangeField, name} = this.props
+    const {onChangeField, onChange, name} = this.props
     onChangeField(name, value)
+    if (onChange) onChange(value)
   }
 
   render() {

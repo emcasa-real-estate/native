@@ -37,8 +37,6 @@ export default class MapScreen extends Component {
   render() {
     const {active, zoom} = this.state
 
-    const distance = 800 * zoom
-    console.log(zoom, distance)
     return (
       <Shell overlay title="Buscar imóveis" footer={null}>
         <View style={styles.body}>
@@ -46,7 +44,7 @@ export default class MapScreen extends Component {
           <Map
             onRegionChange={this.onRegionChange}
             onSelect={this.onSelect}
-            distance={distance}
+            distance={339 * zoom + 0.25}
             aggregate={zoom > 0.0007}
             active={active}
             type="search"

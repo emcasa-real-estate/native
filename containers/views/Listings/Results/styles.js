@@ -7,7 +7,7 @@ export default StyleSheet.create({
   },
   mapButton: {
     position: 'absolute',
-    right: 20,
-    bottom: 20
+    right: 10,
+    bottom: 10
   }
 })

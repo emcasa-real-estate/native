@@ -1,6 +1,7 @@
 import {Component} from 'react'
 import {View} from 'react-native'
 
+import Text from '@/components/shared/Text'
 import Modal from '@/components/shared/Modal'
 import Map from '../Map'
 import Gallery from '../Gallery'
@@ -39,6 +40,10 @@ export default class ListingView extends Component {
       <View style={styles.container}>
         <View style={styles.header}>
           <Thumbnail onOpen={this.onOpen} {...this.props} />
+          <View style={styles.heading}>
+            <Text style={styles.h1}>{address.street}</Text>
+            <Text style={styles.h2}>{address.neighborhood}</Text>
+          </View>
           <Properties {...this.props} />
         </View>
         <Description {...this.props} />

@@ -12,6 +12,19 @@ export default StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     marginBottom: 10
   },
+  heading: {
+    padding: 15
+  },
+  h1: {
+    fontSize: 20,
+    color: colors.gray.dark,
+    marginBottom: 5
+  },
+  h2: {
+    fontSize: 17,
+    fontWeight: '600',
+    color: colors.gray.medium
+  },
   map: {
     width: '100%',
     height: 300

@@ -1,15 +1,16 @@
 import {Component} from 'react'
 import {View} from 'react-native'
 
+import Icon from '@/components/shared/Icon'
 import Text from '@/components/shared/Text'
 import Modal from '@/components/shared/Modal'
-import Map from '../Map'
+import Map, {Marker} from '../Map'
 import Gallery from '../Gallery'
 import Matterport from '../Matterport'
 import Description from './Description'
 import Properties from './Properties'
 import Thumbnail from './Thumbnail'
-import styles, {modalStyles} from './styles'
+import styles, {modalStyles, markerStyles, markerColor} from './styles'
 
 export default class ListingView extends Component {
   state = {
@@ -47,7 +48,13 @@ export default class ListingView extends Component {
           <Properties {...this.props} />
         </View>
         <Description {...this.props} />
-        {active && <Map zoom="close" style={styles.map} {...address} />}
+        {active && (
+          <Map zoom="close" style={styles.map} {...address}>
+            <Marker styles={markerStyles} address={address}>
+              <Icon name="home" color={markerColor} size={20} />
+            </Marker>
+          </Map>
+        )}
         <Modal
           contrast
           overlay

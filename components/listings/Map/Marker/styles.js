@@ -15,13 +15,10 @@ export default StyleSheet({
     zIndex: 1,
     display: 'flex',
     alignItems: 'center',
-    borderRadius: 7,
+    borderRadius: 9,
     backgroundColor: colors.blue.medium,
     width: 50,
     ...padding(3.5, null),
-    ':icon': {
-      width: 30
-    },
     ':active': {
       backgroundColor: 'white'
     }
@@ -29,9 +26,6 @@ export default StyleSheet({
   text: {
     color: 'white',
     fontWeight: '600',
-    ':icon': {
-      fontSize: 17
-    },
     ':active': {
       color: colors.blue.medium
     }

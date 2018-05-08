@@ -36,3 +36,17 @@ export const modalStyles = StyleSheet.create({
     paddingTop: 60
   }
 })
+
+export const markerStyles = StyleSheet.create({
+  body: {
+    width: 40,
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: 'white'
+  },
+  tip: {
+    borderTopColor: 'white'
+  }
+})
+
+export const markerColor = colors.red.medium

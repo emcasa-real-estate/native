@@ -5,6 +5,9 @@ ARGS=()
 OPTIONS=(CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=)
 SCHEME=EmCasa
 
+if [[ $BUILD_PROFILE == beta ]];
+then export BUNDLE_IDENTIFIER_SUFFIX="-beta"; fi
+
 if [[ ! -z "$IOS_XCCONFIG_FILE" ]]; then ARGS+=(-xcconfig "$IOS_XCCONFIG_FILE"); fi
 case $BUILD_PROFILE in
   debug) CONFIGURATION=Debug;;

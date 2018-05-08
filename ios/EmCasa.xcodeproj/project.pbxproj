@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -41,6 +42,7 @@
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		B19C244ACB3D472EB10421F2 /* libSMXCrashlytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 225DE1D715094D96B64BE883 /* libSMXCrashlytics.a */; };
 		C38112FA207E8AD500A82158 /* libRCTOrientation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C38112DD207E8A8D00A82158 /* libRCTOrientation.a */; };
+		C3D2661A20A10D3100CCE313 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		C3D3B5C0205C4AB20004FBF1 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D3B598205C4AAA0004FBF1 /* libAirMaps.a */; };
 		C3D6CCF5209774AA00E1D8D1 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D6CCF02097749200E1D8D1 /* libRNSVG.a */; };
 		C3E6462A2093CD2000CABB50 /* libRNPhotoView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C33522C22063422100AF766A /* libRNPhotoView.a */; };
@@ -443,11 +445,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3D2661A20A10D3100CCE313 /* libRCTAnimation.a in Frameworks */,
 				C3D6CCF5209774AA00E1D8D1 /* libRNSVG.a in Frameworks */,
 				C38112FA207E8AD500A82158 /* libRCTOrientation.a in Frameworks */,
 				C3D3B5C0205C4AB20004FBF1 /* libAirMaps.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
-				C3DF043D20928C2100D742CF /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,

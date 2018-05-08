@@ -1,9 +1,32 @@
 import {PureComponent} from 'react'
+import {connect} from 'react-redux'
 
+import {load} from '@/redux/modules/listings/feed'
+import {
+  getOptions,
+  getPagination
+} from '@/redux/modules/listings/feed/selectors'
 import {withFeed} from './Feed/FeedLoader'
 import Map, {Marker, Aggregator} from '@/components/listings/Map'
 
-class MapApp extends PureComponent {
+@connect(
+  (state, props) => ({
+    options: getOptions(state, props),
+    pagination: getPagination(state, props)
+  }),
+  {load}
+)
+@withFeed
+export default class MapApp extends PureComponent {
+  componentDidMount() {
+    const {type, load, options, pagination} = this.props
+    if (!pagination.remainingCount) return
+    load(type, {
+      ...options,
+      page_size: pagination.remainingCount
+    })
+  }
+
   onSelect = (id) => () => this.props.onSelect(id)
 
   render() {
@@ -28,5 +51,3 @@ class MapApp extends PureComponent {
     )
   }
 }
-
-export default withFeed(MapApp)

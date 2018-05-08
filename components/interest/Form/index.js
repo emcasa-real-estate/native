@@ -12,11 +12,6 @@ export default class InterestForm extends Component {
     activeType: undefined
   }
 
-  constructor(props) {
-    super(props)
-    this.state.activeType = props.types[0].id
-  }
-
   onChangeType = (id) => this.setState({activeType: id})
 
   render() {

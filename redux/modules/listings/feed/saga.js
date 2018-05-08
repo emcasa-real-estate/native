@@ -41,7 +41,7 @@ function* request({key, options}) {
   }
 }
 
-const filterParams = _.omit('excluded_listing_ids')
+const filterParams = _.omit(['excluded_listing_ids', 'page_size'])
 
 const eqlOptions = _.overArgs(_.isEqual)(Array(2).fill(filterParams))
 

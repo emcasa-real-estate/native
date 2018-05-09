@@ -1,10 +1,11 @@
 import {Component} from 'react'
-import {View} from 'react-native'
 
 import Form from '@/components/shared/Form/Form'
+import Section from './Section'
 import EmailForm from './Email'
 import PasswordForm from './Password'
 import ProfileForm from './Profile'
+import styles from './styles'
 
 export default class EditAccountForm extends Component {
   state = {
@@ -26,16 +27,25 @@ export default class EditAccountForm extends Component {
   render() {
     const {values} = this.state
     return (
-      <Form onSubmit={this.onSubmit} value={values}>
-        <ProfileForm
-          onChange={this.onChangeForm('profile')}
-          value={values.profile}
-        />
-        <EmailForm onChange={this.onChangeForm('email')} value={values.email} />
-        <PasswordForm
-          onChange={this.onChangeForm('password')}
-          value={values.password}
-        />
+      <Form onSubmit={this.onSubmit} value={values} style={styles.container}>
+        <Section title="Perfil">
+          <ProfileForm
+            onChange={this.onChangeForm('profile')}
+            value={values.profile}
+          />
+        </Section>
+        <Section title="Email">
+          <EmailForm
+            onChange={this.onChangeForm('email')}
+            value={values.email}
+          />
+        </Section>
+        <Section title="Alterar senha">
+          <PasswordForm
+            onChange={this.onChangeForm('password')}
+            value={values.password}
+          />
+        </Section>
       </Form>
     )
   }

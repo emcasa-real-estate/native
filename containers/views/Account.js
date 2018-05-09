@@ -3,7 +3,7 @@ import Form from '@/components/account/EditForm'
 
 export default function AccountScreen() {
   return (
-    <Shell title="Minha conta">
+    <Shell scroll title="Minha conta">
       <Form onSubmit={console.log} />
     </Shell>
   )

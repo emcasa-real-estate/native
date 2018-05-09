@@ -21,9 +21,15 @@ export default StyleSheet.create({
     fontSize: 12,
     color: colors.gray.light
   },
+  buttonTextActive: {
+    color: colors.blue.medium
+  },
   icon: {
     margin: 5
   }
 })
 
-export const iconColor = colors.gray.light
+export const iconColor = {
+  default: colors.gray.light,
+  active: colors.blue.medium
+}

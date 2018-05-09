@@ -5,12 +5,21 @@ import Button from './Button'
 
 export default function Navigation({user, navigation, onLogout}) {
   const navigateTo = (scene) => () => navigation.navigate(scene)
+  const active = navigation.state.route || navigation.state.routeName
   return (
     <View style={styles.container}>
-      <Button icon="search" onPress={navigateTo('listings')}>
+      <Button
+        active={active === 'results'}
+        icon="search"
+        onPress={navigateTo('listings')}
+      >
         Buscar
       </Button>
-      <Button icon="heart" onPress={navigateTo('favorites')}>
+      <Button
+        active={active === 'favorites'}
+        icon="heart"
+        onPress={navigateTo('favorites')}
+      >
         Salvos
       </Button>
       {user ? (

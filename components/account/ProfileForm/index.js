@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import React, {Component} from 'react'
+import {Component} from 'react'
 import {View} from 'react-native'
 
 import {required} from '@/lib/validations'
@@ -12,32 +12,15 @@ import Button from './Button'
 import styles from './styles'
 
 export default class ProfileForm extends Component {
-  forms = {
-    email: React.createRef(),
-    password: React.createRef(),
-    profile: React.createRef()
+  get value() {
+    return _.pick(this.props.user, ['name', 'phone', 'email'])
   }
-
-  state = {}
-
-  static getDerivedStateFromProps({user}, state) {
-    return _.merge(
-      {
-        name: user.name,
-        phone: user.phone,
-        email: user.email
-      },
-      state
-    )
-  }
-
-  onChange = (value) => this.setState(value)
 
   render() {
     const {onSubmit, onChangePassword} = this.props
 
     return (
-      <Form onSubmit={onSubmit} value={this.state} style={styles.container}>
+      <Form onSubmit={onSubmit} value={this.value} style={styles.container}>
         <View style={styles.body}>
           <Section title="Nome completo">
             <TextInput

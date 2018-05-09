@@ -28,7 +28,7 @@ const createMutation = (QUERY, name) =>
 )
 @createMutation(EDIT_EMAIL, 'changeEmail')
 @createMutation(EDIT_PROFILE, 'editUserProfile')
-export default class EditAccountFormApp extends Component {
+export default class ProfileFormApp extends Component {
   onSubmit = (value) => {
     const {user, changeEmail, editUserProfile} = this.props
     if (user.email !== value.email) changeEmail({email: value.email})

@@ -51,11 +51,14 @@ export default class EditAccountForm extends Component {
       ['password', this.props.onSubmitPassword],
       ['profile', this.props.onSubmitProfile]
     ]
-    console.log(this.forms)
-    return
     forms.forEach(([key, onSubmit]) => {
+      const form = this.forms[key].current
       const formValue = values[key]
-      if (formValue && !_.isEqual(formValue, defaultValues[key]))
+      if (
+        formValue &&
+        form.onValidate() &&
+        !_.isEqual(formValue, defaultValues[key])
+      )
         onSubmit(formValue)
     })
   }

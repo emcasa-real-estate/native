@@ -23,8 +23,8 @@ export default function Navigation({user, navigation, onLogout}) {
         Salvos
       </Button>
       {user ? (
-        <Button icon="sign-out" onPress={onLogout}>
-          Sair
+        <Button icon="user" onPress={navigateTo('account')}>
+          Minha Conta
         </Button>
       ) : (
         <Button icon="user" onPress={navigateTo('auth')}>

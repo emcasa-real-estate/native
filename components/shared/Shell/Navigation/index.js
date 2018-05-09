@@ -23,7 +23,7 @@ export default function Navigation({user, navigation}) {
         Salvos
       </Button>
       {user ? (
-        <Button icon="user" onPress={navigateTo('account')}>
+        <Button icon="user" onPress={navigateTo('profile')}>
           Perfil
         </Button>
       ) : (

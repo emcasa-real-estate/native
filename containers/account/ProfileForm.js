@@ -2,14 +2,10 @@ import {Component} from 'react'
 import {connect} from 'react-redux'
 import {graphql} from 'react-apollo'
 
-import {
-  EDIT_EMAIL,
-  EDIT_PASSWORD,
-  EDIT_PROFILE
-} from '@/lib/graphql/mutations/account'
-import {patch, signOut} from '@/redux/modules/auth'
+import {EDIT_EMAIL, EDIT_PROFILE} from '@/lib/graphql/mutations/account'
+import {patch} from '@/redux/modules/auth'
 import {getUser} from '@/redux/modules/auth/selectors'
-import Form from '@/components/account/Form'
+import Form from '@/components/account/ProfileForm'
 
 const createMutation = (QUERY, name) =>
   graphql(QUERY, {
@@ -28,27 +24,25 @@ const createMutation = (QUERY, name) =>
   (state) => ({
     user: getUser(state)
   }),
-  {patch, signOut}
+  {patch}
 )
 @createMutation(EDIT_EMAIL, 'changeEmail')
-@createMutation(EDIT_PASSWORD, 'changePassword')
 @createMutation(EDIT_PROFILE, 'editUserProfile')
 export default class EditAccountFormApp extends Component {
+  onSubmit = (value) => {
+    const {user, changeEmail, editUserProfile} = this.props
+    if (user.email !== value.email) changeEmail({email: value.email})
+    if (user.name !== value.name || user.phone !== value.phone)
+      editUserProfile({name: value.name, phone: value.phone})
+  }
+
   render() {
-    const {
-      user,
-      changeEmail,
-      changePassword,
-      editUserProfile,
-      signOut
-    } = this.props
+    const {user, onChangePassword} = this.props
     return (
       <Form
         user={user}
-        onSubmitEmail={changeEmail}
-        onSubmitPassword={changePassword}
-        onSubmitProfile={editUserProfile}
-        onSignOut={signOut}
+        onSubmit={this.onSubmit}
+        onChangePassword={onChangePassword}
       />
     )
   }

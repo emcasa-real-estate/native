@@ -11,7 +11,7 @@ import Section from './Section'
 import Button from './Button'
 import styles from './styles'
 
-export default class EditAccountForm extends Component {
+export default class ProfileForm extends Component {
   forms = {
     email: React.createRef(),
     password: React.createRef(),

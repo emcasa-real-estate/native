@@ -3,22 +3,20 @@ import styles from './styles'
 
 import Button from './Button'
 
-export default function Navigation({user, navigation, onLogout}) {
-  const navigateTo = (scene) => () => navigation.navigate(scene)
-  const active = navigation.state.route || navigation.state.routeName
+export default function Navigation({user, active, onNavigate, onLogout}) {
   return (
     <View style={styles.container}>
       <Button
-        active={active === 'results'}
+        active={active === 'listings'}
         icon="search"
-        onPress={navigateTo('listings')}
+        onPress={onNavigate('listings')}
       >
         Buscar
       </Button>
       <Button
         active={active === 'favorites'}
         icon="heart"
-        onPress={navigateTo('favorites')}
+        onPress={onNavigate('favorites')}
       >
         Salvos
       </Button>
@@ -27,7 +25,7 @@ export default function Navigation({user, navigation, onLogout}) {
           Sair
         </Button>
       ) : (
-        <Button icon="user" onPress={navigateTo('auth')}>
+        <Button icon="user" onPress={onNavigate('auth')}>
           Login
         </Button>
       )}

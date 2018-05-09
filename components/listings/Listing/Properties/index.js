@@ -1,45 +1,39 @@
-import {View} from 'react-native'
+import {View, Dimensions} from 'react-native'
 
 import Icon from '@/components/shared/Icon'
 import Text from '@/components/shared/Text'
-import Price from '@/components/shared/Price'
+import {number} from '@/assets/format'
 import styles, {iconColor} from './styles'
 
-const Property = ({children, icon}) => (
-  <View style={styles.property}>
+const Property = ({children, icon, width}) => (
+  <View style={[styles.property, {width}]}>
     <Icon name={icon} color={iconColor} style={styles.icon} />
-    <Text style={styles.propertyText}>{children.toUpperCase()}</Text>
+    <View style={styles.propertyBody}>
+      <Text style={styles.propertyText}>{children}</Text>
+    </View>
   </View>
 )
+
+Property.defaultProps = {
+  get width() {
+    return Dimensions.get('window').width / 3
+  }
+}
 
 export default function ListingProperties(props) {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
-        <Property icon="bed">Quartos</Property>
-        <Text style={styles.value}>{props.rooms}</Text>
+        <Property icon="bed">{props.rooms} quartos</Property>
+        <Property icon="bath">{props.bathrooms} banheiros</Property>
+        <Property icon="car">{props.garageSpots} vagas</Property>
       </View>
       <View style={styles.row}>
-        <Property icon="bath">Banheiros</Property>
-        <Text style={styles.value}>{props.bathrooms}</Text>
-      </View>
-      <View style={styles.row}>
-        <Property icon="car">№ Vagas</Property>
-        <Text style={styles.value}>{props.garageSpots}</Text>
-      </View>
-      <View style={styles.row}>
-        <Property icon="building">Andar</Property>
-        <Text style={styles.value}>{props.floor}</Text>
-      </View>
-      <View style={styles.row}>
-        <Property icon="cube">Área</Property>
-        <Text style={styles.value}>{props.area}m²</Text>
-      </View>
-      <View style={styles.row}>
-        <Property icon="usd-circle">Preço/m²</Property>
-        <Price styles={{container: styles.value}}>
-          {Math.floor(props.price / props.area)}
-        </Price>
+        <Property icon="building">{props.floor}° andar</Property>
+        <Property icon="cube">{props.area} m²</Property>
+        <Property icon="usd-circle">
+          R$ {number(Math.floor(props.price / props.area))}/m²
+        </Property>
       </View>
     </View>
   )

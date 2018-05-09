@@ -33,11 +33,7 @@ export default function ListingMap({
       }}
       {...props}
     >
-      {typeof children === 'undefined' ? (
-        <Marker icon="home" address={{lat, lng}} />
-      ) : (
-        children
-      )}
+      {children}
     </MapView>
   )
 }

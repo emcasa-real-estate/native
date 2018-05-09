@@ -21,14 +21,16 @@ export default function ListingDescrition(props) {
       <Section title="Tipo do Imóvel">
         <Text style={styles.text}>{props.type}</Text>
       </Section>
-      <View style={styles.sectionContainer}>
-        <Section nested title="Condomínio">
-          <Price nullable>{maintenanceFee}</Price>
-        </Section>
-        <Section nested title="IPTU">
-          <Price nullable>{propertyTax}</Price>
-        </Section>
-      </View>
+      {(maintenanceFee || propertyTax) && (
+        <View style={styles.sectionContainer}>
+          <Section nested title="Condomínio">
+            <Price nullable>{maintenanceFee}</Price>
+          </Section>
+          <Section nested title="IPTU">
+            <Price nullable>{propertyTax}</Price>
+          </Section>
+        </View>
+      )}
     </View>
   )
 }

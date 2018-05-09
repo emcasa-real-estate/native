@@ -4,8 +4,6 @@ import * as colors from '@/assets/colors'
 
 export default StyleSheet.create({
   section: {
-    paddingTop: 15,
-    paddingBottom: 10,
     marginLeft: 20,
     marginRight: 20,
     borderBottomColor: colors.gray.lighter,
@@ -15,6 +13,7 @@ export default StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
     color: colors.gray.mediumDark,
+    marginTop: 5,
     marginBottom: 10
   },
   button: {

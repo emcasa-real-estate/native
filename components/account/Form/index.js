@@ -1,11 +1,12 @@
 import _ from 'lodash'
 import React, {Component} from 'react'
 
+import {required} from '@/lib/validations'
 import Form from '@/components/shared/Form/Form'
+import Email from '@/components/shared/Form/Email'
+import Phone from '@/components/shared/Form/Phone'
+import TextInput from '@/components/shared/Form/TextInput'
 import Section from './Section'
-import EmailForm from './Email'
-import PasswordForm from './Password'
-import ProfileForm from './Profile'
 import Button from './Button'
 import styles from './styles'
 
@@ -16,82 +17,40 @@ export default class EditAccountForm extends Component {
     profile: React.createRef()
   }
 
-  state = {
-    values: {},
-    defaultValues: {}
-  }
+  state = {}
 
   static getDerivedStateFromProps({user}, state) {
-    const defaultValues = {
-      profile: {
+    return _.merge(
+      {
         name: user.name,
-        phone: user.phone
-      },
-      email: {
+        phone: user.phone,
         email: user.email
-      }
-    }
-    return {
-      values: _.merge(defaultValues, state.values),
-      defaultValues
-    }
+      },
+      state
+    )
   }
 
-  onChangeForm = (key) => (value) =>
-    this.setState(({values}) => ({
-      values: {
-        ...values,
-        [key]: value
-      }
-    }))
-
-  onSubmit = () => {
-    const {values, defaultValues} = this.state
-    const forms = [
-      ['email', this.props.onSubmitEmail],
-      ['password', this.props.onSubmitPassword],
-      ['profile', this.props.onSubmitProfile]
-    ]
-    forms.forEach(([key, onSubmit]) => {
-      const form = this.forms[key].current
-      const formValue = values[key]
-      if (
-        formValue &&
-        form.onValidate() &&
-        !_.isEqual(formValue, defaultValues[key])
-      )
-        onSubmit(formValue)
-    })
-  }
+  onChange = (value) => this.setState(value)
 
   render() {
-    const {onSignOut} = this.props
-    const {values} = this.state
+    const {onSubmit, onChangePassword} = this.props
 
     return (
-      <Form onSubmit={this.onSubmit} value={values} style={styles.container}>
-        <Section title="Perfil">
-          <ProfileForm
-            value={values.profile}
-            formRef={this.forms.profile}
-            onChange={this.onChangeForm('profile')}
+      <Form onSubmit={onSubmit} value={this.state} style={styles.container}>
+        <Section title="Nome">
+          <TextInput
+            name="name"
+            placeholder="Nome"
+            validations={[required('O nome é obrigatório')]}
           />
+        </Section>
+        <Section title="Telefone">
+          <Phone name="phone" validations={[required(false)]} />
         </Section>
         <Section title="Email">
-          <EmailForm
-            value={values.email}
-            formRef={this.forms.email}
-            onChange={this.onChangeForm('email')}
-          />
+          <Email name="email" />
         </Section>
-        <Section title="Alterar senha">
-          <PasswordForm
-            value={values.password}
-            formRef={this.forms.password}
-            onChange={this.onChangeForm('password')}
-          />
-        </Section>
-        <Button onPress={onSignOut} icon="sign-out">
+        <Button onPress={onChangePassword} icon="chevron-right">
           Sair
         </Button>
       </Form>

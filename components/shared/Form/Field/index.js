@@ -41,7 +41,7 @@ const mergeValidations = _.flow(
   _.uniqBy((fun) => fun.name)
 )
 
-export const field = (options) => (Target) => (props) => (
+export const field = (options = {}) => (Target) => (props) => (
   <FieldView
     {...props}
     {...options}

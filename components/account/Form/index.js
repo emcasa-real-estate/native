@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import React, {Component} from 'react'
+import {View} from 'react-native'
 
 import {required} from '@/lib/validations'
 import Form from '@/components/shared/Form/Form'
@@ -37,21 +38,23 @@ export default class EditAccountForm extends Component {
 
     return (
       <Form onSubmit={onSubmit} value={this.state} style={styles.container}>
-        <Section title="Nome">
-          <TextInput
-            name="name"
-            placeholder="Nome"
-            validations={[required('O nome é obrigatório')]}
-          />
-        </Section>
-        <Section title="Telefone">
-          <Phone name="phone" validations={[required(false)]} />
-        </Section>
-        <Section title="Email">
-          <Email name="email" />
-        </Section>
+        <View style={styles.body}>
+          <Section title="Nome completo">
+            <TextInput
+              name="name"
+              placeholder="Nome"
+              validations={[required('O nome é obrigatório')]}
+            />
+          </Section>
+          <Section title="Endereço de email">
+            <Email name="email" />
+          </Section>
+          <Section title="Telefone">
+            <Phone name="phone" validations={[required(false)]} />
+          </Section>
+        </View>
         <Button onPress={onChangePassword} icon="chevron-right">
-          Sair
+          Alterar senha
         </Button>
       </Form>
     )

@@ -24,7 +24,7 @@ export default function Navigation({user, navigation}) {
       </Button>
       {user ? (
         <Button icon="user" onPress={navigateTo('account')}>
-          Minha Conta
+          Perfil
         </Button>
       ) : (
         <Button icon="user" onPress={navigateTo('auth')}>

@@ -7,8 +7,8 @@ import Form from '@/components/shared/Form/Form'
 import Email from '@/components/shared/Form/Email'
 import Phone from '@/components/shared/Form/Phone'
 import TextInput from '@/components/shared/Form/TextInput'
-import Section from './Section'
-import Button from './Button'
+import Button from '../FormButton'
+import Section from '../FormSection'
 import styles from './styles'
 
 export default class ProfileForm extends Component {
@@ -20,8 +20,8 @@ export default class ProfileForm extends Component {
     const {onSubmit, onChangePassword} = this.props
 
     return (
-      <Form onSubmit={onSubmit} value={this.value} style={styles.container}>
-        <View style={styles.body}>
+      <View style={styles.container}>
+        <Form onSubmit={onSubmit} value={this.value} style={styles.form}>
           <Section title="Nome completo">
             <TextInput
               name="name"
@@ -35,11 +35,11 @@ export default class ProfileForm extends Component {
           <Section title="Telefone">
             <Phone name="phone" validations={[required(false)]} />
           </Section>
-        </View>
+        </Form>
         <Button onPress={onChangePassword} icon="chevron-right">
           Alterar senha
         </Button>
-      </Form>
+      </View>
     )
   }
 }

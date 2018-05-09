@@ -1,5 +1,5 @@
 import Shell from '@/containers/shared/Shell'
-import Form from '@/components/account/EditForm'
+import Form from '@/containers/account/Form'
 
 export default function AccountScreen() {
   return (

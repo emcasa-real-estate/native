@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import {Component} from 'react'
 
 import Form from '@/components/shared/Form/Form'
@@ -9,7 +10,24 @@ import styles from './styles'
 
 export default class EditAccountForm extends Component {
   state = {
-    values: {}
+    values: {},
+    defaultValues: {}
+  }
+
+  static getDerivedStateFromProps({user}, state) {
+    const defaultValues = {
+      profile: {
+        name: user.name,
+        phone: user.phone
+      },
+      email: {
+        email: user.email
+      }
+    }
+    return {
+      values: _.merge(defaultValues, state.values),
+      defaultValues
+    }
   }
 
   onChangeForm = (key) => (value) =>
@@ -20,8 +38,18 @@ export default class EditAccountForm extends Component {
       }
     }))
 
-  onSubmit = (values) => {
-    const {onSubmit} = this.props
+  onSubmit = () => {
+    const {values, defaultValues} = this.state
+    const forms = [
+      ['email', this.props.onSubmitEmail],
+      ['password', this.props.onSubmitPassword],
+      ['profile', this.props.onSubmitProfile]
+    ]
+    forms.forEach(([key, onSubmit]) => {
+      const formValue = values[key]
+      if (formValue && !_.isEqual(formValue, defaultValues[key]))
+        onSubmit(formValue)
+    })
   }
 
   render() {

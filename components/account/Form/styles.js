@@ -3,13 +3,11 @@ import {StyleSheet} from 'react-native'
 import * as colors from '@/assets/colors'
 
 export default StyleSheet.create({
-  container: {
-    paddingLeft: 20,
-    paddingRight: 20
-  },
   section: {
     paddingTop: 15,
     paddingBottom: 10,
+    marginLeft: 20,
+    marginRight: 20,
     borderBottomColor: colors.gray.lighter,
     borderBottomWidth: 1
   },
@@ -18,5 +16,18 @@ export default StyleSheet.create({
     fontWeight: '500',
     color: colors.gray.mediumDark,
     marginBottom: 10
+  },
+  button: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 15,
+    borderTopColor: colors.gray.lighter,
+    borderTopWidth: 1,
+    marginTop: -1
   }
 })
+
+export const buttonIconColor = colors.gray.mediumDark
+export const buttonUnderlayColor = colors.gray.offWhite

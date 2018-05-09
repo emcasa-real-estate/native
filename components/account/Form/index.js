@@ -6,6 +6,7 @@ import Section from './Section'
 import EmailForm from './Email'
 import PasswordForm from './Password'
 import ProfileForm from './Profile'
+import Button from './Button'
 import styles from './styles'
 
 export default class EditAccountForm extends Component {
@@ -64,7 +65,9 @@ export default class EditAccountForm extends Component {
   }
 
   render() {
+    const {onSignOut} = this.props
     const {values} = this.state
+
     return (
       <Form onSubmit={this.onSubmit} value={values} style={styles.container}>
         <Section title="Perfil">
@@ -88,6 +91,9 @@ export default class EditAccountForm extends Component {
             onChange={this.onChangeForm('password')}
           />
         </Section>
+        <Button onPress={onSignOut} icon="sign-out">
+          Sair
+        </Button>
       </Form>
     )
   }

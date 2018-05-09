@@ -7,7 +7,7 @@ import {
   EDIT_PASSWORD,
   EDIT_PROFILE
 } from '@/lib/graphql/mutations/account'
-import {patch} from '@/redux/modules/auth'
+import {patch, signOut} from '@/redux/modules/auth'
 import {getUser} from '@/redux/modules/auth/selectors'
 import Form from '@/components/account/Form'
 
@@ -28,20 +28,27 @@ const createMutation = (QUERY, name) =>
   (state) => ({
     user: getUser(state)
   }),
-  {patch}
+  {patch, signOut}
 )
 @createMutation(EDIT_EMAIL, 'changeEmail')
 @createMutation(EDIT_PASSWORD, 'changePassword')
 @createMutation(EDIT_PROFILE, 'editUserProfile')
-export default class FormApp extends Component {
+export default class EditAccountFormApp extends Component {
   render() {
-    const {user, changeEmail, changePassword, editUserProfile} = this.props
+    const {
+      user,
+      changeEmail,
+      changePassword,
+      editUserProfile,
+      signOut
+    } = this.props
     return (
       <Form
         user={user}
         onSubmitEmail={changeEmail}
         onSubmitPassword={changePassword}
         onSubmitProfile={editUserProfile}
+        onSignOut={signOut}
       />
     )
   }

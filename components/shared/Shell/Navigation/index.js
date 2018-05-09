@@ -3,7 +3,7 @@ import styles from './styles'
 
 import Button from './Button'
 
-export default function Navigation({user, navigation, onLogout}) {
+export default function Navigation({user, navigation}) {
   const navigateTo = (scene) => () => navigation.navigate(scene)
   const active = navigation.state.route || navigation.state.routeName
   return (

@@ -1,26 +1,43 @@
 import _ from 'lodash/fp'
 import React, {Component} from 'react'
-import {View} from 'react-native'
+import geolib from 'geolib'
 
 import Marker from './Marker'
 
-const {sin, cos, pow, sqrt, atan2} = Math
-// Radius of the earth in Km
-const R = 6372.8
-const angle2rad = (x) => Math.PI * x / 180
-const coord2rad = ({lat, lng}) => ({lat: angle2rad(lat), lng: angle2rad(lng)})
-const hav = (x) => pow(sin(x / 2), 2)
-// Haversine distance between a and b in Km
-const distance = _.flow(
-  ([a, b]) => [coord2rad(a), coord2rad(b)],
-  ([a, b]) => hav(a.lat - b.lat) + hav(a.lng - b.lng) * cos(a.lat) * cos(b.lat),
-  (x) => atan2(sqrt(x, 2), sqrt(1 - x, 2)) * 2 * R
-)
+const coord = ({lat, lng}) => ({latitude: lat, longitude: lng})
+const getDistance = (a, b) => geolib.getDistance(coord(a), coord(b)) / 1000
+const isWithinCircle = (a, b, distance) =>
+  geolib.isPointInCircle(coord(a), coord(b), distance * 1000)
+const getCenter = (points) => {
+  const point = geolib.getCenterOfBounds(points.map(coord))
+  return {
+    lng: parseFloat(point.longitude),
+    lat: parseFloat(point.latitude)
+  }
+}
 
-const average = (a, b) => ({
-  lat: (a.lat + b.lat) / 2,
-  lng: (a.lng + b.lng) / 2
-})
+const closestPoint = (point, groups, range) =>
+  groups.reduce((closest, group, index) => {
+    const distance = getDistance(point, group.center)
+    const closestGroup = closest && groups[closest.index]
+    const isWithin = isWithinCircle(point, group.center, range)
+    const isCloser = !closestGroup || closestGroup.distance > distance
+    if (isWithin && isCloser) return {index, distance}
+    return closest
+  }, null)
+const groupMarkers = (distance) => (groups, point) => {
+  const closest = closestPoint(point, groups, distance)
+  if (closest) {
+    const group = groups[closest.index]
+    const children = group.children.concat(point)
+    groups[closest.index] = {
+      center: getCenter(children),
+      children
+    }
+  } else
+    groups.push({center: {lng: point.lng, lat: point.lat}, children: [point]})
+  return groups
+}
 
 export default class MarkerAggregator extends Component {
   static defaultProps = {
@@ -29,27 +46,19 @@ export default class MarkerAggregator extends Component {
 
   state = {}
 
-  static getDerivedStateFromProps({children, distance: diameter}) {
-    const groups = []
-    React.Children.forEach(children, ({props: {address}}, i) => {
-      const {lat, lng} = address
-      let min
-      const distances = groups.map((group, index) => ({
-        value: distance([address, group]),
-        index
-      }))
-      for (const {value, index} of distances) {
-        if (value <= diameter && (!min || value < min.value))
-          min = {value, index}
-      }
-      if (min) {
-        groups[min.index] = {
-          ...average(address, groups[min.index]),
-          children: groups[min.index].children.concat(i)
-        }
-      } else groups.push({lat, lng, children: [i]})
-    })
-    return {groups}
+  static getDerivedStateFromProps({children, distance}) {
+    const points = React.Children.map(children, ({props: {address}}, i) => ({
+      index: i,
+      lng: address.lng,
+      lat: address.lat
+    }))
+    const groups = points.reduce(groupMarkers(distance), []).map((group) => ({
+      ...group,
+      key: group.children.map((point) => point.index).join(',')
+    }))
+    return {
+      groups
+    }
   }
 
   render() {
@@ -57,8 +66,8 @@ export default class MarkerAggregator extends Component {
     const {groups} = this.state
 
     if (!enabled) return children
-    return groups.map(({children, ...props}) => (
-      <Marker key={`${children.join(',')}`} {...props}>
+    return groups.map(({key, children, center}) => (
+      <Marker key={key} {...center}>
         {children.length}
       </Marker>
     ))

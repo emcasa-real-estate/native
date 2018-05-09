@@ -3,9 +3,9 @@ import Phone from '@/components/shared/Form/Phone'
 import TextInput from '@/components/shared/Form/TextInput'
 import {required} from '@/lib/validations'
 
-export default function EditProfileForm({onChange, value}) {
+export default function EditProfileForm({onChange, value, formRef}) {
   return (
-    <Form onChange={onChange} value={value}>
+    <Form formRef={formRef} onChange={onChange} value={value}>
       <TextInput
         name="name"
         placeholder="Nome"

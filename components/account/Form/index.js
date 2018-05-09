@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import {Component} from 'react'
+import React, {Component} from 'react'
 
 import Form from '@/components/shared/Form/Form'
 import Section from './Section'
@@ -9,6 +9,12 @@ import ProfileForm from './Profile'
 import styles from './styles'
 
 export default class EditAccountForm extends Component {
+  forms = {
+    email: React.createRef(),
+    password: React.createRef(),
+    profile: React.createRef()
+  }
+
   state = {
     values: {},
     defaultValues: {}
@@ -45,6 +51,8 @@ export default class EditAccountForm extends Component {
       ['password', this.props.onSubmitPassword],
       ['profile', this.props.onSubmitProfile]
     ]
+    console.log(this.forms)
+    return
     forms.forEach(([key, onSubmit]) => {
       const formValue = values[key]
       if (formValue && !_.isEqual(formValue, defaultValues[key]))
@@ -58,20 +66,23 @@ export default class EditAccountForm extends Component {
       <Form onSubmit={this.onSubmit} value={values} style={styles.container}>
         <Section title="Perfil">
           <ProfileForm
-            onChange={this.onChangeForm('profile')}
             value={values.profile}
+            formRef={this.forms.profile}
+            onChange={this.onChangeForm('profile')}
           />
         </Section>
         <Section title="Email">
           <EmailForm
-            onChange={this.onChangeForm('email')}
             value={values.email}
+            formRef={this.forms.email}
+            onChange={this.onChangeForm('email')}
           />
         </Section>
         <Section title="Alterar senha">
           <PasswordForm
-            onChange={this.onChangeForm('password')}
             value={values.password}
+            formRef={this.forms.password}
+            onChange={this.onChangeForm('password')}
           />
         </Section>
       </Form>

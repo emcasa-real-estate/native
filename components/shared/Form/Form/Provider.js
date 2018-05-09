@@ -18,9 +18,11 @@ export const form = (Target) => ({
   onValidate,
   onSubmit,
   value,
+  formRef,
   ...props
 }) => (
   <FormProvider
+    ref={formRef}
     onChange={onChange}
     onValidate={onValidate}
     onSubmit={onSubmit}
@@ -100,6 +102,10 @@ export default class FormProvider extends PureComponent {
     const {onSubmit} = this.props
     const {value} = this.state
     if (onSubmit) onSubmit(value)
+  }
+
+  get isValid() {
+    return this.state.valid
   }
 
   get value() {

@@ -1,8 +1,8 @@
-import _ from 'lodash'
 import {Component} from 'react'
 import {View} from 'react-native'
 import {Gateway} from 'react-gateway'
 
+import {required} from '@/lib/validations'
 import Form from '@/components/shared/Form/Form'
 import Password from '@/components/shared/Form/Password'
 import Header from '@/components/shared/Form/SubmitHeader'
@@ -16,7 +16,10 @@ export default class PasswordForm extends Component {
 
   onSubmit = () => this.props.onSubmit(this.state)
 
-  validateEquals = (field) => (value) => this.state[field] === value
+  validatePasswordConfirmation = (value) => {
+    if (value && this.state.newPassword !== value)
+      return 'A senha está incorreta'
+  }
 
   render() {
     return (
@@ -31,10 +34,14 @@ export default class PasswordForm extends Component {
         <Form value={this.state} onChange={this.onChange} style={styles.form}>
           <Section title="Senha atual">
             <Password name="currentPassword" />
+          </Section>
+          <Section title="Nova senha">
             <Password name="newPassword" />
+          </Section>
+          <Section title="Confirmar nova senha">
             <Password
               name="confirmNewPassword"
-              validations={[this.validateEquals('newPassword')]}
+              validations={[this.validatePasswordConfirmation]}
             />
           </Section>
         </Form>

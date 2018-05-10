@@ -1,10 +1,15 @@
 import {View} from 'react-native'
 
+import {Gateway} from 'react-gateway'
 import Button from '../FormButton'
+import Header from './Header'
 
-export default function AccountMenu({onEditProfile, onSignOut}) {
+export default function AccountMenu({user, onEditProfile, onSignOut}) {
   return (
     <View>
+      <Gateway into="header">
+        <Header user={user} />
+      </Gateway>
       <Button onPress={onEditProfile} icon="chevron-right">
         Editar perfil
       </Button>

@@ -9,6 +9,8 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 15,
+    paddingLeft: 20,
+    paddingRight: 20,
     borderBottomColor: colors.gray.lighter,
     borderBottomWidth: 1
   },

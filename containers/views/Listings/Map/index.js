@@ -8,16 +8,26 @@ import Feed from '@/containers/listings/Feed/Map'
 import ListButton from '@/components/listings/Feed/Button'
 import styles from './styles'
 
-const zoom = ({longitudeDelta}) => Math.PI * _.round(longitudeDelta, 10) / 180
+const zoom = ({longitudeDelta}) =>
+  Math.round(Math.log(360 / longitudeDelta) / Math.LN2)
+
+// https://gis.stackexchange.com/a/127949
+const kmPerPx = ({lat, zoom}) =>
+  156.54303392 * Math.cos(lat * Math.PI / 180) / Math.pow(2, zoom)
 
 export default class MapScreen extends Component {
   state = {
     active: undefined,
+    lat: 0.01,
     zoom: zoom({longitudeDelta: 0.09999999999993747})
   }
 
   onRegionChange = _.debounce((region) => {
-    this.setState({zoom: zoom(region)})
+    this.setState({
+      zoom: zoom(region),
+      lat: region.latitude,
+      lng: region.longitude
+    })
   }, 200)
 
   onSelect = (id) => {
@@ -44,8 +54,8 @@ export default class MapScreen extends Component {
           <Map
             onRegionChange={this.onRegionChange}
             onSelect={this.onSelect}
-            distance={500 * zoom + Math.pow(3.9, zoom * 100) - 1}
-            aggregate={zoom > 0.0007}
+            distance={kmPerPx(this.state) * 25}
+            aggregate={zoom < 13}
             active={active}
             type="search"
           />

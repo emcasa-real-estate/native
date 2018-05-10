@@ -17,10 +17,14 @@ steps:
   command:
   - .buildkite/run ios setup,build --profile debug
   branches: "!master"
+  concurrency: 1
+  concurrency_group: "build:ios"
 - label: 'build:android'
   command:
   - .buildkite/run android setup,build --profile debug
   branches: "!master"
+  concurrency: 2
+  concurrency_group: "build:android"
 - wait
 - block: "Beta"
   branches: "!master"
@@ -31,6 +35,8 @@ steps:
     API_URL: https://em-casa-backend-staging.herokuapp.com
   agents:
     queue: deploy
+  concurrency: 1
+  concurrency_group: "beta:ios"
 - label: 'beta:android'
   command:
   - .buildkite/run android setup,assets,bump,build,deploy --profile beta
@@ -38,6 +44,8 @@ steps:
     API_URL: https://em-casa-backend-staging.herokuapp.com
   agents:
     queue: deploy
+  concurrency: 1
+  concurrency_group: "beta:android"
 - block: ":rocket: Release"
 - label: 'release:ios'
   command:

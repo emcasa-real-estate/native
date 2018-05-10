@@ -14,12 +14,17 @@ import Section from '../FormSection'
 import styles from './styles'
 
 export default class ProfileForm extends Component {
-  get value() {
-    return _.pick(this.props.user, ['name', 'phone', 'email'])
+  constructor(props) {
+    super(props)
+    this.state = _.pick(props.user, ['name', 'phone', 'email'])
   }
 
+  onChange = (value) => this.setState(value)
+
+  onSubmit = () => this.props.onSubmit(this.state)
+
   render() {
-    const {onSubmit, onChangePassword} = this.props
+    const {onChangePassword} = this.props
 
     return (
       <View style={styles.container}>
@@ -27,10 +32,10 @@ export default class ProfileForm extends Component {
           <Header
             title="Editar perfil"
             buttonText="Salvar"
-            onSubmit={onSubmit}
+            onSubmit={this.onSubmit}
           />
         </Gateway>
-        <Form value={this.value} style={styles.form}>
+        <Form value={this.state} onChange={this.onChange} style={styles.form}>
           <Section title="Nome completo">
             <TextInput
               name="name"

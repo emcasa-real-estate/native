@@ -1,3 +1,4 @@
+import _ from 'lodash/fp'
 import React from 'react'
 import {PureComponent} from 'react'
 import {View, KeyboardAvoidingView} from 'react-native'
@@ -35,8 +36,17 @@ export default class FieldView extends PureComponent {
   }
 }
 
-export const field = (options) => (Target) => (props) => (
-  <FieldView {...props} {...options}>
+const mergeValidations = _.flow(
+  (a = [], b = []) => b.concat(a),
+  _.uniqBy((fun) => fun.name)
+)
+
+export const field = (options = {}) => (Target) => (props) => (
+  <FieldView
+    {...props}
+    {...options}
+    validations={mergeValidations(options.validations, props.validations)}
+  >
     <Target {...props} />
   </FieldView>
 )

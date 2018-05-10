@@ -3,7 +3,7 @@ import styles from './styles'
 
 import Button from './Button'
 
-export default function Navigation({user, active, onNavigate, onLogout}) {
+export default function Navigation({user, active, onNavigate}) {
   return (
     <View style={styles.container}>
       <Button
@@ -21,8 +21,8 @@ export default function Navigation({user, active, onNavigate, onLogout}) {
         Salvos
       </Button>
       {user ? (
-        <Button icon="sign-out" onPress={onLogout}>
-          Sair
+        <Button icon="user" onPress={onNavigate('account')}>
+          Perfil
         </Button>
       ) : (
         <Button icon="user" onPress={onNavigate('auth')}>

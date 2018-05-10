@@ -6,10 +6,10 @@ export default field({
   validations: [required('A senha é obrigatória')]
 })(({onChange, valid, ...props}) => (
   <TextInput
-    {...props}
     secureTextEntry
     invalid={!valid}
     placeholder="Senha"
     onChangeText={onChange}
+    {...props}
   />
 ))

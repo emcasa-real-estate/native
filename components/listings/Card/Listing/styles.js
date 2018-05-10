@@ -33,7 +33,7 @@ export default $StyleSheet({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'baseline',
     marginBottom: 5
   },
   street: {
@@ -44,6 +44,7 @@ export default $StyleSheet({
   },
   neighborhood: {
     color: colors.gray.mediumDark,
+    fontSize: 12,
     fontWeight: '600'
   },
   priceText: {

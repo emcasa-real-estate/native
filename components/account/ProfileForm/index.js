@@ -25,7 +25,7 @@ export default class ProfileForm extends Component {
       <View style={styles.container}>
         <Gateway into="header">
           <Header
-            title="Editar Perfil"
+            title="Editar perfil"
             buttonText="Salvar"
             onSubmit={onSubmit}
           />

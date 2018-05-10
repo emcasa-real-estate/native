@@ -11,7 +11,7 @@ export default class AccountMenuScreen extends Component {
 
   render() {
     return (
-      <Shell scroll title="Editar Perfil">
+      <Shell scroll>
         <Menu onEditProfile={this.onEditProfile} />
       </Shell>
     )

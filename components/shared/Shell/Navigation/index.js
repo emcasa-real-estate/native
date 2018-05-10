@@ -21,9 +21,9 @@ export default function Navigation({user, active, onNavigate}) {
         Salvos
       </Button>
       <Button
-        active={active === 'profile'}
+        active={active === 'account'}
         icon="user"
-        onPress={onNavigate(user ? 'profile' : 'auth')}
+        onPress={onNavigate(user ? 'account' : 'auth')}
       >
         {user ? 'Perfil' : 'Login'}
       </Button>

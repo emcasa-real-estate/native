@@ -1,4 +1,4 @@
-import {Component} from 'react'
+import React, {Component} from 'react'
 import {View} from 'react-native'
 import {Gateway} from 'react-gateway'
 
@@ -11,9 +11,13 @@ import styles from './styles'
 export default class PasswordForm extends Component {
   state = {}
 
+  form = React.createRef()
+
   onChange = (value) => this.setState(value)
 
-  onSubmit = () => this.props.onSubmit(this.state)
+  onSubmit = () => {
+    if (this.form.current.onValidate()) this.props.onSubmit(this.state)
+  }
 
   validatePasswordConfirmation = (value) => {
     if (value && this.state.newPassword !== value)
@@ -30,7 +34,12 @@ export default class PasswordForm extends Component {
             onSubmit={this.onSubmit}
           />
         </Gateway>
-        <Form value={this.state} onChange={this.onChange} style={styles.form}>
+        <Form
+          formRef={this.form}
+          value={this.state}
+          onChange={this.onChange}
+          style={styles.form}
+        >
           <Section title="Senha atual">
             <Password name="currentPassword" />
           </Section>

@@ -3,31 +3,29 @@ import styles from './styles'
 
 import Button from './Button'
 
-export default function Navigation({user, navigation}) {
-  const navigateTo = (scene) => () => navigation.navigate(scene)
-  const active = navigation.state.route || navigation.state.routeName
+export default function Navigation({user, active, onNavigate}) {
   return (
     <View style={styles.container}>
       <Button
-        active={active === 'results'}
+        active={active === 'listings'}
         icon="search"
-        onPress={navigateTo('listings')}
+        onPress={onNavigate('listings')}
       >
         Buscar
       </Button>
       <Button
         active={active === 'favorites'}
         icon="heart"
-        onPress={navigateTo('favorites')}
+        onPress={onNavigate('favorites')}
       >
         Salvos
       </Button>
       {user ? (
-        <Button icon="user" onPress={navigateTo('profile')}>
+        <Button icon="user" onPress={onNavigate('profile')}>
           Perfil
         </Button>
       ) : (
-        <Button icon="user" onPress={navigateTo('auth')}>
+        <Button icon="user" onPress={onNavigate('auth')}>
           Login
         </Button>
       )}

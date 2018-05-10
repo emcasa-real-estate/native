@@ -1,17 +1,12 @@
-import {Platform} from 'react-native'
-
 import StyleSheet from '@/assets/StyleSheet'
 import * as colors from '@/assets/colors'
 import {elevation} from '@/assets/styles'
 
 export default StyleSheet({
-  wrapper: {
+  container: {
     flex: 1,
     backgroundColor: 'white',
     position: 'relative'
-  },
-  container: {
-    flex: 1
   },
   main: {
     flex: 1,

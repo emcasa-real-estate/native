@@ -2,7 +2,6 @@ import {Component} from 'react'
 import {View} from 'react-native'
 import {Gateway} from 'react-gateway'
 
-import {required} from '@/lib/validations'
 import Form from '@/components/shared/Form/Form'
 import Password from '@/components/shared/Form/Password'
 import Header from '@/components/shared/Form/SubmitHeader'

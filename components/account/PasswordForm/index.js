@@ -16,7 +16,12 @@ export default class PasswordForm extends Component {
 
   componentDidUpdate(prev) {
     const {loading, error} = this.props
-    if (prev.loading !== loading && !error) this.setState({})
+    if (prev.loading !== loading && !loading && !error)
+      this.setState({
+        currentPassword: null,
+        newPassword: null,
+        confirmNewPassword: null
+      })
   }
 
   onChange = (value) => this.setState(value)

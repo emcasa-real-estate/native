@@ -3,7 +3,7 @@ import Form from '@/containers/account/ProfileForm'
 
 export default function EditProfileScreen({navigation}) {
   return (
-    <Shell scroll>
+    <Shell scroll header={null}>
       <Form onChangePassword={() => navigation.navigate('editPassword')} />
     </Shell>
   )

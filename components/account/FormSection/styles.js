@@ -12,5 +12,8 @@ export default StyleSheet.create({
     fontWeight: '600',
     color: colors.gray.dark,
     marginBottom: 10
+  },
+  activeTitle: {
+    color: colors.blue.medium
   }
 })

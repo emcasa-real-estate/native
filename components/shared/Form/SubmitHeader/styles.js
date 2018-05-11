@@ -20,10 +20,17 @@ export default StyleSheet.create({
     color: colors.gray.dark
   },
   resetButton: {
+    position: 'relative',
+    marginRight: 15
+  },
+  activityIndicator: {
+    position: 'absolute',
+    paddingLeft: 10
+  },
+  resetLink: {
     fontSize: 14,
     color: colors.blue.medium,
-    fontWeight: '500',
-    marginRight: 15
+    fontWeight: '500'
   },
   button: {
     marginLeft: 10

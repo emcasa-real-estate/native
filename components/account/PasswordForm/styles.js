@@ -6,6 +6,16 @@ export default StyleSheet.create({
   form: {
     paddingTop: 20,
     paddingBottom: 15
+  },
+  input: {
+    borderColor: colors.gray.light
+  },
+  error: {
+    fontSize: 16,
+    color: colors.red.medium,
+    marginBottom: 20,
+    marginLeft: 20,
+    marginRight: 20
   }
 })
 

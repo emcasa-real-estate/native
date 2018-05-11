@@ -11,7 +11,7 @@ export default StyleSheet({
     borderColor: colors.gray.light,
     ...padding(Platform.OS === 'ios' ? 14 : 3, 14),
     ':value': {
-      borderColor: colors.blue.pastel
+      borderColor: colors.blue.medium
     },
     ':invalid': {
       borderColor: colors.red.medium

@@ -1,11 +1,11 @@
 import {Component} from 'react'
 import {View, StatusBar, SafeAreaView} from 'react-native'
-import {StackNavigator} from 'react-navigation'
+import {createStackNavigator} from 'react-navigation'
 
 import OrientationProvider from '@/containers/shared/Orientation/Provider'
 import views from '@/containers/views'
 
-const Stack = StackNavigator(views, {
+const Stack = createStackNavigator(views, {
   initialRouteName: 'listings',
   initialRouteParams: {},
   headerMode: 'float',

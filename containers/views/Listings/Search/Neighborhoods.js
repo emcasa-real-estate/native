@@ -4,7 +4,7 @@ import {NavigationActions} from 'react-navigation'
 import {MultiSelectOptions} from '@/components/listings/Search/Field'
 import {withNeighborhoods} from '@/containers/neighborhoods/Loader'
 import Shell, {Footer} from '@/containers/shared/Shell'
-import Header from '@/components/listings/Search/Header'
+import Header from '@/components/shared/Form/SubmitHeader'
 
 @withNeighborhoods
 export default class NeighborhoodsScreen extends Component {
@@ -41,8 +41,9 @@ export default class NeighborhoodsScreen extends Component {
         header={
           <Header
             title="Bairros"
+            buttonText="Limpar"
             onReturn={this.onReturn}
-            onReset={this.onReset}
+            onSubmit={this.onReset}
           />
         }
         footer={<Footer label="Selecionar" onPress={this.onReturn} />}

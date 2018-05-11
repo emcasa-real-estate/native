@@ -3,7 +3,7 @@ import Form from '@/containers/account/ProfileForm'
 
 export default function AccountScreen() {
   return (
-    <Shell scroll title="Minha conta">
+    <Shell scroll>
       <Form />
     </Shell>
   )

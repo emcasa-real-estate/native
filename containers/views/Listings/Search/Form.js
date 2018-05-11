@@ -3,7 +3,7 @@ import {Component} from 'react'
 import {NavigationActions} from 'react-navigation'
 
 import Shell, {Footer} from '@/containers/shared/Shell'
-import Header from '@/components/listings/Search/Header'
+import Header from '@/components/shared/Form/SubmitHeader'
 import Form from '@/components/listings/Search/Form'
 
 export default class SearchFormScreen extends Component {
@@ -43,8 +43,9 @@ export default class SearchFormScreen extends Component {
         header={
           <Header
             title="Filtrar busca"
+            buttonText="Limpar"
             onReturn={this.onReturn}
-            onReset={this.onReset}
+            onSubmit={this.onReset}
           />
         }
         footer={<Footer label="Filtrar resultados" onPress={this.onReturn} />}

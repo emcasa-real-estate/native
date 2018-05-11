@@ -8,12 +8,14 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 15,
+    padding: 17,
+    paddingLeft: 20,
+    paddingRight: 20,
     borderBottomColor: colors.gray.lighter,
     borderBottomWidth: 1
   },
   text: {
-    fontSize: 17,
+    fontSize: 19,
     color: colors.blue.medium
   }
 })

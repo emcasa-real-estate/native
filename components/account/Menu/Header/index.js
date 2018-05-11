@@ -10,7 +10,7 @@ export default function Header({user}) {
   return (
     <View style={styles.container}>
       <Avatar />
-      <Text style={styles.title}>Olá, {firstName(user)}</Text>
+      {user && <Text style={styles.title}>Olá, {firstName(user)}</Text>}
     </View>
   )
 }

@@ -25,10 +25,13 @@ export default class PasswordForm extends Component {
   }
 
   render() {
+    const {loading} = this.props
+
     return (
       <View style={styles.container}>
         <Gateway into="header">
           <Header
+            loading={loading}
             title="Alterar senha"
             buttonText="Salvar"
             onSubmit={this.onSubmit}

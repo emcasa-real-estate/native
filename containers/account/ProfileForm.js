@@ -29,18 +29,26 @@ const createMutation = (QUERY, name) =>
 @createMutation(EDIT_EMAIL, 'changeEmail')
 @createMutation(EDIT_PROFILE, 'editUserProfile')
 export default class ProfileFormApp extends Component {
-  onSubmit = (value) => {
+  state = {
+    loading: false
+  }
+
+  onSubmit = async (value) => {
     const {user, changeEmail, editUserProfile} = this.props
-    if (user.email !== value.email) changeEmail({email: value.email})
+    this.setState({loading: true})
+    if (user.email !== value.email) await changeEmail({email: value.email})
     if (user.name !== value.name || user.phone !== value.phone)
-      editUserProfile({name: value.name, phone: value.phone})
+      await editUserProfile({name: value.name, phone: value.phone})
+    this.setState({loading: false})
   }
 
   render() {
     const {user, onChangePassword} = this.props
+    const {loading} = this.state
     return (
       <Form
         user={user}
+        loading={loading}
         onSubmit={this.onSubmit}
         onChangePassword={onChangePassword}
       />

@@ -30,12 +30,13 @@ export default class ProfileForm extends Component {
   isInputActive = (key) => this.state[key] !== this.props.user[key]
 
   render() {
-    const {onChangePassword} = this.props
+    const {onChangePassword, loading} = this.props
 
     return (
       <View style={styles.container}>
         <Gateway into="header">
           <Header
+            loading={loading}
             title="Editar perfil"
             buttonText="Salvar"
             onSubmit={this.onSubmit}

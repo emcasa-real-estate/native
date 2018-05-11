@@ -1,12 +1,8 @@
 import {WebView, View, Platform} from 'react-native'
-import WebkitView from 'react-native-webkit-webview'
 
 import styles from './styles'
 
-const WebGlView = Platform.select({
-  ios: WebView,
-  android: WebkitView
-})
+const hasWebglSupport = Platform.OS === 'ios' || Platform.Version >= 19 // >= Android 4.4 kitkat
 
 export default function Matterport({children, code, play, width, height}) {
   let uri = `https://my.matterport.com/show?play=0&m=${code}`
@@ -14,11 +10,12 @@ export default function Matterport({children, code, play, width, height}) {
   const display = {width, height}
   return (
     <View style={[styles.container, display]}>
-      {code && (
-        <View style={[styles.content, display]}>
-          <WebGlView source={{uri}} style={[styles.webview, display]} />
-        </View>
-      )}
+      {code &&
+        hasWebglSupport && (
+          <View style={[styles.content, display]}>
+            <WebView source={{uri}} style={[styles.webview, display]} />
+          </View>
+        )}
       <View style={[styles.fallback, display]}>{children}</View>
     </View>
   )

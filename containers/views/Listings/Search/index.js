@@ -1,9 +1,9 @@
-import {StackNavigator} from 'react-navigation'
+import {createStackNavigator} from 'react-navigation'
 
 import * as form from './Form'
 import * as neighborhoods from './Neighborhoods'
 
-export const screen = StackNavigator(
+export const screen = createStackNavigator(
   {
     form,
     neighborhoods

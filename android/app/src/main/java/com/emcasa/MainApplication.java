@@ -18,7 +18,6 @@ import com.facebook.soloader.SoLoader;
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 import com.smixx.fabric.FabricPackage;
-import com.jordansexton.react.crosswalk.webview.CrosswalkWebViewPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,12 +34,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new SvgPackage(),
+          new SvgPackage(),
           new OrientationPackage(),
           new PhotoViewPackage(),
           new MapsPackage(),
-          new FabricPackage(),
-          new CrosswalkWebViewPackage()
+          new FabricPackage()
       );
     }
 

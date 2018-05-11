@@ -7,11 +7,9 @@ import Provider from '@/containers/Provider'
 // https://github.com/facebook/react-native/issues/17504
 // https://github.com/react-navigation/react-navigation/issues/3956
 YellowBox.ignoreWarnings([
-  'Warning: componentWillMount is deprecated',
-  'Warning: componentWillUpdate is deprecated',
-  'Warning: componentWillReceiveProps is deprecated',
-  'Warning: isMounted(...) is deprecated',
-  'Module RCTImageLoader'
+  'Class RCTCxxModule was not exported',
+  'Module RCTImageLoader requires main queue setup',
+  'Warning: isMounted(...) is deprecated'
 ])
 
 AppRegistry.registerComponent('EmCasa', () => App)

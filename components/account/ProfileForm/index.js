@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import {Component} from 'react'
+import React, {Component} from 'react'
 import {View} from 'react-native'
 import {Gateway} from 'react-gateway'
 
@@ -14,6 +14,8 @@ import Section from '../FormSection'
 import styles from './styles'
 
 export default class ProfileForm extends Component {
+  form = React.createRef()
+
   constructor(props) {
     super(props)
     this.state = _.pick(props.user, ['name', 'phone', 'email'])
@@ -21,7 +23,9 @@ export default class ProfileForm extends Component {
 
   onChange = (value) => this.setState(value)
 
-  onSubmit = () => this.props.onSubmit(this.state)
+  onSubmit = () => {
+    if (this.form.current.onValidate()) this.props.onSubmit(this.state)
+  }
 
   render() {
     const {onChangePassword} = this.props
@@ -35,7 +39,12 @@ export default class ProfileForm extends Component {
             onSubmit={this.onSubmit}
           />
         </Gateway>
-        <Form value={this.state} onChange={this.onChange} style={styles.form}>
+        <Form
+          formRef={this.form}
+          value={this.state}
+          onChange={this.onChange}
+          style={styles.form}
+        >
           <Section title="Nome completo">
             <TextInput
               name="name"

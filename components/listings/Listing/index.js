@@ -40,7 +40,7 @@ export default class ListingView extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Thumbnail onOpen={this.onOpen} {...this.props} />
+          <Thumbnail active={active} onOpen={this.onOpen} {...this.props} />
           <View style={styles.heading}>
             <Text style={styles.h1}>{address.street}</Text>
             <Text style={styles.h2}>{address.neighborhood}</Text>

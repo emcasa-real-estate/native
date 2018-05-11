@@ -34,7 +34,7 @@ export default class ListingThumbnail extends Component {
   onViewTour = _.after(50, _.once(this.props.onViewTour))
 
   render() {
-    const {images, favorite, matterportCode, onFavorite} = this.props
+    const {active, images, favorite, matterportCode, onFavorite} = this.props
     const image = images[0] || {}
     let {width, height} = Dimensions.get('window')
     height = width * 0.64
@@ -46,9 +46,13 @@ export default class ListingThumbnail extends Component {
           onStartShouldSetResponder={() => true}
           onResponderMove={this.onViewTour}
         >
-          <Matterport code={matterportCode} width={width} height={height}>
-            <Image thumbnail {...image} width={width} height={height} />
-          </Matterport>
+          {active ? (
+            <Matterport code={matterportCode} width={width} height={height}>
+              <Image thumbnail {...image} width={width} height={height} />
+            </Matterport>
+          ) : (
+            <View style={{width, height}} />
+          )}
         </View>
         <View style={styles.actionRow}>
           <View style={styles.actionCell}>

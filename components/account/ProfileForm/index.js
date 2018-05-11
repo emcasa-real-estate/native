@@ -27,6 +27,8 @@ export default class ProfileForm extends Component {
     if (this.form.current.onValidate()) this.props.onSubmit(this.state)
   }
 
+  isInputActive = (key) => this.state[key] !== this.props.user[key]
+
   render() {
     const {onChangePassword} = this.props
 
@@ -45,17 +47,20 @@ export default class ProfileForm extends Component {
           onChange={this.onChange}
           style={styles.form}
         >
-          <Section title="Nome completo">
+          <Section active={this.isInputActive('name')} title="Nome completo">
             <TextInput
               name="name"
               placeholder="Nome"
               validations={[required('O nome é obrigatório')]}
             />
           </Section>
-          <Section title="Endereço de email">
+          <Section
+            active={this.isInputActive('email')}
+            title="Endereço de email"
+          >
             <Email name="email" />
           </Section>
-          <Section title="Telefone">
+          <Section active={this.isInputActive('phone')} title="Telefone">
             <Phone name="phone" validations={[required(false)]} />
           </Section>
         </Form>

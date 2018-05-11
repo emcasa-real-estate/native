@@ -18,14 +18,18 @@ import Form from '@/components/account/PasswordForm'
 export default class PasswordFormApp extends Component {
   state = {
     loading: false,
-    errors: null
+    error: null
   }
 
   onSubmit = async (data) => {
     const {changePassword} = this.props
     this.setState({loading: true})
-    const {loading, errors} = await changePassword(data)
-    this.setState({loading, errors})
+    try {
+      await changePassword(data)
+      this.setState({loading: false, error: null})
+    } catch (error) {
+      this.setState({loading: false, error})
+    }
   }
 
   render() {

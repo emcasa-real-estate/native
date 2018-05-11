@@ -56,13 +56,22 @@ export default class PasswordForm extends Component {
         >
           {error && <Text style={styles.error}>A senha está incorreta</Text>}
           <Section title="Senha atual">
-            <Password name="currentPassword" placeholder="Senha atual" />
+            <Password
+              style={styles.input}
+              name="currentPassword"
+              placeholder="Senha atual"
+            />
           </Section>
           <Section title="Nova senha">
-            <Password name="newPassword" placeholder="Nova senha" />
+            <Password
+              style={styles.input}
+              name="newPassword"
+              placeholder="Nova senha"
+            />
           </Section>
           <Section title="Confirmar nova senha">
             <Password
+              style={styles.input}
               name="confirmNewPassword"
               placeholder="Confirmar nova senha"
               validations={[this.validatePasswordConfirmation]}

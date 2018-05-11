@@ -8,6 +8,9 @@ export default StyleSheet.create({
     paddingBottom: 15,
     borderBottomColor: colors.gray.lighter,
     borderBottomWidth: 1
+  },
+  input: {
+    borderColor: colors.gray.light
   }
 })
 

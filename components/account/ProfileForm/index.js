@@ -50,6 +50,7 @@ export default class ProfileForm extends Component {
         >
           <Section active={this.isInputActive('name')} title="Nome completo">
             <TextInput
+              style={styles.input}
               name="name"
               placeholder="Nome"
               validations={[required('O nome é obrigatório')]}
@@ -59,10 +60,14 @@ export default class ProfileForm extends Component {
             active={this.isInputActive('email')}
             title="Endereço de email"
           >
-            <Email name="email" />
+            <Email style={styles.input} name="email" />
           </Section>
           <Section active={this.isInputActive('phone')} title="Telefone">
-            <Phone name="phone" validations={[required(false)]} />
+            <Phone
+              style={styles.input}
+              name="phone"
+              validations={[required(false)]}
+            />
           </Section>
         </Form>
         <Button onPress={onChangePassword} icon="chevron-right">

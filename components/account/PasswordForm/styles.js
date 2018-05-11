@@ -7,6 +7,9 @@ export default StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 15
   },
+  input: {
+    borderColor: colors.gray.light
+  },
   error: {
     fontSize: 16,
     color: colors.red.medium,

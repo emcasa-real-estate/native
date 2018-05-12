@@ -1,4 +1,3 @@
-// Runs before each test case
 import detox from 'detox'
 import pkg from '@/package.json'
 

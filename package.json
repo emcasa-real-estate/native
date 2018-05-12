@@ -16,7 +16,7 @@
     "log-android": "react-native log-android",
     "log-ios": "react-native log-ios",
     "test": "jest --config __test__/jest.config.js",
-    "e2e": "detox test -c ios.debug --platform ios"
+    "e2e": "scripts/e2e.sh"
   },
   "detox": {
     "specs": "__e2e__",

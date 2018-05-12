@@ -4,5 +4,5 @@ react-native bundle \
   --platform ios \
   --entry-file index.js \
   --assets-dest ios \
-  --bundle-output ios/main.jsbundle \
+  --bundle-output ios/EmCasa/main.jsbundle \
   $@

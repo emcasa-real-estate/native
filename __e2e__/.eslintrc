@@ -4,6 +4,7 @@
   },
   "globals": {
     "device": true,
+    "waitFor": true,
     "element": true,
     "by": true
   }

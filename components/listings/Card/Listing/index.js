@@ -16,6 +16,7 @@ function ListingCard({
   price,
   favorite,
   onFavorite,
+  testUniqueID,
   ...props
 }) {
   const image = images[0] || {}
@@ -25,38 +26,36 @@ function ListingCard({
     height: width * 0.64 - padding * 2
   }
   return (
-    <View
-      testID="@listings.Card.Listings"
-      style={styles.container.concat(style, {width})}
-      {...props}
-    >
-      <View style={styles.thumbnail}>
-        <TouchableOpacity
-          style={styles.iconButton}
-          onPress={onFavorite}
-          hitSlop={{
-            top: 15,
-            bottom: 15,
-            left: 15,
-            right: 15
-          }}
-        >
-          <LikeIcon contrast active={favorite} />
-        </TouchableOpacity>
-        <Image thumbnail style={styles.image} {...image} {...imageSize} />
-      </View>
-      <View style={styles.body}>
-        <View style={styles.row}>
-          <Text style={styles.street} numberOfLines={1} ellipsizeMode="tail">
-            {address.street}
-          </Text>
-          <Text style={styles.neighborhood}>
-            {address.neighborhood.toUpperCase()}
-          </Text>
+    <View style={styles.container.concat(style, {width})} {...props}>
+      <View testID={`@listings.Card.Listing(${testUniqueID})`}>
+        <View style={styles.thumbnail}>
+          <TouchableOpacity
+            style={styles.iconButton}
+            onPress={onFavorite}
+            hitSlop={{
+              top: 15,
+              bottom: 15,
+              left: 15,
+              right: 15
+            }}
+          >
+            <LikeIcon contrast active={favorite} />
+          </TouchableOpacity>
+          <Image thumbnail style={styles.image} {...image} {...imageSize} />
         </View>
-        <Price size={22} styles={{text: styles.priceText}}>
-          {price}
-        </Price>
+        <View style={styles.body}>
+          <View style={styles.row}>
+            <Text style={styles.street} numberOfLines={1} ellipsizeMode="tail">
+              {address.street}
+            </Text>
+            <Text style={styles.neighborhood}>
+              {address.neighborhood.toUpperCase()}
+            </Text>
+          </View>
+          <Price size={22} styles={{text: styles.priceText}}>
+            {price}
+          </Price>
+        </View>
       </View>
     </View>
   )

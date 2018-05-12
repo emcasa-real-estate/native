@@ -11,10 +11,15 @@ export default function ListingFeed({onSelect, pagination, Card, ...props}) {
   return (
     <FlatList
       {...props}
+      testID="@listings.Feed.Listing"
       pagination={pagination}
       keyExtractor={keyExtractor}
-      renderItem={({item}) => (
-        <Card onPress={createHandler(onSelect, item.id)} {...item} />
+      renderItem={({item, index}) => (
+        <Card
+          testUniqueID={index + 1}
+          onPress={createHandler(onSelect, item.id)}
+          {...item}
+        />
       )}
     />
   )

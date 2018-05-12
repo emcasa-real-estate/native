@@ -17,11 +17,10 @@
     "devtools": "react-devtools",
     "log-android": "react-native log-android",
     "log-ios": "react-native log-ios",
-    "test": "yarn test:unit && yarn test:e2e",
-    "test:unit": "jest --config __test__/jest.config.js",
-    "test:e2e": "./__e2e__/run",
-    "test:e2e:ios": "yarn test:e2e ios",
-    "test:e2e:android": "yarn test e2e android"
+    "test": "jest --config __test__/jest.config.js",
+    "e2e": "./__e2e__/run",
+    "e2e:ios": "yarn test:e2e ios",
+    "e2e:android": "yarn test e2e android"
   },
   "detox": {
     "specs": "__e2e__",

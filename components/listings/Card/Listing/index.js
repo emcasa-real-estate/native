@@ -25,7 +25,11 @@ function ListingCard({
     height: width * 0.64 - padding * 2
   }
   return (
-    <View style={styles.container.concat(style, {width})} {...props}>
+    <View
+      testID="@listings.Card.Listings"
+      style={styles.container.concat(style, {width})}
+      {...props}
+    >
       <View style={styles.thumbnail}>
         <TouchableOpacity
           style={styles.iconButton}

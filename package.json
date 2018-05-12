@@ -35,11 +35,11 @@
         "name": "iPhone 7"
       },
       "android.debug": {
-        "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
+        "binaryPath": "android/app/build/outputs/apk/app-debug.apk",
         "build":
           "pushd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && popd",
         "type": "android.emulator",
-        "name": "Nexus_5X_API_24_-_GPlay"
+        "name": "Nexus_5X_API_26"
       }
     }
   },

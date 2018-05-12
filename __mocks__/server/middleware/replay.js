@@ -4,7 +4,7 @@ const yakbak = require('yakbak')
 
 module.exports = ({port, replayMode}) =>
   yakbak(`http://localhost:${port}`, {
-    dirname: path.join(__dirname, 'fixtures'),
+    dirname: path.join(__dirname, '../fixtures'),
     noRecord: replayMode !== 'record',
     hash(req) {
       return crypt

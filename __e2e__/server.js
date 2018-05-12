@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-const _ = require('lodash')
 const path = require('path')
 const http = require('http')
 const crypt = require('crypto')

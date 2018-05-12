@@ -1,4 +1,4 @@
-// Jest `setupFiles` file - Runs before all tests
+// Jest `setupFiles` file - Runs before each test, before test framework
 import fs from 'fs'
 import path from 'path'
 

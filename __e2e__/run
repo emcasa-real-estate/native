@@ -1,18 +1,9 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 cd $(dirname $(dirname "$0"))
-
-case $1 in
-  help|--help)
-    echo "Usage: test.e2e.sh [platform] [-r|--release] [-R|--record]"
-    exit 0
-  ;;
-  android) PLATFORM=$1; shift;;
-  -*|"") PLATFORM=$([[ $OSTYPE == "darwin"* ]] && echo "ios" || echo "android");;
-  *) >&2 echo "Invalid platform $1"; exit 1;;
-esac
+export PLATFORM=${1:-android}; shift;
 
 PIDS=()
 
@@ -23,7 +14,6 @@ function close {
 
 trap close EXIT
 
-BUILD=
 BUILD_TYPE=debug
 export REPLAY_PORT=4040
 export API_URL=http://localhost:$REPLAY_PORT
@@ -32,7 +22,6 @@ while true; do
 case $1 in
   -r|--release) BUILD_TYPE=release; shift;;
   -R|--record) export REPLAY_MODE=record; shift;;
-  --build) BUILD=true; shift;;
   *) break;;
 esac
 done

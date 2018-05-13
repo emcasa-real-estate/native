@@ -1,6 +1,6 @@
 import * as elements from './elements'
 
-describe('<Landing />', () => {
+describe('listings/results', () => {
   it('loads more listings on scroll', async () => {
     await waitFor(elements.feed())
       .toExist()

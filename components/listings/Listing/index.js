@@ -38,7 +38,7 @@ export default class ListingView extends Component {
     const {active, address} = this.props
     const {view} = this.state
     return (
-      <View style={styles.container}>
+      <View testID="@listings.Listing" style={styles.container}>
         <View style={styles.header}>
           <Thumbnail active={active} onOpen={this.onOpen} {...this.props} />
           <View style={styles.heading}>
@@ -49,11 +49,13 @@ export default class ListingView extends Component {
         </View>
         <Description {...this.props} />
         {active && (
-          <Map zoom="close" style={styles.map} {...address}>
-            <Marker styles={markerStyles} address={address}>
-              <Icon name="home" color={markerColor} size={20} />
-            </Marker>
-          </Map>
+          <View testID="@listings.Listing.map">
+            <Map zoom="close" style={styles.map} {...address}>
+              <Marker styles={markerStyles} address={address}>
+                <Icon name="home" color={markerColor} size={20} />
+              </Marker>
+            </Map>
+          </View>
         )}
         <Modal
           contrast
@@ -62,7 +64,7 @@ export default class ListingView extends Component {
           visible={Boolean(view)}
           onDismiss={this.onClose}
         >
-          {this.renderModal()}
+          <View testID="@listings.Listing.modal">{this.renderModal()}</View>
         </Modal>
       </View>
     )

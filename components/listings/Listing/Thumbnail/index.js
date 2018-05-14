@@ -40,7 +40,7 @@ export default class ListingThumbnail extends Component {
     height = width * 0.64
 
     return (
-      <View style={styles.container}>
+      <View testID="@listings.Listing.Thumbnail" style={styles.container}>
         <View
           onMoveShouldSetResponder={() => true}
           onStartShouldSetResponder={() => true}

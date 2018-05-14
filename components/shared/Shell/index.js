@@ -12,7 +12,9 @@ function Shell({styles, children, scroll}) {
         <View>
           <GatewayView name="header" style={styles.header} />
         </View>
-        <Main style={styles.main}>{children}</Main>
+        <Main testID="@shared.Shell.main" style={styles.main}>
+          {children}
+        </Main>
         <GatewayView name="footer" style={styles.footer} />
       </View>
     </GatewayProvider>

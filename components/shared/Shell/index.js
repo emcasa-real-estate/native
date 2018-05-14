@@ -8,8 +8,8 @@ function Shell({styles, children, scroll}) {
   const Main = scroll ? ScrollView : View
   return (
     <GatewayProvider>
-      <View testID="@shared.Shell" style={styles.container}>
-        <View testID="@shared.Shell.Header">
+      <View style={styles.container}>
+        <View>
           <GatewayView name="header" style={styles.header} />
         </View>
         <Main style={styles.main}>{children}</Main>

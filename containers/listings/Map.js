@@ -33,7 +33,7 @@ export default class MapApp extends PureComponent {
     const {data, active, aggregate, ...props} = this.props
     const zIndex = active ? 2 : 1
     return (
-      <View testID={'@listings.Map'}>
+      <View>
         <Map {...props}>
           <Aggregator enabled={aggregate} {...props}>
             {data &&

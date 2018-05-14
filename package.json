@@ -30,7 +30,7 @@
           "ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app",
         "build": "scripts/ios/bundle.sh && scripts/ios/build.sh",
         "type": "ios.simulator",
-        "name": "iPhone 7"
+        "name": "iPhone 6"
       },
       "android.debug": {
         "binaryPath": "android/app/build/outputs/apk/app-debug.apk",

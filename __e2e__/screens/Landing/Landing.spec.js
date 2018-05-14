@@ -1,16 +1,18 @@
-import * as elements from './elements'
+import * as select from './selectors'
 
 describe('listings/results', () => {
+  beforeAll(() => device.reloadReactNative())
+
   it('loads more listings on scroll', async () => {
-    await waitFor(elements.feed())
+    await waitFor(element(select.feed()))
       .toExist()
       .withTimeout(3000)
-    await expect(elements.nthCard(1)).toExist()
-    await expect(elements.nthCard(16)).toNotExist()
-    await elements.feed().swipe('up', 'fast', 0.9)
-    await waitFor(elements.nthCard(16))
+    await expect(element(select.nthCard(1))).toExist()
+    await expect(element(select.nthCard(16))).toNotExist()
+    await element(select.feed()).swipe('up', 'fast', 0.9)
+    await waitFor(element(select.nthCard(16)))
       .toExist()
-      .withTimeout(3000)
-    await expect(elements.nthCard(16)).toExist()
+      .withTimeout(10000)
+    await expect(element(select.nthCard(16))).toExist()
   })
 })

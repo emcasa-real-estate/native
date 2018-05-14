@@ -7,6 +7,7 @@ export default function ListingImage({
   thumbnail,
   width,
   height,
+  resolution,
   ...props
 }) {
   const Component = LAYOUTS[layout]
@@ -15,7 +16,13 @@ export default function ListingImage({
   delete props.layout
   return (
     <Component
-      source={{uri: ListingImage.url(filename, {thumbnail, width, height})}}
+      source={{
+        uri: ListingImage.url(filename, {
+          thumbnail,
+          width: width * resolution,
+          height: height * resolution
+        })
+      }}
       width={width}
       height={height}
       {...props}
@@ -24,7 +31,8 @@ export default function ListingImage({
 }
 
 ListingImage.defaultProps = {
-  layout: 'static'
+  layout: 'static',
+  resolution: 2
 }
 
 ListingImage.url = (

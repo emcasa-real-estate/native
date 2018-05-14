@@ -39,7 +39,7 @@ export default class ListingView extends Component {
     const {view} = this.state
     return (
       <View testID="@listings.Listing" style={styles.container}>
-        <View style={styles.header}>
+        <View testID="@listings.Listing.header" style={styles.header}>
           <Thumbnail active={active} onOpen={this.onOpen} {...this.props} />
           <View style={styles.heading}>
             <Text style={styles.h1}>{address.street}</Text>

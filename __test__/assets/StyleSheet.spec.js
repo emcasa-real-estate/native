@@ -52,7 +52,7 @@ describe('StyleSheet', () => {
   })
 
   it('matches selectors by value', () => {
-    expect($styles({test: 'foo'})).toMatchObject({
+    expect($styles({test: 'foo'})).to.eql({
       foo: [FLAT_STYLES.foo],
       bar: [FLAT_STYLES.bar, FLAT_STYLES.bar__foo]
     })

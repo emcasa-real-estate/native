@@ -64,7 +64,9 @@ export default class ListingView extends Component {
           visible={Boolean(view)}
           onDismiss={this.onClose}
         >
-          <View testID="@listings.Listing.modal">{this.renderModal()}</View>
+          <View testID="@listings.Listing.modal" style={styles.modal}>
+            {this.renderModal()}
+          </View>
         </Modal>
       </View>
     )

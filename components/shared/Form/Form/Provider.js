@@ -17,6 +17,7 @@ export const form = (Target) => ({
   onChange,
   onValidate,
   onSubmit,
+  defaultValue,
   value,
   formRef,
   ...props
@@ -26,6 +27,7 @@ export const form = (Target) => ({
     onChange={onChange}
     onValidate={onValidate}
     onSubmit={onSubmit}
+    defaultValue={defaultValue}
     value={value}
   >
     <Consumer>{(ctx) => <Target {...props} {...ctx} />}</Consumer>
@@ -33,10 +35,6 @@ export const form = (Target) => ({
 )
 
 export default class FormProvider extends PureComponent {
-  static defaultProps = {
-    value: {}
-  }
-
   state = {
     valid: true,
     value: {},
@@ -44,13 +42,11 @@ export default class FormProvider extends PureComponent {
     validation: {}
   }
 
-  constructor(props) {
-    super(props)
-    if (props.defaultValue) this.state.value = props.defaultValue
-  }
-
-  static getDerivedStateFromProps({value}, state) {
-    if (value && !_.isEqual(value, state.value)) return {value, valid: false}
+  static getDerivedStateFromProps({value, defaultValue}, state) {
+    if (!_.isEmpty(value) && !_.isEqual(value, state.value))
+      return {value, valid: false}
+    if (!_.isEmpty(defaultValue) && _.isEmpty(state.value))
+      return {value: defaultValue, valid: false}
     return null
   }
 

@@ -1,6 +1,7 @@
 import {Component} from 'react'
 import {connect} from 'react-redux'
 
+import {getUser} from '@/redux/modules/auth/selectors'
 import {getInterestTypes} from '@/redux/modules/interest/types/selectors'
 import {isLoading, getError} from '@/redux/modules/interest/form/selectors'
 import {request} from '@/redux/modules/interest/form'
@@ -34,7 +35,8 @@ class InterestFormApp extends Component {
 const props = (state) => ({
   types: getInterestTypes(state),
   loading: isLoading(state),
-  error: getError(state)
+  error: getError(state),
+  user: getUser(state)
 })
 
 const actions = {request}

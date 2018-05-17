@@ -13,12 +13,7 @@ export const signIn = ({email, password}) => ({
   email,
   password
 })
-export const signUp = ({name, email, password}) => ({
-  type: SIGN_UP,
-  name,
-  email,
-  password
-})
+export const signUp = (params) => ({type: SIGN_UP, ...params})
 export const signOut = () => ({type: SIGN_OUT})
 export const resetPassword = ({email}) => ({type: RESET_PASSWORD, email})
 export const reset = () => ({type: RESET})

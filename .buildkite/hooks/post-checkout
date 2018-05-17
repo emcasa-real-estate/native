@@ -26,3 +26,5 @@ if [[ "$BUILDKITE_BRANCH" && "$BUILDKITE_BRANCH" != "master" ]]; then
   export VERSION_TAG="$BUILDKITE_BRANCH"
 fi
 
+# Disable xcode debug on react
+sed -i '' '/RUN_CLANG_STATIC_ANALYZER/d;/CLANG_STATIC_ANALYZER_MODE/d;/CLANG_ANALYZER_NONNULL/d' node_modules/react-native/React/React.xcodeproj/project.pbxproj

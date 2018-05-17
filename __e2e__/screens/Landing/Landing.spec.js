@@ -15,4 +15,10 @@ describe('listings/results', () => {
       .withTimeout(20000)
     await expect(element(select.nthCard(16))).toExist()
   })
+
+  context('unauthenticated', () => {
+    beforeAll(() => {})
+
+    it('stores favorited listings', () => {})
+  })
 })

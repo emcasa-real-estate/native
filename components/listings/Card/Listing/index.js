@@ -25,11 +25,18 @@ function ListingCard({
     width: width - padding * 2,
     height: width * 0.64 - padding * 2
   }
+
   return (
     <View style={styles.container.concat(style, {width})} {...props}>
       <View testID={`@listings.Card.Listing(${testUniqueID})`}>
         <View style={styles.thumbnail}>
-          <TouchableOpacity style={styles.iconButton} onPress={onFavorite}>
+          <TouchableOpacity
+            style={styles.iconButton}
+            onPress={onFavorite}
+            accessibilityLabel={
+              favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'
+            }
+          >
             <LikeIcon contrast active={favorite} />
           </TouchableOpacity>
           <Image thumbnail style={styles.image} {...image} {...imageSize} />

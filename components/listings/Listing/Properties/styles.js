@@ -4,7 +4,10 @@ import * as colors from '@/assets/colors'
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: colors.gray.$f0f0,
+    backgroundColor: 'white',
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.gray.lighter,
     paddingTop: 5,
     paddingBottom: 5
   },
@@ -27,7 +30,7 @@ export default StyleSheet.create({
     flexDirection: 'row'
   },
   propertyText: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '500',
     color: colors.gray.dark
   },

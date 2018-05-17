@@ -13,19 +13,19 @@ export default StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 7,
+    paddingTop: 5,
     paddingBottom: 5
   },
   buttonText: {
     textAlign: 'center',
-    fontSize: 12,
+    fontSize: 10,
     color: colors.gray.light
   },
   buttonTextActive: {
     color: colors.blue.medium
   },
   icon: {
-    margin: 5
+    margin: 3
   }
 })
 

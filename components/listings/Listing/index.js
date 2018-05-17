@@ -43,7 +43,7 @@ export default class ListingView extends Component {
           <Thumbnail active={active} onOpen={this.onOpen} {...this.props} />
           <View style={styles.heading}>
             <Text style={styles.h1}>{address.street}</Text>
-            <Text style={styles.h2}>{address.neighborhood}</Text>
+            <Text style={styles.h2}>{address.neighborhood.toUpperCase()}</Text>
           </View>
           <Properties {...this.props} />
         </View>

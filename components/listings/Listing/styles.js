@@ -21,7 +21,7 @@ export default StyleSheet.create({
     marginBottom: 5
   },
   h2: {
-    fontSize: 17,
+    fontSize: 14,
     fontWeight: '600',
     color: colors.gray.medium
   },

@@ -26,13 +26,15 @@ export default function ListingProperties(props) {
       <View style={styles.row}>
         <Property icon="bed">{props.rooms} quartos</Property>
         <Property icon="bath">{props.bathrooms} banheiros</Property>
-        <Property icon="car">{props.garageSpots} vagas</Property>
+        <Property icon="car">
+          {props.garageSpots} {props.garageSpots > 1 ? 'vagas' : 'vaga'}
+        </Property>
       </View>
       <View style={styles.row}>
         <Property icon="building">{props.floor}° andar</Property>
         <Property icon="cube">{props.area} m²</Property>
         <Property icon="usd-circle">
-          R$ {number(Math.floor(props.price / props.area))}/m²
+          R${number(Math.floor(props.price / props.area))}/m²
         </Property>
       </View>
     </View>

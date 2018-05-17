@@ -10,6 +10,7 @@ export default function NavButton({children, icon, active, ...props}) {
       <Icon
         name={icon}
         color={iconColor[active ? 'active' : 'default']}
+        size={17}
         style={styles.icon}
       />
       <Text style={[styles.buttonText, active && styles.buttonTextActive]}>

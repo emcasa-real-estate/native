@@ -2,6 +2,7 @@ import {Component} from 'react'
 import {View} from 'react-native'
 
 import TextInput from '@/components/shared/TextInput'
+import AutoComplete from './AutoComplete'
 import styles from './styles'
 
 export default class ListingAddressForm extends Component {
@@ -23,14 +24,14 @@ export default class ListingAddressForm extends Component {
   }
 
   render() {
-    const {address, complement} = this.props
+    const {address, complement} = this.state
     return (
       <View style={styles.container}>
         <View style={styles.field}>
-          <TextInput
+          <AutoComplete
             placeholder="Endereço"
             value={address}
-            onChangeText={this.onChangeAddress}
+            onChange={this.onChangeAddress}
           />
         </View>
         <View style={styles.field}>

@@ -22,7 +22,7 @@ export default StyleSheet({
   },
   titleText: {
     fontSize: 20,
-    color: colors.gray.medium
+    color: colors.gray.dark
   },
   button: {
     marginLeft: 10

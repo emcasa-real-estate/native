@@ -27,7 +27,16 @@ function ListingCard({
   return (
     <View style={styles.container.concat(style, {width})} {...props}>
       <View style={styles.thumbnail}>
-        <TouchableOpacity style={styles.iconButton} onPress={onFavorite}>
+        <TouchableOpacity
+          style={styles.iconButton}
+          onPress={onFavorite}
+          hitSlop={{
+            top: 15,
+            bottom: 15,
+            left: 15,
+            right: 15
+          }}
+        >
           <LikeIcon contrast active={favorite} />
         </TouchableOpacity>
         <Image thumbnail style={styles.image} {...image} {...imageSize} />

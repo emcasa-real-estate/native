@@ -21,7 +21,7 @@ export default class FieldView extends PureComponent {
     const {valid, errors} = this.props
 
     return (
-      <KeyboardAvoidingView>
+      <KeyboardAvoidingView enabled keyboardVerticalOffset={10}>
         <View style={styles.container}>
           {this.renderInput()}
           {!valid &&

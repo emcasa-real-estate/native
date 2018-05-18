@@ -1,19 +1,15 @@
 import {required, phone} from '@/lib/validations'
-import TextInput from '@/components/shared/TextInput'
-import {field} from './Field'
+import TextInput from '@/components/shared/Form/TextInput'
 
-function Phone({onChange, valid, ...props}) {
+export default function Phone({validations, ...props}) {
   return (
     <TextInput
-      invalid={!valid}
       keyboardType="phone-pad"
       placeholder="Telefone"
-      onChangeText={onChange}
+      validations={[required('O telefone é obrigatório'), phone()].concat(
+        validations
+      )}
       {...props}
     />
   )
 }
-
-export default field({
-  validations: [required('O telefone é obrigatório'), phone()]
-})(Phone)

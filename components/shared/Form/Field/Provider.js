@@ -13,12 +13,13 @@ const validate = (validations) => (value) =>
   }, OK)
 
 export const withField = (Target) =>
-  withForm(({name, value, validation, ...props}) => (
+  withForm(({name, value, validation, focus, ...props}) => (
     <Target
       {...props}
       {...validation[name] || OK}
       value={value[name] || ''}
       validation={undefined}
+      focus={focus === name}
       name={name}
     />
   ))
@@ -42,6 +43,7 @@ export const field = (Target) =>
         onUnsubscribe={onUnsubscribe}
         onChangeField={onChangeField}
         onValidateField={onValidateField}
+        onFocusField={props.onFocusField}
         onChange={props.onChange}
         onFocus={props.onFocus}
         onBlur={props.onBlur}
@@ -58,10 +60,6 @@ export const field = (Target) =>
 export default class FieldProvider extends PureComponent {
   static defaultProps = {
     validations: []
-  }
-
-  state = {
-    focus: false
   }
 
   componentDidMount() {
@@ -85,15 +83,9 @@ export default class FieldProvider extends PureComponent {
   }
 
   onFocus = () => {
-    const {onFocus} = this.props
-    this.setState({focus: true})
+    const {name, onFocus, onFocusField} = this.props
+    onFocusField(name)
     if (onFocus) onFocus()
-  }
-
-  onBlur = () => {
-    const {onBlur} = this.props
-    this.setState({focus: false})
-    if (onBlur) onBlur()
   }
 
   onChange = (value) => {
@@ -106,9 +98,7 @@ export default class FieldProvider extends PureComponent {
     const {children} = this.props
 
     return children({
-      ...this.state,
       onFocus: this.onFocus,
-      onBlur: this.onBlur,
       onValidate: this.onValidate,
       onChange: this.onChange
     })

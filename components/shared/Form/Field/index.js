@@ -42,6 +42,7 @@ export default class FieldView extends PureComponent {
 
 const mergeValidations = _.flow(
   (a = [], b = []) => b.concat(a),
+  _.filter(_.identity),
   _.uniqBy((fun) => fun._name || fun.name)
 )
 

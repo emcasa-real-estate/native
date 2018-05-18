@@ -4,9 +4,13 @@ configurations:
   - &nodejs
     <<: *defaults
     docker:
-      - image: circleci/node:9
+    - image: circleci/node:9
     environment:
-      - PATH: "/opt/yarn/yarn-v1.5.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    - PATH: "/opt/yarn/yarn-v1.5.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  - &android
+    <<: *defaults
+    docker:
+    - image: circleci/android:api-26-alpha
   - &macos
     <<: *defaults
     macos:
@@ -24,7 +28,7 @@ jobs:
     - run: yarn install --no-optional
     - save_cache:
         paths:
-          - node_modules
+        - node_modules
         key: v1-node-modules-{{ checksum "package.json" }}
     - persist_to_workspace:
         root: .
@@ -52,8 +56,24 @@ jobs:
     # - run: yarn e2e --reuse --debug-synchronization 10000
     - save_cache:
         paths:
-          - ~/.cocoapods
+        - ~/.cocoapods
         key: v1-cocoapods-{{ checksum "ios/Podfile" }}
+  build_android:
+    <<: *android
+    steps:
+    - attach_workspace:
+        at: ~/emcasa
+    - restore_cache:
+        key: v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
+    - run: >-
+      yes | sdkmanager "platforms;android-26"
+      yes | sdkmanager "build-tools;26.0.1"
+      yes | sdkmanager "extras;android;m2repository" "extras;google;m2repository"
+    - run: .circleci/run android build
+    - save_cache:
+        paths:
+        - ~/.gradle
+        key: v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
 
 workflows:
   version: 2

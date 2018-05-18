@@ -1,0 +1,61 @@
+configurations:
+  - &defaults
+    working_directory: ~/emcasa
+  - &nodejs
+    <<: *defaults
+    docker:
+      - image: circleci/node:9
+    environment:
+      - PATH: "/opt/yarn/yarn-v1.5.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  - &macos
+    <<: *defaults
+    macos:
+      xcode: "9.2.0"
+
+version: 2
+jobs:
+  checkout:
+    <<: *nodejs
+    steps:
+    - checkout
+    - restore_cache:
+        keys:
+        - v1-node-modules-{{ checksum "package.json" }}
+    - run: yarn install --no-optional
+    - save_cache:
+        paths:
+          - node_modules
+        key: v1-node-modules-{{ checksum "package.json" }}
+    - persist_to_workspace:
+        root: .
+        paths: .
+  # unit tests
+  test:
+    <<: *nodejs
+    steps:
+    - attach_workspace:
+        at: ~/emcasa
+    - run: yarn test
+  build_ios:
+    <<: *macos
+    steps:
+    - attach_workspace:
+        at: ~/emcasa
+    - run: cd ios && pod install
+    # - run: xcrun instruments -w "iPhone 6 (11.2)" || true
+    - run: .circleci/run ios build
+    # - run: xcrun simctl uninstall "iPhone 6" com.EmCasa.native
+    # - run: xcrun simctl install "iPhone 6" com.EmCasa.native
+    # - run: yarn e2e --reuse --debug-synchronization 10000
+
+workflows:
+  version: 2
+  commit:
+    jobs:
+    - checkout
+    - test:
+        requires:
+        - checkout
+    - build_ios:
+        requires:
+        - checkout

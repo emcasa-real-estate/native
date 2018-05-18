@@ -24,11 +24,11 @@ done
 run() {
   set +eu
   script=$1; shift;
-  if [[ -f $ROOT/.buildkite/$script.sh ]]; then
-    source $ROOT/.buildkite/$script.sh $@
+  if [[ -f $ROOT/.circleci/$script.sh ]]; then
+    source $ROOT/.circleci/$script.sh $@
   fi
-  if [[ $PLATFORM && -f $ROOT/.buildkite/$PLATFORM/$script.sh ]]; then
-    $ROOT/.buildkite/$PLATFORM/$script.sh $@
+  if [[ $PLATFORM && -f $ROOT/.circleci/$PLATFORM/$script.sh ]]; then
+    $ROOT/.circleci/$PLATFORM/$script.sh $@
   fi
 }
 

@@ -41,12 +41,19 @@ jobs:
     steps:
     - attach_workspace:
         at: ~/emcasa
+    - restore_cache:
+        keys:
+        - v1-cocoapods-{{ checksum "ios/Podfile" }}
     - run: cd ios && pod install
     # - run: xcrun instruments -w "iPhone 6 (11.2)" || true
     - run: .circleci/run ios build
     # - run: xcrun simctl uninstall "iPhone 6" com.EmCasa.native
     # - run: xcrun simctl install "iPhone 6" com.EmCasa.native
     # - run: yarn e2e --reuse --debug-synchronization 10000
+    - save_cache:
+        paths:
+          - ~/.cocoapods
+        key: v1-cocoapods-{{ checksum "ios/Podfile" }}
 
 workflows:
   version: 2

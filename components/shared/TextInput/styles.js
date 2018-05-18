@@ -22,6 +22,7 @@ export default StyleSheet({
   },
   input: {
     fontFamily: Platform.OS === 'ios' ? 'Open Sans' : 'OpenSans',
+    fontSize: 17,
     lineHeight: Platform.OS === 'ios' ? null : 18,
     color: colors.gray.dark
   }

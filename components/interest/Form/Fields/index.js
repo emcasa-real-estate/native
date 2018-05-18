@@ -12,12 +12,17 @@ export default function InterestFormFields({type}) {
   if (type !== 3 || type === 5) fields.push(<Phone name="phone" />)
   if (type === 2) fields.push(<Time name="time" />)
   if (type === 3) fields.push(<Message name="message" />)
+  const keyboardType = (node, i) => {
+    if (node.props.name === 'message') return undefined
+    if (fields[i + 1]) return 'next'
+    return 'done'
+  }
   return (
     <Fragment>
       {fields.map((node, i) =>
         React.cloneElement(node, {
           key: node.props.name,
-          returnKeyType: fields[i + 1] ? 'next' : 'done',
+          returnKeyType: keyboardType(node, i),
           nextField: fields[i + 1] && fields[i + 1].props.name
         })
       )}

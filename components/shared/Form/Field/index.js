@@ -18,10 +18,14 @@ export default class FieldView extends PureComponent {
   }
 
   render() {
-    const {valid, errors} = this.props
+    const {valid, focus, errors} = this.props
 
     return (
-      <KeyboardAvoidingView>
+      <KeyboardAvoidingView
+        enabled={focus}
+        behavior="position"
+        contentContainerStyle={{flex: 1}}
+      >
         <View style={styles.container}>
           {this.renderInput()}
           {!valid &&

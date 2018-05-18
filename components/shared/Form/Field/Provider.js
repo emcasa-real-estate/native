@@ -43,6 +43,8 @@ export const field = (Target) =>
         onChangeField={onChangeField}
         onValidateField={onValidateField}
         onChange={props.onChange}
+        onFocus={props.onFocus}
+        onBlur={props.onBlur}
       >
         {(ctx) => (
           <Target {...props} {...ctx}>
@@ -56,6 +58,10 @@ export const field = (Target) =>
 export default class FieldProvider extends PureComponent {
   static defaultProps = {
     validations: []
+  }
+
+  state = {
+    focus: false
   }
 
   componentDidMount() {
@@ -78,6 +84,18 @@ export default class FieldProvider extends PureComponent {
     return state.valid
   }
 
+  onFocus = () => {
+    const {onFocus} = this.props
+    this.setState({focus: true})
+    if (onFocus) onFocus()
+  }
+
+  onBlur = () => {
+    const {onBlur} = this.props
+    this.setState({focus: false})
+    if (onBlur) onBlur()
+  }
+
   onChange = (value) => {
     const {onChangeField, onChange, name} = this.props
     onChangeField(name, value)
@@ -88,6 +106,9 @@ export default class FieldProvider extends PureComponent {
     const {children} = this.props
 
     return children({
+      ...this.state,
+      onFocus: this.onFocus,
+      onBlur: this.onBlur,
       onValidate: this.onValidate,
       onChange: this.onChange
     })

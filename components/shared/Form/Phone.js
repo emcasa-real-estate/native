@@ -6,6 +6,7 @@ export default function Phone({validations, ...props}) {
     <TextInput
       keyboardType="phone-pad"
       placeholder="Telefone"
+      maxLength={16}
       validations={[required('O telefone é obrigatório'), phone()].concat(
         validations
       )}

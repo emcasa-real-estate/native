@@ -19,7 +19,7 @@ cd ios && xcodebuild \
   -workspace EmCasa.xcworkspace \
   -configuration $BUILD_CONFIGURATION \
   -destination "generic/platform=iOS" \
-  ${buildArgs[*]}
+  ${buildArgs[*]} \
   CODE_SIGNING_REQUIRED=NO \
   CODE_SIGN_IDENTITY="" \
   clean archive | tee $ROOT/tmp/logs/ios.build.log | xcpretty

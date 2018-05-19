@@ -2,6 +2,7 @@ import {required} from '@/lib/validations'
 import Text from '@/components/shared/Text'
 import Form from '@/components/shared/Form/Form'
 import Email from '@/components/shared/Form/Email'
+import Phone from '@/components/shared/Form/Phone'
 import Password from '@/components/shared/Form/Password'
 import TextInput from '@/components/shared/TextInput'
 import {field} from '@/components/shared/Form/Field'
@@ -35,6 +36,7 @@ export default function SignUpForm({onSubmit, error}) {
       {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
       <Name name="name" placeholder="Nome" />
       <Email name="email" />
+      <Phone name="phone" validations={[required(false)]} />
       <Password name="password" />
     </Form>
   )

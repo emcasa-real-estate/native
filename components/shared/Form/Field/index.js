@@ -18,10 +18,15 @@ export default class FieldView extends PureComponent {
   }
 
   render() {
-    const {valid, errors} = this.props
+    const {valid, focus, errors} = this.props
 
     return (
-      <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={10}>
+      <KeyboardAvoidingView
+        enabled={focus}
+        behavior="padding"
+        keyboardVerticalOffset={60}
+        contentContainerStyle={{flex: 1}}
+      >
         <View style={styles.container}>
           {this.renderInput()}
           {!valid &&
@@ -38,6 +43,7 @@ export default class FieldView extends PureComponent {
 
 const mergeValidations = _.flow(
   (a = [], b = []) => b.concat(a),
+  _.filter(_.identity),
   _.uniqBy((fun) => fun._name || fun.name)
 )
 

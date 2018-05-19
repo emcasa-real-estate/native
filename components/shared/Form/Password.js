@@ -1,15 +1,13 @@
 import {required} from '@/lib/validations'
-import TextInput from '@/components/shared/TextInput'
-import {field} from './Field'
+import TextInput from '@/components/shared/Form/TextInput'
 
-export default field({
-  validations: [required('A senha é obrigatória')]
-})(({onChange, valid, ...props}) => (
-  <TextInput
-    secureTextEntry
-    invalid={!valid}
-    placeholder="Senha"
-    onChangeText={onChange}
-    {...props}
-  />
-))
+export default function Password({validations, ...props}) {
+  return (
+    <TextInput
+      secureTextEntry
+      placeholder="Senha"
+      validations={[required('A senha é obrigatória')].concat(validations)}
+      {...props}
+    />
+  )
+}

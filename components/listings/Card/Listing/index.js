@@ -31,11 +31,13 @@ function ListingCard({
       <View testID={`@listings.Card.Listing(${testUniqueID})`}>
         <View style={styles.thumbnail}>
           <TouchableOpacity
-            style={styles.iconButton}
-            onPress={onFavorite}
+            accessible
             accessibilityLabel={
               favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'
             }
+            testID={'@listings.Card.Listing.favoriteButton'}
+            style={styles.iconButton}
+            onPress={onFavorite}
           >
             <LikeIcon contrast active={favorite} />
           </TouchableOpacity>

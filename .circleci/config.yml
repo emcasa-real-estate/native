@@ -25,6 +25,7 @@ jobs:
     - restore_cache:
         keys:
         - v1-node-modules-{{ checksum "package.json" }}
+    - run: mkdir -p tmp/logs tmp/screenshots
     - run: yarn install --no-optional
     - save_cache:
         paths:
@@ -67,10 +68,8 @@ jobs:
         at: ~/emcasa
     - restore_cache:
         key: v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
-    - run: >-
-        yes | sdkmanager "platforms;android-26" &&
-        yes | sdkmanager "build-tools;26.0.1" &&
-        yes | sdkmanager "extras;android;m2repository" "extras;google;m2repository" &&
+    - run: sdkmanager --install "extras;android;m2repository" "extras;google;m2repository"
+    - run: sdkmanager --licenses
     - run: cd android && ./gradlew assembleDebug
     - save_cache:
         paths:

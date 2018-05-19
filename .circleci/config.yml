@@ -88,3 +88,6 @@ workflows:
     - build_ios:
         requires:
         - checkout
+    - build_android:
+        requires:
+        - checkout

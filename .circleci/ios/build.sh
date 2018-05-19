@@ -1,31 +1,25 @@
 set -e
 set -o pipefail
 
-ARGS=()
-OPTIONS=(CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=)
-SCHEME=EmCasa
+BUILD_CONFIGURATION=${BUILD_CONFIGURATION:-Debug}
 
-if [[ $BUILD_PROFILE == beta ]];
-then export BUNDLE_IDENTIFIER_SUFFIX="-beta"; fi
+buildArgs=()
+buildScheme=EmCasa
 
-if [[ ! -z "$IOS_XCCONFIG_FILE" ]]; then ARGS+=(-xcconfig "$IOS_XCCONFIG_FILE"); fi
-case $BUILD_PROFILE in
-  debug) CONFIGURATION=Debug;;
-  production) CONFIGURATION=Release;;
-  beta)
-    CONFIGURATION=Beta
-    SCHEME=EmCasa-Beta
+if [[ ! -z "$IOS_XCCONFIG_FILE" ]]; then buildArgs+=(-xcconfig "$IOS_XCCONFIG_FILE"); fi
+if [[ $BUILD_CONFIGURATION == "Beta" ]]; then
+    export BUNDLE_IDENTIFIER_SUFFIX="-beta"
+    buildScheme=EmCasa-Beta
     ;;
 esac
 
-echo "Building ipa for ${BUILD_PROFILE}"
-echo "Using backend server \"$API_URL\""
-
-cd $ROOT/ios && xcodebuild \
-  -scheme $SCHEME \
-  -archivePath $ROOT/ios/build/EmCasa.xcarchive \
-  -workspace $ROOT/ios/EmCasa.xcworkspace \
-  -configuration $CONFIGURATION \
+cd ios && xcodebuild \
+  -scheme $buildScheme \
+  -archivePath build/EmCasa.xcarchive \
+  -workspace EmCasa.xcworkspace \
+  -configuration $BUILD_CONFIGURATION \
   -destination "generic/platform=iOS" \
-  ${ARGS[*]} ${OPTIONS[*]} \
+  ${buildArgs[*]}
+  CODE_SIGNING_REQUIRED=NO \
+  CODE_SIGN_IDENTITY="" \
   clean archive | tee $ROOT/tmp/logs/ios.build.log | xcpretty

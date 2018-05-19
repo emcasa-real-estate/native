@@ -42,6 +42,8 @@ jobs:
     - run: yarn test
   build_ios:
     <<: *macos
+    environment:
+
     steps:
     - attach_workspace:
         at: ~/emcasa
@@ -50,7 +52,7 @@ jobs:
         - v1-cocoapods-{{ checksum "ios/Podfile" }}
     - run: cd ios && pod install
     # - run: xcrun instruments -w "iPhone 6 (11.2)" || true
-    - run: .circleci/run ios build
+    - run: .circleci/ios/build.sh
     # - run: xcrun simctl uninstall "iPhone 6" com.EmCasa.native
     # - run: xcrun simctl install "iPhone 6" com.EmCasa.native
     # - run: yarn e2e --reuse --debug-synchronization 10000
@@ -69,7 +71,7 @@ jobs:
       yes | sdkmanager "platforms;android-26"
       yes | sdkmanager "build-tools;26.0.1"
       yes | sdkmanager "extras;android;m2repository" "extras;google;m2repository"
-    - run: .circleci/run android build
+    - run: cd android && ./gradlew assembleDebug
     - save_cache:
         paths:
         - ~/.gradle

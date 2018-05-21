@@ -10,18 +10,13 @@ export default class FormView extends PureComponent {
     label: 'Enviar'
   }
 
-  onSubmit = () => {
-    const {onValidate, onSubmit} = this.props
-    if (onValidate()) onSubmit(this.props.value)
-  }
-
   render() {
     const {children, label, style, onSubmit, ...props} = this.props
     return (
       <View style={style}>
         {children}
         {onSubmit && (
-          <SubmitButton label={label} onPress={this.onSubmit} {...props} />
+          <SubmitButton label={label} onPress={onSubmit} {...props} />
         )}
       </View>
     )

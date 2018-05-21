@@ -1,6 +1,5 @@
 import {View, ScrollView, Platform} from 'react-native'
 import {GatewayProvider} from 'react-gateway'
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import KeyboardSpacer from 'react-native-keyboard-spacer'
 import KeyboardManager from 'react-native-keyboard-manager'
 

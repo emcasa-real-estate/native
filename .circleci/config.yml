@@ -26,7 +26,7 @@ jobs:
     - restore_cache:
         keys:
         - v1-node-modules-{{ checksum "package.json" }}
-    - run: mkdir -p tmp/logs tmp/screenshots
+    - run: mkdir -p tmp/logs tmp/screenshots tmp/.secrets
     - run: yarn install --no-optional
     - run: aws s3 sync $AWS_SECRETS_BUCKET ~/emcasa/tmp/.secrets
     - save_cache:

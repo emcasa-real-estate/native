@@ -4,7 +4,7 @@ configurations:
   - &nodejs
     <<: *default
     docker:
-    - image: circleci/ruby:2.5-node
+    - image: circleci/ruby:2.4-node
   - &android
     <<: *default
     docker:
@@ -13,6 +13,7 @@ configurations:
     <<: *default
     macos:
       xcode: "9.2.0"
+    shell: /bin/bash --login -eo pipefail
 
 version: 2
 jobs:

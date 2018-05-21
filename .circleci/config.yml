@@ -65,6 +65,9 @@ jobs:
     - run: >-
         scripts/server/start.js &
         detox test -c ios.debug --platform ios --debug-synchronization 10000
+    - store_artifacts:
+        path: tmp/screenshots
+        destination: screenshots
     - save_cache:
         paths:
         - ~/.cocoapods

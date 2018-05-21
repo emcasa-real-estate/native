@@ -22,9 +22,9 @@ export default class FieldView extends PureComponent {
 
     return (
       <KeyboardAvoidingView
-        enabled={focus}
         behavior="padding"
-        contentContainerStyle={{flex: 1}}
+        keyboardVerticalOffset={100}
+        contentContainerStyle={{flex: 1, height: 70, marginTop: 50}}
       >
         <View style={styles.container}>
           {this.renderInput()}

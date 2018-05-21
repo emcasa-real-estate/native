@@ -7,17 +7,20 @@ PODS:
   - GoogleMaps/Base (2.6.0)
   - GoogleMaps/Maps (2.6.0):
     - GoogleMaps/Base
+  - IQKeyboardManager (6.0.2)
 
 DEPENDENCIES:
   - Crashlytics
   - Fabric
   - GoogleMaps
+  - IQKeyboardManager
 
 SPEC CHECKSUMS:
   Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
   Fabric: ae7146a5f505ea370a1e44820b4b1dc8890e2890
   GoogleMaps: 42f91c68b7fa2f84d5c86597b18ceb99f5414c7f
+  IQKeyboardManager: c49d59e358aeeffaa0280aa305093c2b194d2607
 
-PODFILE CHECKSUM: c84618a1000ef151f7fafd5fa527a43c6fa98c72
+PODFILE CHECKSUM: 4bed4ffc49adc8dd9d4aaab394483eb6b25575bb
 
 COCOAPODS: 1.4.0

@@ -34,10 +34,21 @@ export default function SignUpForm({onSubmit, error}) {
   return (
     <Form style={styles.container} onSubmit={onSubmit}>
       {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
-      <Name name="name" placeholder="Nome" />
-      <Email name="email" />
-      <Phone name="phone" validations={[required(false)]} />
-      <Password name="password" />
+      <Name
+        name="name"
+        returnKeyType="next"
+        nextField="email"
+        placeholder="Nome"
+      />
+      <Email name="email" returnKeyType="next" nextField="phone" />
+      <Phone
+        name="phone"
+        returnKeyType="next"
+        nextField="password"
+        placeholder="Telefone (opcional)"
+        validations={[required(false)]}
+      />
+      <Password name="password" returnKeyType="done" />
     </Form>
   )
 }

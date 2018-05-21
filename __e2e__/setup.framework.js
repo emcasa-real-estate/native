@@ -32,7 +32,7 @@ global.screenShot = (fileName = timestamp()) =>
     )
   )
 
-jest.setTimeout(60000)
+jest.setTimeout(180000)
 
 beforeAll(() => detox.init(pkg.detox))
 

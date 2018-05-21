@@ -10,7 +10,7 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-    <activity android:name=".MainActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:windowSoftInputMode="adjustResize" android:exported="true" />
+    <activity android:name=".MainActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:windowSoftInputMode="stateUnchanged|adjustResize" android:exported="true" />
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
     <meta-data android:name="io.fabric.ApiKey" android:value="${fabricApiKey}" />
     <meta-data android:name="com.google.android.geo.API_KEY" android:value="${googleMapsApiKey}" />

@@ -25,8 +25,8 @@ export default function LoginForm({
   return (
     <Form style={styles.container} onSubmit={onSubmit}>
       {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
-      <Email name="email" />
-      <Password name="password" />
+      <Email name="email" returnKeyType="next" nextField="password" />
+      <Password name="password" returnKeyType="done" />
       <View style={styles.inlineText}>
         <Link style={styles.text} onPress={onPasswordRecovery}>
           Esqueci a minha senha

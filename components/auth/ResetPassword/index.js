@@ -21,7 +21,7 @@ export default function SignUpForm({onSubmit, error}) {
         nova.
       </Text>
       {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
-      <Email name="email" />
+      <Email name="email" returnKeyType="done" />
     </Form>
   )
 }

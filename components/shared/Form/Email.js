@@ -9,9 +9,10 @@ export default function Email({validations, value, ...props}) {
       placeholder="Email"
       autoCapitalize="none"
       value={value.toLowerCase()}
-      validations={[required('O email é obrigatório'), email()].concat(
-        validations
-      )}
+      validations={[].concat(validations, [
+        required('O email é obrigatório'),
+        email()
+      ])}
     />
   )
 }

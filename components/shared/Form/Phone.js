@@ -7,9 +7,10 @@ export default function Phone({validations, ...props}) {
       keyboardType="phone-pad"
       placeholder="Telefone"
       maxLength={16}
-      validations={[required('O telefone é obrigatório'), phone()].concat(
-        validations
-      )}
+      validations={[].concat(validations, [
+        required('O telefone é obrigatório'),
+        phone()
+      ])}
       {...props}
     />
   )

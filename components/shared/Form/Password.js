@@ -6,7 +6,7 @@ export default function Password({validations, ...props}) {
     <TextInput
       secureTextEntry
       placeholder="Senha"
-      validations={[required('A senha é obrigatória')].concat(validations)}
+      validations={[].concat(validations, required('A senha é obrigatória'))}
       {...props}
     />
   )

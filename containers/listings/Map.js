@@ -33,21 +33,23 @@ export default class MapApp extends PureComponent {
     const {data, active, aggregate, ...props} = this.props
     const zIndex = active ? 2 : 1
     return (
-      <Map {...props}>
-        <Aggregator enabled={aggregate} {...props}>
-          {data &&
-            data.map((listing) => (
-              <Marker
-                active={active === listing.id}
-                onPress={this.onSelect(listing.id)}
-                key={listing.id}
-                style={{zIndex}}
-                zIndex={zIndex}
-                {...listing}
-              />
-            ))}
-        </Aggregator>
-      </Map>
+      <View>
+        <Map {...props}>
+          <Aggregator enabled={aggregate} {...props}>
+            {data &&
+              data.map((listing) => (
+                <Marker
+                  active={active === listing.id}
+                  onPress={this.onSelect(listing.id)}
+                  key={listing.id}
+                  style={{zIndex}}
+                  zIndex={zIndex}
+                  {...listing}
+                />
+              ))}
+          </Aggregator>
+        </Map>
+      </View>
     )
   }
 }

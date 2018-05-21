@@ -31,28 +31,28 @@ describe('StyleSheet', () => {
   const $styles = StyleSheet(STYLES)
 
   it('contains flat stylesheet properties', () => {
-    expect($styles.foo).toMatchObject(FLAT_STYLES.foo)
-    expect($styles.bar).toMatchObject(FLAT_STYLES.bar)
-    expect($styles[styleId('foo', 'foo')]).toMatchObject(FLAT_STYLES.foo__foo)
-    expect($styles[styleId('foo', 'bar')]).toMatchObject(FLAT_STYLES.foo__bar)
+    expect($styles.foo).to.eql(FLAT_STYLES.foo)
+    expect($styles.bar).to.eql(FLAT_STYLES.bar)
+    expect($styles[styleId('foo', 'foo')]).to.eql(FLAT_STYLES.foo__foo)
+    expect($styles[styleId('foo', 'bar')]).to.eql(FLAT_STYLES.foo__bar)
   })
 
   it('returns a stylesheet with desired variants', () => {
-    expect($styles({foo: true, bar: true})).toMatchObject({
+    expect($styles({foo: true, bar: true})).to.eql({
       foo: [FLAT_STYLES.foo, FLAT_STYLES.foo__foo, FLAT_STYLES.foo__bar],
       bar: [FLAT_STYLES.bar]
     })
   })
 
   it('ignores falsy values', () => {
-    expect($styles({foo: true, bar: false})).toMatchObject({
+    expect($styles({foo: true, bar: false})).to.eql({
       foo: [FLAT_STYLES.foo, FLAT_STYLES.foo__foo],
       bar: [FLAT_STYLES.bar]
     })
   })
 
   it('matches selectors by value', () => {
-    expect($styles({test: 'foo'})).toMatchObject({
+    expect($styles({test: 'foo'})).to.eql({
       foo: [FLAT_STYLES.foo],
       bar: [FLAT_STYLES.bar, FLAT_STYLES.bar__foo]
     })
@@ -60,9 +60,9 @@ describe('StyleSheet', () => {
 
   describe('#get', () => {
     it('returns a style with desired variants', () => {
-      expect($styles.get('foo')).toHaveLength(1)
-      expect($styles.get('foo', {foo: true})).toHaveLength(2)
-      expect($styles.get('foo', {foo: true, bar: true})).toHaveLength(3)
+      expect($styles.get('foo')).to.have.lengthOf(1)
+      expect($styles.get('foo', {foo: true})).to.have.lengthOf(2)
+      expect($styles.get('foo', {foo: true, bar: true})).to.have.lengthOf(3)
     })
   })
 
@@ -73,18 +73,12 @@ describe('StyleSheet', () => {
 
     it('extracts variants from props', () => {
       const node = renderer.create(<Component foo />).toJSON()
-      expect(node.props.style).toMatchObject([
-        FLAT_STYLES.foo,
-        FLAT_STYLES.foo__foo
-      ])
+      expect(node.props.style).to.eql([FLAT_STYLES.foo, FLAT_STYLES.foo__foo])
     })
 
     it('maps props to style variants', () => {
       const node = renderer.create(<Component value="bar" />).toJSON()
-      expect(node.props.style).toMatchObject([
-        FLAT_STYLES.foo,
-        FLAT_STYLES.foo__bar
-      ])
+      expect(node.props.style).to.eql([FLAT_STYLES.foo, FLAT_STYLES.foo__bar])
     })
 
     it('merges "styles" props into final stylesheet', () => {
@@ -92,7 +86,7 @@ describe('StyleSheet', () => {
       const node = renderer
         .create(<Component bar styles={moreStyles} />)
         .toJSON()
-      expect(node.props.style).toMatchObject([
+      expect(node.props.style).to.eql([
         FLAT_STYLES.foo,
         FLAT_STYLES.foo__bar,
         moreStyles.foo
@@ -103,11 +97,11 @@ describe('StyleSheet', () => {
   describe('#all', () => {
     it('concatenates stylesheets', () => {
       const moreStyles = {foo: {flex: 1}}
-      expect($styles.all('foo', 'bar')).toMatchObject([
+      expect($styles.all('foo', 'bar')).to.eql([
         FLAT_STYLES.foo,
         FLAT_STYLES.bar
       ])
-      expect($styles.all('foo', moreStyles.foo)).toMatchObject([
+      expect($styles.all('foo', moreStyles.foo)).to.eql([
         FLAT_STYLES.foo,
         moreStyles.foo
       ])

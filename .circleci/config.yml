@@ -41,20 +41,31 @@ jobs:
     - attach_workspace:
         at: ~/emcasa
     - run: yarn test
-  build_ios:
+  e2e_ios:
     <<: *macos
+    environment:
+      API_URL: http://localhost:4040
+      REPLAY_MODE: replay
+      REPLAY_PORT: 4040
     steps:
     - attach_workspace:
         at: ~/emcasa
     - restore_cache:
         keys:
         - v1-cocoapods-{{ checksum "ios/Podfile" }}
+    - run:
+        name: Start server
+        command: scripts/server/start.js
+        background: true
+    - run: >-
+        brew update &&
+        brew tap wix/brew &&
+        brew install --HEAD applesimutils &&
+        npm install -g detox-cli
     - run: cd ios && pod install
-    # - run: xcrun instruments -w "iPhone 6 (11.2)" || true
-    - run: .circleci/ios/build.sh
-    # - run: xcrun simctl uninstall "iPhone 6" com.EmCasa.native
-    # - run: xcrun simctl install "iPhone 6" com.EmCasa.native
-    # - run: yarn e2e --reuse --debug-synchronization 10000
+    - run: xcrun instruments -w "iPhone 6 (11.2)" || true
+    - run: detox build -c ios.debug
+    - run: detox test -c ios.debug --platform ios --debug-synchronization 10000
     - save_cache:
         paths:
         - ~/.cocoapods
@@ -81,7 +92,7 @@ workflows:
     - test:
         requires:
         - checkout
-    - build_ios:
+    - e2e_ios:
         requires:
         - checkout
     - build_android:

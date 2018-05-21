@@ -15,8 +15,7 @@
     "devtools": "react-devtools",
     "log-android": "react-native log-android",
     "log-ios": "react-native log-ios",
-    "test": "jest --config __test__/jest.config.js",
-    "e2e": "scripts/e2e.sh"
+    "test": "jest --config __test__/jest.config.js"
   },
   "detox": {
     "specs": "__e2e__",
@@ -26,13 +25,13 @@
       "ios.debug": {
         "binaryPath":
           "ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app",
-        "build": "scripts/ios/bundle.sh && scripts/ios/build.sh",
+        "build": "scripts/ios/build.sh",
         "type": "ios.simulator",
         "name": "iPhone 6"
       },
       "android.debug": {
         "binaryPath": "android/app/build/outputs/apk/app-debug.apk",
-        "build": "scripts/android/bundle.sh && scripts/android/build.sh",
+        "build": "scripts/android/build.sh",
         "type": "android.emulator",
         "name": "Nexus_5X_API_26"
       }

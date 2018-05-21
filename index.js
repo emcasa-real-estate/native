@@ -21,7 +21,7 @@ AppRegistry.setWrapperComponentProvider(() => Provider)
 if (Platform.OS === 'ios') {
   KeyboardManager.setEnable(true)
   KeyboardManager.setEnableDebugging(__DEV__)
-  KeyboardManager.setKeyboardDistanceFromTextField(10)
+  KeyboardManager.setKeyboardDistanceFromTextField(50)
   KeyboardManager.setPreventShowingBottomBlankSpace(true)
   KeyboardManager.setEnableAutoToolbar(true)
   KeyboardManager.setToolbarDoneBarButtonItemText('Próximo')

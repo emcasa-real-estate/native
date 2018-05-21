@@ -61,8 +61,9 @@ jobs:
         brew update &&
         brew tap wix/brew &&
         brew install --HEAD applesimutils &&
-        npm install -g detox-cli
-    - run: cd ios && pod install
+        npm install -g detox-cli &&
+        detox clean-framework-cache && detox build-framework-cache
+    - run: yarn install && cd ios && pod install
     - run: xcrun instruments -w "iPhone 6 (11.2)" || true
     - run: detox build -c ios.debug
     - run: detox test -c ios.debug --platform ios --debug-synchronization 10000

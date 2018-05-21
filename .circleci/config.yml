@@ -63,7 +63,7 @@ jobs:
     - run: xcrun instruments -w "iPhone 6 (11.2)" || true
     - run:
         name: Start test server
-        command: scripts/server/start.sh
+        command: scripts/server/start.js
         background: true
     - run:
         name: Start bundler

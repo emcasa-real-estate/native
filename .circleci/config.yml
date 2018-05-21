@@ -1,18 +1,14 @@
 configurations:
   - &default
     working_directory: ~/emcasa
-    docker:
-    - image: circleci/ruby:2.5-node
   - &nodejs
     <<: *default
     docker:
-    - image: circleci/node:9
-    environment:
-    - PATH: "/opt/yarn/yarn-v1.5.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    - image: circleci/ruby:2.5-node
   - &android
     <<: *default
     docker:
-    - image: circleci/android:api-26-alpha
+    - image: circleci/android:api-26-node8-alpha
   - &macos
     <<: *default
     macos:
@@ -21,7 +17,7 @@ configurations:
 version: 2
 jobs:
   checkout:
-    <<: *default
+    <<: *nodejs
     steps:
     - checkout
     - run: sudo apt-get -y -qq install awscli
@@ -108,7 +104,7 @@ jobs:
     - run: BUILD_CONFIGURATION=Beta .circleci/ios/build.sh
     - run: BUILD_PROFILE=beta .circleci/ios/deploy.sh
   deploy_staging_android:
-    <<: *nodejs
+    <<: *android
     environment:
       ANDROID_KEYSTORE_FILE: ~/emcasa/.secrets/android/keystore.jks
       PLAY_STORE_CERTIFICATE_FILE: ~/emcasa/.secrets/android/play-store.p12

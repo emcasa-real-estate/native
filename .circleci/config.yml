@@ -61,10 +61,16 @@ jobs:
         detox clean-framework-cache && detox build-framework-cache
     - run: yarn install && cd ios && pod install
     - run: xcrun instruments -w "iPhone 6 (11.2)" || true
+    - run:
+        name: Start test server
+        command: scripts/server/start.sh
+        background: true
+    - run:
+        name: Start bundler
+        command: yarn start
+        background: true
     - run: detox build -c ios.debug
-    - run: >-
-        scripts/server/start.js &
-        detox test -c ios.debug --platform ios --debug-synchronization 10000
+    - run: detox test -c ios.debug --platform ios --debug-synchronization 10000
     - store_artifacts:
         path: tmp/screenshots
         destination: screenshots

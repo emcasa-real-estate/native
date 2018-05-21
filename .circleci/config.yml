@@ -43,8 +43,6 @@ jobs:
     - run: yarn test
   build_ios:
     <<: *macos
-    environment:
-
     steps:
     - attach_workspace:
         at: ~/emcasa
@@ -70,12 +68,11 @@ jobs:
         key: v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
     - run: sdkmanager --install "extras;android;m2repository" "extras;google;m2repository"
     - run: sdkmanager --licenses
-    - run: cd android && ./gradlew assembleDebug
+    - run: export TERM=xterm && cd android && ./gradlew assembleDebug
     - save_cache:
         paths:
         - ~/.gradle
         key: v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
-
 workflows:
   version: 2
   commit:

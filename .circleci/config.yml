@@ -1,25 +1,27 @@
 configurations:
-  - &defaults
+  - &default
     working_directory: ~/emcasa
+    docker:
+    - image: circleci/ruby:2.5-node
   - &nodejs
-    <<: *defaults
+    <<: *default
     docker:
     - image: circleci/node:9
     environment:
     - PATH: "/opt/yarn/yarn-v1.5.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
   - &android
-    <<: *defaults
+    <<: *default
     docker:
     - image: circleci/android:api-26-alpha
   - &macos
-    <<: *defaults
+    <<: *default
     macos:
       xcode: "9.2.0"
 
 version: 2
 jobs:
   checkout:
-    <<: *nodejs
+    <<: *default
     steps:
     - checkout
     - run: sudo apt-get -y -qq install awscli
@@ -29,9 +31,6 @@ jobs:
     - restore_cache:
         keys:
         - v1-gems-{{ checksum "Gemfile.lock" }}
-    - run: >-
-        gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BD &&
-        \curl -sSL https://get.rvm.io | bash -s stable --ruby
     - run: bundle check || bundle install --path vendor/bundle
     - run: mkdir -p tmp/logs tmp/screenshots tmp/.secrets
     - run: yarn install --no-optional

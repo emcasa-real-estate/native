@@ -30,16 +30,16 @@ sed \
   -e "s/\$PROVISIONING_UUID/$IOS_PROVISIONING_UUID/g" \
   -e "s/\$CODESIGN_IDENTITY/$IOS_CODESIGN_IDENTITY/g" \
   -e "s/\$BUNDLE_IDENTIFIER_SUFFIX/${BUNDLE_IDENTIFIER_SUFFIX:-}/g" \
-  $ROOT/.buildkite/ios/templates/exportOptions.plist > \
-  $ROOT/tmp/release.plist
+  .circleci/ios/templates/exportOptions.plist > \
+  tmp/release.plist
 
 echo "Code signing application"
 
 OPTIONS=("OTHER_CODE_SIGN_FLAGS=--keychain '$KEYCHAIN_NAME'")
 
-cd $ROOT/ios && xcodebuild -verbose \
+cd ios && xcodebuild -verbose \
   -exportArchive \
-  -exportPath $ROOT/ios/build \
-  -archivePath $ROOT/ios/build/EmCasa.xcarchive \
-  -exportOptionsPlist $ROOT/tmp/release.plist \
-  ${OPTIONS[*]} | tee $ROOT/tmp/logs/ios.sign.log | xcpretty
+  -exportPath build \
+  -archivePath build/EmCasa.xcarchive \
+  -exportOptionsPlist ../tmp/release.plist \
+  ${OPTIONS[*]} | tee ../tmp/logs/ios.sign.log | xcpretty

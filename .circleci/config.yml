@@ -22,11 +22,13 @@ jobs:
     <<: *nodejs
     steps:
     - checkout
+    - run: apt-get -y -qq install awscli
     - restore_cache:
         keys:
         - v1-node-modules-{{ checksum "package.json" }}
     - run: mkdir -p tmp/logs tmp/screenshots
     - run: yarn install --no-optional
+    - run: aws s3 sync $AWS_SECRETS_BUCKET ~/emcasa/tmp/.secrets
     - save_cache:
         paths:
         - node_modules
@@ -73,6 +75,38 @@ jobs:
         paths:
         - ~/.gradle
         key: v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
+  deploy_staging_ios:
+    <<: *macos
+    environment:
+      IOS_XCCONFIG_FILE: ~/emcasa/.secrets/ios/secrets.xcconfig
+      IOS_CERTIFICATE_FILE: ~/emcasa/.secrets/ios/app.p12
+      IOS_PROVISIONING_FILE: ~/emcasa/.secrets/ios/ad-hoc.mobileprovision
+      KEYCHAIN_NAME: ~/Library/Keychains/build.keychain
+      KEYCHAIN_PASSWORD: passwd
+    steps:
+    - attach_workspace:
+        at: ~/emcasa
+    - run: bundle install
+    - run: >-
+        mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles/ &&
+        security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME" &&
+        security default-keychain -s "$KEYCHAIN_NAME"
+    - run: >-
+        VERSION_NAME=$(.circleci/version.sh) $([CIRCLE_BRANCH != "master"] && echo $CIRCLE_BRANCH)
+        BUILD_NUMBER=$CIRCLE_BUILD_NUM
+        .circleci/ios/bump.sh
+    - run: BUILD_CONFIGURATION=Beta .circleci/ios/build.sh
+    - run: BUILD_PROFILE=beta .circleci/ios/deploy.sh
+  deploy_staging_android:
+    <<: *nodejs
+    environment:
+      ANDROID_KEYSTORE_FILE: ~/emcasa/.secrets/android/keystore.jks
+      PLAY_STORE_CERTIFICATE_FILE: ~/emcasa/.secrets/android/play-store.p12
+    steps:
+    - attach_workspace:
+        at: ~/emcasa
+    - run: bundle install
+
 workflows:
   version: 2
   commit:
@@ -87,3 +121,11 @@ workflows:
     - build_android:
         requires:
         - checkout
+    - deploy_staging:
+        type: approval
+        requires:
+        - build_ios
+        - build_android
+    - deploy_staging_ios:
+        requires:
+        - deploy_staging

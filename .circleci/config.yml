@@ -29,7 +29,7 @@ jobs:
     - restore_cache:
         keys:
         - v1-gems-{{ checksum "Gemfile.lock" }}
-    - run: bundle check || bundle install --path vendor/bundle
+    - run: gem install bundler && bundle check || bundle install --path vendor/bundle
     - run: mkdir -p tmp/logs tmp/screenshots tmp/.secrets
     - run: yarn install --no-optional
     - run: aws s3 sync $AWS_SECRETS_BUCKET ~/emcasa/tmp/.secrets

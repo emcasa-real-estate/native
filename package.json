@@ -68,6 +68,7 @@
     "react-native-fabric-crashlytics": "^0.1.8",
     "react-native-fontawesome-pro": "^1.0.12",
     "react-native-keyboard-aware-scroll-view": "^0.5.0",
+    "react-native-keyboard-spacer": "^0.4.1",
     "react-native-maps": "^0.20.1",
     "react-native-modal-dropdown": "^0.6.2",
     "react-native-offline": "^3.7.3",

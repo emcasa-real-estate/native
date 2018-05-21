@@ -72,7 +72,10 @@ jobs:
         command: yarn start
         background: true
     - run: detox build -c ios.debug
-    - run: detox test -c ios.debug --platform ios --debug-synchronization 10000
+    - run: >-
+        xcrun simctl install "iPhone 6" ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app &&
+        xcrun simctl launch "iPhone 6" com.EmCasa.native && sleep 5
+    - run: detox test -c ios.debug --reuse --platform ios --debug-synchronization 10000
     - store_artifacts:
         path: tmp/screenshots
         destination: screenshots

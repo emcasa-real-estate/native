@@ -9,7 +9,8 @@ describe('listings/results', () => {
       .withTimeout(6000)
     await expect(element(select.nthCard(1))).toExist()
     await expect(element(select.nthCard(16))).toNotExist()
-    await element(select.feed()).swipe('up', 'fast', 0.9)
+    await element(select.feed()).swipe('up', 'fast', 0.6)
+    await element(select.feed()).swipe('up', 'fast', 0.6)
     await waitFor(element(select.nthCard(16)))
       .toExist()
       .withTimeout(20000)
@@ -18,14 +19,18 @@ describe('listings/results', () => {
 
   context('favorites', () => {
     beforeAll(() => device.reloadReactNative())
+    afterEach(() => element(select.feed()).swipe('down', 'fast', 0.5))
+
+    const scrollToCard = (n, direction = 'down') =>
+      waitFor(element(select.nthCard(n)))
+        .toBeVisible()
+        .whileElement(select.feed())
+        .scroll(250, direction)
 
     it('saves client-side favorited listings', async () => {
       for (let i = 1; i <= 3; ++i) {
         const likeButton = element(select.nthLikeButton(i))
-        await waitFor(element(select.nthCard(i)))
-          .toBeVisible()
-          .whileElement(select.feed())
-          .scroll(200, 'down')
+        await scrollToCard(i)
         await expect(likeButton).toBeVisible()
         await expect(likeButton).toHaveLabel('Adicionar aos favoritos')
         await likeButton.tap()
@@ -33,12 +38,15 @@ describe('listings/results', () => {
       }
     })
 
-    it('persists client-side data', async () => {
-      await device.terminateApp()
-      await device.launchApp({newInstance: false})
-      await expect(element(select.nthLikeButton(1)))
-        .toHaveLabel('Remover dos favoritos')
-        .withTimeout(3000)
+    it('removes client-side favorited listings', async () => {
+      for (let i = 1; i <= 3; ++i) {
+        const likeButton = element(select.nthLikeButton(i))
+        await scrollToCard(i)
+        await expect(likeButton).toBeVisible()
+        await expect(likeButton).toHaveLabel('Remover dos favoritos')
+        await likeButton.tap()
+        await expect(likeButton).toHaveLabel('Adicionar aos favoritos')
+      }
     })
   })
 })

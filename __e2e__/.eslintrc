@@ -3,6 +3,7 @@
     "jest": true
   },
   "globals": {
+    "context": true,
     "device": true,
     "waitFor": true,
     "element": true,

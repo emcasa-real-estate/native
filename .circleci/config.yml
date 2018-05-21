@@ -22,7 +22,7 @@ jobs:
     <<: *nodejs
     steps:
     - checkout
-    - run: apt-get -y -qq install awscli
+    - run: sudo apt-get -y -qq install awscli
     - restore_cache:
         keys:
         - v1-node-modules-{{ checksum "package.json" }}

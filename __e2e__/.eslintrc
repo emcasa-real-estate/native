@@ -3,6 +3,7 @@
     "jest": true
   },
   "globals": {
+    "screenShot": true,
     "context": true,
     "device": true,
     "waitFor": true,

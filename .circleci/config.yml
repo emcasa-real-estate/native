@@ -99,9 +99,10 @@ jobs:
         security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME" &&
         security default-keychain -s "$KEYCHAIN_NAME"
     - run: >-
-        VERSION_NAME=$(.circleci/version.sh $([ $CIRCLE_BRANCH != "master" ] && echo "$CIRCLE_BRANCH"))
-        BUILD_NUMBER=$CIRCLE_BUILD_NUM
-        .circleci/ios/bump.sh
+        export VERSION_NAME=$(.circleci/version.sh $([ $CIRCLE_BRANCH != "master" ] && echo "$CIRCLE_BRANCH")) &&
+        export BUILD_NUMBER=$CIRCLE_BUILD_NUM &&
+        agvtool new-marketing-version $VERSION_NAME &&
+        agvtool new-version -all $BUILD_NUMBER
     - run: BUILD_CONFIGURATION=Beta .circleci/ios/build.sh
     - run: BUILD_PROFILE=beta .circleci/ios/deploy.sh
   deploy_staging_android:

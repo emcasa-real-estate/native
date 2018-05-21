@@ -13,6 +13,6 @@ describe('containers/App', () => {
         <App />
       </Provider>
     )
-    expect(node.getInstance()).toBeTruthy()
+    expect(node.getInstance()).to.be.ok
   })
 })

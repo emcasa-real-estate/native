@@ -57,6 +57,7 @@ jobs:
         brew update &&
         brew tap wix/brew &&
         brew install --HEAD applesimutils &&
+        brew upgrade python &&
         brew install watchman &&
         npm install -g detox-cli &&
         detox clean-framework-cache && detox build-framework-cache

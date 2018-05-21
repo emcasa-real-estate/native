@@ -53,10 +53,6 @@ jobs:
     - restore_cache:
         keys:
         - v1-cocoapods-{{ checksum "ios/Podfile" }}
-    - run:
-        name: Start server
-        command: scripts/server/start.js
-        background: true
     - run: >-
         brew update &&
         brew tap wix/brew &&
@@ -66,7 +62,9 @@ jobs:
     - run: yarn install && cd ios && pod install
     - run: xcrun instruments -w "iPhone 6 (11.2)" || true
     - run: detox build -c ios.debug
-    - run: detox test -c ios.debug --platform ios --debug-synchronization 10000
+    - run: >-
+        scripts/server/start.js &
+        detox test -c ios.debug --platform ios --debug-synchronization 10000
     - save_cache:
         paths:
         - ~/.cocoapods

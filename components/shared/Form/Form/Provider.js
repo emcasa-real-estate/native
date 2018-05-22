@@ -92,7 +92,7 @@ export default class FormProvider extends PureComponent {
       [field]: value
     }
     this.setState({value: result})
-    if (onChange) onChange(result)
+    if (onChange) onChange(result, field)
   }
 
   onFocusField = (field) => this.setState({focus: field})

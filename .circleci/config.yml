@@ -80,6 +80,17 @@ aliases:
       mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles/ &&
       security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME" &&
       security default-keychain -s "$KEYCHAIN_NAME"
+  # build scripts
+  - &bump-ios
+    command: |-
+      cd ios
+      agvtool new-marketing-version $VERSION_NAME
+      agvtool new-version -all $BUILD_NUMBER
+  - &bump-android
+    command: |-
+      sed -i'' -re "s/(versionCode) ([[:digit:]]*)/\1 $BUILD_NUMBER/" android/app/build.gradle
+      sed -i'' -re "s/(versionName) \"(.*)\"/\1 \"$VERSION_NAME\"/" android/app/build.gradle
+
 
 
 version: 2
@@ -141,11 +152,8 @@ jobs:
     - run: *install-cocoapods
     - run: *configure-keychain
     - run: *configure-release
+    - run: *bump-ios
     - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-ios-staging.png --platforms ios
-    - run: |-
-        cd ios
-        agvtool new-marketing-version $VERSION_NAME
-        agvtool new-version -all $BUILD_NUMBER
     - run: BUILD_CONFIGURATION=Beta .circleci/ios/build.sh
     - run: >-
         bundle exec fastlane run crashlytics
@@ -166,10 +174,8 @@ jobs:
     - run: *install-gems
     - run: *install-sdkmanager
     - run: *configure-release
+    - run: *bump-android
     - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-android-staging.png --platforms android
-    - run: |-
-        sed -i'' -re "s/(versionCode) ([[:digit:]]*)/\1 $BUILD_NUMBER/" android/app/build.gradle
-        sed -i'' -re "s/(versionName) \"(.*)\"/\1 \"$VERSION_NAME\"/" android/app/build.gradle
     - run: export TERM=xterm && cd android && ./gradlew assembleStaging
     - run: >-
         bundle exec fastlane run crashlytics
@@ -178,6 +184,32 @@ jobs:
         build_secret:"$FABRIC_BUILD_SECRET",
         groups:"$TESTER_GROUPS"
   # production deploy
+  deploy_production_ios:
+    <<: *macos
+    environment:
+      API_URL: https://em-casa-backend.herokuapp.com
+      IOS_XCCONFIG_FILE: ~/emcasa/tmp/.secrets/ios/secrets.xcconfig
+      IOS_CERTIFICATE_FILE: ~/emcasa/tmp/.secrets/ios/app.p12
+      IOS_PROVISIONING_FILE: ~/emcasa/tmp/.secrets/ios/app-store.mobileprovision
+    steps:
+    - attach_workspace:
+        at: ~/emcasa
+    - restore_cache: *restore-cocoapods
+    - run: *install-gems
+    - run: *install-cocoapods
+    - run: *configure-keychain
+    - run: *configure-release
+    - run: *bump-ios
+    - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-ios.png --platforms ios
+    - run: BUILD_CONFIGURATION=Release .circleci/ios/build.sh
+    - run: >-
+        bundle exec fastlane deliver
+        --skip_metadata --skip_screenshots
+        --ipa "$PWD/ios/build/EmCasa.ipa"
+        --app $APPLE_APP_ID
+        --username $APPLE_ID
+        --app_version $VERSION_NAME
+        --app_identifier com.EmCasa.native
   deploy_production_android:
     <<: *android
     environment:
@@ -191,11 +223,8 @@ jobs:
     - run: *install-gems
     - run: *install-sdkmanager
     - run: *configure-release
+    - run: *bump-android
     - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-android.png --platforms android
-    - run: |-
-        sed -i'' -re "s/(versionCode) ([[:digit:]]*)/\1 $BUILD_NUMBER/" android/app/build.gradle
-        sed -i'' -re "s/(versionName) \"(.*)\"/\1 \"$VERSION_NAME\"/" android/app/build.gradle
-    - run: bundle check || bundle install --path vendor/bundle
     - run: export TERM=xterm && cd android && ./gradlew assembleRelease
     - run: export TERM=xterm && cd android && ./gradlew publishApkRelease
 
@@ -229,6 +258,9 @@ workflows:
     - deploy_staging_android:
         requires:
         - deploy_staging
+    - deploy_production_ios:
+        requires:
+        - deploy_production
     - deploy_production_android:
         requires:
         - deploy_production

@@ -72,7 +72,7 @@ aliases:
       echo "export ANDROID_KEYSTORE_FILE=$PWD/emcasa/tmp/.secrets/android/play-store.p12" >> $BASH_ENV
       echo "export IOS_XCCONFIG_FILE=$PWD/emcasa/tmp/.secrets/ios/secrets.xcconfig" >> $BASH_ENV
       echo "export IOS_CERTIFICATE_FILE=$PWD/emcasa/tmp/.secrets/ios/app.p12" >> $BASH_ENV
-      echo "export IOS_PROVISIONING_FILE=$PWD/emcasa/tmp/.secrets/ios/${PROVISIONING_PROFILE:-ad-hoc}.mobileprovision" >> $BASH_ENV
+      echo "export IOS_PROVISIONING_FILE=$PWD/emcasa/tmp/.secrets/ios/${CODESIGN_PROFILE:-ad-hoc}.mobileprovision" >> $BASH_ENV
   - &configure-keychain
     name: Setup build keychain
     command: |-
@@ -144,18 +144,21 @@ jobs:
     <<: *macos
     environment:
       API_URL: https://em-casa-backend-staging.herokuapp.com
-      PROVISIONING_PROFILE: ad-hoc
+      CODESIGN_PROFILE: ad-hoc
+      BUNDLE_IDENTIFIER_SUFFIX: -beta
     steps:
     - attach_workspace:
         at: ~/emcasa
     - restore_cache: *restore-cocoapods
     - run: *install-gems
     - run: *install-cocoapods
+    - run: brew install pcre
     - run: *configure-keychain
     - run: *configure-release
     - run: *bump-ios
     - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-ios-staging.png --platforms ios
     - run: BUILD_CONFIGURATION=Beta .circleci/ios/build.sh
+    - run: .circleci/ios/sign.sh
     - run: >-
         bundle exec fastlane run crashlytics
         ipa_path:"$PWD/ios/build/EmCasa-Beta.ipa"
@@ -187,18 +190,20 @@ jobs:
     <<: *macos
     environment:
       API_URL: https://em-casa-backend.herokuapp.com
-      PROVISIONING_PROFILE: app-store
+      CODESIGN_PROFILE: app-store
     steps:
     - attach_workspace:
         at: ~/emcasa
     - restore_cache: *restore-cocoapods
     - run: *install-gems
     - run: *install-cocoapods
+    - run: brew install pcre
     - run: *configure-keychain
     - run: *configure-release
     - run: *bump-ios
     - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-ios.png --platforms ios
     - run: BUILD_CONFIGURATION=Release .circleci/ios/build.sh
+    - run: .circleci/ios/sign.sh
     - run: >-
         bundle exec fastlane deliver
         --skip_metadata --skip_screenshots

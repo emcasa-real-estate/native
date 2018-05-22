@@ -1,11 +1,5 @@
 set -eu
 
-if [[ $BUILD_PROFILE == production ]];
-then CODESIGN_PROFILE=app-store;
-else CODESIGN_PROFILE=ad-hoc; fi
-if [[ $BUILD_PROFILE == beta ]];
-then export BUNDLE_IDENTIFIER_SUFFIX="-beta"; fi
-
 echo "Preparing keychain access"
 
 KEYCHAIN_NAME=${KEYCHAIN_NAME:-login.keychain}
@@ -16,7 +10,6 @@ security import "$IOS_CERTIFICATE_FILE" -P "$IOS_CERTIFICATE_PASSWORD" -k "$KEYC
 
 echo "Preparing provisioning profile"
 
-export IOS_PROVISIONING_FILE=$(printf $IOS_PROVISIONING_FILE $CODESIGN_PROFILE)
 export IOS_PROVISIONING_UUID=`grep UUID -A1 -a $IOS_PROVISIONING_FILE | grep -io "[-A-F0-9]\{36\}"`
 export IOS_PROVISIONING_NAME=`grep "<key>Name" -A1 -a $IOS_PROVISIONING_FILE | pcregrep -o1 '<string>(.*)</string>'`
 export IOS_TEAM_ID=`grep "<key>TeamIdentifier" -A2 -a $IOS_PROVISIONING_FILE | pcregrep -o1 '<string>(.*)</string>'`

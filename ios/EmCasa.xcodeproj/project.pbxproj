@@ -41,6 +41,8 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		B19C244ACB3D472EB10421F2 /* libSMXCrashlytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 225DE1D715094D96B64BE883 /* libSMXCrashlytics.a */; };
+		C350457520B37A4000C05F9A /* libReactNativeKeyboardManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C350456F20B379FC00C05F9A /* libReactNativeKeyboardManager.a */; };
+		C350457720B37A8600C05F9A /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C350457620B37A8600C05F9A /* IQKeyboardManager.bundle */; };
 		C38112FA207E8AD500A82158 /* libRCTOrientation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C38112DD207E8A8D00A82158 /* libRCTOrientation.a */; };
 		C3D2661A20A10D3100CCE313 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		C3D3B5C0205C4AB20004FBF1 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D3B598205C4AAA0004FBF1 /* libAirMaps.a */; };
@@ -353,6 +355,13 @@
 			remoteGlobalIDString = 9936F32F1F5F2E5B0010BF04;
 			remoteInfo = "privatedata-tvOS";
 		};
+		C350456E20B379FC00C05F9A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C350454420B379FC00C05F9A /* ReactNativeKeyboardManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A51183591EFAC02F0077C68F;
+			remoteInfo = ReactNativeKeyboardManager;
+		};
 		C38112DC207E8A8D00A82158 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C38112CB207E8A8D00A82158 /* RCTOrientation.xcodeproj */;
@@ -422,6 +431,8 @@
 		87313058992349ECBFDA6CA2 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-SemiBold.ttf"; path = "../assets/fonts/OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		AC14AACE2CF950571B460565 /* Pods-EmCasaTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmCasaTests.beta.xcconfig"; path = "Pods/Target Support Files/Pods-EmCasaTests/Pods-EmCasaTests.beta.xcconfig"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
+		C350454420B379FC00C05F9A /* ReactNativeKeyboardManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeKeyboardManager.xcodeproj; path = "../node_modules/react-native-keyboard-manager/ios/ReactNativeKeyboardManager.xcodeproj"; sourceTree = "<group>"; };
+		C350457620B37A8600C05F9A /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = IQKeyboardManager.bundle; path = "../node_modules/react-native-keyboard-manager/ios/IQKeyboardManager/Resources/IQKeyboardManager.bundle"; sourceTree = "<group>"; };
 		C38112CB207E8A8D00A82158 /* RCTOrientation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTOrientation.xcodeproj; path = "../node_modules/react-native-orientation/iOS/RCTOrientation.xcodeproj"; sourceTree = "<group>"; };
 		C3D3B593205C4AAA0004FBF1 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		C3D6CCC22097749200E1D8D1 /* RNSVG.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSVG.xcodeproj; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; };
@@ -445,6 +456,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C350457520B37A4000C05F9A /* libReactNativeKeyboardManager.a in Frameworks */,
 				C3D2661A20A10D3100CCE313 /* libRCTAnimation.a in Frameworks */,
 				C3D6CCF5209774AA00E1D8D1 /* libRNSVG.a in Frameworks */,
 				C38112FA207E8AD500A82158 /* libRCTOrientation.a in Frameworks */,
@@ -638,6 +650,7 @@
 		7E4AFE5F5EC34142AAD2E6FA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C350457620B37A8600C05F9A /* IQKeyboardManager.bundle */,
 				1628E5320CD54949AD213729 /* OpenSans-Bold.ttf */,
 				013F8C74D0DC4BF9BF7E23FA /* OpenSans-ExtraBold.ttf */,
 				1A78C75678D844D4A6D6FF76 /* OpenSans-Light.ttf */,
@@ -650,6 +663,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				C350454420B379FC00C05F9A /* ReactNativeKeyboardManager.xcodeproj */,
 				C3D6CCC22097749200E1D8D1 /* RNSVG.xcodeproj */,
 				C38112CB207E8A8D00A82158 /* RCTOrientation.xcodeproj */,
 				C3D3B593205C4AAA0004FBF1 /* AirMaps.xcodeproj */,
@@ -752,6 +766,14 @@
 			isa = PBXGroup;
 			children = (
 				C33522C22063422100AF766A /* libRNPhotoView.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C350454520B379FC00C05F9A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C350456F20B379FC00C05F9A /* libReactNativeKeyboardManager.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -959,6 +981,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = C350454520B379FC00C05F9A /* Products */;
+					ProjectRef = C350454420B379FC00C05F9A /* ReactNativeKeyboardManager.xcodeproj */;
 				},
 				{
 					ProductGroup = C33522982063422100AF766A /* Products */;
@@ -1264,6 +1290,13 @@
 			remoteRef = C34D29FE204D9678004AEDCC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		C350456F20B379FC00C05F9A /* libReactNativeKeyboardManager.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReactNativeKeyboardManager.a;
+			remoteRef = C350456E20B379FC00C05F9A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		C38112DD207E8A8D00A82158 /* libRCTOrientation.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1310,6 +1343,7 @@
 				E58E3BD668E147E88B11A36E /* OpenSans-Bold.ttf in Resources */,
 				011B0FBB61A747FF8C96BF81 /* OpenSans-ExtraBold.ttf in Resources */,
 				3EEAAC4E956E475C99F6FF0C /* OpenSans-Light.ttf in Resources */,
+				C350457720B37A8600C05F9A /* IQKeyboardManager.bundle in Resources */,
 				E85C9CB2634347619F34FCDA /* OpenSans-Regular.ttf in Resources */,
 				5CFBFF8ECB7F46339FD1EE04 /* OpenSans-SemiBold.ttf in Resources */,
 			);
@@ -1452,11 +1486,11 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-EmCasa/Pods-EmCasa-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/React/React.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/React.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManager.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

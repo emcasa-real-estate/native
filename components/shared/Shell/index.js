@@ -1,21 +1,19 @@
-import {View, Platform} from 'react-native'
+import {View, ScrollView, Platform} from 'react-native'
 import {GatewayProvider} from 'react-gateway'
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import KeyboardSpacer from 'react-native-keyboard-spacer'
+import KeyboardManager from 'react-native-keyboard-manager'
 
 import GatewayView from '@/components/shared/GatewayView'
 import $styles from './styles'
 
 function Shell({styles, children, scroll}) {
-  const Main = scroll ? KeyboardAwareScrollView : View
+  const Main = scroll ? ScrollView : View
   return (
     <GatewayProvider>
       <View style={styles.container}>
         <GatewayView name="header" style={styles.header} />
         <Main
-          extraHeight={0}
-          extraScrollHeight={-50}
-          enableResetScrollToCoords={false}
+          onLayout={() => KeyboardManager.reloadLayoutIfNeeded()}
           style={styles.main}
         >
           {children}

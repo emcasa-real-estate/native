@@ -6,7 +6,6 @@ export default function Message(props) {
     <TextInput
       autoCorrect
       multiline
-      numberOfLines={4}
       style={styles.input}
       placeholder="Mensagem (Opcional)"
       {...props}

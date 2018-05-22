@@ -1,24 +1,13 @@
-import {Component} from 'react'
+import {createStackNavigator} from 'react-navigation'
 
-import Shell from '@/containers/shared/Shell'
-import Address from '@/components/newListing/Address'
+import * as address from './Address'
+import * as properties from './Properties'
 
-export default class AddressFormScreen extends Component {
-  onSubmit = (value) => {
-    const {navigation} = this.props
-    navigation.navigate(
-      'properties',
-      Object.assign({}, navigation.state.params, value)
-    )
+export const screen = createStackNavigator(
+  {address, properties},
+  {
+    initialRouteName: 'address',
+    initialRouteParams: {},
+    headerMode: 'none'
   }
-
-  render() {
-    return (
-      <Shell title="Endereço">
-        <Address onSubmit={this.onSubmit} />
-      </Shell>
-    )
-  }
-}
-
-export const screen = AddressFormScreen
+)

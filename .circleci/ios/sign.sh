@@ -5,7 +5,7 @@ echo "Preparing keychain access"
 KEYCHAIN_NAME=${KEYCHAIN_NAME:-login.keychain}
 
 security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
-security set-keychain-settings -t 300 "$KEYCHAIN_NAME"
+security set-keychain-settings -t 1000 "$KEYCHAIN_NAME"
 security import "$IOS_CERTIFICATE_FILE" -P "$IOS_CERTIFICATE_PASSWORD" -k "$KEYCHAIN_NAME" -A
 
 echo "Preparing provisioning profile"
@@ -27,6 +27,8 @@ sed \
   tmp/release.plist
 
 echo "Code signing application"
+
+set -x
 
 OPTIONS=("OTHER_CODE_SIGN_FLAGS=--keychain '$KEYCHAIN_NAME'")
 

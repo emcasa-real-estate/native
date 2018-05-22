@@ -37,8 +37,10 @@ export default function ListingPropertiesForm({onSubmit}) {
         name="iptu"
         placeholder="IPTU (R$)"
         keyboardType="numeric"
-        returnKeyType="done"
+        returnKeyType="next"
+        nextField="description"
       />
+      <TextInput multiline name="description" placeholder="Descrição" />
     </Form>
   )
 }

@@ -14,8 +14,8 @@ export default class PropertiesFormScreen extends Component {
 
   render() {
     return (
-      <Shell title="Dados principais">
-        <Properties onSubmit={this.o2nSubmit} />
+      <Shell scroll title="Dados principais">
+        <Properties onSubmit={this.onSubmit} />
       </Shell>
     )
   }

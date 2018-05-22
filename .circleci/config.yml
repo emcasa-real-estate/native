@@ -46,6 +46,17 @@ aliases:
     paths:
     - ~/.cocoapods
     key: v1-cocoapods-{{ checksum "ios/Podfile" }}
+  # install dependencies
+  - &install-sdkmanager
+    command: |-
+      sdkmanager --install "extras;android;m2repository" "extras;google;m2repository"
+      sdkmanager --licenses
+  - &install-node-modules
+    command: yarn install
+  - &install-gems
+    command: bundle check || bundle install --path vendor/bundle
+  - &install-cocoapods
+    command: cd ios && pod install
   # build configurations
   - &configure-release
     name: Setup release configuration
@@ -80,9 +91,9 @@ jobs:
     - run: sudo apt-get -y -qq install awscli
     - restore_cache: *restore-node-modules
     - restore_cache: *restore-gems
+    - run: *install-node-modules
+    - run: *install-gems
     - run: mkdir -p tmp/logs tmp/screenshots tmp/.secrets
-    - run: bundle check || bundle install --path vendor/bundle
-    - run: yarn install --no-optional
     - run: aws s3 sync $AWS_SECRETS_BUCKET ~/emcasa/tmp/.secrets
     - save_cache: *cache-node-modules
     - save_cache: *cache-gems
@@ -102,7 +113,7 @@ jobs:
     - attach_workspace:
         at: ~/emcasa
     - restore_cache: *restore-cocoapods
-    - run: cd ios && pod install
+    - run: *install-cocoapods
     - run: .circleci/ios/build.sh
     - save_cache: *cache-cocoapods
   build_android:
@@ -111,8 +122,7 @@ jobs:
     - attach_workspace:
         at: ~/emcasa
     - restore_cache: *restore-gradle
-    - run: sdkmanager --install "extras;android;m2repository" "extras;google;m2repository"
-    - run: sdkmanager --licenses
+    - run: *install-sdkmanager
     - run: export TERM=xterm && cd android && ./gradlew assembleDebug
     - save_cache: *cache-gradle
   # staging deploy
@@ -127,8 +137,8 @@ jobs:
     - attach_workspace:
         at: ~/emcasa
     - restore_cache: *restore-cocoapods
-    - run: cd ios && pod install
-    - run: bundle check || bundle install --path vendor/bundle
+    - run: *install-gems
+    - run: *install-cocoapods
     - run: *configure-keychain
     - run: *configure-release
     - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-ios-staging.png --platforms ios
@@ -153,9 +163,8 @@ jobs:
     - attach_workspace:
         at: ~/emcasa
     - restore_cache: *restore-gradle
-    - run: sdkmanager --install "extras;android;m2repository" "extras;google;m2repository"
-    - run: sdkmanager --licenses
-    - run: bundle check || bundle install --path vendor/bundle
+    - run: *install-gems
+    - run: *install-sdkmanager
     - run: *configure-release
     - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-android-staging.png --platforms android
     - run: |-
@@ -179,8 +188,8 @@ jobs:
     - attach_workspace:
         at: ~/emcasa
     - restore_cache: *restore-gradle
-    - run: sdkmanager --install "extras;android;m2repository" "extras;google;m2repository"
-    - run: sdkmanager --licenses
+    - run: *install-gems
+    - run: *install-sdkmanager
     - run: *configure-release
     - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-android.png --platforms android
     - run: |-

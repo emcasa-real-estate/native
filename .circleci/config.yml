@@ -209,9 +209,17 @@ workflows:
         requires:
         # - build_ios
         - build_android
+    - deploy_production:
+        type: approval
+        requires:
+        # - build_ios
+        - build_android
     - deploy_staging_ios:
         requires:
         - deploy_staging
     - deploy_staging_android:
         requires:
         - deploy_staging
+    - deploy_production_android:
+        requires:
+        - deploy_production

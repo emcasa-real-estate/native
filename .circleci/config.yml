@@ -82,11 +82,11 @@ jobs:
     - run:
         command: |-
           xcrun simctl io booted recordVideo tmp/video.mp4 &
-          echo $! >> tmp/video.pid
+          echo $! > tmp/video.pid
         background: true
     - run: detox test -c ios.debug --reuse --platform ios --debug-synchronization 10000
     - run:
-        command: cat tmp/video.pid | kill -SIGINT
+        command: kill -SIGINT $(cat tmp/video.pid)
         when: always
     - store_artifacts:
         path: tmp/video.mp4

@@ -68,11 +68,11 @@ aliases:
       echo "export BUILD_NUMBER=$CIRCLE_BUILD_NUM" >> $BASH_ENV
       echo "export VERSION_NAME=$(.circleci/version.sh $([ $CIRCLE_BRANCH != \"master\" ] && echo $CIRCLE_BRANCH))" >> $BASH_ENV
       echo "export TESTER_GROUPS=$([ $CIRCLE_BRANCH != \"master\" ] && echo $ALPHA_TESTERS || echo $BETA_TESTERS)" >> $BASH_ENV
-      echo "export ANDROID_KEYSTORE_FILE=$PWD/emcasa/tmp/.secrets/android/keystore.jks" >> $BASH_ENV
-      echo "export ANDROID_KEYSTORE_FILE=$PWD/emcasa/tmp/.secrets/android/play-store.p12" >> $BASH_ENV
-      echo "export IOS_XCCONFIG_FILE=$PWD/emcasa/tmp/.secrets/ios/secrets.xcconfig" >> $BASH_ENV
-      echo "export IOS_CERTIFICATE_FILE=$PWD/emcasa/tmp/.secrets/ios/app.p12" >> $BASH_ENV
-      echo "export IOS_PROVISIONING_FILE=$PWD/emcasa/tmp/.secrets/ios/${CODESIGN_PROFILE:-ad-hoc}.mobileprovision" >> $BASH_ENV
+      echo "export ANDROID_KEYSTORE_FILE=$PWD/tmp/.secrets/android/keystore.jks" >> $BASH_ENV
+      echo "export ANDROID_KEYSTORE_FILE=$PWD/tmp/.secrets/android/play-store.p12" >> $BASH_ENV
+      echo "export IOS_XCCONFIG_FILE=$PWD/tmp/.secrets/ios/secrets.xcconfig" >> $BASH_ENV
+      echo "export IOS_CERTIFICATE_FILE=$PWD/tmp/.secrets/ios/app.p12" >> $BASH_ENV
+      echo "export IOS_PROVISIONING_FILE=$PWD/tmp/.secrets/ios/${CODESIGN_PROFILE:-ad-hoc}.mobileprovision" >> $BASH_ENV
   - &configure-keychain
     name: Setup build keychain
     command: |-

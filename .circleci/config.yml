@@ -62,6 +62,10 @@ jobs:
         npm install -g detox-cli &&
         detox clean-framework-cache && detox build-framework-cache
     - run: yarn install && cd ios && pod install
+    - save_cache:
+        paths:
+        - ~/.cocoapods
+        key: v1-cocoapods-{{ checksum "ios/Podfile" }}
     - run: xcrun instruments -w "iPhone 6 (11.2)" || true
     - run:
         name: Start test server
@@ -79,10 +83,6 @@ jobs:
     - store_artifacts:
         path: tmp/screenshots
         destination: screenshots
-    - save_cache:
-        paths:
-        - ~/.cocoapods
-        key: v1-cocoapods-{{ checksum "ios/Podfile" }}
   build_android:
     <<: *android
     steps:

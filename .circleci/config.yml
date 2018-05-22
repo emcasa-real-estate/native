@@ -152,7 +152,7 @@ jobs:
     - restore_cache: *restore-cocoapods
     - run: *install-gems
     - run: *install-cocoapods
-    - run: brew install pcre
+    - run: brew install pcre imagemagick
     - run: *configure-keychain
     - run: *configure-release
     - run: *bump-ios
@@ -175,6 +175,7 @@ jobs:
     - restore_cache: *restore-gradle
     - run: *install-gems
     - run: *install-sdkmanager
+    - run: sudo apt-get install -y -qq imagemagick
     - run: *configure-release
     - run: *bump-android
     - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-android-staging.png --platforms android
@@ -197,7 +198,7 @@ jobs:
     - restore_cache: *restore-cocoapods
     - run: *install-gems
     - run: *install-cocoapods
-    - run: brew install pcre
+    - run: brew install pcre imagemagick
     - run: *configure-keychain
     - run: *configure-release
     - run: *bump-ios
@@ -222,6 +223,7 @@ jobs:
     - restore_cache: *restore-gradle
     - run: *install-gems
     - run: *install-sdkmanager
+    - run: sudo apt-get install -y -qq imagemagick
     - run: *configure-release
     - run: *bump-android
     - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-android.png --platforms android

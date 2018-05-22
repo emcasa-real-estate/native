@@ -21,17 +21,20 @@ aliases:
     environment:
       BETA_TESTERS: product,dev
       ALHPA_TESTERS: dev
-    command: >-
-      export VERSION_NAME=$(.circleci/version.sh $([ $CIRCLE_BRANCH != "master" ] && echo "$CIRCLE_BRANCH")) &&
-      export BUILD_NUMBER=$CIRCLE_BUILD_NUM &&
-      export TESTER_GROUPS=$([ $CIRCLE_BRANCH != "master" ] && echo $ALPHA_TESTERS || echo $BETA_TESTERS)
+    command: |-
+      BASH_ENV=${BASH_ENV:-~/.bashrc}
+      echo 'export BUILD_NUMBER=$CIRCLE_BUILD_NUM' >> $BASH_ENV
+      echo 'export VERSION_NAME=$(.circleci/version.sh $([ $CIRCLE_BRANCH != "master" ] && echo "$CIRCLE_BRANCH"))' >> $BASH_ENV
+      echo 'export TESTER_GROUPS=$([ $CIRCLE_BRANCH != "master" ] && echo $ALPHA_TESTERS || echo $BETA_TESTERS)' >> $BASH_ENV
   - &configure-keychain
     name: Setup build keychain
-    command: >-
-      export FASTLANE_USER=$APPLE_ID &&
-      export FASTLANE_PASSWORD=$APPLE_PASSWORD &&
-      export KEYCHAIN_NAME=${KEYCHAIN_NAME:-~/Library/Keychains/build.keychain} &&
-      export KEYCHAIN_PASSWORD=${KEYCHAIN_PASSWORD:-passwd} &&
+    command: |-
+      BASH_ENV=${BASH_ENV:-~/.bashrc}
+      echo 'export FASTLANE_USER=$APPLE_ID' >> $BASH_ENV
+      echo 'export FASTLANE_PASSWORD=$APPLE_PASSWORD' >> $BASH_ENV
+      echo 'export KEYCHAIN_NAME=${KEYCHAIN_NAME:-~/Library/Keychains/build.keychain}' >> $BASH_ENV
+      echo 'export KEYCHAIN_PASSWORD=${KEYCHAIN_PASSWORD:-passwd}' >> $BASH_ENV
+      source $BASH_ENV
       mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles/ &&
       security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME" &&
       security default-keychain -s "$KEYCHAIN_NAME"

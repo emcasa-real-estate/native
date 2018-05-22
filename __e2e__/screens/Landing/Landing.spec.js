@@ -1,8 +1,6 @@
 import * as select from './selectors'
 
 describe('listings/results', () => {
-  beforeAll(() => device.reloadReactNative())
-
   it('loads more listings on scroll', async () => {
     await waitFor(element(select.feed()))
       .toExist()
@@ -19,7 +17,7 @@ describe('listings/results', () => {
 
   context('favorites', () => {
     beforeAll(() => device.reloadReactNative())
-    afterEach(() => element(select.feed()).swipe('down', 'fast', 0.5))
+    beforeEach(() => element(select.feed()).swipe('down', 'fast', 0.5))
 
     const scrollToCard = (n, direction = 'down') =>
       waitFor(element(select.nthCard(n)))

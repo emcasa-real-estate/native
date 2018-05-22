@@ -68,6 +68,11 @@ aliases:
       echo "export BUILD_NUMBER=$CIRCLE_BUILD_NUM" >> $BASH_ENV
       echo "export VERSION_NAME=$(.circleci/version.sh $([ $CIRCLE_BRANCH != \"master\" ] && echo $CIRCLE_BRANCH))" >> $BASH_ENV
       echo "export TESTER_GROUPS=$([ $CIRCLE_BRANCH != \"master\" ] && echo $ALPHA_TESTERS || echo $BETA_TESTERS)" >> $BASH_ENV
+      echo "export ANDROID_KEYSTORE_FILE=$PWD/emcasa/tmp/.secrets/android/keystore.jks" >> $BASH_ENV
+      echo "export ANDROID_KEYSTORE_FILE=$PWD/emcasa/tmp/.secrets/android/play-store.p12" >> $BASH_ENV
+      echo "export IOS_XCCONFIG_FILE=$PWD/emcasa/tmp/.secrets/ios/secrets.xcconfig" >> $BASH_ENV
+      echo "export IOS_CERTIFICATE_FILE=$PWD/emcasa/tmp/.secrets/ios/app.p12" >> $BASH_ENV
+      echo "export IOS_PROVISIONING_FILE=$PWD/emcasa/tmp/.secrets/ios/${PROVISIONING_PROFILE:-ad-hoc}.mobileprovision" >> $BASH_ENV
   - &configure-keychain
     name: Setup build keychain
     command: |-
@@ -90,8 +95,6 @@ aliases:
     command: |-
       sed -i'' -re "s/(versionCode) ([[:digit:]]*)/\1 $BUILD_NUMBER/" android/app/build.gradle
       sed -i'' -re "s/(versionName) \"(.*)\"/\1 \"$VERSION_NAME\"/" android/app/build.gradle
-
-
 
 version: 2
 jobs:
@@ -141,9 +144,7 @@ jobs:
     <<: *macos
     environment:
       API_URL: https://em-casa-backend-staging.herokuapp.com
-      IOS_XCCONFIG_FILE: ~/emcasa/tmp/.secrets/ios/secrets.xcconfig
-      IOS_CERTIFICATE_FILE: ~/emcasa/tmp/.secrets/ios/app.p12
-      IOS_PROVISIONING_FILE: ~/emcasa/tmp/.secrets/ios/ad-hoc.mobileprovision
+      PROVISIONING_PROFILE: ad-hoc
     steps:
     - attach_workspace:
         at: ~/emcasa
@@ -165,8 +166,6 @@ jobs:
     <<: *android
     environment:
       API_URL: https://em-casa-backend-staging.herokuapp.com
-      ANDROID_KEYSTORE_FILE: ~/emcasa/tmp/.secrets/android/keystore.jks
-      PLAY_STORE_CERTIFICATE_FILE: ~/emcasa/tmp/.secrets/android/play-store.p12
     steps:
     - attach_workspace:
         at: ~/emcasa
@@ -188,9 +187,7 @@ jobs:
     <<: *macos
     environment:
       API_URL: https://em-casa-backend.herokuapp.com
-      IOS_XCCONFIG_FILE: ~/emcasa/tmp/.secrets/ios/secrets.xcconfig
-      IOS_CERTIFICATE_FILE: ~/emcasa/tmp/.secrets/ios/app.p12
-      IOS_PROVISIONING_FILE: ~/emcasa/tmp/.secrets/ios/app-store.mobileprovision
+      PROVISIONING_PROFILE: app-store
     steps:
     - attach_workspace:
         at: ~/emcasa
@@ -214,8 +211,6 @@ jobs:
     <<: *android
     environment:
       API_URL: https://em-casa-backend.herokuapp.com
-      ANDROID_KEYSTORE_FILE: ~/emcasa/tmp/.secrets/android/keystore.jks
-      PLAY_STORE_CERTIFICATE_FILE: ~/emcasa/tmp/.secrets/android/play-store.p12
     steps:
     - attach_workspace:
         at: ~/emcasa

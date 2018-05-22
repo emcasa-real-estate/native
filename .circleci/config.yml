@@ -1,0 +1,123 @@
+configurations:
+  - &defaults
+    working_directory: ~/emcasa
+  - &nodejs
+    <<: *defaults
+    docker:
+    - image: circleci/node:9
+    environment:
+    - PATH: "/opt/yarn/yarn-v1.5.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  - &android
+    <<: *defaults
+    docker:
+    - image: circleci/android:api-26-alpha
+  - &macos
+    <<: *defaults
+    macos:
+      xcode: "9.2.0"
+
+version: 2
+jobs:
+  checkout:
+    <<: *nodejs
+    steps:
+    - checkout
+    - restore_cache:
+        keys:
+        - v1-node-modules-{{ checksum "package.json" }}
+    - run: mkdir -p tmp/logs tmp/screenshots
+    - run: yarn install --no-optional
+    - save_cache:
+        paths:
+        - node_modules
+        key: v1-node-modules-{{ checksum "package.json" }}
+    - persist_to_workspace:
+        root: .
+        paths: .
+  # unit tests
+  test:
+    <<: *nodejs
+    steps:
+    - attach_workspace:
+        at: ~/emcasa
+    - run: yarn test
+  e2e_ios:
+    <<: *macos
+    environment:
+      API_URL: http://localhost:4040
+      REPLAY_MODE: replay
+      REPLAY_PORT: 4040
+    steps:
+    - attach_workspace:
+        at: ~/emcasa
+    - restore_cache:
+        keys:
+        - v1-cocoapods-{{ checksum "ios/Podfile" }}
+    - run: >-
+        brew update &&
+        brew tap wix/brew &&
+        brew install --HEAD applesimutils &&
+        brew upgrade python &&
+        brew install watchman &&
+        npm install -g detox-cli &&
+        detox clean-framework-cache && detox build-framework-cache
+    - run: yarn install && cd ios && pod install
+    - save_cache:
+        paths:
+        - ~/.cocoapods
+        key: v1-cocoapods-{{ checksum "ios/Podfile" }}
+    - run: xcrun instruments -w "iPhone 6 (11.2)" || true
+    - run:
+        name: Start test server
+        command: scripts/server/start.js
+        background: true
+    - run:
+        name: Start bundler
+        command: yarn start
+        background: true
+    - run: detox build -c ios.debug
+    - run: >-
+        xcrun simctl install "iPhone 6" ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app &&
+        xcrun simctl launch "iPhone 6" com.EmCasa.native && sleep 5
+    - run:
+        command: |-
+          xcrun simctl io booted recordVideo tmp/video.mp4 &
+          echo $! > tmp/video.pid
+        background: true
+    - run: detox test -c ios.debug --reuse --platform ios --debug-synchronization 10000
+    - run:
+        command: pkill -SIGINT -F tmp/video.pid || true
+        when: always
+    - store_artifacts:
+        path: tmp/video.mp4
+    - store_artifacts:
+        path: tmp/screenshots
+        destination: screenshots
+  build_android:
+    <<: *android
+    steps:
+    - attach_workspace:
+        at: ~/emcasa
+    - restore_cache:
+        key: v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
+    - run: sdkmanager --install "extras;android;m2repository" "extras;google;m2repository"
+    - run: sdkmanager --licenses
+    - run: export TERM=xterm && cd android && ./gradlew assembleDebug
+    - save_cache:
+        paths:
+        - ~/.gradle
+        key: v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
+workflows:
+  version: 2
+  commit:
+    jobs:
+    - checkout
+    - test:
+        requires:
+        - checkout
+    - e2e_ios:
+        requires:
+        - checkout
+    - build_android:
+        requires:
+        - checkout

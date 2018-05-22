@@ -115,9 +115,11 @@ jobs:
     - run: sdkmanager --licenses
     - run: export TERM=xterm && cd android && ./gradlew assembleDebug
     - save_cache: *cache-gradle
+  # staging deploy
   deploy_staging_ios:
     <<: *macos
     environment:
+      API_URL: https://em-casa-backend-staging.herokuapp.com
       IOS_XCCONFIG_FILE: ~/emcasa/tmp/.secrets/ios/secrets.xcconfig
       IOS_CERTIFICATE_FILE: ~/emcasa/tmp/.secrets/ios/app.p12
       IOS_PROVISIONING_FILE: ~/emcasa/tmp/.secrets/ios/ad-hoc.mobileprovision
@@ -129,6 +131,7 @@ jobs:
     - run: bundle check || bundle install --path vendor/bundle
     - run: *configure-keychain
     - run: *configure-release
+    - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-ios-staging.png --platforms ios
     - run: |-
         cd ios
         agvtool new-marketing-version $VERSION_NAME
@@ -143,6 +146,33 @@ jobs:
   deploy_staging_android:
     <<: *android
     environment:
+      API_URL: https://em-casa-backend-staging.herokuapp.com
+      ANDROID_KEYSTORE_FILE: ~/emcasa/tmp/.secrets/android/keystore.jks
+      PLAY_STORE_CERTIFICATE_FILE: ~/emcasa/tmp/.secrets/android/play-store.p12
+    steps:
+    - attach_workspace:
+        at: ~/emcasa
+    - restore_cache: *restore-gradle
+    - run: sdkmanager --install "extras;android;m2repository" "extras;google;m2repository"
+    - run: sdkmanager --licenses
+    - run: bundle check || bundle install --path vendor/bundle
+    - run: *configure-release
+    - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-android-staging.png --platforms android
+    - run: |-
+        sed -i'' -re "s/(versionCode) ([[:digit:]]*)/\1 $BUILD_NUMBER/" android/app/build.gradle
+        sed -i'' -re "s/(versionName) \"(.*)\"/\1 \"$VERSION_NAME\"/" android/app/build.gradle
+    - run: export TERM=xterm && cd android && ./gradlew assembleStaging
+    - run: >-
+        bundle exec fastlane run crashlytics
+        apk_path"$PWD/android/app/build/outputs/apk/app-staging.apk"
+        api_token:"$FABRIC_API_KEY",
+        build_secret:"$FABRIC_BUILD_SECRET",
+        groups:"$TESTER_GROUPS"
+  # production deploy
+  deploy_production_android:
+    <<: *android
+    environment:
+      API_URL: https://em-casa-backend.herokuapp.com
       ANDROID_KEYSTORE_FILE: ~/emcasa/tmp/.secrets/android/keystore.jks
       PLAY_STORE_CERTIFICATE_FILE: ~/emcasa/tmp/.secrets/android/play-store.p12
     steps:
@@ -152,17 +182,13 @@ jobs:
     - run: sdkmanager --install "extras;android;m2repository" "extras;google;m2repository"
     - run: sdkmanager --licenses
     - run: *configure-release
+    - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-android.png --platforms android
     - run: |-
         sed -i'' -re "s/(versionCode) ([[:digit:]]*)/\1 $BUILD_NUMBER/" android/app/build.gradle
         sed -i'' -re "s/(versionName) \"(.*)\"/\1 \"$VERSION_NAME\"/" android/app/build.gradle
     - run: bundle check || bundle install --path vendor/bundle
-    - run: export TERM=xterm && cd android && ./gradlew assembleStaging
-    - run: >-
-        bundle exec fastlane run crashlytics
-        apk_path"$PWD/android/app/build/outputs/apk/app-staging.apk"
-        api_token:"$FABRIC_API_KEY",
-        build_secret:"$FABRIC_BUILD_SECRET",
-        groups:"$TESTER_GROUPS"
+    - run: export TERM=xterm && cd android && ./gradlew assembleRelease
+    - run: export TERM=xterm && cd android && ./gradlew publishApkRelease
 
 workflows:
   version: 2

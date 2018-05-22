@@ -2,9 +2,9 @@ import {required} from '@/lib/validations'
 import Text from '@/components/shared/Text'
 import Form from '@/components/shared/Form/Form'
 import Email from '@/components/shared/Form/Email'
+import Phone from '@/components/shared/Form/Phone'
 import Password from '@/components/shared/Form/Password'
-import TextInput from '@/components/shared/TextInput'
-import {field} from '@/components/shared/Form/Field'
+import TextInput from '@/components/shared/Form/TextInput'
 import styles from './styles'
 
 const getError = (error) => {
@@ -17,25 +17,27 @@ const getError = (error) => {
   }
 }
 
-const Name = field({validations: [required('O nome é obrigatório')]})(
-  ({onChange, ...props}) => (
-    <TextInput
-      style={styles.input}
-      placeholder="Nome"
-      onChangeText={onChange}
-      {...props}
-    />
-  )
-)
-
-export default function SignUpForm({onSubmit, error}) {
+export default function SignUpForm({onSubmit, error, loading}) {
   const errorMessage = getError(error)
   return (
-    <Form style={styles.container} onSubmit={onSubmit}>
+    <Form style={styles.container} onSubmit={onSubmit} loading={loading}>
       {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
-      <Name name="name" placeholder="Nome" />
-      <Email name="email" />
-      <Password name="password" />
+      <TextInput
+        name="name"
+        returnKeyType="next"
+        nextField="email"
+        placeholder="Nome"
+        validations={[required('O nome é obrigatório')]}
+      />
+      <Email name="email" returnKeyType="next" nextField="phone" />
+      <Phone
+        name="phone"
+        returnKeyType="next"
+        nextField="password"
+        placeholder="Telefone (opcional)"
+        validations={[required(false)]}
+      />
+      <Password name="password" returnKeyType="done" />
     </Form>
   )
 }

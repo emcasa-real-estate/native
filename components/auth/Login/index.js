@@ -19,14 +19,15 @@ export default function LoginForm({
   onPasswordRecovery,
   onSignUp,
   onSubmit,
-  error
+  error,
+  loading
 }) {
   const errorMessage = getError(error)
   return (
-    <Form style={styles.container} onSubmit={onSubmit}>
+    <Form style={styles.container} onSubmit={onSubmit} loading={loading}>
       {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
-      <Email name="email" />
-      <Password name="password" />
+      <Email name="email" returnKeyType="next" nextField="password" />
+      <Password name="password" returnKeyType="done" />
       <View style={styles.inlineText}>
         <Link style={styles.text} onPress={onPasswordRecovery}>
           Esqueci a minha senha

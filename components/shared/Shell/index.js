@@ -1,5 +1,7 @@
-import {ScrollView, View} from 'react-native'
+import {View, ScrollView, Platform} from 'react-native'
 import {GatewayProvider} from 'react-gateway'
+import KeyboardSpacer from 'react-native-keyboard-spacer'
+import KeyboardManager from 'react-native-keyboard-manager'
 
 import GatewayView from '@/components/shared/GatewayView'
 import $styles from './styles'
@@ -9,13 +11,15 @@ function Shell({styles, children, scroll}) {
   return (
     <GatewayProvider>
       <View style={styles.container}>
-        <View>
-          <GatewayView name="header" style={styles.header} />
-        </View>
-        <Main testID="@shared.Shell.main" style={styles.main}>
+        <GatewayView name="header" style={styles.header} />
+        <Main
+          onLayout={() => KeyboardManager.reloadLayoutIfNeeded()}
+          style={styles.main}
+        >
           {children}
         </Main>
         <GatewayView name="footer" style={styles.footer} />
+        {Platform.OS === 'ios' && <KeyboardSpacer />}
       </View>
     </GatewayProvider>
   )

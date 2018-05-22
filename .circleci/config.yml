@@ -184,9 +184,9 @@ jobs:
     - run: export TERM=xterm && cd android && ./gradlew assembleStaging
     - run: >-
         bundle exec fastlane run crashlytics
-        apk_path"$PWD/android/app/build/outputs/apk/staging/app-staging.apk"
-        api_token:"$FABRIC_API_KEY",
-        build_secret:"$FABRIC_BUILD_SECRET",
+        apk_path:"$PWD/android/app/build/outputs/apk/app-staging.apk"
+        api_token:"$FABRIC_API_KEY"
+        build_secret:"$FABRIC_BUILD_SECRET"
         groups:"$TESTER_GROUPS"
   # production deploy
   deploy_production_ios:

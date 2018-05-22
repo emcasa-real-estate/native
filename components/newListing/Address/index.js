@@ -2,6 +2,7 @@ import {Component} from 'react'
 import {View} from 'react-native'
 
 import TextInput from '@/components/shared/TextInput'
+import SubmitButton from '@/components/shared/Form/SubmitButton'
 import AutoComplete from './AutoComplete'
 import styles from './styles'
 
@@ -11,9 +12,7 @@ export default class ListingAddressForm extends Component {
     complement: ''
   }
 
-  onSubmit = (value) => {
-    console.log(value)
-  }
+  onSubmit = () => this.props.onSubmit(this.state)
 
   onChangeComplement = (value) => this.setState({complement: value})
 
@@ -27,20 +26,12 @@ export default class ListingAddressForm extends Component {
     const {address, complement} = this.state
     return (
       <View style={styles.container}>
-        <View style={styles.field}>
-          <AutoComplete
-            placeholder="Endereço"
-            value={address}
-            onChange={this.onChangeAddress}
-          />
-        </View>
-        <View style={styles.field}>
-          <TextInput
-            placeholder="Complemento"
-            value={complement}
-            onChangeText={this.onChangeComplement}
-          />
-        </View>
+        <AutoComplete
+          placeholder="Endereço"
+          value={address}
+          onChange={this.onChangeAddress}
+        />
+        <SubmitButton label="Próximo" onPress={this.onSubmit} />
       </View>
     )
   }

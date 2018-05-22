@@ -5,6 +5,7 @@ export default StyleSheet.create({
     margin: 20
   },
   field: {
+    overflow: 'visible',
     height: 50,
     marginBottom: 15
   }

@@ -7,16 +7,29 @@ import {form} from './Provider'
 @form
 export default class FormView extends PureComponent {
   static defaultProps = {
-    label: 'Enviar'
+    label: 'Enviar',
+    loadingLabel: 'Enviando...'
   }
 
   render() {
-    const {children, label, style, onSubmit, ...props} = this.props
+    const {
+      children,
+      label,
+      loadingLabel,
+      loading,
+      style,
+      onSubmit,
+      ...props
+    } = this.props
     return (
       <View style={style}>
         {children}
         {onSubmit && (
-          <SubmitButton label={label} onPress={onSubmit} {...props} />
+          <SubmitButton
+            label={loading ? loadingLabel : label}
+            onPress={onSubmit}
+            {...props}
+          />
         )}
       </View>
     )

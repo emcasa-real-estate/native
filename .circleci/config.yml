@@ -86,7 +86,7 @@ jobs:
         background: true
     - run: detox test -c ios.debug --reuse --platform ios --debug-synchronization 10000
     - run:
-        command: kill -SIGINT $(cat tmp/video.pid)
+        command: pkill -SIGINT -F tmp/video.pid || true
         when: always
     - store_artifacts:
         path: tmp/video.mp4

@@ -116,6 +116,7 @@ jobs:
     - run: *configure-keychain
     - run: *configure-release
     - run: >-
+        cd ios &&
         agvtool new-marketing-version $VERSION_NAME &&
         agvtool new-version -all $BUILD_NUMBER
     - run: BUILD_CONFIGURATION=Beta .circleci/ios/build.sh
@@ -125,7 +126,6 @@ jobs:
         api_token:"$FABRIC_API_KEY"
         build_secret:"$FABRIC_BUILD_SECRET"
         groups:"$TESTER_GROUPS"
-
   deploy_staging_android:
     <<: *android
     environment:
@@ -136,8 +136,8 @@ jobs:
         at: ~/emcasa
     - run: *configure-release
     - run: >-
-        sed -Ei '' "s/(versionCode) ([[:digit:]]*)/\1 $BUILD_NUMBER/" android/app/build.gradle &&
-        sed -Ei '' "s/(versionName) \"(.*)\"/\1 \"$VERSION_NAME\"/" android/app/build.gradle
+        sed -i'' -re "s/(versionCode) ([[:digit:]]*)/\1 $BUILD_NUMBER/" android/app/build.gradle &&
+        sed -i'' -re "s/(versionName) \"(.*)\"/\1 \"$VERSION_NAME\"/" android/app/build.gradle
     - run: bundle check || bundle install --path vendor/bundle
     - run: export TERM=xterm && cd android && ./gradlew assembleStaging
     - run: >-

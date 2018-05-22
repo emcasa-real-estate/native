@@ -1,6 +1,7 @@
 import Form from '@/components/shared/Form/Form'
 import Dropdown from '@/components/shared/Form/Dropdown'
 import TextInput from '@/components/shared/Form/TextInput'
+import NumberPicker from './NumberPicker'
 import styles from './styles'
 
 export default function ListingPropertiesForm({onSubmit}) {
@@ -15,6 +16,9 @@ export default function ListingPropertiesForm({onSubmit}) {
           {value: 'Cobertura', label: 'Cobertura'}
         ]}
       />
+      <NumberPicker label="Quartos" name="rooms" />
+      <NumberPicker label="Banheiros" name="bathrooms" />
+      <NumberPicker label="Vagas de garagem" name="garage_spots" />
       <TextInput
         name="floor"
         placeholder="Andar"

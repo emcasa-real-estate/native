@@ -16,7 +16,7 @@ configurations:
     shell: /bin/bash --login -eo pipefail
 
 aliases:
-  - &set-version-name
+  - &configure-release
     name: Setup release configuration
     environment:
       BETA_TESTERS: product,dev

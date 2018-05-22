@@ -16,6 +16,37 @@ configurations:
     shell: /bin/bash --login -eo pipefail
 
 aliases:
+  # restore caches
+  - &restore-node-modules
+    keys:
+    - v1-node-modules-{{ checksum "package.json" }}
+  - &restore-gems
+    keys:
+    - v1-gems-{{ checksum "Gemfile.lock" }}
+  - &restore-gradle
+    keys:
+    - v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
+  - &restore-cocoapods
+    keys:
+    - v1-cocoapods-{{ checksum "ios/Podfile" }}
+  # save caches
+  - &cache-node-modules
+    paths:
+    - node_modules
+    key: v1-node-modules-{{ checksum "package.json" }}
+  - &cache-gems
+    paths:
+    - vendor/bundle
+    key: v1-gems-{{ checksum "Gemfile.lock" }}
+  - &cache-gradle
+    paths:
+    - ~/.gradle
+    key: v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
+  - &cache-cocoapods
+    paths:
+    - ~/.cocoapods
+    key: v1-cocoapods-{{ checksum "ios/Podfile" }}
+  # build configurations
   - &configure-release
     name: Setup release configuration
     environment:
@@ -23,9 +54,9 @@ aliases:
       ALHPA_TESTERS: dev
     command: |-
       BASH_ENV=${BASH_ENV:-~/.bashrc}
-      echo 'export BUILD_NUMBER=$CIRCLE_BUILD_NUM' >> $BASH_ENV
-      echo 'export VERSION_NAME=$(.circleci/version.sh $([ $CIRCLE_BRANCH != "master" ] && echo "$CIRCLE_BRANCH"))' >> $BASH_ENV
-      echo 'export TESTER_GROUPS=$([ $CIRCLE_BRANCH != "master" ] && echo $ALPHA_TESTERS || echo $BETA_TESTERS)' >> $BASH_ENV
+      echo "export BUILD_NUMBER=$CIRCLE_BUILD_NUM" >> $BASH_ENV
+      echo "export VERSION_NAME=$(.circleci/version.sh $([ $CIRCLE_BRANCH != \"master\" ] && echo $CIRCLE_BRANCH))" >> $BASH_ENV
+      echo "export TESTER_GROUPS=$([ $CIRCLE_BRANCH != \"master\" ] && echo $ALPHA_TESTERS || echo $BETA_TESTERS)" >> $BASH_ENV
   - &configure-keychain
     name: Setup build keychain
     command: |-
@@ -39,6 +70,7 @@ aliases:
       security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME" &&
       security default-keychain -s "$KEYCHAIN_NAME"
 
+
 version: 2
 jobs:
   checkout:
@@ -46,24 +78,14 @@ jobs:
     steps:
     - checkout
     - run: sudo apt-get -y -qq install awscli
-    - restore_cache:
-        keys:
-        - v1-node-modules-{{ checksum "package.json" }}
-    - restore_cache:
-        keys:
-        - v1-gems-{{ checksum "Gemfile.lock" }}
-    - run: bundle check || bundle install --path vendor/bundle
+    - restore_cache: *restore-node-modules
+    - restore_cache: *restore-gems
     - run: mkdir -p tmp/logs tmp/screenshots tmp/.secrets
+    - run: bundle check || bundle install --path vendor/bundle
     - run: yarn install --no-optional
     - run: aws s3 sync $AWS_SECRETS_BUCKET ~/emcasa/tmp/.secrets
-    - save_cache:
-        paths:
-        - node_modules
-        key: v1-node-modules-{{ checksum "package.json" }}
-    - save_cache:
-        paths:
-        - vendor/bundle
-        key: v1-gems-{{ checksum "Gemfile.lock" }}
+    - save_cache: *cache-node-modules
+    - save_cache: *cache-gems
     - persist_to_workspace:
         root: .
         paths: .
@@ -79,33 +101,20 @@ jobs:
     steps:
     - attach_workspace:
         at: ~/emcasa
-    - restore_cache:
-        keys:
-        - v1-cocoapods-{{ checksum "ios/Podfile" }}
+    - restore_cache: *restore-cocoapods
     - run: cd ios && pod install
-    # - run: xcrun instruments -w "iPhone 6 (11.2)" || true
     - run: .circleci/ios/build.sh
-    # - run: xcrun simctl uninstall "iPhone 6" com.EmCasa.native
-    # - run: xcrun simctl install "iPhone 6" com.EmCasa.native
-    # - run: yarn e2e --reuse --debug-synchronization 10000
-    - save_cache:
-        paths:
-        - ~/.cocoapods
-        key: v1-cocoapods-{{ checksum "ios/Podfile" }}
+    - save_cache: *cache-cocoapods
   build_android:
     <<: *android
     steps:
     - attach_workspace:
         at: ~/emcasa
-    - restore_cache:
-        key: v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
+    - restore_cache: *restore-gradle
     - run: sdkmanager --install "extras;android;m2repository" "extras;google;m2repository"
     - run: sdkmanager --licenses
     - run: export TERM=xterm && cd android && ./gradlew assembleDebug
-    - save_cache:
-        paths:
-        - ~/.gradle
-        key: v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
+    - save_cache: *cache-gradle
   deploy_staging_ios:
     <<: *macos
     environment:
@@ -115,6 +124,8 @@ jobs:
     steps:
     - attach_workspace:
         at: ~/emcasa
+    - restore_cache: *restore-cocoapods
+    - run: cd ios && pod install
     - run: bundle check || bundle install --path vendor/bundle
     - run: *configure-keychain
     - run: *configure-release
@@ -137,6 +148,9 @@ jobs:
     steps:
     - attach_workspace:
         at: ~/emcasa
+    - restore_cache: *restore-gradle
+    - run: sdkmanager --install "extras;android;m2repository" "extras;google;m2repository"
+    - run: sdkmanager --licenses
     - run: *configure-release
     - run: >-
         sed -i'' -re "s/(versionCode) ([[:digit:]]*)/\1 $BUILD_NUMBER/" android/app/build.gradle &&

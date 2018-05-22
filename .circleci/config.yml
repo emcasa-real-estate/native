@@ -109,9 +109,9 @@ jobs:
   deploy_staging_ios:
     <<: *macos
     environment:
-      IOS_XCCONFIG_FILE: ~/emcasa/.secrets/ios/secrets.xcconfig
-      IOS_CERTIFICATE_FILE: ~/emcasa/.secrets/ios/app.p12
-      IOS_PROVISIONING_FILE: ~/emcasa/.secrets/ios/ad-hoc.mobileprovision
+      IOS_XCCONFIG_FILE: ~/emcasa/tmp/.secrets/ios/secrets.xcconfig
+      IOS_CERTIFICATE_FILE: ~/emcasa/tmp/.secrets/ios/app.p12
+      IOS_PROVISIONING_FILE: ~/emcasa/tmp/.secrets/ios/ad-hoc.mobileprovision
     steps:
     - attach_workspace:
         at: ~/emcasa
@@ -132,8 +132,8 @@ jobs:
   deploy_staging_android:
     <<: *android
     environment:
-      ANDROID_KEYSTORE_FILE: ~/emcasa/.secrets/android/keystore.jks
-      PLAY_STORE_CERTIFICATE_FILE: ~/emcasa/.secrets/android/play-store.p12
+      ANDROID_KEYSTORE_FILE: ~/emcasa/tmp/.secrets/android/keystore.jks
+      PLAY_STORE_CERTIFICATE_FILE: ~/emcasa/tmp/.secrets/android/play-store.p12
     steps:
     - attach_workspace:
         at: ~/emcasa

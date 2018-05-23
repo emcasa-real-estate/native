@@ -291,12 +291,12 @@ workflows:
     - deploy_staging:
         type: approval
         requires:
-        # - build_ios
+        - e2e_ios
         - build_android
     - deploy_production:
         type: approval
         requires:
-        # - build_ios
+        - e2e_ios
         - build_android
     - deploy_staging_ios:
         requires:

@@ -88,6 +88,7 @@ aliases:
       security default-keychain -s "$KEYCHAIN_PATH"
       security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
       security set-keychain-settings -t 1000 "$KEYCHAIN_PATH"
+      security set-key-partition-list -S "apple-tool:,apple:,codesign:" -s -k $KEYCHAIN_PASSWORD $KEYCHAIN_NAME
       security import "$IOS_CERTIFICATE_FILE" -P "$IOS_CERTIFICATE_PASSWORD" -k "$KEYCHAIN_PATH" -A
       security list-keychains -s login.keychain $KEYCHAIN_NAME
       security list-keychains

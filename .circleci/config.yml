@@ -148,6 +148,9 @@ jobs:
           brew upgrade python
           brew install --HEAD applesimutils
           brew install watchman
+          npm install --global detox-cli
+          detox clean-framework-cache
+          detox build-framework-cache
     - run: *install-cocoapods
     - save_cache: *cache-cocoapods
     - run: xcrun instruments -w "iPhone 6 (11.2)" || true

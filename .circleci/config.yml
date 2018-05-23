@@ -66,8 +66,7 @@ aliases:
       BETA_TESTERS: product,dev
       ALPHA_TESTERS: dev
     command: |-
-      BASH_ENV=${BASH_ENV:-~/.bashrc}
-      echo "export BUILD_NUMBER=$CIRCLE_BUILD_NUM" >> $BASH_ENV
+      echo "export BUILD_NUMBER=$((CIRCLE_BUILD_NUM+100))" >> $BASH_ENV
       echo "export VERSION_NAME=$(.circleci/version.sh ${VERSION_TAG:-})" >> $BASH_ENV
       echo "export TESTER_GROUPS=$([ $CIRCLE_BRANCH != \"master\" ] && echo $ALPHA_TESTERS || echo $BETA_TESTERS)" >> $BASH_ENV
       echo "export ANDROID_KEYSTORE_FILE=$PWD/tmp/.secrets/android/keystore.jks" >> $BASH_ENV

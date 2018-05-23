@@ -58,6 +58,8 @@ aliases:
   - &install-cocoapods
     command: cd ios && pod install
   # build configurations
+  - &configure-version-staging
+    command: echo "export VERSION_TAG=$([ $CIRCLE_BRANCH != \"master\" ] && echo $CIRCLE_BRANCH)" >> $BASH_ENV
   - &configure-release
     name: Setup release configuration
     environment:
@@ -66,7 +68,7 @@ aliases:
     command: |-
       BASH_ENV=${BASH_ENV:-~/.bashrc}
       echo "export BUILD_NUMBER=$CIRCLE_BUILD_NUM" >> $BASH_ENV
-      echo "export VERSION_NAME=$(.circleci/version.sh $([ $CIRCLE_BRANCH != \"master\" ] && echo $CIRCLE_BRANCH))" >> $BASH_ENV
+      echo "export VERSION_NAME=$(.circleci/version.sh ${VERSION_TAG:-})" >> $BASH_ENV
       echo "export TESTER_GROUPS=$([ $CIRCLE_BRANCH != \"master\" ] && echo $ALPHA_TESTERS || echo $BETA_TESTERS)" >> $BASH_ENV
       echo "export ANDROID_KEYSTORE_FILE=$PWD/tmp/.secrets/android/keystore.jks" >> $BASH_ENV
       echo "export PLAY_STORE_CERTIFICATE_FILE=$PWD/tmp/.secrets/android/play-store.p12" >> $BASH_ENV
@@ -193,6 +195,7 @@ jobs:
     - run: *install-gems
     - run: *install-cocoapods
     - run: brew install pcre imagemagick
+    - run: *configure-version-staging
     - run: *configure-release
     - run: *configure-keychain
     - run: *bump-ios
@@ -216,6 +219,7 @@ jobs:
     - run: *install-gems
     - run: *install-sdkmanager
     - run: sudo apt-get install -y -qq imagemagick
+    - run: *configure-version-staging
     - run: *configure-release
     - run: *bump-android
     - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-android-staging.png --platforms android

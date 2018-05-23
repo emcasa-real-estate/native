@@ -147,11 +147,13 @@ android {
         staging {
             signingConfig signingConfigs.release
             applicationIdSuffix '.beta'
+            matchingFallbacks = ['release', 'debug']
         }
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             signingConfig signingConfigs.release
+            matchingFallbacks = ['debug']
         }
     }
     // applicationVariants are e.g. debug, release

@@ -112,6 +112,13 @@ platform :ios do
     }
     bump options if bump
     if signed
+      setup_circle_ci
+      import_certificates(
+        keychain_name: ENV["MATCH_KEYCHAIN_NAME"],
+        keychain_password: ENV["MATCH_KEYCHAIN_PASSWORD"],
+        certificate_path: ENV["IOS_CERTIFICATE_FILE"],
+        certificate_password: ENV["IOS_CERTIFICATE_PASSWORD"] || ""
+      )
       gym_options[:export_options] = {
         provisioningProfiles: {
           APP_ID => ENV['IOS_PROVISIONING_NAME']

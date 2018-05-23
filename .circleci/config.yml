@@ -1,36 +1,126 @@
 configurations:
-  - &defaults
+  - &default
     working_directory: ~/emcasa
   - &nodejs
-    <<: *defaults
+    <<: *default
     docker:
-    - image: circleci/node:9
-    environment:
-    - PATH: "/opt/yarn/yarn-v1.5.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    - image: circleci/ruby:2.4-node
   - &android
-    <<: *defaults
+    <<: *default
     docker:
-    - image: circleci/android:api-26-alpha
+    - image: circleci/android:api-26-node8-alpha
   - &macos
-    <<: *defaults
+    <<: *default
     macos:
       xcode: "9.2.0"
+    shell: /bin/bash --login -eo pipefail
+
+aliases:
+  # restore caches
+  - &restore-node-modules
+    keys:
+    - v1-node-modules-{{ checksum "package.json" }}
+  - &restore-gems
+    keys:
+    - v1-gems-{{ checksum "Gemfile.lock" }}
+  - &restore-gradle
+    keys:
+    - v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
+  - &restore-cocoapods
+    keys:
+    - v1-cocoapods-{{ checksum "ios/Podfile" }}
+  # save caches
+  - &cache-node-modules
+    paths:
+    - node_modules
+    key: v1-node-modules-{{ checksum "package.json" }}
+  - &cache-gems
+    paths:
+    - vendor/bundle
+    key: v1-gems-{{ checksum "Gemfile.lock" }}
+  - &cache-gradle
+    paths:
+    - ~/.gradle
+    key: v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
+  - &cache-cocoapods
+    paths:
+    - ~/.cocoapods
+    key: v1-cocoapods-{{ checksum "ios/Podfile" }}
+  # install dependencies
+  - &install-sdkmanager
+    command: |-
+      sdkmanager --install "extras;android;m2repository" "extras;google;m2repository"
+      sdkmanager --licenses
+  - &install-node-modules
+    command: yarn install
+  - &install-gems
+    command: bundle check || bundle install --path vendor/bundle
+  - &install-cocoapods
+    command: cd ios && pod install
+  # build configurations
+  - &configure-version-staging
+    command: echo "export VERSION_TAG=$([ $CIRCLE_BRANCH != \"master\" ] && echo $CIRCLE_BRANCH)" >> $BASH_ENV
+  - &configure-release
+    name: Setup release configuration
+    environment:
+      BETA_TESTERS: product,dev
+      ALPHA_TESTERS: dev
+    command: |-
+      BASH_ENV=${BASH_ENV:-~/.bashrc}
+      echo "export BUILD_NUMBER=$CIRCLE_BUILD_NUM" >> $BASH_ENV
+      echo "export VERSION_NAME=$(.circleci/version.sh ${VERSION_TAG:-})" >> $BASH_ENV
+      echo "export TESTER_GROUPS=$([ $CIRCLE_BRANCH != \"master\" ] && echo $ALPHA_TESTERS || echo $BETA_TESTERS)" >> $BASH_ENV
+      echo "export ANDROID_KEYSTORE_FILE=$PWD/tmp/.secrets/android/keystore.jks" >> $BASH_ENV
+      echo "export PLAY_STORE_CERTIFICATE_FILE=$PWD/tmp/.secrets/android/play-store.p12" >> $BASH_ENV
+      echo "export IOS_XCCONFIG_FILE=$PWD/tmp/.secrets/ios/secrets.xcconfig" >> $BASH_ENV
+      echo "export IOS_CERTIFICATE_FILE=$PWD/tmp/.secrets/ios/app.p12" >> $BASH_ENV
+      echo "export IOS_PROVISIONING_FILE=$PWD/tmp/.secrets/ios/${CODESIGN_PROFILE:-ad-hoc}.mobileprovision" >> $BASH_ENV
+  - &configure-keychain
+    name: Setup build keychain
+    command: |-
+      BASH_ENV=${BASH_ENV:-~/.bashrc}
+      echo 'export FASTLANE_USER=$APPLE_ID' >> $BASH_ENV
+      echo 'export FASTLANE_PASSWORD=$APPLE_PASSWORD' >> $BASH_ENV
+      echo 'export KEYCHAIN_NAME=${KEYCHAIN_NAME:-build.keychain}' >> $BASH_ENV
+      echo 'export KEYCHAIN_PASSWORD=${KEYCHAIN_PASSWORD:-passwd}' >> $BASH_ENV
+      source $BASH_ENV
+      KEYCHAIN_PATH=~/Library/Keychains/$KEYCHAIN_NAME
+      mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles/
+      security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+      security default-keychain -s "$KEYCHAIN_PATH"
+      security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+      security set-keychain-settings -t 1000 "$KEYCHAIN_PATH"
+      security import "$IOS_CERTIFICATE_FILE" -P "$IOS_CERTIFICATE_PASSWORD" -k "$KEYCHAIN_PATH" -A
+      security list-keychains -s login.keychain $KEYCHAIN_NAME
+      security list-keychains
+      security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $KEYCHAIN_PASSWORD $KEYCHAIN_NAME
+  # build scripts
+  - &bump-ios
+    command: |-
+      cd ios
+      agvtool new-marketing-version $VERSION_NAME
+      agvtool new-version -all $BUILD_NUMBER
+  - &bump-android
+    command: |-
+      sed -i'' -re "s/(versionCode) ([[:digit:]]*)/\1 $BUILD_NUMBER/" android/app/build.gradle
+      sed -i'' -re "s/(versionName) \"(.*)\"/\1 \"$VERSION_NAME\"/" android/app/build.gradle
 
 version: 2
 jobs:
+  # checkout and install
   checkout:
     <<: *nodejs
     steps:
     - checkout
-    - restore_cache:
-        keys:
-        - v1-node-modules-{{ checksum "package.json" }}
-    - run: mkdir -p tmp/logs tmp/screenshots
-    - run: yarn install --no-optional
-    - save_cache:
-        paths:
-        - node_modules
-        key: v1-node-modules-{{ checksum "package.json" }}
+    - run: sudo apt-get -y -qq install awscli
+    - restore_cache: *restore-node-modules
+    - restore_cache: *restore-gems
+    - run: *install-node-modules
+    - run: *install-gems
+    - run: mkdir -p tmp/logs tmp/screenshots tmp/.secrets
+    - run: aws s3 sync $AWS_SECRETS_BUCKET ~/emcasa/tmp/.secrets
+    - save_cache: *cache-node-modules
+    - save_cache: *cache-gems
     - persist_to_workspace:
         root: .
         paths: .
@@ -41,6 +131,7 @@ jobs:
     - attach_workspace:
         at: ~/emcasa
     - run: yarn test
+  # e2e tests
   e2e_ios:
     <<: *macos
     environment:
@@ -50,22 +141,20 @@ jobs:
     steps:
     - attach_workspace:
         at: ~/emcasa
-    - restore_cache:
-        keys:
-        - v1-cocoapods-{{ checksum "ios/Podfile" }}
-    - run: >-
-        brew update &&
-        brew tap wix/brew &&
-        brew install --HEAD applesimutils &&
-        brew upgrade python &&
-        brew install watchman &&
-        npm install -g detox-cli &&
-        detox clean-framework-cache && detox build-framework-cache
-    - run: yarn install && cd ios && pod install
-    - save_cache:
-        paths:
-        - ~/.cocoapods
-        key: v1-cocoapods-{{ checksum "ios/Podfile" }}
+    - restore_cache: *restore-cocoapods
+    - run:
+        name: Install detox dependencies
+        command: |-
+          brew update
+          brew tap wix/brew
+          brew upgrade python
+          brew install --HEAD applesimutils
+          brew install watchman
+          npm install --global detox-cli
+          detox clean-framework-cache
+          detox build-framework-cache
+    - run: *install-cocoapods
+    - save_cache: *cache-cocoapods
     - run: xcrun instruments -w "iPhone 6 (11.2)" || true
     - run:
         name: Start test server
@@ -75,21 +164,11 @@ jobs:
         name: Start bundler
         command: yarn start
         background: true
-    - run: detox build -c ios.debug
-    - run: >-
-        xcrun simctl install "iPhone 6" ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app &&
+    - run: yarn build_e2e
+    - run: |-
+        xcrun simctl install "iPhone 6" ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app
         xcrun simctl launch "iPhone 6" com.EmCasa.native && sleep 5
-    - run:
-        command: |-
-          xcrun simctl io booted recordVideo tmp/video.mp4 &
-          echo $! > tmp/video.pid
-        background: true
-    - run: detox test -c ios.debug --reuse --platform ios --debug-synchronization 10000
-    - run:
-        command: pkill -SIGINT -F tmp/video.pid || true
-        when: always
-    - store_artifacts:
-        path: tmp/video.mp4
+    - run: yarn e2e --reuse --debug-synchronization 10000
     - store_artifacts:
         path: tmp/screenshots
         destination: screenshots
@@ -98,15 +177,103 @@ jobs:
     steps:
     - attach_workspace:
         at: ~/emcasa
-    - restore_cache:
-        key: v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
-    - run: sdkmanager --install "extras;android;m2repository" "extras;google;m2repository"
-    - run: sdkmanager --licenses
+    - restore_cache: *restore-gradle
+    - run: *install-sdkmanager
     - run: export TERM=xterm && cd android && ./gradlew assembleDebug
-    - save_cache:
-        paths:
-        - ~/.gradle
-        key: v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
+    - save_cache: *cache-gradle
+  # staging deploy
+  deploy_staging_ios:
+    <<: *macos
+    environment:
+      API_URL: https://em-casa-backend-staging.herokuapp.com
+      CODESIGN_PROFILE: ad-hoc
+      BUNDLE_IDENTIFIER_SUFFIX: -beta
+    steps:
+    - attach_workspace:
+        at: ~/emcasa
+    - restore_cache: *restore-cocoapods
+    - run: *install-gems
+    - run: *install-cocoapods
+    - run: brew install pcre imagemagick
+    - run: *configure-version-staging
+    - run: *configure-release
+    - run: *configure-keychain
+    - run: *bump-ios
+    - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-ios-staging.png --platforms ios
+    - run: BUILD_CONFIGURATION=Beta .circleci/ios/build.sh
+    - run: .circleci/ios/sign.sh
+    - run: >-
+        bundle exec fastlane run crashlytics
+        ipa_path:"$PWD/ios/build/EmCasa-Beta.ipa"
+        api_token:"$FABRIC_API_KEY"
+        build_secret:"$FABRIC_BUILD_SECRET"
+        groups:"$TESTER_GROUPS"
+  deploy_staging_android:
+    <<: *android
+    environment:
+      API_URL: https://em-casa-backend-staging.herokuapp.com
+    steps:
+    - attach_workspace:
+        at: ~/emcasa
+    - restore_cache: *restore-gradle
+    - run: *install-gems
+    - run: *install-sdkmanager
+    - run: sudo apt-get install -y -qq imagemagick
+    - run: *configure-version-staging
+    - run: *configure-release
+    - run: *bump-android
+    - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-android-staging.png --platforms android
+    - run: export TERM=xterm && cd android && ./gradlew assembleStaging
+    - run: >-
+        bundle exec fastlane run crashlytics
+        apk_path:"$PWD/android/app/build/outputs/apk/staging/app-staging.apk"
+        api_token:"$FABRIC_API_KEY"
+        build_secret:"$FABRIC_BUILD_SECRET"
+        groups:"$TESTER_GROUPS"
+  # production deploy
+  deploy_production_ios:
+    <<: *macos
+    environment:
+      API_URL: https://em-casa-backend.herokuapp.com
+      CODESIGN_PROFILE: app-store
+    steps:
+    - attach_workspace:
+        at: ~/emcasa
+    - restore_cache: *restore-cocoapods
+    - run: *install-gems
+    - run: *install-cocoapods
+    - run: brew install pcre imagemagick
+    - run: *configure-release
+    - run: *configure-keychain
+    - run: *bump-ios
+    - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-ios.png --platforms ios
+    - run: BUILD_CONFIGURATION=Release .circleci/ios/build.sh
+    - run: .circleci/ios/sign.sh
+    - run: >-
+        bundle exec fastlane deliver
+        --skip_metadata --skip_screenshots
+        --ipa "$PWD/ios/build/EmCasa.ipa"
+        --app $APPLE_APP_ID
+        --username $APPLE_ID
+        --app_version $VERSION_NAME
+        --app_identifier com.EmCasa.native
+  deploy_production_android:
+    <<: *android
+    environment:
+      API_URL: https://em-casa-backend.herokuapp.com
+    steps:
+    - attach_workspace:
+        at: ~/emcasa
+    - restore_cache: *restore-gradle
+    - run: *install-gems
+    - run: *install-sdkmanager
+    - run: sudo apt-get install -y -qq imagemagick
+    - run: *configure-release
+    - run: *bump-android
+    - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-android.png --platforms android
+    - run: export TERM=xterm && cd android && ./gradlew assembleRelease
+    - run: export TERM=xterm && cd android && ./gradlew publishApkRelease
+
 workflows:
   version: 2
   commit:
@@ -121,3 +288,25 @@ workflows:
     - build_android:
         requires:
         - checkout
+    - deploy_staging:
+        type: approval
+        requires:
+        - e2e_ios
+        - build_android
+    - deploy_production:
+        type: approval
+        requires:
+        - e2e_ios
+        - build_android
+    - deploy_staging_ios:
+        requires:
+        - deploy_staging
+    - deploy_staging_android:
+        requires:
+        - deploy_staging
+    - deploy_production_ios:
+        requires:
+        - deploy_production
+    - deploy_production_android:
+        requires:
+        - deploy_production

@@ -13,7 +13,11 @@ function Shell({styles, children, scroll}) {
       <View style={styles.container}>
         <GatewayView name="header" style={styles.header} />
         <Main
-          onLayout={() => KeyboardManager.reloadLayoutIfNeeded()}
+          onLayout={
+            Platform.OS === 'ios'
+              ? () => KeyboardManager.reloadLayoutIfNeeded()
+              : undefined
+          }
           style={styles.main}
         >
           {children}

@@ -79,14 +79,18 @@ aliases:
       BASH_ENV=${BASH_ENV:-~/.bashrc}
       echo 'export FASTLANE_USER=$APPLE_ID' >> $BASH_ENV
       echo 'export FASTLANE_PASSWORD=$APPLE_PASSWORD' >> $BASH_ENV
-      echo 'export KEYCHAIN_NAME=${KEYCHAIN_NAME:-~/Library/Keychains/build.keychain}' >> $BASH_ENV
+      echo 'export KEYCHAIN_NAME=${KEYCHAIN_NAME:-build.keychain}' >> $BASH_ENV
       echo 'export KEYCHAIN_PASSWORD=${KEYCHAIN_PASSWORD:-passwd}' >> $BASH_ENV
       source $BASH_ENV
-      mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles/ &&
-      security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME" &&
-      security default-keychain -s "$KEYCHAIN_NAME"
-      security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
-      security set-keychain-settings -t 1000 "$KEYCHAIN_NAME"
+      KEYCHAIN_PATH=~/Library/Keychains/$KEYCHAIN_NAME
+      mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles/
+      security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+      security default-keychain -s "$KEYCHAIN_PATH"
+      security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+      security set-keychain-settings -t 1000 "$KEYCHAIN_PATH"
+      security import "$IOS_CERTIFICATE_FILE" -P "$IOS_CERTIFICATE_PASSWORD" -k "$KEYCHAIN_PATH" -A
+      security list-keychains -s login.keychain $KEYCHAIN_NAME
+      security list-keychains
   # build scripts
   - &bump-ios
     command: |-

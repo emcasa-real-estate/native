@@ -8,10 +8,10 @@ export default function Navigation({user, active, onNavigate}) {
     <View style={styles.container}>
       <Button
         active={active === 'listings'}
-        icon="search"
+        icon="home"
         onPress={onNavigate('listings')}
       >
-        Buscar
+        Imóveis
       </Button>
       <Button
         active={active === 'favorites'}

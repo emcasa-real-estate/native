@@ -62,7 +62,7 @@ aliases:
     name: Setup release configuration
     environment:
       BETA_TESTERS: product,dev
-      ALHPA_TESTERS: dev
+      ALPHA_TESTERS: dev
     command: |-
       BASH_ENV=${BASH_ENV:-~/.bashrc}
       echo "export BUILD_NUMBER=$CIRCLE_BUILD_NUM" >> $BASH_ENV

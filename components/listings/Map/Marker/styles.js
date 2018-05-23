@@ -3,12 +3,13 @@ import * as colors from '@/assets/colors'
 import {elevation, padding} from '@/assets/styles'
 
 const TIP_HEIGHT = 6
-const TIP_WIDTH = 10
+
+const TIP_SIZE = Math.sqrt(Math.pow(TIP_HEIGHT, 2) / 2) * 2
 
 export default StyleSheet({
   container: {
     position: 'relative',
-    marginBottom: TIP_HEIGHT,
+    paddingBottom: TIP_HEIGHT,
     ...elevation(2)
   },
   body: {
@@ -31,21 +32,18 @@ export default StyleSheet({
     }
   },
   tip: {
-    zIndex: 0,
     position: 'absolute',
-    bottom: -TIP_HEIGHT,
+    zIndex: 0,
+    bottom: 2,
     left: '50%',
-    marginLeft: -(TIP_HEIGHT / 2),
-    borderTopWidth: TIP_HEIGHT,
-    borderRightWidth: TIP_WIDTH / 2.0,
-    borderBottomWidth: 0,
-    borderLeftWidth: TIP_WIDTH / 2.0,
-    borderTopColor: colors.blue.medium,
-    borderRightColor: 'transparent',
-    borderBottomColor: 'transparent',
-    borderLeftColor: 'transparent',
+    marginTop: -TIP_HEIGHT,
+    marginLeft: -TIP_HEIGHT / 2,
+    width: TIP_SIZE,
+    height: TIP_SIZE,
+    backgroundColor: colors.blue.medium,
+    transform: [{rotate: '45deg'}],
     ':active': {
-      borderTopColor: 'white'
+      backgroundColor: 'white'
     }
   }
 })

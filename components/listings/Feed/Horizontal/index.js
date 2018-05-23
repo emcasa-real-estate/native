@@ -20,8 +20,9 @@ export default class HorizontalFeed extends Component {
 
   componentDidUpdate(prev) {
     const {active, data} = this.props
-    if (prev.active !== active && active) {
-      this.slider.value.snapToItem(data.findIndex(({id}) => id == active))
+    const slider = this.slider.current
+    if (slider && prev.active !== active && active) {
+      slider.snapToItem(data.findIndex(({id}) => id == active))
     }
   }
 

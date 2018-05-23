@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import {Component} from 'react'
-import {View} from 'react-native'
+import {View, Platform} from 'react-native'
 
 import Shell from '@/containers/shared/Shell'
 import Map from '@/containers/listings/Map'
@@ -19,7 +19,7 @@ export default class MapScreen extends Component {
   state = {
     active: undefined,
     lat: 0.01,
-    zoom: zoom({longitudeDelta: 0.01})
+    zoom: 12
   }
 
   onRegionChange = _.debounce((region) => {
@@ -47,7 +47,7 @@ export default class MapScreen extends Component {
   render() {
     const {active, zoom} = this.state
     const maxZoomToAggregateMarkers = 15
-    const aggregateMarkerPixelDiameter = 35
+    const aggregateMarkerPixelDiameter = Platform.OS === 'ios' ? 45 : 35
 
     return (
       <Shell overlay title="Buscar imóveis" footer={null}>

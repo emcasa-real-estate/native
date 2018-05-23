@@ -49,7 +49,7 @@ export const markerStyles = StyleSheet.create({
     backgroundColor: 'white'
   },
   tip: {
-    borderTopColor: 'white'
+    backgroundColor: 'white'
   }
 })
 

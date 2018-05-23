@@ -22,11 +22,10 @@ sed \
 
 echo "Code signing application"
 
-set -x
-
 OPTIONS=("OTHER_CODE_SIGN_FLAGS=--keychain '$KEYCHAIN_NAME'")
 
 cd ios && xcodebuild \
+  -verbose \
   -exportArchive \
   -exportPath build \
   -archivePath build/EmCasa.xcarchive \

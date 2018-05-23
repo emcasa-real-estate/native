@@ -19,7 +19,7 @@ export default class MapScreen extends Component {
   state = {
     active: undefined,
     lat: 0.01,
-    zoom: zoom({longitudeDelta: 0.01})
+    zoom: zoom({longitudeDelta: 0.1})
   }
 
   onRegionChange = _.debounce((region) => {

@@ -31,7 +31,6 @@ export default class MapApp extends PureComponent {
 
   render() {
     const {data, active, aggregate, ...props} = this.props
-    const zIndex = active ? 2 : 1
     return (
       <Map {...props}>
         <Aggregator enabled={aggregate} {...props}>
@@ -41,8 +40,8 @@ export default class MapApp extends PureComponent {
                 active={active === listing.id}
                 onPress={this.onSelect(listing.id)}
                 key={listing.id}
-                style={{zIndex}}
-                zIndex={zIndex}
+                style={{zIndex: active === listing.id ? 2 : 1}}
+                zIndex={active === listing.id ? 2 : 1}
                 {...listing}
               />
             ))}

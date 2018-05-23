@@ -1,0 +1,13 @@
+{
+  "env": {
+    "jest": true
+  },
+  "globals": {
+    "screenShot": true,
+    "context": true,
+    "device": true,
+    "waitFor": true,
+    "element": true,
+    "by": true
+  }
+}

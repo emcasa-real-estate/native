@@ -36,6 +36,7 @@ export const form = (Target) => ({
 
 export default class FormProvider extends PureComponent {
   state = {
+    focus: undefined,
     valid: true,
     value: {},
     fields: {},
@@ -94,10 +95,12 @@ export default class FormProvider extends PureComponent {
     if (onChange) onChange(result)
   }
 
+  onFocusField = (field) => this.setState({focus: field})
+
   onSubmit = () => {
     const {onSubmit} = this.props
     const {value} = this.state
-    if (onSubmit) onSubmit(value)
+    if (onSubmit && this.onValidate()) onSubmit(value)
   }
 
   get isValid() {
@@ -109,6 +112,7 @@ export default class FormProvider extends PureComponent {
       ..._.omit(['fields'])(this.state),
       onSubscribe: this.onSubscribe,
       onUnsubscribe: this.onUnsubscribe,
+      onFocusField: this.onFocusField,
       onChangeField: this.onChangeField,
       onValidateField: this.onValidateField,
       onValidate: this.onValidate,

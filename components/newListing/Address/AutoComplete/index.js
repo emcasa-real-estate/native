@@ -44,7 +44,9 @@ export default class AddressAutoComplete extends PureComponent {
           end: start + 6
         }
       })
-      this.autoComplete.current.refs.textInput.focus()
+      requestAnimationFrame(() =>
+        this.autoComplete.current.refs.textInput.focus()
+      )
       streetAddress[1] = 'número'
     }
     onChange({

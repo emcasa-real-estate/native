@@ -159,8 +159,8 @@ jobs:
     - run: *install-gems
     - run: *install-cocoapods
     - run: brew install pcre imagemagick
-    - run: *configure-keychain
     - run: *configure-release
+    - run: *configure-keychain
     - run: *bump-ios
     - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-ios-staging.png --platforms ios
     - run: BUILD_CONFIGURATION=Beta .circleci/ios/build.sh
@@ -205,8 +205,8 @@ jobs:
     - run: *install-gems
     - run: *install-cocoapods
     - run: brew install pcre imagemagick
-    - run: *configure-keychain
     - run: *configure-release
+    - run: *configure-keychain
     - run: *bump-ios
     - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-ios.png --platforms ios
     - run: BUILD_CONFIGURATION=Release .circleci/ios/build.sh

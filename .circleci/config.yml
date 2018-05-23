@@ -146,7 +146,7 @@ jobs:
           brew tap wix/brew
           brew upgrade python
           brew install --HEAD applesimutils watchman
-    - run: *instal-cocoapods
+    - run: *install-cocoapods
     - save_cache: *cache-cocoapods
     - run: xcrun instruments -w "iPhone 6 (11.2)" || true
     - run:

@@ -22,13 +22,13 @@ export default class MapScreen extends Component {
     zoom: 12
   }
 
-  onRegionChange = _.debounce((region) => {
+  onRegionChange = (region) => {
     this.setState({
       zoom: zoom(region),
       lat: region.latitude,
       lng: region.longitude
     })
-  }, 200)
+  }
 
   onSelect = (id) => {
     const {active} = this.state

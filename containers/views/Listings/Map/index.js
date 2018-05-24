@@ -18,17 +18,19 @@ const kmPerPx = ({lat, zoom}) =>
 export default class MapScreen extends Component {
   state = {
     active: undefined,
-    lat: 0.01,
+    // initial position
+    lat: -22.9608099,
+    lng: -43.2096142,
     zoom: 12
   }
 
-  onRegionChange = _.debounce((region) => {
+  onRegionChange = (region) => {
     this.setState({
       zoom: zoom(region),
       lat: region.latitude,
       lng: region.longitude
     })
-  }, 200)
+  }
 
   onSelect = (id) => {
     const {active} = this.state
@@ -45,7 +47,7 @@ export default class MapScreen extends Component {
   }
 
   render() {
-    const {active, zoom} = this.state
+    const {active, zoom, lat, lng} = this.state
     const maxZoomToAggregateMarkers = 15
     const aggregateMarkerPixelDiameter = Platform.OS === 'ios' ? 45 : 35
 
@@ -59,6 +61,8 @@ export default class MapScreen extends Component {
             distance={kmPerPx(this.state) * aggregateMarkerPixelDiameter}
             aggregate={zoom < maxZoomToAggregateMarkers}
             active={active}
+            lat={lat}
+            lng={lng}
             type="search"
           />
         </View>

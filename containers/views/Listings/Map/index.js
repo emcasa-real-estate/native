@@ -1,11 +1,12 @@
 import _ from 'lodash'
-import {Component} from 'react'
-import {View, Platform} from 'react-native'
+import React, {Component} from 'react'
+import {View, Platform, PermissionsAndroid} from 'react-native'
 
 import Shell from '@/containers/shared/Shell'
 import Map from '@/containers/listings/Map'
 import Feed from '@/containers/listings/Feed/Map'
 import ListButton from '@/components/listings/Feed/Button'
+import Header from '@/components/shared/Form/SubmitHeader'
 import styles from './styles'
 
 const zoom = ({longitudeDelta}) =>
@@ -24,6 +25,17 @@ export default class MapScreen extends Component {
     zoom: 12
   }
 
+  map = React.createRef()
+
+  componentDidMount() {
+    PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      {
+        title: 'Acessar local',
+        message: 'Esta função necessita permissão para acessar o seu local.'
+      }
+    )
+  }
   onRegionChange = (region) => {
     this.setState({
       zoom: zoom(region),
@@ -42,6 +54,18 @@ export default class MapScreen extends Component {
     navigation.goBack(null)
   }
 
+  // onWatchPosition = () => this.setState({following: !this.state.following})
+  onWatchPosition = () => {
+    navigator.geolocation.getCurrentPosition(({coords}) => {
+      this.map.current.animateToRegion({
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+        longitude: coords.longitude,
+        latitude: coords.latitude
+      })
+    })
+  }
+
   get params() {
     return _.omitBy(this.props.navigation.state.params, 'id')
   }
@@ -52,10 +76,22 @@ export default class MapScreen extends Component {
     const aggregateMarkerPixelDiameter = Platform.OS === 'ios' ? 45 : 35
 
     return (
-      <Shell overlay title="Buscar imóveis" footer={null}>
+      <Shell
+        overlay
+        header={
+          <Header
+            onReturn={this.onReturn}
+            onSubmit={this.onWatchPosition}
+            title="Buscar imóvel"
+            buttonText="Meu local"
+          />
+        }
+        footer={null}
+      >
         <View style={styles.body}>
           <ListButton style={styles.button} onPress={this.onReturn} />
           <Map
+            mapRef={this.map}
             onRegionChange={this.onRegionChange}
             onSelect={this.onSelect}
             distance={kmPerPx(this.state) * aggregateMarkerPixelDiameter}

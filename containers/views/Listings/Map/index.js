@@ -1,12 +1,13 @@
 import _ from 'lodash'
 import React, {Component} from 'react'
-import {View, Platform, PermissionsAndroid} from 'react-native'
+import {View, Platform} from 'react-native'
 
 import Shell from '@/containers/shared/Shell'
 import Map from '@/containers/listings/Map'
 import Feed from '@/containers/listings/Feed/Map'
 import ListButton from '@/components/listings/Feed/Button'
 import Header from '@/components/shared/Form/SubmitHeader'
+import {withPermission} from '@/containers/shared/Permission'
 import styles from './styles'
 
 const zoom = ({longitudeDelta}) =>
@@ -16,8 +17,10 @@ const zoom = ({longitudeDelta}) =>
 const kmPerPx = ({lat, zoom}) =>
   156.54303392 * Math.cos(lat * Math.PI / 180) / Math.pow(2, zoom)
 
+@withPermission('location', 'whenInUse')
 export default class MapScreen extends Component {
   state = {
+    authorized: false,
     watchID: undefined,
     region: undefined,
     active: undefined,
@@ -30,14 +33,7 @@ export default class MapScreen extends Component {
   map = React.createRef()
 
   componentDidMount() {
-    if (Platform.OS === 'android')
-      PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        {
-          title: 'Acessar local',
-          message: 'Esta função necessita permissão para acessar o seu local.'
-        }
-      )
+    requestAnimationFrame(() => this.props.onRequestPermission(false))
   }
 
   componentWillUnmount() {
@@ -67,15 +63,15 @@ export default class MapScreen extends Component {
       region: {
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
+        ...this.state.region,
         longitude: coords.longitude,
         latitude: coords.latitude
       }
     })
 
-  // onWatchPosition = () => this.setState({following: !this.state.following})
-  onWatchPosition = () => {
-    if (this.isWatching) return
-    navigator.geolocation.getCurrentPosition(this.updatePosition)
+  onWatchPosition = async () => {
+    const permission = await this.props.onRequestPermission()
+    if (this.isWatching || permission !== 'authorized') return
     const watchID = navigator.geolocation.watchPosition(this.updatePosition)
     this.setState({watchID})
   }
@@ -83,7 +79,7 @@ export default class MapScreen extends Component {
   onUnwatchPosition = () => {
     if (!this.isWatching) return
     navigator.geolocation.clearWatch(this.state.watchID)
-    this.setState({watchID: null, region: null})
+    this.setState({watchID: null})
   }
 
   get params() {
@@ -126,7 +122,7 @@ export default class MapScreen extends Component {
             distance={kmPerPx(this.state) * aggregateMarkerPixelDiameter}
             aggregate={zoom < maxZoomToAggregateMarkers}
             active={active}
-            region={region}
+            region={this.isWatching ? region : undefined}
             type="search"
           />
         </View>

@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import React, {Component} from 'react'
-import {View, Platform} from 'react-native'
+import {View, Platform, Alert} from 'react-native'
+import geolib from 'geolib'
 
 import Shell from '@/containers/shared/Shell'
 import Map from '@/containers/listings/Map'
@@ -30,10 +31,16 @@ export default class MapScreen extends Component {
     zoom: 12
   }
 
+  lastUserLocation = null
+
   map = React.createRef()
 
   componentDidMount() {
-    requestAnimationFrame(() => this.props.onRequestPermission(false))
+    requestAnimationFrame(async () => {
+      const permission = await this.props.onRequestPermission(false)
+      if (permission === 'authorized')
+        navigator.geolocation.getCurrentPosition(this.updatePosition)
+    })
   }
 
   componentWillUnmount() {
@@ -59,7 +66,7 @@ export default class MapScreen extends Component {
     navigation.goBack(null)
   }
 
-  updatePosition = ({coords}) =>
+  updatePosition = ({coords}) => {
     this.setState({
       region: {
         latitudeDelta: 0.01,
@@ -68,8 +75,16 @@ export default class MapScreen extends Component {
         latitude: coords.latitude
       }
     })
+    this.lastUserLocation = coords
+  }
 
   onWatchPosition = async () => {
+    if (this.isWithinBounds === false) {
+      return Alert.alert(
+        'Fora da área de cobertura',
+        'A sua região ainda não é coberta pela EmCasa.'
+      )
+    }
     const permission = await this.props.onRequestPermission()
     if (this.isWatching || permission !== 'authorized') return
     const watchID = navigator.geolocation.watchPosition(this.updatePosition)
@@ -88,6 +103,16 @@ export default class MapScreen extends Component {
 
   get isWatching() {
     return typeof this.state.watchID === 'number'
+  }
+
+  get isWithinBounds() {
+    if (!this.lastUserLocation) return undefined
+    const centerOfRJ = {
+      latitude: -22.9255,
+      longitude: -43.2037
+    }
+    const distance = 500 * 1000
+    return geolib.isPointInCircle(this.lastUserLocation, centerOfRJ, distance)
   }
 
   render() {

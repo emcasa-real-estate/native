@@ -38,8 +38,11 @@ export default class MapScreen extends Component {
   componentDidMount() {
     requestAnimationFrame(async () => {
       const permission = await this.props.onRequestPermission(false)
-      if (permission === 'authorized')
-        navigator.geolocation.getCurrentPosition(this.updatePosition)
+      if (permission !== 'authorized') return
+      navigator.geolocation.getCurrentPosition(async (response) => {
+        await this.updatePosition(response)
+        if (this.isWithinBounds) this.onWatchPosition()
+      })
     })
   }
 
@@ -66,16 +69,21 @@ export default class MapScreen extends Component {
     navigation.goBack(null)
   }
 
-  updatePosition = ({coords}) => {
-    this.setState({
-      region: {
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
-        longitude: coords.longitude,
-        latitude: coords.latitude
-      }
-    })
+  updatePosition = async ({coords}) => {
     this.lastUserLocation = coords
+    return new Promise((resolve) =>
+      this.setState(
+        {
+          region: {
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05,
+            longitude: coords.longitude,
+            latitude: coords.latitude
+          }
+        },
+        resolve
+      )
+    )
   }
 
   onWatchPosition = async () => {
@@ -111,7 +119,7 @@ export default class MapScreen extends Component {
       latitude: -22.9255,
       longitude: -43.2037
     }
-    const distance = 500 * 1000
+    const distance = 60 * 1000
     return geolib.isPointInCircle(this.lastUserLocation, centerOfRJ, distance)
   }
 

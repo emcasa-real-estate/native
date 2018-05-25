@@ -44,7 +44,8 @@ export default class MapScreen extends Component {
     this.setState({
       zoom: zoom(region),
       lat: region.latitude,
-      lng: region.longitude
+      lng: region.longitude,
+      region
     })
   }
 
@@ -63,7 +64,6 @@ export default class MapScreen extends Component {
       region: {
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
-        ...this.state.region,
         longitude: coords.longitude,
         latitude: coords.latitude
       }
@@ -116,7 +116,7 @@ export default class MapScreen extends Component {
           <Map
             mapRef={this.map}
             scrollEnabled={!this.isWatching}
-            onRegionChange={this.onRegionChange}
+            onRegionChangeComplete={this.onRegionChange}
             onPanDrag={this.onUnwatchPosition}
             onSelect={this.onSelect}
             distance={kmPerPx(this.state) * aggregateMarkerPixelDiameter}

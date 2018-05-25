@@ -18,6 +18,8 @@ const kmPerPx = ({lat, zoom}) =>
 
 export default class MapScreen extends Component {
   state = {
+    watchID: undefined,
+    region: undefined,
     active: undefined,
     // initial position
     lat: -22.9608099,
@@ -28,13 +30,18 @@ export default class MapScreen extends Component {
   map = React.createRef()
 
   componentDidMount() {
-    PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      {
-        title: 'Acessar local',
-        message: 'Esta função necessita permissão para acessar o seu local.'
-      }
-    )
+    if (Platform.OS === 'android')
+      PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Acessar local',
+          message: 'Esta função necessita permissão para acessar o seu local.'
+        }
+      )
+  }
+
+  componentWillUnmount() {
+    this.onUnwatchPosition()
   }
 
   onRegionChange = (region) => {
@@ -55,31 +62,40 @@ export default class MapScreen extends Component {
     navigation.goBack(null)
   }
 
-  // onWatchPosition = () => this.setState({following: !this.state.following})
-  onWatchPosition = () => {
-    if (this.watchID) return
-    this.watchID = navigator.geolocation.watchPosition(({coords}) => {
-      this.map.current.animateToRegion({
+  updatePosition = ({coords}) =>
+    this.setState({
+      region: {
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
         longitude: coords.longitude,
         latitude: coords.latitude
-      })
+      }
     })
+
+  // onWatchPosition = () => this.setState({following: !this.state.following})
+  onWatchPosition = () => {
+    if (this.isWatching) return
+    navigator.geolocation.getCurrentPosition(this.updatePosition)
+    const watchID = navigator.geolocation.watchPosition(this.updatePosition)
+    this.setState({watchID})
   }
 
   onUnwatchPosition = () => {
-    if (!this.watchID) return
-    navigator.geolocation.clearWatch(this.watchID)
-    this.watchID = null
+    if (!this.isWatching) return
+    navigator.geolocation.clearWatch(this.state.watchID)
+    this.setState({watchID: null, region: null})
   }
 
   get params() {
     return _.omitBy(this.props.navigation.state.params, 'id')
   }
 
+  get isWatching() {
+    return typeof this.state.watchID === 'number'
+  }
+
   render() {
-    const {active, zoom, lat, lng} = this.state
+    const {active, zoom, region} = this.state
     const maxZoomToAggregateMarkers = 15
     const aggregateMarkerPixelDiameter = Platform.OS === 'ios' ? 45 : 35
 
@@ -89,9 +105,12 @@ export default class MapScreen extends Component {
         header={
           <Header
             onReturn={this.onReturn}
-            onSubmit={this.onWatchPosition}
+            onSubmit={
+              !this.isWatching ? this.onWatchPosition : this.onUnwatchPosition
+            }
             title="Buscar imóvel"
             buttonText="Meu local"
+            buttonStyle={!this.isWatching && {color: 'gray'}}
           />
         }
         footer={null}
@@ -100,14 +119,14 @@ export default class MapScreen extends Component {
           <ListButton style={styles.button} onPress={this.onReturn} />
           <Map
             mapRef={this.map}
+            scrollEnabled={!this.isWatching}
             onRegionChange={this.onRegionChange}
             onPanDrag={this.onUnwatchPosition}
             onSelect={this.onSelect}
             distance={kmPerPx(this.state) * aggregateMarkerPixelDiameter}
             aggregate={zoom < maxZoomToAggregateMarkers}
             active={active}
-            lat={lat}
-            lng={lng}
+            region={region}
             type="search"
           />
         </View>

@@ -7,6 +7,7 @@ import Link from '@/components/shared/Link'
 import styles, {iconColor} from './styles'
 
 function FormHeader({
+  buttonStyle,
   title,
   buttonText,
   loading,
@@ -29,7 +30,7 @@ function FormHeader({
             <ActivityIndicator animating size="small" />
           </View>
         )}
-        <Link style={styles.resetLink} onPress={onSubmit}>
+        <Link style={[styles.resetLink, buttonStyle]} onPress={onSubmit}>
           {buttonText}
         </Link>
       </View>

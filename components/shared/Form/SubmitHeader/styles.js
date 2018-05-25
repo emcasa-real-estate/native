@@ -4,24 +4,27 @@ import * as colors from '@/assets/colors'
 
 export default StyleSheet.create({
   container: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
     backgroundColor: 'white',
     height: 45
   },
   title: {
+    zIndex: 0,
     flex: 1,
     display: 'flex',
-    paddingLeft: 10,
     fontSize: 20,
+    lineHeight: 45,
     textAlign: 'center',
     color: colors.gray.dark
   },
   resetButton: {
-    position: 'relative',
-    marginRight: 15
+    zIndex: 1,
+    position: 'absolute',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: 0,
+    right: 10,
+    height: 45
   },
   activityIndicator: {
     position: 'absolute',
@@ -33,7 +36,14 @@ export default StyleSheet.create({
     fontWeight: '500'
   },
   button: {
-    marginLeft: 10
+    zIndex: 1,
+    position: 'absolute',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: 0,
+    left: 10,
+    height: 45
   }
 })
 

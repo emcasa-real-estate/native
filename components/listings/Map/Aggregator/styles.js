@@ -1,10 +1,11 @@
-import StyleSheet from '@/assets/StyleSheet'
+import {StyleSheet} from 'react-native'
+
 import * as colors from '@/assets/colors'
 import {elevation} from '@/assets/styles'
 
 const SIZE = 28
 
-export default StyleSheet({
+export default StyleSheet.create({
   container: {
     display: 'flex',
     justifyContent: 'center',

@@ -1,24 +1,32 @@
+import {Component} from 'react'
 import {View} from 'react-native'
 import {Marker, Callout} from 'react-native-maps'
 
 import Text from '@/components/shared/Text'
-import $styles from './styles'
+import styles from './styles'
 
-function AggregatorMarker({styles, children, lat, lng, ...props}) {
-  return (
-    <Marker
-      {...props}
-      coordinate={{
-        latitude: lat,
-        longitude: lng
-      }}
-    >
-      <View style={styles.container}>
-        <Text style={styles.text}>{children}</Text>
-      </View>
-      <Callout tooltip />
-    </Marker>
-  )
+export default class AggregatorMarker extends Component {
+  shouldComponentUpdate(next) {
+    const {lat, lng, children} = this.props
+    return lat !== next.lat || lng !== next.lng || children !== next.children
+  }
+
+  render() {
+    const {children, lat, lng, ...props} = this.props
+
+    return (
+      <Marker
+        {...props}
+        coordinate={{
+          latitude: lat,
+          longitude: lng
+        }}
+      >
+        <View style={styles.container}>
+          <Text style={styles.text}>{children}</Text>
+        </View>
+        <Callout tooltip />
+      </Marker>
+    )
+  }
 }
-
-export default $styles.inject()(AggregatorMarker)

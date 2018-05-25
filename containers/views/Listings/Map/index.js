@@ -36,6 +36,7 @@ export default class MapScreen extends Component {
       }
     )
   }
+
   onRegionChange = (region) => {
     this.setState({
       zoom: zoom(region),
@@ -56,7 +57,8 @@ export default class MapScreen extends Component {
 
   // onWatchPosition = () => this.setState({following: !this.state.following})
   onWatchPosition = () => {
-    navigator.geolocation.getCurrentPosition(({coords}) => {
+    if (this.watchID) return
+    this.watchID = navigator.geolocation.watchPosition(({coords}) => {
       this.map.current.animateToRegion({
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
@@ -64,6 +66,12 @@ export default class MapScreen extends Component {
         latitude: coords.latitude
       })
     })
+  }
+
+  onUnwatchPosition = () => {
+    if (!this.watchID) return
+    navigator.geolocation.clearWatch(this.watchID)
+    this.watchID = null
   }
 
   get params() {
@@ -93,6 +101,7 @@ export default class MapScreen extends Component {
           <Map
             mapRef={this.map}
             onRegionChange={this.onRegionChange}
+            onPanDrag={this.onUnwatchPosition}
             onSelect={this.onSelect}
             distance={kmPerPx(this.state) * aggregateMarkerPixelDiameter}
             aggregate={zoom < maxZoomToAggregateMarkers}

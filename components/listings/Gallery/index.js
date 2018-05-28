@@ -9,6 +9,10 @@ import styles from './styles'
 
 @withOrientation
 export default class ListingGallery extends Component {
+  static defaultProps = {
+    paginationDelta: 2
+  }
+
   state = {
     position: 0
   }
@@ -34,18 +38,31 @@ export default class ListingGallery extends Component {
     this.gallery = node
   }
 
-  renderPagination() {
-    const {position} = this.state
-
-    return this.items.map((image, index) => (
+  renderPagination = (image, index) => {
+    let {position} = this.state
+    const {paginationDelta} = this.props
+    let right = position + paginationDelta
+    let left = position - paginationDelta
+    if (left < 0) right -= left
+    if (right >= this.items.length)
+      left = this.items.length - paginationDelta * 2 - 1
+    if (index < left || index > right) return null
+    const distanceFromActivePage = Math.min(
+      paginationDelta,
+      Math.abs(index - position)
+    )
+    const size = 12 / (distanceFromActivePage + 1) + 2
+    const opacity = 0.6 / (distanceFromActivePage + 1) + 0.4
+    return (
       <Icon
         key={image.id}
         type="solid"
         name="circle"
         color="white"
-        size={position === index ? 14 : 10}
+        size={size}
+        style={[styles.pageIcon, {opacity}]}
       />
-    ))
+    )
   }
 
   renderImage = (image, index) => {
@@ -56,6 +73,7 @@ export default class ListingGallery extends Component {
       return <View key={image.id} style={dimensions} />
     return (
       <Image
+        style={styles.image}
         layout="scalable"
         key={image.id}
         width={800}
@@ -77,7 +95,9 @@ export default class ListingGallery extends Component {
         >
           {this.items.map(this.renderImage)}
         </SwipeableView>
-        <View style={styles.pagination}>{this.renderPagination()}</View>
+        <View style={styles.pagination}>
+          {this.items.map(this.renderPagination)}
+        </View>
       </View>
     )
   }

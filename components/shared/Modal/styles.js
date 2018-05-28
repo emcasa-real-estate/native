@@ -1,7 +1,6 @@
 import {Platform} from 'react-native'
 
 import StyleSheet from '@/assets/StyleSheet'
-import * as colors from '@/assets/colors'
 import {padding} from '@/assets/styles'
 
 export default StyleSheet({

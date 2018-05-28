@@ -6,7 +6,7 @@ export default class PermissionProvider extends PureComponent {
   state = {}
 
   componentDidMount() {
-    this.onUpdatePermission()
+    this.initialRequest = this.onUpdatePermission()
     AppState.addEventListener('change', this.onAppStateChange)
   }
 
@@ -23,16 +23,18 @@ export default class PermissionProvider extends PureComponent {
     const response = await Permissions.check(permission, options)
     // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
     this.setState({value: response})
+    return response
   }
 
   onRequestPermission = async (alert = true) => {
     const {permission, options} = this.props
+    const currentResponse = this.state.value || (await this.initialRequest)
     let response
-    switch (this.state.value) {
+    switch (currentResponse) {
       case 'authorized':
       case 'restricted':
         // already authorized or blocked
-        return this.state.value
+        return currentResponse
       case 'undetermined':
         response = await Permissions.request(permission, options)
         break

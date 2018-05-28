@@ -31,6 +31,13 @@ export default class AutoComplete extends PureComponent {
 
   onSelectionChange = ({nativeEvent: {selection}}) => this.setState({selection})
 
+  onSubmitEditing = () => {
+    const autoComplete = this.autoComplete.current
+    if (!autoComplete.state.dataSource) return
+    const bestMatch = autoComplete.state.dataSource[0]
+    this.onChange(bestMatch)
+  }
+
   onChange = (place) => {
     const {onChange, onChangeComplete} = this.props
     const streetAddress = place.structured_formatting.main_text.split(',')
@@ -83,6 +90,7 @@ export default class AutoComplete extends PureComponent {
           types: 'address'
         }}
         textInputProps={{
+          onSubmitEditing: this.onSubmitEditing,
           onSelectionChange: this.onSelectionChange,
           onChangeText: this.props.onChangeText,
           selection: this.state.selection

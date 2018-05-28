@@ -3,9 +3,8 @@ import React, {PureComponent} from 'react'
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete'
 
 import {GOOGLE_PLACES_API_KEY} from '@/lib/config'
-import styles from './styles'
 
-export default class AddressAutoComplete extends PureComponent {
+export default class AutoComplete extends PureComponent {
   static defaultProps = {
     value: {}
   }
@@ -33,10 +32,15 @@ export default class AddressAutoComplete extends PureComponent {
   onSelectionChange = ({nativeEvent: {selection}}) => this.setState({selection})
 
   onChange = (place) => {
-    const {onChange} = this.props
+    const {onChange, onChangeComplete} = this.props
     const streetAddress = place.structured_formatting.main_text.split(',')
     const secondaryAddress = place.structured_formatting.secondary_text
-    if (!streetAddress[1]) {
+    const value = {
+      street: streetAddress[0],
+      streetNumber: streetAddress[1],
+      secondaryAddress
+    }
+    if (!value.streetNumber) {
       const start = streetAddress[0].length + 2
       requestAnimationFrame(() =>
         this.setState(
@@ -53,13 +57,11 @@ export default class AddressAutoComplete extends PureComponent {
           }
         )
       )
-      streetAddress[1] = 'número'
+      value.streetNumber = 'número'
+    } else if (onChangeComplete) {
+      onChangeComplete(value)
     }
-    onChange({
-      street: streetAddress[0],
-      streetNumber: streetAddress[1],
-      secondaryAddress
-    })
+    onChange(value)
   }
 
   render() {
@@ -71,7 +73,6 @@ export default class AddressAutoComplete extends PureComponent {
         autoFocus={false}
         horizontal={false}
         enablePoweredByContainer={false}
-        styles={styles}
         minLength={3}
         getDefaultValue={() => ''}
         onPress={this.onChange}

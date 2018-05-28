@@ -38,14 +38,20 @@ export default class AddressAutoComplete extends PureComponent {
     const secondaryAddress = place.structured_formatting.secondary_text
     if (!streetAddress[1]) {
       const start = streetAddress[0].length + 2
-      this.setState({
-        selection: {
-          start,
-          end: start + 6
-        }
-      })
       requestAnimationFrame(() =>
-        this.autoComplete.current.refs.textInput.focus()
+        this.setState(
+          {
+            selection: {
+              start,
+              end: start + 6
+            }
+          },
+          () => {
+            requestAnimationFrame(() =>
+              this.autoComplete.current.refs.textInput.focus()
+            )
+          }
+        )
       )
       streetAddress[1] = 'número'
     }

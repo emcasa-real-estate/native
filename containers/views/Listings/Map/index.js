@@ -119,11 +119,12 @@ export default class MapScreen extends Component {
 
   get isWithinBounds() {
     if (!this.lastUserLocation) return undefined
+    // Vista Chinesa - RJ
     const centerOfRJ = {
-      latitude: -22.9255,
-      longitude: -43.2037
+      latitude: -22.9730992,
+      longitude: -43.2524123
     }
-    const distance = 60 * 1000
+    const distance = 17 * 1000
     return geolib.isPointInCircle(this.lastUserLocation, centerOfRJ, distance)
   }
 

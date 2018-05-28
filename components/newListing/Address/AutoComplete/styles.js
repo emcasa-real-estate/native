@@ -5,19 +5,16 @@ import * as colors from '@/assets/colors'
 export default StyleSheet.create({
   container: {
     display: 'flex',
-    flex: 0,
-    position: 'relative',
-    height: 50,
-    zIndex: 1
+    flex: 0
   },
   textInputContainer: {
     display: 'flex',
-    backgroundColor: 'rgba(0,0,0,0)',
     paddingTop: 5,
     height: 50,
     borderWidth: 1,
     borderRadius: 4,
-    borderColor: colors.gray.light
+    borderColor: colors.gray.light,
+    backgroundColor: 'white'
   },
   textInput: {
     fontSize: 18,
@@ -29,9 +26,7 @@ export default StyleSheet.create({
     borderColor: colors.blue.medium,
     borderBottomLeftRadius: 4,
     borderBottomRightRadius: 4,
-    position: 'absolute',
-    top: 50 - 3,
-    left: 0,
+    marginTop: -2,
     backgroundColor: 'white'
   }
 })

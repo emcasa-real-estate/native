@@ -39,10 +39,14 @@ export default class MapScreen extends Component {
     requestAnimationFrame(async () => {
       const permission = await this.props.onRequestPermission(false)
       if (permission !== 'authorized') return
-      navigator.geolocation.getCurrentPosition(async (response) => {
-        await this.updatePosition(response)
-        if (this.isWithinBounds) this.onWatchPosition()
-      })
+      navigator.geolocation.getCurrentPosition(
+        async (response) => {
+          await this.updatePosition(response)
+          if (this.isWithinBounds) this.onWatchPosition()
+        },
+        console.warn,
+        {timeout: 1000}
+      )
     })
   }
 
@@ -87,7 +91,7 @@ export default class MapScreen extends Component {
   }
 
   onWatchPosition = async () => {
-    if (this.isWithinBounds === false) {
+    if (!this.isWithinBounds) {
       return Alert.alert(
         'Fora da área de cobertura',
         'A sua região ainda não é coberta pela EmCasa.'

@@ -1,9 +1,8 @@
 import React, {PureComponent} from 'react'
-import {View, TouchableWithoutFeedback, Modal} from 'react-native'
+import {View, TouchableWithoutFeedback, TextInput, Modal} from 'react-native'
 
 import {required} from '@/lib/validations'
 import {field} from '@/components/shared/Form/Field'
-import Text from '@/components/shared/Text'
 import AutoComplete from '../AutoComplete'
 import styles from './styles'
 
@@ -62,15 +61,18 @@ export default class AutoCompleteAndroid extends PureComponent {
       <View>
         <TouchableWithoutFeedback onPress={this.onShowModal}>
           <View ref={this.inputButton} style={styles.textInputContainer}>
-            <Text
+            <TextInput
               style={[
                 styles.textInput,
                 styles.textInputButton,
                 !value && styles.placeholder
               ]}
-            >
-              {value || this.props.placeholder}
-            </Text>
+              editable={false}
+              value={value}
+              placeholder={this.props.placeholder}
+              selection={{start: 0, end: 0}}
+              underlineColorAndroid="rgba(0,0,0,0),m"
+            />
           </View>
         </TouchableWithoutFeedback>
         <Modal transparent visible={active} onRequestClose={this.onHideModal}>

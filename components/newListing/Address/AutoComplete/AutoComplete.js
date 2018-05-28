@@ -19,13 +19,21 @@ export default class AutoComplete extends PureComponent {
     return this.autoComplete.current.refs.textInput
   }
 
+  get addressText() {
+    const {street, streetNumber, secondaryAddress} = this.props.value
+    let text = street
+    if (streetNumber) text += ', ' + streetNumber
+    if (secondaryAddress) text += ' - ' + secondaryAddress
+    return text
+  }
+
+  componentDidMount() {
+    this.autoComplete.current.setAddressText(this.addressText)
+  }
+
   componentDidUpdate(prev) {
     if (!_.isEqual(prev.value, this.props.value) && this.props.value) {
-      const {street, streetNumber, secondaryAddress} = this.props.value
-      let text = street
-      if (streetNumber) text += ', ' + streetNumber
-      if (secondaryAddress) text += ' - ' + secondaryAddress
-      this.autoComplete.current.setAddressText(text)
+      this.autoComplete.current.setAddressText(this.addressText)
     }
   }
 

@@ -15,6 +15,7 @@ export default class AutoCompleteAndroid extends PureComponent {
   }
 
   inputButton = React.createRef()
+  inputButtonText = React.createRef()
   autoComplete = React.createRef()
 
   onShowModal = () =>
@@ -41,6 +42,11 @@ export default class AutoCompleteAndroid extends PureComponent {
     this.setState({value})
   }
 
+  onChangeComplete = () => {
+    requestAnimationFrame(() => this.inputButtonText.current.focus())
+    this.onHideModal()
+  }
+
   get modalLayout() {
     const {layout} = this.state
     if (!layout) return undefined
@@ -62,16 +68,14 @@ export default class AutoCompleteAndroid extends PureComponent {
         <TouchableWithoutFeedback onPress={this.onShowModal}>
           <View ref={this.inputButton} style={styles.textInputContainer}>
             <TextInput
-              style={[
-                styles.textInput,
-                styles.textInputButton,
-                !value && styles.placeholder
-              ]}
+              caretHidden
+              ref={this.inputButtonText}
+              style={[styles.textInput, styles.textInputButton]}
               editable={false}
               value={value}
               placeholder={this.props.placeholder}
               selection={{start: 0, end: 0}}
-              underlineColorAndroid="rgba(0,0,0,0),m"
+              underlineColorAndroid="rgba(0,0,0,0)"
             />
           </View>
         </TouchableWithoutFeedback>
@@ -86,7 +90,7 @@ export default class AutoCompleteAndroid extends PureComponent {
                   ref={this.autoComplete}
                   styles={styles}
                   onChangeText={this.onChangeText}
-                  onChangeComplete={this.onHideModal}
+                  onChangeComplete={this.onChangeComplete}
                   {...this.props}
                 />
               </View>

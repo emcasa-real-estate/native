@@ -20,5 +20,12 @@ export default StyleSheet.create({
     alignItems: 'center',
     bottom: 10,
     width: '100%'
+  },
+  pageIcon: {
+    width: 20,
+    height: 20,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })

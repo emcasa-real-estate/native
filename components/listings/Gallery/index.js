@@ -47,13 +47,20 @@ export default class ListingGallery extends Component {
     if (right >= this.items.length)
       left = this.items.length - paginationDelta * 2 - 1
     if (index < left || index > right) return null
+    const distanceFromActivePage = Math.min(
+      paginationDelta,
+      Math.abs(index - position)
+    )
+    const size = 12 / (distanceFromActivePage + 1) + 2
+    const opacity = 0.6 / (distanceFromActivePage + 1) + 0.4
     return (
       <Icon
         key={image.id}
         type="solid"
         name="circle"
         color="white"
-        size={position === index ? 14 : 10}
+        size={size}
+        style={[styles.pageIcon, {opacity}]}
       />
     )
   }

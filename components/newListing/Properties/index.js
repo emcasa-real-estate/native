@@ -5,10 +5,11 @@ import TextInput from '@/components/shared/Form/TextInput'
 import NumberPicker from './NumberPicker'
 import styles from './styles'
 
-export default function ListingPropertiesForm({onSubmit}) {
+export default function ListingPropertiesForm({onSubmit, loading}) {
   return (
     <Form
       style={styles.container}
+      loading={loading}
       onSubmit={onSubmit}
       defaultValue={{
         rooms: 0,

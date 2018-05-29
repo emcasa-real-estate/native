@@ -7,29 +7,16 @@ import AutoComplete from './AutoComplete'
 import styles from './styles'
 
 export default class ListingAddressForm extends Component {
-  state = {
-    address: {},
-    streetNumber: '',
-    complement: ''
-  }
-
   onSubmit = (value) =>
     this.props.onSubmit({
       address: value.address.details,
       complement: value.complement
     })
 
-  onChange = (value) => this.setState(value)
-
   render() {
     return (
       <View style={styles.container}>
-        <Form
-          value={this.state}
-          onSubmit={this.onSubmit}
-          onChange={this.onChange}
-          label="Próximo"
-        >
+        <Form onSubmit={this.onSubmit} label="Próximo">
           <View style={{zIndex: 1}}>
             <AutoComplete name="address" placeholder="Endereço" />
           </View>

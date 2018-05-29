@@ -4,10 +4,11 @@ import {connect} from 'react-redux'
 import * as listingsApi from '@/lib/services/listings'
 import Shell from '@/containers/shared/Shell'
 import Properties from '@/components/newListing/Properties'
-import {getToken} from '@/redux/modules/auth/selectors'
+import {getToken, getData} from '@/redux/modules/auth/selectors'
 
 @connect((state) => ({
-  jwt: getToken(state)
+  jwt: getToken(state),
+  user: getData(state) || {}
 }))
 export default class PropertiesFormScreen extends Component {
   state = {
@@ -33,11 +34,15 @@ export default class PropertiesFormScreen extends Component {
   }
 
   render() {
-    const {loading} = this.state
+    const {loading, user} = this.state
 
     return (
       <Shell scroll title="Dados principais">
-        <Properties onSubmit={this.onSubmit} loading={loading} />
+        <Properties
+          askForPhone={!user.phone}
+          onSubmit={this.onSubmit}
+          loading={loading}
+        />
       </Shell>
     )
   }

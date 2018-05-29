@@ -1,12 +1,9 @@
 import React, {PureComponent} from 'react'
 import {View, TouchableWithoutFeedback, TextInput, Modal} from 'react-native'
 
-import {required} from '@/lib/validations'
-import {field} from '@/components/shared/Form/Field'
 import AutoComplete from '../AutoComplete'
 import styles from './styles'
 
-@field({validations: [required('O endereço é obrigatório')]})
 export default class AutoCompleteAndroid extends PureComponent {
   state = {
     active: false,

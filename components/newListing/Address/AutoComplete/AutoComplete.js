@@ -83,7 +83,7 @@ export default class AutoComplete extends PureComponent {
     return (
       <GooglePlacesAutocomplete
         {...this.props}
-        fetchDefails
+        autoFillOnNotFound
         ref={this.autoComplete}
         autoFocus={false}
         horizontal={false}
@@ -98,6 +98,7 @@ export default class AutoComplete extends PureComponent {
           types: 'address'
         }}
         textInputProps={{
+          ...(this.props.textInputProps || {}),
           onSubmitEditing: this.onSubmitEditing,
           onSelectionChange: this.onSelectionChange,
           onChangeText: this.props.onChangeText,

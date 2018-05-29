@@ -3,6 +3,17 @@ import {StyleSheet, Platform} from 'react-native'
 import * as colors from '@/assets/colors'
 
 export default StyleSheet.create({
+  viewContainer: {
+    position: 'relative'
+  },
+  touchable: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    zIndex: 0
+  },
   container: {
     display: 'flex',
     flex: 0,

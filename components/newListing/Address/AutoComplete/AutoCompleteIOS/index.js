@@ -1,14 +1,37 @@
-import {View} from 'react-native'
+import {PureComponent, Fragment} from 'react'
+import {View, TouchableWithoutFeedback} from 'react-native'
 
-import {required} from '@/lib/validations'
-import {field} from '@/components/shared/Form/Field'
 import AutoComplete from '../AutoComplete'
 import styles from './styles'
 
-function AutoCompleteIOS(props) {
-  return <AutoComplete styles={styles} {...props} />
-}
+export default class AutoCompleteIOS extends PureComponent {
+  state = {
+    active: false
+  }
 
-export default field({validations: [required('O endereço é obrigatório')]})(
-  AutoCompleteIOS
-)
+  onShowResults = () => this.setState({active: true})
+
+  onHideResults = () => this.setState({active: false})
+
+  render() {
+    return (
+      <Fragment>
+        <AutoComplete
+          styles={styles}
+          listViewDisplayed={this.state.active}
+          textInputProps={{
+            onBlur: this.onHideResults,
+            onFocus: this.onShowResults
+          }}
+          {...this.props}
+        />
+        <TouchableWithoutFeedback
+          style={styles.touchable}
+          onPress={this.onPress}
+        >
+          <View style={styles.touchable} />
+        </TouchableWithoutFeedback>
+      </Fragment>
+    )
+  }
+}

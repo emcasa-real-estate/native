@@ -7,8 +7,8 @@ import AutoCompleteAndroid from './AutoCompleteAndroid'
 
 export default field({
   validations: [
-    (address) => {
-      if (_.isEmpty(address)) return 'O endereço é obrigatório'
+    ({street}) => {
+      if (_.isEmpty(street)) return 'O endereço é obrigatório'
     },
     ({streetNumber}) => {
       if (isNaN(streetNumber)) return 'O número é obrigatório'

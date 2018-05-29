@@ -91,7 +91,7 @@ export default class AutoComplete extends PureComponent {
   onChangeText = (text) => this.setState({text})
 
   onChange = (place, details) => {
-    const {onChange, onChangeComplete} = this.props
+    const {onChange, onValidate, onChangeComplete} = this.props
     const value = addressFromPlace(place)
     value.details = details
     if (isNaN(value.streetNumber)) {
@@ -117,6 +117,7 @@ export default class AutoComplete extends PureComponent {
     }
     this.setState({text: addressText(value)})
     onChange(value)
+    if (onValidate) onValidate()
   }
 
   render() {

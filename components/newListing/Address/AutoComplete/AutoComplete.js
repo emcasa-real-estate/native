@@ -88,7 +88,10 @@ export default class AutoComplete extends PureComponent {
     if (this.props.onBlur) this.props.onBlur()
   }
 
-  onChangeText = (text) => this.setState({text})
+  onChangeText = (text) => {
+    this.setState({text})
+    if (!text) this.props.onChange({})
+  }
 
   onChange = (place, details) => {
     const {onChange, onValidate, onChangeComplete} = this.props
@@ -116,8 +119,7 @@ export default class AutoComplete extends PureComponent {
       onChangeComplete(value)
     }
     this.setState({text: addressText(value)})
-    onChange(value)
-    if (onValidate) onValidate()
+    onChange(value, onValidate)
   }
 
   render() {

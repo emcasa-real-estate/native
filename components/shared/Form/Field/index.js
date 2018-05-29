@@ -13,6 +13,7 @@ export default class FieldView extends PureComponent {
     const {children, onValidate, ...props} = this.props
     return React.cloneElement(React.Children.only(children), {
       ...props,
+      onValidate,
       onBlur: onValidate
     })
   }

@@ -85,13 +85,13 @@ export default class FormProvider extends PureComponent {
     if (onValidate) onValidate(valid)
   }
 
-  onChangeField = (field, value) => {
+  onChangeField = (field, value, callback) => {
     const {onChange} = this.props
     const result = {
       ...this.state.value,
       [field]: value
     }
-    this.setState({value: result})
+    this.setState({value: result}, callback)
     if (onChange) onChange(result, field)
   }
 

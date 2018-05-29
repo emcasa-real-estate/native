@@ -2,10 +2,15 @@ import {required} from '@/lib/validations'
 import Form from '@/components/shared/Form/Form'
 import Dropdown from '@/components/shared/Form/Dropdown'
 import TextInput from '@/components/shared/Form/TextInput'
+import Phone from '@/components/shared/Form/Phone'
 import NumberPicker from './NumberPicker'
 import styles from './styles'
 
-export default function ListingPropertiesForm({onSubmit, loading}) {
+export default function ListingPropertiesForm({
+  onSubmit,
+  loading,
+  requirePhone
+}) {
   return (
     <Form
       style={styles.container}
@@ -59,8 +64,15 @@ export default function ListingPropertiesForm({onSubmit, loading}) {
         placeholder="IPTU (R$)"
         keyboardType="numeric"
         returnKeyType="next"
-        nextField="description"
+        nextField={requirePhone ? 'phone' : 'description'}
       />
+      {requirePhone && (
+        <Phone
+          name="phone"
+          placeholder="Telefone (obrigatório)"
+          nextField="description"
+        />
+      )}
       <TextInput multiline name="description" placeholder="Descrição" />
     </Form>
   )

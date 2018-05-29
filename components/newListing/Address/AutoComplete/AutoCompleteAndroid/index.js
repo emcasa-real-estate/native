@@ -7,7 +7,6 @@ import styles from './styles'
 export default class AutoCompleteAndroid extends PureComponent {
   state = {
     active: false,
-    value: null,
     layout: null
   }
 
@@ -35,13 +34,14 @@ export default class AutoCompleteAndroid extends PureComponent {
 
   onHideModal = () => this.setState({active: false})
 
-  onChangeText = (value) => {
-    this.setState({value})
-  }
-
   onChangeComplete = () => {
     requestAnimationFrame(() => this.inputButtonText.current.focus())
     this.onHideModal()
+  }
+
+  get text() {
+    if (!this.autoComplete.current) return ''
+    return this.autoComplete.current.text
   }
 
   get modalLayout() {
@@ -58,7 +58,7 @@ export default class AutoCompleteAndroid extends PureComponent {
   }
 
   render() {
-    const {active, value} = this.state
+    const {active} = this.state
 
     return (
       <View>
@@ -69,7 +69,7 @@ export default class AutoCompleteAndroid extends PureComponent {
               ref={this.inputButtonText}
               style={[styles.textInput, styles.textInputButton]}
               editable={false}
-              value={value}
+              value={this.text}
               placeholder={this.props.placeholder}
               selection={{start: 0, end: 0}}
               underlineColorAndroid="rgba(0,0,0,0)"

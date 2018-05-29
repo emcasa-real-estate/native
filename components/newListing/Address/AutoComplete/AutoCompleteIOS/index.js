@@ -1,5 +1,4 @@
-import {PureComponent, Fragment} from 'react'
-import {View, TouchableWithoutFeedback} from 'react-native'
+import {PureComponent} from 'react'
 
 import AutoComplete from '../AutoComplete'
 import styles from './styles'
@@ -15,23 +14,15 @@ export default class AutoCompleteIOS extends PureComponent {
 
   render() {
     return (
-      <Fragment>
-        <AutoComplete
-          styles={styles}
-          listViewDisplayed={this.state.active}
-          textInputProps={{
-            onBlur: this.onHideResults,
-            onFocus: this.onShowResults
-          }}
-          {...this.props}
-        />
-        <TouchableWithoutFeedback
-          style={styles.touchable}
-          onPress={this.onPress}
-        >
-          <View style={styles.touchable} />
-        </TouchableWithoutFeedback>
-      </Fragment>
+      <AutoComplete
+        styles={styles}
+        listViewDisplayed={this.state.active}
+        textInputProps={{
+          onBlur: this.onHideResults,
+          onFocus: this.onShowResults
+        }}
+        {...this.props}
+      />
     )
   }
 }

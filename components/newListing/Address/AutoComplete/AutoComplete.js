@@ -4,8 +4,16 @@ import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete'
 
 import {GOOGLE_PLACES_API_KEY} from '@/lib/config'
 
+const addressText = ({street, streetNumber, secondaryAddress}) => {
+  let text = street
+  if (streetNumber) text += ', ' + streetNumber
+  if (secondaryAddress) text += ' - ' + secondaryAddress
+  return text || ''
+}
+
 export default class AutoComplete extends PureComponent {
   static defaultProps = {
+    text: '',
     value: {}
   }
 
@@ -19,22 +27,23 @@ export default class AutoComplete extends PureComponent {
     return this.autoComplete.current.refs.textInput
   }
 
-  get addressText() {
-    const {street, streetNumber, secondaryAddress} = this.props.value
-    let text = street
-    if (streetNumber) text += ', ' + streetNumber
-    if (secondaryAddress) text += ' - ' + secondaryAddress
-    return text
+  get text() {
+    return this.state.text
+  }
+
+  updateAddressText() {
+    this.setState({
+      text: addressText(this.props.value || {})
+    })
   }
 
   componentDidMount() {
-    this.autoComplete.current.setAddressText(this.addressText)
+    this.updateAddressText()
   }
 
   componentDidUpdate(prev) {
-    if (!_.isEqual(prev.value, this.props.value) && this.props.value) {
-      this.autoComplete.current.setAddressText(this.addressText)
-    }
+    if (!_.isEqual(prev.value, this.props.value) && this.props.value)
+      this.updateAddressText()
   }
 
   onSelectionChange = ({nativeEvent: {selection}}) => this.setState({selection})
@@ -45,6 +54,8 @@ export default class AutoComplete extends PureComponent {
     const bestMatch = autoComplete.state.dataSource[0]
     this.onChange(bestMatch)
   }
+
+  onChangeText = (text) => this.setState({text})
 
   onChange = (place) => {
     const {onChange, onChangeComplete} = this.props
@@ -76,6 +87,7 @@ export default class AutoComplete extends PureComponent {
     } else if (onChangeComplete) {
       onChangeComplete(value)
     }
+    this.setState({text: addressText(value)})
     onChange(value)
   }
 
@@ -84,6 +96,7 @@ export default class AutoComplete extends PureComponent {
       <GooglePlacesAutocomplete
         {...this.props}
         autoFillOnNotFound
+        text={this.state.text}
         ref={this.autoComplete}
         autoFocus={false}
         horizontal={false}
@@ -101,7 +114,7 @@ export default class AutoComplete extends PureComponent {
           ...(this.props.textInputProps || {}),
           onSubmitEditing: this.onSubmitEditing,
           onSelectionChange: this.onSelectionChange,
-          onChangeText: this.props.onChangeText,
+          onChangeText: this.onChangeText,
           selection: this.state.selection
         }}
       />

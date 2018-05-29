@@ -14,6 +14,11 @@ export default class AutoCompleteAndroid extends PureComponent {
   inputButtonText = React.createRef()
   autoComplete = React.createRef()
 
+  get text() {
+    if (!this.autoComplete.current) return ''
+    return this.autoComplete.current.text
+  }
+
   onShowModal = () =>
     this.inputButton.current.measure((_, __, width, height, pageX, pageY) =>
       this.setState(
@@ -27,7 +32,7 @@ export default class AutoCompleteAndroid extends PureComponent {
           }
         },
         () => {
-          requestAnimationFrame(() => this.autoComplete.current.input.focus())
+          requestAnimationFrame(() => this.autoComplete.current.focus())
         }
       )
     )
@@ -37,11 +42,6 @@ export default class AutoCompleteAndroid extends PureComponent {
   onChangeComplete = () => {
     requestAnimationFrame(() => this.inputButtonText.current.focus())
     this.onHideModal()
-  }
-
-  get text() {
-    if (!this.autoComplete.current) return ''
-    return this.autoComplete.current.text
   }
 
   get modalLayout() {
@@ -86,7 +86,6 @@ export default class AutoCompleteAndroid extends PureComponent {
                 <AutoComplete
                   ref={this.autoComplete}
                   styles={styles}
-                  onChangeText={this.onChangeText}
                   onChangeComplete={this.onChangeComplete}
                   {...this.props}
                 />

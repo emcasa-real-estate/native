@@ -4,7 +4,19 @@ import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete'
 
 import {GOOGLE_PLACES_API_KEY} from '@/lib/config'
 
-const addressText = ({street, streetNumber, secondaryAddress}) => {
+const addressFromPlace = (place) => {
+  let [street, streetNumber] = place.structured_formatting.main_text.split(',')
+  const secondaryAddress = place.structured_formatting.secondary_text
+  if (!streetNumber || !isFinite(streetNumber)) streetNumber = 'número'
+  else streetNumber = parseInt(streetNumber)
+  return {
+    street,
+    streetNumber,
+    secondaryAddress
+  }
+}
+
+const addressText = ({street, streetNumber, secondaryAddress} = {}) => {
   let text = street
   if (streetNumber) text += ', ' + streetNumber
   if (secondaryAddress) text += ' - ' + secondaryAddress
@@ -13,28 +25,45 @@ const addressText = ({street, streetNumber, secondaryAddress}) => {
 
 export default class AutoComplete extends PureComponent {
   static defaultProps = {
-    text: '',
     value: {}
   }
 
   state = {
+    text: '',
     selection: {start: 0, end: 0}
   }
 
   autoComplete = React.createRef()
 
-  get input() {
-    return this.autoComplete.current.refs.textInput
-  }
-
   get text() {
     return this.state.text
+  }
+
+  get dataSource() {
+    return this.autoComplete.current.state.dataSource || []
+  }
+
+  focus() {
+    this.autoComplete.current.triggerFocus()
+  }
+
+  blur() {
+    this.autoComplete.current.triggerBlur()
   }
 
   updateAddressText() {
     this.setState({
       text: addressText(this.props.value || {})
     })
+  }
+
+  hasAddressChanged() {
+    return this.state.value !== addressText(this.props.value)
+  }
+
+  selectBestMatch() {
+    const place = this.dataSource[0]
+    if (place) this.onChange(place)
   }
 
   componentDidMount() {
@@ -49,36 +78,33 @@ export default class AutoComplete extends PureComponent {
   onSelectionChange = ({nativeEvent: {selection}}) => this.setState({selection})
 
   onSubmitEditing = () => {
-    const autoComplete = this.autoComplete.current
-    if (!autoComplete.state.dataSource) return
-    const bestMatch = autoComplete.state.dataSource[0]
-    this.onChange(bestMatch)
+    if (this.hasAddressChanged()) this.selectBestMatch()
+  }
+
+  onBlur = () => {
+    if (this.hasAddressChanged()) this.selectBestMatch()
+    if (this.props.textInputProps && this.props.textInputProps.onBlur)
+      this.props.textInputProps.onBlur()
   }
 
   onChangeText = (text) => this.setState({text})
 
   onChange = (place) => {
     const {onChange, onChangeComplete} = this.props
-    const streetAddress = place.structured_formatting.main_text.split(',')
-    const secondaryAddress = place.structured_formatting.secondary_text
-    const value = {
-      street: streetAddress[0],
-      streetNumber: streetAddress[1],
-      secondaryAddress
-    }
-    if (!value.streetNumber) {
-      const start = streetAddress[0].length + 2
+    const value = addressFromPlace(place)
+    if (isNaN(value.streetNumber)) {
+      const start = value.street.length + 2
       requestAnimationFrame(() =>
         this.setState(
           {
             selection: {
               start,
-              end: start + 6
+              end: start + value.streetNumber.length
             }
           },
           () => {
             requestAnimationFrame(() =>
-              this.autoComplete.current.refs.textInput.focus()
+              this.autoComplete.current.triggerFocus()
             )
           }
         )
@@ -95,7 +121,6 @@ export default class AutoComplete extends PureComponent {
     return (
       <GooglePlacesAutocomplete
         {...this.props}
-        autoFillOnNotFound
         text={this.state.text}
         ref={this.autoComplete}
         autoFocus={false}
@@ -115,6 +140,7 @@ export default class AutoComplete extends PureComponent {
           onSubmitEditing: this.onSubmitEditing,
           onSelectionChange: this.onSelectionChange,
           onChangeText: this.onChangeText,
+          onBlur: this.onBlur,
           selection: this.state.selection
         }}
       />

@@ -1,3 +1,4 @@
+import {required} from '@/lib/validations'
 import Form from '@/components/shared/Form/Form'
 import Dropdown from '@/components/shared/Form/Dropdown'
 import TextInput from '@/components/shared/Form/TextInput'
@@ -15,6 +16,7 @@ export default function ListingPropertiesForm({onSubmit}) {
           {value: 'Casa', label: 'Casa'},
           {value: 'Cobertura', label: 'Cobertura'}
         ]}
+        validations={[required('O tipo de imóvel é obrigatório')]}
       />
       <NumberPicker label="Quartos" name="rooms" />
       <NumberPicker label="Banheiros" name="bathrooms" />

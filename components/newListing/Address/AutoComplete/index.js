@@ -7,11 +7,14 @@ import AutoCompleteAndroid from './AutoCompleteAndroid'
 
 export default field({
   validations: [
-    ({street}) => {
-      if (_.isEmpty(street)) return 'O endereço é obrigatório'
+    (address) => {
+      if (_.isEmpty(address)) return 'O endereço é obrigatório'
     },
-    ({streetNumber}) => {
-      if (isNaN(streetNumber)) return 'O número é obrigatório'
+    ({details}) => {
+      if (!details) return undefined
+      else if (isNaN(details.street_number)) return 'O número é obrigatório'
+      else if (!details.postal_code)
+        return 'Não encontramos um endereço válido com esse número.'
     }
   ]
 })(

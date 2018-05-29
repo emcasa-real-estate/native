@@ -4,23 +4,35 @@ import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete'
 
 import {GOOGLE_PLACES_API_KEY} from '@/lib/config'
 
-const addressFromPlace = (place) => {
-  let [street, streetNumber] = place.structured_formatting.main_text.split(',')
-  const secondaryAddress = place.structured_formatting.secondary_text
-  if (!streetNumber || !isFinite(streetNumber)) streetNumber = 'número'
-  else streetNumber = parseInt(streetNumber)
-  return {
-    street,
-    streetNumber,
-    secondaryAddress
-  }
+const filterComponent = (place, property) => {
+  const component = place.address_components.find((val) =>
+    val.types.includes(property)
+  )
+  if (component) return component.short_name
 }
 
-const addressText = ({street, streetNumber, secondaryAddress} = {}) => {
-  let text = street
-  if (streetNumber) text += ', ' + streetNumber
-  if (secondaryAddress) text += ' - ' + secondaryAddress
-  return text || ''
+const placeDetails = (place) => ({
+  street: filterComponent(place, 'route'),
+  street_number: filterComponent(place, 'street_number'),
+  postal_code: filterComponent(place, 'postal_code'),
+  neighborhood: filterComponent(place, 'sublocality_level_1'),
+  state: filterComponent(place, 'administrative_area_level_1'),
+  city: filterComponent(place, 'administrative_area_level_2'),
+  ...place.geometry.location
+})
+
+const addressText = (place) => {
+  let [street, street_number] = place.structured_formatting.main_text.split(',')
+  const secondary_address = place.structured_formatting.secondary_text
+  if (!street_number || !isFinite(street_number)) street_number = 'número'
+  let value = street
+  if (street_number) value += ', ' + street_number
+  if (secondary_address) value += ' - ' + secondary_address
+  return {
+    value,
+    street,
+    street_number
+  }
 }
 
 export default class AutoComplete extends PureComponent {
@@ -39,6 +51,11 @@ export default class AutoComplete extends PureComponent {
     return this.state.text
   }
 
+  get valueText() {
+    const text = this.props.value.text
+    return text ? text.value : ''
+  }
+
   get dataSource() {
     return this.autoComplete.current.state.dataSource || []
   }
@@ -53,12 +70,12 @@ export default class AutoComplete extends PureComponent {
 
   updateAddressText() {
     this.setState({
-      text: addressText(this.props.value || {})
+      text: this.valueText
     })
   }
 
   hasAddressChanged() {
-    return this.state.value !== addressText(this.props.value)
+    return this.value !== this.valueText
   }
 
   selectBestMatch() {
@@ -93,18 +110,18 @@ export default class AutoComplete extends PureComponent {
     if (!text) this.props.onChange({})
   }
 
-  onChange = (place, details) => {
+  onChange = (place, _details) => {
     const {onChange, onValidate, onChangeComplete} = this.props
-    const value = addressFromPlace(place)
-    value.details = details
-    if (isNaN(value.streetNumber)) {
-      const start = value.street.length + 2
+    const text = addressText(place)
+    const details = placeDetails(_details)
+    if (isNaN(text.street_number)) {
+      const start = text.street.length + 2
       requestAnimationFrame(() =>
         this.setState(
           {
             selection: {
               start,
-              end: start + value.streetNumber.length
+              end: start + text.street_number.length
             }
           },
           () => {
@@ -114,18 +131,18 @@ export default class AutoComplete extends PureComponent {
           }
         )
       )
-      value.streetNumber = 'número'
     } else if (onChangeComplete) {
-      onChangeComplete(value)
+      onChangeComplete({text, details})
     }
-    this.setState({text: addressText(value)})
-    onChange(value, onValidate)
+    this.setState({text: text.value})
+    onChange({text, details}, onValidate)
   }
 
   render() {
     return (
       <GooglePlacesAutocomplete
         {...this.props}
+        fetchDetails
         text={this.state.text}
         ref={this.autoComplete}
         autoFocus={false}
@@ -138,7 +155,8 @@ export default class AutoComplete extends PureComponent {
         query={{
           key: GOOGLE_PLACES_API_KEY,
           language: 'pt-BR',
-          types: 'address'
+          types: ['address'],
+          components: {country: 'BR'}
         }}
         textInputProps={{
           ...(this.props.textInputProps || {}),

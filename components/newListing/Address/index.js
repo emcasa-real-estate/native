@@ -32,7 +32,9 @@ export default class ListingAddressForm extends Component {
           onChange={this.onChange}
           label="Próximo"
         >
-          <AutoComplete name="address" placeholder="Endereço" />
+          <View style={{zIndex: 1}}>
+            <AutoComplete name="address" placeholder="Endereço" />
+          </View>
           <TextInput name="complement" placeholder="Complemento" />
         </Form>
       </View>

@@ -32,6 +32,7 @@ export default StyleSheet.create({
     position: 'absolute',
     top: 50 - 3,
     left: 0,
+    width: '100%',
     backgroundColor: 'white'
   }
 })

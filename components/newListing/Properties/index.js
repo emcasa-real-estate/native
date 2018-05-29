@@ -7,7 +7,17 @@ import styles from './styles'
 
 export default function ListingPropertiesForm({onSubmit}) {
   return (
-    <Form style={styles.container} onSubmit={onSubmit}>
+    <Form
+      style={styles.container}
+      onSubmit={onSubmit}
+      defaultValue={{
+        rooms: 0,
+        bathrooms: 0,
+        garage_spots: 0,
+        maintenance_fee: 0,
+        property_tax: 0
+      }}
+    >
       <Dropdown
         name="type"
         placeholder="Tipo de imóvel"
@@ -26,7 +36,15 @@ export default function ListingPropertiesForm({onSubmit}) {
         placeholder="Andar"
         keyboardType="numeric"
         returnKeyType="next"
+        nextField="area"
+      />
+      <TextInput
+        name="area"
+        placeholder="Área (m²)"
+        keyboardType="numeric"
+        returnKeyType="next"
         nextField="maintenance_fee"
+        validations={[required('A área é obrigatória')]}
       />
       <TextInput
         name="maintenance_fee"
@@ -36,7 +54,7 @@ export default function ListingPropertiesForm({onSubmit}) {
         nextField="iptu"
       />
       <TextInput
-        name="iptu"
+        name="property_tax"
         placeholder="IPTU (R$)"
         keyboardType="numeric"
         returnKeyType="next"

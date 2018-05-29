@@ -15,9 +15,7 @@ export default class ListingAddressForm extends Component {
 
   onSubmit = (value) =>
     this.props.onSubmit({
-      address: `${value.address.street}, ${value.streetNumber} - ${
-        value.address.secondaryAddress
-      }`,
+      address: value.address.details,
       complement: value.complement
     })
 

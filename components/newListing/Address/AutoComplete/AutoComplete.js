@@ -63,7 +63,7 @@ export default class AutoComplete extends PureComponent {
 
   selectBestMatch() {
     const place = this.dataSource[0]
-    if (place) this.onChange(place)
+    if (place) this.autoComplete.current._onPress(place)
   }
 
   componentDidMount() {
@@ -85,13 +85,15 @@ export default class AutoComplete extends PureComponent {
     if (this.hasAddressChanged()) this.selectBestMatch()
     if (this.props.textInputProps && this.props.textInputProps.onBlur)
       this.props.textInputProps.onBlur()
+    if (this.props.onBlur) this.props.onBlur()
   }
 
   onChangeText = (text) => this.setState({text})
 
-  onChange = (place) => {
+  onChange = (place, details) => {
     const {onChange, onChangeComplete} = this.props
     const value = addressFromPlace(place)
+    value.details = details
     if (isNaN(value.streetNumber)) {
       const start = value.street.length + 2
       requestAnimationFrame(() =>

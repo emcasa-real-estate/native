@@ -41,6 +41,7 @@ export default class AutoCompleteAndroid extends PureComponent {
 
   onChangeComplete = () => {
     requestAnimationFrame(() => this.inputButtonText.current.focus())
+    this.props.onValidate()
     this.onHideModal()
   }
 

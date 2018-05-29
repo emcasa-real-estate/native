@@ -37,11 +37,16 @@ export default class AutoCompleteAndroid extends PureComponent {
       )
     )
 
-  onHideModal = () => this.setState({active: false})
+  onHideModal = async () => {
+    await this.autoComplete.current.selectBestMatch()
+    requestAnimationFrame(() => this.setState({active: false}))
+  }
 
   onChangeComplete = () => {
-    requestAnimationFrame(() => this.inputButtonText.current.focus())
-    this.onHideModal()
+    requestAnimationFrame(() => {
+      this.inputButtonText.current.focus()
+      this.setState({active: false})
+    })
   }
 
   get modalLayout() {

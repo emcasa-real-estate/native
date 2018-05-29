@@ -1,7 +1,7 @@
-import {createStackNavigator} from 'react-navigation'
+import {Component} from 'react'
 
-import * as address from './Address'
-import * as properties from './Properties'
+import Shell from '@/containers/shared/Shell'
+import Address from '@/components/newListing/Address'
 
 export default class AddressFormScreen extends Component {
   onSubmit = (value) => {
@@ -19,4 +19,6 @@ export default class AddressFormScreen extends Component {
       </Shell>
     )
   }
-)
+}
+
+export const screen = AddressFormScreen

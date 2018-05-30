@@ -1,0 +1,12 @@
+#!/bin/bash
+
+TARGET='.env';
+
+echo "Loading $TARGET"
+if [ ! -f "$TARGET" ]; then
+  echo "$TARGET file does not exist"
+else
+  eval "$(awk '$0 ~ /^[^#]/ {print "export ", $0}' $TARGET)" &> /dev/null
+fi
+
+$@

@@ -15,7 +15,16 @@
     [
       "transform-inline-environment-variables",
       {
-        "include": ["NODE_ENV", "API_URL", "CDN_URL", "GOOGLE_PLACES_API_KEY"]
+        "include": [
+          "NODE_ENV",
+          "GOOGLE_PLACES_API_KEY",
+          "API_URL",
+          "IOS_API_URL",
+          "ANDROID_API_URL",
+          "CDN_URL",
+          "IOS_CDN_URL",
+          "ANDROID_CDN_URL"
+        ]
       }
     ]
   ],

@@ -3,9 +3,7 @@
   "version": "1.1.5",
   "private": true,
   "rnpm": {
-    "assets": [
-      "./assets/fonts"
-    ]
+    "assets": ["./assets/fonts"]
   },
   "scripts": {
     "prepare": "patch-package",
@@ -27,7 +25,8 @@
     "runner-config": "./__e2e__/jest.config.js",
     "configurations": {
       "ios.debug": {
-        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app",
+        "binaryPath":
+          "ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app",
         "build": "scripts/ios/build.sh",
         "type": "ios.simulator",
         "name": "iPhone 6"
@@ -82,7 +81,7 @@
     "react-native-photo-view": "^1.5.2",
     "react-native-snap-carousel": "^3.6.0",
     "react-native-svg": "^6.3.1",
-    "react-navigation": "^2.0.1",
+    "react-navigation": "^2.0.4",
     "react-redux": "^5.0.7",
     "react-swipeable-views-native": "^0.12.9",
     "react-swipeable-views-utils": "^0.12.13",

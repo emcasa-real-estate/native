@@ -63,12 +63,24 @@ export default class AutoComplete extends PureComponent {
     return this.autoComplete.current.state.dataSource || []
   }
 
+  get isListVisible() {
+    return (
+      this.autoComplete.current &&
+      this.autoComplete.current.state.listViewDisplayed
+    )
+  }
+
   focus() {
     this.autoComplete.current.triggerFocus()
   }
 
   blur() {
     this.autoComplete.current.triggerBlur()
+  }
+
+  async awaitRequests() {
+    if (this.autoComplete.current)
+      await Promise.all(this.autoComplete.current._requests)
   }
 
   updateAddressText() {
@@ -106,7 +118,8 @@ export default class AutoComplete extends PureComponent {
       this.props.textInputProps.onBlur()
     if (this.props.onBlur) this.props.onBlur()
     setTimeout(async () => {
-      await Promise.all(this.autoComplete.current._requests)
+      if (!this.autoComplete.current) return
+      await this.awaitRequests()
       if (this.hasAddressChanged()) this.selectBestMatch()
     }, 500)
   }

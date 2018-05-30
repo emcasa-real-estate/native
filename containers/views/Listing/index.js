@@ -1,5 +1,4 @@
 import {Component} from 'react'
-import {withNavigationFocus} from 'react-navigation'
 
 import Shell, {Section, Footer} from '@/containers/shared/Shell'
 import Listing, {Price} from '@/containers/listings/Listing'
@@ -12,7 +11,7 @@ export default class ListingScreen extends Component {
   }
 
   render() {
-    const {navigation, isFocused} = this.props
+    const {navigation} = this.props
     const {id} = navigation.state.params
 
     return (
@@ -27,7 +26,7 @@ export default class ListingScreen extends Component {
           />
         }
       >
-        <Listing active={isFocused} id={id} />
+        <Listing id={id} />
         <Section title="Veja Também">
           <RelatedListings id={id} />
         </Section>
@@ -36,4 +35,4 @@ export default class ListingScreen extends Component {
   }
 }
 
-export const screen = withNavigationFocus(ListingScreen)
+export const screen = ListingScreen

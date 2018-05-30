@@ -14,7 +14,12 @@ import styles, {modalStyles, markerStyles, markerColor} from './styles'
 
 export default class ListingView extends Component {
   state = {
+    ready: false,
     view: undefined
+  }
+
+  componentDidMount() {
+    requestAnimationFrame(() => this.setState({ready: true}))
   }
 
   onOpen = (view) => this.setState({view})
@@ -35,12 +40,12 @@ export default class ListingView extends Component {
   }
 
   render() {
-    const {active, address} = this.props
-    const {view} = this.state
+    const {address} = this.props
+    const {view, ready} = this.state
     return (
       <View testID="@listings.Listing" style={styles.container}>
         <View testID="@listings.Listing.header" style={styles.header}>
-          <Thumbnail active={active} onOpen={this.onOpen} {...this.props} />
+          <Thumbnail active={ready} onOpen={this.onOpen} {...this.props} />
           <View style={styles.heading}>
             <Text style={styles.h1}>{address.street}</Text>
             <Text style={styles.h2}>{address.neighborhood.toUpperCase()}</Text>
@@ -48,7 +53,7 @@ export default class ListingView extends Component {
           <Properties {...this.props} />
         </View>
         <Description {...this.props} />
-        {active && (
+        {ready && (
           <View testID="@listings.Listing.map">
             <Map zoom="close" style={styles.map} {...address}>
               <Marker styles={markerStyles} address={address}>

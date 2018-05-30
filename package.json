@@ -10,13 +10,11 @@
     "start": "scripts/env react-native start",
     "android": "scripts/env react-native run-android",
     "ios": "scripts/env react-native run-ios",
-    "android:log": "yarn android && yarn log-android",
-    "ios:log": "yarn ios && yarn log-ios",
     "devtools": "react-devtools",
     "log-android": "react-native log-android",
     "log-ios": "react-native log-ios",
     "test": "jest --config __test__/jest.config.js",
-    "build_e2e": "detox build -c ios.debug",
+    "build_e2e": "scripts/env detox build -c ios.debug",
     "e2e": "detox test -c ios.debug --platform ios"
   },
   "detox": {

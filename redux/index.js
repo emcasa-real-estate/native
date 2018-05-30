@@ -44,3 +44,6 @@ export default function create() {
 // Create store outside entry point to avoid creating a new one on HMR
 export const store = create()
 export const persistor = store.persistor
+
+// Clear cache before each test case for e2e tests
+if (process.env.NODE_ENV === 'e2e') persistor.purge()

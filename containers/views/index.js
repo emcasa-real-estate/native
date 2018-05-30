@@ -3,7 +3,17 @@ import * as auth from './Auth'
 import * as account from './Account'
 import * as listing from './Listing'
 import * as listings from './Listings'
+import * as newListing from './NewListing'
 import * as interestForm from './InterestForm'
 import * as favorites from './Favorites'
 
-export default {home, auth, account, listing, listings, interestForm, favorites}
+export default {
+  home,
+  auth,
+  account,
+  listing,
+  listings,
+  newListing,
+  interestForm,
+  favorites
+}

@@ -17,6 +17,7 @@
       {
         "include": [
           "NODE_ENV",
+          "GOOGLE_PLACES_API_KEY",
           "API_URL",
           "IOS_API_URL",
           "ANDROID_API_URL",

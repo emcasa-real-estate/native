@@ -21,6 +21,13 @@ export default function Navigation({user, active, onNavigate}) {
         Salvos
       </Button>
       <Button
+        active={active === 'newListing'}
+        icon="tag"
+        onPress={onNavigate('newListing')}
+      >
+        Anunciar
+      </Button>
+      <Button
         active={active === 'account'}
         icon="user"
         onPress={onNavigate(user ? 'account' : 'auth')}

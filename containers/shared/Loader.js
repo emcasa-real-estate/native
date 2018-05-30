@@ -1,7 +1,12 @@
 import _ from 'lodash'
-import React, {Component} from 'react'
+import {Component} from 'react'
+import {View} from 'react-native'
 
 export default class Loader extends Component {
+  static defaultProps = {
+    as: View
+  }
+
   componentDidMount() {
     const {onLoad, params} = this.props
     onLoad(params)

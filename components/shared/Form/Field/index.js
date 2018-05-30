@@ -13,30 +13,24 @@ export default class FieldView extends PureComponent {
     const {children, onValidate, ...props} = this.props
     return React.cloneElement(React.Children.only(children), {
       ...props,
+      onValidate,
       onBlur: onValidate
     })
   }
 
   render() {
-    const {valid, focus, errors} = this.props
+    const {valid, errors} = this.props
 
     return (
-      <KeyboardAvoidingView
-        enabled={focus}
-        behavior="padding"
-        keyboardVerticalOffset={60}
-        contentContainerStyle={{flex: 1, height: 60, marginTop: 50}}
-      >
-        <View style={styles.container}>
-          {this.renderInput()}
-          {!valid &&
-            errors.map((message, i) => (
-              <Text key={i} style={styles.error}>
-                {message}
-              </Text>
-            ))}
-        </View>
-      </KeyboardAvoidingView>
+      <View style={styles.container}>
+        {this.renderInput()}
+        {!valid &&
+          errors.map((message, i) => (
+            <Text key={i} style={styles.error}>
+              {message}
+            </Text>
+          ))}
+      </View>
     )
   }
 }
@@ -44,7 +38,7 @@ export default class FieldView extends PureComponent {
 const mergeValidations = _.flow(
   (a = [], b = []) => b.concat(a),
   _.filter(_.identity),
-  _.uniqBy((fun) => fun._name || fun.name)
+  _.uniqBy((fun) => fun._name || fun.name || _.uniqueId())
 )
 
 export const field = (options = {}) => (Target) => (props) => (

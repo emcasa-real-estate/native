@@ -48,6 +48,8 @@ export default class AutoComplete extends PureComponent {
 
   autoComplete = React.createRef()
 
+  request = null
+
   get text() {
     return this.state.text
   }
@@ -76,7 +78,7 @@ export default class AutoComplete extends PureComponent {
   }
 
   hasAddressChanged() {
-    return this.value !== this.valueText
+    return this.text !== this.valueText
   }
 
   selectBestMatch() {
@@ -99,11 +101,14 @@ export default class AutoComplete extends PureComponent {
     if (this.hasAddressChanged()) this.selectBestMatch()
   }
 
-  onBlur = () => {
-    if (this.hasAddressChanged()) this.selectBestMatch()
+  onBlur = async () => {
     if (this.props.textInputProps && this.props.textInputProps.onBlur)
       this.props.textInputProps.onBlur()
     if (this.props.onBlur) this.props.onBlur()
+    setTimeout(async () => {
+      await Promise.all(this.autoComplete.current._requests)
+      if (this.hasAddressChanged()) this.selectBestMatch()
+    }, 500)
   }
 
   onChangeText = (text) => {

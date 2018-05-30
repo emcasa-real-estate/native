@@ -52,17 +52,17 @@
       </dict>
     </dict>
     <key>NSLocationWhenInUseUsageDescription</key>
-    <string/>
+    <string>Este aplicativo usa a sua localização para melhorar a sua experiência com o mapa</string>
     <key>NSCalendarsUsageDescription</key>
-    <string/>
+    <string>Acesso ao calendário</string>
     <key>NSBluetoothPeripheralUsageDescription</key>
-    <string/>
+    <string>Acesso ao bluetooth</string>
     <key>NSAppleMusicUsageDescription</key>
-    <string/>
+    <string>Acesso à mídia</string>
     <key>NSMotionUsageDescription</key>
-    <string/>
+    <string>Acesso ao sensor de movimento</string>
     <key>NSSpeechRecognitionUsageDescription</key>
-    <string/>
+    <string>Acesso ao serviço de reconhecimento de fala</string>
     <key>UIAppFonts</key>
     <array>
       <string>OpenSans-Bold.ttf</string>

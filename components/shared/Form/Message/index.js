@@ -10,7 +10,11 @@ function FormMessage({children, title, styles, onClose, ...props}) {
       {title && (
         <Text style={$styles.all(styles.text, styles.title)}>{title}</Text>
       )}
-      <Text style={styles.text}>{children}</Text>
+      {typeof children === 'string' ? (
+        <Text style={styles.text}>{children}</Text>
+      ) : (
+        children
+      )}
       <SubmitButton {...props} onPress={onClose} />
     </View>
   )

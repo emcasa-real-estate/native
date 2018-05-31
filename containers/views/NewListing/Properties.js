@@ -34,7 +34,7 @@ export default class PropertiesFormScreen extends Component {
       if (value.phone) editUserProfile({variables: {phone: value.phone}})
       const response = await listingsApi.create({listing, address}, {jwt})
       this.setState({loading: false})
-      navigation.navigate('success', response.listing)
+      navigation.navigate('success', {listing: response.listing, address})
     } catch (error) {
       this.setState({errors: error.errors, loading: false})
     }

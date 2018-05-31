@@ -12,13 +12,11 @@ function reportError({error}) {
     let message = error.trace || error.message
     if (typeof message !== 'string') message = message.toString()
     if (Platform.OS === 'ios') {
-      Crashlytics.reportError(message)
+      Crashlytics.recordError(message)
     } else {
       Crashlytics.logException(message)
     }
   }
-  // eslint-disable-next-line no-console
-  console.error(error)
 }
 
 function identifySession({data}) {

@@ -3,21 +3,21 @@ import * as select from './selectors'
 import * as action from './interactions'
 
 describe('auth/login', () => {
-  beforeAll(action.navigate)
+  beforeAll(action.navigateToLogin)
 
   it('validates input data', async () => {
-    await action.login('test', '')
+    await action.login({email: 'test', password: ''})
     await expect(element(by.text('Este email é inválido'))).toBeVisible()
     await expect(element(by.text('A senha é obrigatória'))).toBeVisible()
   })
 
   it('shows an error message on failure', async () => {
-    await action.login('test@example.com', 'wrong_password')
+    await action.login({email: 'test@example.com', password: 'wrong_password'})
     await expect(element(by.text('Senha ou email inválidos'))).toBeVisible()
   })
 
   it('redirects to the main screen on success', async () => {
-    await action.login('foo@example.com', 'password123')
+    await action.login({email: 'foo@example.com', password: 'password123'})
     await waitFor(element(select.loginScreen()))
       .toBeNotVisible()
       .withTimeout(1000)

@@ -1,8 +1,12 @@
-import * as selectors from './selectors'
+import * as select from './selectors'
 
 export async function navigate() {
-  await element(selectors.navButton()).tap()
-  await waitFor(element(selectors.loginScreen())).toBeVisible()
+  await element(select.navButton()).tap()
+  await waitFor(element(select.loginScreen())).toBeVisible()
 }
 
-export async function login(username, password) {}
+export async function login(email, password) {
+  await element(select.input('Email')).typeText(email + '\n')
+  await element(select.input('Senha')).typeText(password + '\n')
+  await element(by.text('Enviar')).tap()
+}

@@ -30,6 +30,8 @@ export default class TextInputField extends Component {
     return (
       <TextInput
         {...props}
+        accessible
+        accessibilityLabel={props.placeholder}
         invalid={!valid}
         inputRef={this.input}
         onChangeText={onChange}

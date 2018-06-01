@@ -33,15 +33,13 @@ export default class LoginScreen extends PureComponent {
   render() {
     const {isFocused} = this.props
     return (
-      <Shell scroll title="Login">
-        <View testID="@auth.Login">
-          <Login
-            enabled={isFocused}
-            onSignUp={this.onSignUp}
-            onPasswordRecovery={this.onPasswordRecovery}
-            onSuccess={this.onSuccess}
-          />
-        </View>
+      <Shell scroll title="Login" testID="@auth.Login">
+        <Login
+          enabled={isFocused}
+          onSignUp={this.onSignUp}
+          onPasswordRecovery={this.onPasswordRecovery}
+          onSuccess={this.onSuccess}
+        />
       </Shell>
     )
   }

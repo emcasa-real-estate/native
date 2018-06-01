@@ -17,10 +17,8 @@ export default class SignUpScreen extends Component {
 
   render() {
     return (
-      <Shell scroll title="Cadastre-se">
-        <View testID="@auth.SignUp">
-          <SignUp onSuccess={this.onSuccess} />
-        </View>
+      <Shell scroll title="Cadastre-se" testID="@auth.SignUp">
+        <SignUp onSuccess={this.onSuccess} />
       </Shell>
     )
   }

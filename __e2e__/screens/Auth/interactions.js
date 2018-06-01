@@ -26,6 +26,7 @@ export async function signUp({name, email, phone, password}) {
   await element(input('Nome')).tap()
   await element(input('Nome')).clearText()
   await element(input('Nome')).typeText(name + '\n')
+  await element(input('Email')).clearText()
   await element(input('Email')).typeText(email + '\n')
   if (phone) await element(input('Telefone (opcional)')).typeText(phone)
   await element(input('Senha')).tap()

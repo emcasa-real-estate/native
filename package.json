@@ -3,7 +3,9 @@
   "version": "1.1.6",
   "private": true,
   "rnpm": {
-    "assets": ["./assets/fonts"]
+    "assets": [
+      "./assets/fonts"
+    ]
   },
   "scripts": {
     "prepare": "patch-package",
@@ -15,6 +17,7 @@
     "log-ios": "react-native log-ios",
     "test": "jest --config __test__/jest.config.js",
     "build_e2e": "NODE_ENV=e2e scripts/env detox build -c ios.debug",
+    "record": "REPLAY_MODE=record scripts/server/start.js",
     "e2e": "detox test -c ios.debug --platform ios"
   },
   "detox": {
@@ -23,8 +26,7 @@
     "runner-config": "./__e2e__/jest.config.js",
     "configurations": {
       "ios.debug": {
-        "binaryPath":
-          "ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app",
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app",
         "build": "scripts/ios/build.sh",
         "type": "ios.simulator",
         "name": "iPhone 6"
@@ -69,9 +71,9 @@
     "react-native-fabric": "^0.5.1",
     "react-native-fabric-crashlytics": "^0.1.8",
     "react-native-fontawesome-pro": "^1.0.12",
+    "react-native-google-places-autocomplete": "^1.3.6",
     "react-native-keyboard-manager": "^4.0.13-7",
     "react-native-keyboard-spacer": "^0.4.1",
-    "react-native-google-places-autocomplete": "^1.3.6",
     "react-native-maps": "^0.20.1",
     "react-native-modal-dropdown": "^0.6.2",
     "react-native-offline": "^3.7.3",
@@ -116,6 +118,7 @@
   },
   "optionalDependencies": {
     "app-icon": "^0.6.3",
+    "body-parser": "^1.18.3",
     "eslint": "^4.18.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",

@@ -7,17 +7,14 @@ const RECORD_PORT = process.env.RECORD_PORT || 4000
 
 const app = express()
 
+app.use(express.json())
+
 app.use(
   createReplayServer({
     port: RECORD_PORT,
     replayMode: REPLAY_MODE
   })
 )
-
-app.use((req, res) => {
-  app.emit('response', {req, res})
-  return res
-})
 
 module.exports = {
   app,

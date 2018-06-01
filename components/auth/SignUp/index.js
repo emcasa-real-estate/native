@@ -11,7 +11,7 @@ const getError = (error) => {
   if (!error) return undefined
   switch (error.status) {
     case 422:
-      return 'Esse e-mail já está em uso.'
+      return 'Esse e-mail já está em uso'
     default:
       return 'Ocorreu um erro desconhecido. Por favor, tente novamente.'
   }

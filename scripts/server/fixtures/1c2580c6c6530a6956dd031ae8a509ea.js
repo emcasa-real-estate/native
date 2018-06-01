@@ -17,12 +17,12 @@ module.exports = function (req, res) {
   res.statusCode = 200;
 
   res.setHeader("server", "Cowboy");
-  res.setHeader("date", "Sun, 13 May 2018 00:02:42 GMT");
+  res.setHeader("date", "Fri, 01 Jun 2018 23:46:53 GMT");
   res.setHeader("content-length", "195");
-  res.setHeader("set-cookie", ["_re_key=SFMyNTY.g3QAAAABbQAAABJfdGltYmVyX3Nlc3Npb25faWRtAAAAIDMzMmE2ZGJkZGEzNTNiNjc1NjFmNTM1NWUyZTY3MGI1.U8iV3QhLrNcXyq2ENtToeV7JM29qlBEmIpz4_Eh3Ve8; path=/; HttpOnly"]);
+  res.setHeader("set-cookie", ["_re_key=SFMyNTY.g3QAAAABbQAAABJfdGltYmVyX3Nlc3Npb25faWRtAAAAIDcyNmYwMWYxNjRmZmFiZDdkZTUyNGM1ZjA5NDlmNzY5.UXlbvYH7ipNWFojHmI5au0e63JeksQWdXk1ya8V5a_Y; path=/; HttpOnly"]);
   res.setHeader("content-type", "application/json; charset=utf-8");
   res.setHeader("cache-control", "max-age=0, private, must-revalidate");
-  res.setHeader("x-request-id", "adqcert9f3u3ad29t58ba848p8d4ilp0");
+  res.setHeader("x-request-id", "uqvhn9571829kcn249rac4spa2t5954u");
   res.setHeader("access-control-allow-origin", "*");
   res.setHeader("access-control-expose-headers", "");
   res.setHeader("access-control-allow-credentials", "true");

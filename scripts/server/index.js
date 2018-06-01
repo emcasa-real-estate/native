@@ -7,8 +7,6 @@ const RECORD_PORT = process.env.RECORD_PORT || 4000
 
 const app = express()
 
-app.use(express.json())
-
 app.use(
   createReplayServer({
     port: RECORD_PORT,

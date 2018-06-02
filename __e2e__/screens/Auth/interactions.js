@@ -1,8 +1,9 @@
-import * as landing from '../Landing/selectors'
 import * as select from './selectors'
 
 export async function navigateToLogin() {
-  await waitFor(element(landing.feed())).toBeVisible()
+  await waitFor(element(by.id('@shared.Shell.Navigation')))
+    .toBeVisible()
+    .withTimeout(2000)
   await element(select.navButton()).tap()
   await waitFor(element(select.loginScreen())).toBeVisible()
 }

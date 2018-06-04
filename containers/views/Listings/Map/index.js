@@ -15,10 +15,6 @@ import styles from './styles'
 const zoom = ({longitudeDelta}) =>
   Math.round(Math.log(360 / longitudeDelta) / Math.LN2)
 
-// https://gis.stackexchange.com/a/127949
-const kmPerPx = ({lat, zoom}) =>
-  156.54303392 * Math.cos(lat * Math.PI / 180) / Math.pow(2, zoom)
-
 @withPermission('location', 'whenInUse')
 export default class MapScreen extends Component {
   state = {

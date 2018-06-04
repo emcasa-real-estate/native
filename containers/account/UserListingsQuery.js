@@ -9,7 +9,7 @@ export const withUserListings = (Target) => (props) => (
         {...props}
         userListings={{
           loading: response.loading,
-          data: response.data ? response.data.userListing : []
+          data: response.data ? response.data.userListings : []
         }}
       />
     )}

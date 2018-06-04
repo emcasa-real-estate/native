@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import React, {Component} from 'react'
-import {View, Platform, Alert} from 'react-native'
+import {View, Alert} from 'react-native'
 import geolib from 'geolib'
 
 import Shell from '@/containers/shared/Shell'
@@ -75,6 +75,7 @@ export default class MapScreen extends Component {
     return new Promise((resolve) =>
       this.setState(
         {
+          zoom: zoom({longitudeDelta: 0.01}),
           region: {
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,

@@ -5,7 +5,7 @@ import Button from './Button'
 
 export default function Navigation({user, active, onNavigate}) {
   return (
-    <View style={styles.container}>
+    <View testID="@shared.Shell.Navigation" style={styles.container}>
       <Button
         active={active === 'listings'}
         icon="home"

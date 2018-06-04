@@ -24,19 +24,25 @@ export default function ListingProperties(props) {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
-        <Property icon="bed">{props.rooms} quartos</Property>
-        <Property icon="bath">{props.bathrooms} banheiros</Property>
+        <Property icon="bed">
+          {props.rooms} {props.rooms !== 1 ? 'quartos' : 'quarto'}
+        </Property>
+        <Property icon="bath">
+          {props.bathrooms} {props.bathrooms !== 1 ? 'banheiros' : 'banheiro'}
+        </Property>
         <Property icon="car">
-          {props.garageSpots} {props.garageSpots > 1 ? 'vagas' : 'vaga'}
+          {props.garageSpots} {props.garageSpots !== 1 ? 'vagas' : 'vaga'}
         </Property>
       </View>
       <View style={styles.row}>
-        <Property icon="building">{props.floor}° andar</Property>
+        <Property icon="building">
+          {props.floor ? `${props.floor}° andar` : String.fromCharCode(0x2500)}
+        </Property>
         <Property icon="cube">{props.area} m²</Property>
         <Property icon="usd-circle">
           {props.price && props.area
             ? `R$${number(Math.floor(props.price / props.area))}/m²`
-            : null}
+            : String.fromCharCode(0x2500)}
         </Property>
       </View>
     </View>

@@ -6,7 +6,7 @@ export default function Password({validations, ...props}) {
     <TextInput
       secureTextEntry
       autoCorrect={false}
-      autoCapitalize={false}
+      autoCapitalize="none"
       placeholder="Senha"
       validations={[].concat(validations, required('A senha é obrigatória'))}
       {...props}

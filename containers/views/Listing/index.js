@@ -17,7 +17,7 @@ export default class ListingScreen extends Component {
     return (
       <Shell
         scroll
-        title={<Price id={id} size={24} />}
+        title={<Price nullable id={id} size={24} />}
         footer={
           <Footer
             color="green"

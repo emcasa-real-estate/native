@@ -34,7 +34,9 @@ export default function ListingProperties(props) {
         <Property icon="building">{props.floor}° andar</Property>
         <Property icon="cube">{props.area} m²</Property>
         <Property icon="usd-circle">
-          R${number(Math.floor(props.price / props.area))}/m²
+          {props.price && props.area
+            ? `R$${number(Math.floor(props.price / props.area))}/m²`
+            : null}
         </Property>
       </View>
     </View>

@@ -29,7 +29,7 @@ export const withFavoriteListings = (Target) => (props) => (
       <Target
         {...props}
         favorites={{
-          data: response.data.favoritedListings,
+          data: response.data ? response.data.favoritedListings : [],
           loading: response.loading
         }}
       />

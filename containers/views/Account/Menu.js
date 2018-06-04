@@ -14,7 +14,7 @@ export default class AccountMenuScreen extends Component {
       <Shell scroll>
         <Menu
           listingsCount={
-            userListings.data && userListings.data.userListings.length
+            !userListings.loading && userListings.data.userListings.length
           }
           onEditProfile={this.navigateTo('editProfile')}
           onViewListings={this.navigateTo('userListings')}

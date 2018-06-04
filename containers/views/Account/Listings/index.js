@@ -1,10 +1,10 @@
 import Shell from '@/containers/shared/Shell'
 import Feed from './Feed'
 
-export default function UserListingsScreen() {
+export default function UserListingsScreen({navigation}) {
   return (
     <Shell scroll title="Meus imóveis">
-      <Feed />
+      <Feed onSelect={(id) => navigation.navigate('listing', {id})} />
     </Shell>
   )
 }

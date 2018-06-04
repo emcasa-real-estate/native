@@ -4,6 +4,14 @@ import {GET_USER_LISTINGS} from '@/lib/graphql/queries/account'
 
 export const withUserListings = (Target) => (props) => (
   <Query query={GET_USER_LISTINGS}>
-    {(ctx) => <Target {...props} userListings={ctx} />}
+    {(response) => (
+      <Target
+        {...props}
+        userListings={{
+          loading: response.loading,
+          data: response.data ? response.data.userListing : []
+        }}
+      />
+    )}
   </Query>
 )

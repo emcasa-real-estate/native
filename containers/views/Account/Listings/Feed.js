@@ -6,7 +6,7 @@ function UserListingFeed({userListings, ...props}) {
   return (
     <Feed
       {...props}
-      data={userListings.data.userListings}
+      data={userListings.data}
       loading={userListings.loading}
       Card={Card}
     />

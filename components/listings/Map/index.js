@@ -22,6 +22,7 @@ export default function ListingMap({
   lat,
   lng,
   style,
+  as: MapView,
   ...props
 }) {
   return (
@@ -43,5 +44,6 @@ export default function ListingMap({
 ListingMap.defaultProps = {
   lat: -22.9608099,
   lng: -43.2096142,
-  zoom: 'far'
+  zoom: 'far',
+  as: MapView
 }

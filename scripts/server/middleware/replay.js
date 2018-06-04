@@ -6,10 +6,11 @@ module.exports = ({port, replayMode}) =>
   yakbak(`http://localhost:${port}`, {
     dirname: path.join(__dirname, '../fixtures'),
     noRecord: replayMode !== 'record',
-    hash(req) {
+    hash(req, body) {
+      let payload = req.method + req.headers.host + req.url + body
       return crypt
         .createHash('md5')
-        .update(req.headers.host + req.url)
+        .update(payload)
         .digest('hex')
     }
   })

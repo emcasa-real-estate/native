@@ -29,24 +29,40 @@ export default class MapApp extends PureComponent {
 
   onSelect = (id) => () => this.props.onSelect(id)
 
-  render() {
-    const {data, active, aggregate, ...props} = this.props
+  get data() {
+    return this.props.data.map((listing) => ({
+      listing,
+      location: {
+        longitude: listing.address.lng,
+        latitude: listing.address.lat
+      }
+    }))
+  }
+
+  renderMarker = ({listing}) => {
+    const active = this.props.active === listing.id
     return (
-      <Map {...props}>
-        <Aggregator enabled={aggregate} {...props}>
-          {data &&
-            data.map((listing) => (
-              <Marker
-                active={active === listing.id}
-                onPress={this.onSelect(listing.id)}
-                key={listing.id}
-                style={{zIndex: active === listing.id ? 2 : 1}}
-                zIndex={active === listing.id ? 2 : 1}
-                {...listing}
-              />
-            ))}
-        </Aggregator>
-      </Map>
+      <Marker
+        active={active}
+        onPress={this.onSelect(listing.id)}
+        key={listing.id}
+        style={{zIndex: active ? 2 : 1}}
+        zIndex={active ? 2 : 1}
+        {...listing}
+      />
+    )
+  }
+
+  render() {
+    const {aggregate, ...props} = this.props
+    return (
+      <Map
+        {...props}
+        as={Aggregator}
+        data={this.data}
+        renderMarker={this.renderMarker}
+        clusteringEnabled={aggregate}
+      />
     )
   }
 }

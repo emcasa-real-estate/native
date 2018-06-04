@@ -6,11 +6,11 @@ import KeyboardManager from 'react-native-keyboard-manager'
 import GatewayView from '@/components/shared/GatewayView'
 import $styles from './styles'
 
-function Shell({styles, children, scroll}) {
+function Shell({styles, children, scroll, testID}) {
   const Main = scroll ? ScrollView : View
   return (
     <GatewayProvider>
-      <View style={styles.container}>
+      <View style={styles.container} testID={testID}>
         <GatewayView name="header" style={styles.header} />
         <Main
           onLayout={

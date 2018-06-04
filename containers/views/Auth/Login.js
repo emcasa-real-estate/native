@@ -1,11 +1,12 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
+import {View} from 'react-native'
 import {withNavigationFocus} from 'react-navigation'
 
 import Shell from '@/containers/shared/Shell'
 import Login from '@/containers/auth/Login'
 
 @withNavigationFocus
-export default class LoginScreen extends Component {
+export default class LoginScreen extends PureComponent {
   state = {
     valid: true
   }
@@ -32,7 +33,7 @@ export default class LoginScreen extends Component {
   render() {
     const {isFocused} = this.props
     return (
-      <Shell scroll title="Login">
+      <Shell scroll title="Login" testID="@auth.Login">
         <Login
           enabled={isFocused}
           onSignUp={this.onSignUp}

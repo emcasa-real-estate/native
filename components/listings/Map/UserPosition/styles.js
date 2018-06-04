@@ -1,49 +1,28 @@
 import StyleSheet from '@/assets/StyleSheet'
 import * as colors from '@/assets/colors'
-import {elevation, padding} from '@/assets/styles'
+import {elevation} from '@/assets/styles'
 
-const TIP_HEIGHT = 6
-
-const TIP_SIZE = Math.sqrt(Math.pow(TIP_HEIGHT, 2) / 2) * 2
-
+const CIRCLE_RADIUS = 100
 export default StyleSheet({
   container: {
-    position: 'relative',
-    paddingBottom: TIP_HEIGHT,
-    ...elevation(2)
+    position: 'relative'
   },
-  body: {
-    zIndex: 1,
+  circle: {
     display: 'flex',
+    justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 3,
-    backgroundColor: colors.blue.medium,
-    width: 50,
-    ...padding(3.5, null),
-    ':active': {
-      backgroundColor: 'white'
-    }
+    width: CIRCLE_RADIUS * 2,
+    height: CIRCLE_RADIUS * 2,
+    borderRadius: CIRCLE_RADIUS,
+    backgroundColor: colors.blue.medium + '25'
   },
-  text: {
-    color: 'white',
-    fontWeight: '600',
-    ':active': {
-      color: colors.blue.medium
-    }
-  },
-  tip: {
-    position: 'absolute',
-    zIndex: 0,
-    bottom: 2,
-    left: '50%',
-    marginTop: -TIP_HEIGHT,
-    marginLeft: -TIP_HEIGHT / 2,
-    width: TIP_SIZE,
-    height: TIP_SIZE,
+  dot: {
+    width: 15,
+    height: 15,
+    borderRadius: 7.5,
+    borderWidth: 3,
+    borderColor: 'white',
     backgroundColor: colors.blue.medium,
-    transform: [{rotate: '45deg'}],
-    ':active': {
-      backgroundColor: 'white'
-    }
+    ...elevation(2)
   }
 })

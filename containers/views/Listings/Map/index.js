@@ -165,7 +165,14 @@ export default class MapScreen extends Component {
             type="search"
           >
             {this.isWithinBounds && (
-              <UserPositionMarker active={this.isWatching} address={this.state} />
+              <UserPositionMarker
+                active={this.isWatching}
+                radius={Math.pow(zoom, 1.9) - 50}
+                address={{
+                  lat: this.lastUserLocation.latitude,
+                  lng: this.lastUserLocation.longitude
+                }}
+              />
             )}
           </Map>
         </View>

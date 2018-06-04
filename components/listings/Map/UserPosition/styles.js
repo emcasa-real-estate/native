@@ -14,7 +14,9 @@ export default StyleSheet({
     width: CIRCLE_RADIUS * 2,
     height: CIRCLE_RADIUS * 2,
     borderRadius: CIRCLE_RADIUS,
-    backgroundColor: colors.blue.medium + '25'
+    ':active': {
+      backgroundColor: colors.blue.medium + '25'
+    }
   },
   dot: {
     width: 15,
@@ -22,7 +24,10 @@ export default StyleSheet({
     borderRadius: 7.5,
     borderWidth: 3,
     borderColor: 'white',
-    backgroundColor: colors.blue.medium,
-    ...elevation(2)
+    backgroundColor: colors.gray.medium,
+    ...elevation(2),
+    ':active': {
+      backgroundColor: colors.blue.medium
+    }
   }
 })

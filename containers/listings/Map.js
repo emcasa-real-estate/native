@@ -30,9 +30,10 @@ export default class MapApp extends PureComponent {
   onSelect = (id) => () => this.props.onSelect(id)
 
   render() {
-    const {data, active, aggregate, ...props} = this.props
+    const {data, active, aggregate, children, ...props} = this.props
     return (
       <Map {...props}>
+        {children}
         <Aggregator enabled={aggregate} {...props}>
           {data &&
             data.map((listing) => (

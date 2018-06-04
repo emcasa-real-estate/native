@@ -6,6 +6,7 @@ import geolib from 'geolib'
 import Shell from '@/containers/shared/Shell'
 import Map from '@/containers/listings/Map'
 import Feed from '@/containers/listings/Feed/Map'
+import UserPositionMarker from '@/components/listings/Map/UserPosition'
 import ListButton from '@/components/listings/Feed/Button'
 import Header from '@/components/shared/Form/SubmitHeader'
 import {withPermission} from '@/containers/shared/Permission'
@@ -162,7 +163,11 @@ export default class MapScreen extends Component {
             active={active}
             region={this.isWatching ? region : undefined}
             type="search"
-          />
+          >
+            {this.isWithinBounds && (
+              <UserPositionMarker active={this.isWatching} address={this.state} />
+            )}
+          </Map>
         </View>
         <View style={styles.listings}>
           <Feed active={active} type="search" params={this.params} />

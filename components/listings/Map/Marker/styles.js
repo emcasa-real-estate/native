@@ -16,7 +16,7 @@ export default StyleSheet({
     zIndex: 1,
     display: 'flex',
     alignItems: 'center',
-    borderRadius: 9,
+    borderRadius: 3,
     backgroundColor: colors.blue.medium,
     width: 50,
     ...padding(3.5, null),

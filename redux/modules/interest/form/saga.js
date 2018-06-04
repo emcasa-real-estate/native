@@ -1,11 +1,13 @@
-import {put, call, all, takeLatest} from 'redux-saga/effects'
+import {put, call, all, select, takeLatest} from 'redux-saga/effects'
 
 import * as api from '@/lib/services/interest'
+import {getToken} from '../../auth/selectors'
 import * as actions from './index'
 
 function* request({id, params}) {
   try {
-    const response = yield call(api.create, id, params)
+    const jwt = yield select(getToken)
+    const response = yield call(api.create, id, params, {jwt})
     yield put(actions.success(response.data))
   } catch (err) {
     yield put(actions.failure(err))

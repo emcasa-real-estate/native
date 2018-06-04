@@ -5,6 +5,8 @@ export default function Email({validations, value, ...props}) {
   return (
     <TextInput
       {...props}
+      autoCorrect={false}
+      autoCapitalize={false}
       keyboardType="email-address"
       placeholder="Email"
       autoCapitalize="none"

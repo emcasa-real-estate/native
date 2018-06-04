@@ -130,8 +130,7 @@ export default class MapScreen extends Component {
 
   render() {
     const {active, zoom, region} = this.state
-    const maxZoomToAggregateMarkers = 15
-    const aggregateMarkerPixelDiameter = Platform.OS === 'ios' ? 45 : 35
+    const maxZoomToAggregateMarkers = 14
 
     return (
       <Shell
@@ -157,7 +156,6 @@ export default class MapScreen extends Component {
             onRegionChangeComplete={this.onRegionChange}
             onPanDrag={this.onUnwatchPosition}
             onSelect={this.onSelect}
-            distance={kmPerPx(this.state) * aggregateMarkerPixelDiameter}
             aggregate={zoom < maxZoomToAggregateMarkers}
             active={active}
             region={this.isWatching ? region : undefined}

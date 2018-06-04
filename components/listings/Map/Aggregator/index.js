@@ -1,28 +1,41 @@
-import _ from 'lodash/fp'
-import React, {Component} from 'react'
+import {PureComponent} from 'react'
+import {Dimensions} from 'react-native'
 import ClusteredMapView from 'react-native-maps-super-cluster'
 
 import Marker from './Marker'
 
-export default class MarkerAggregator extends Component {
+export default class MarkerAggregator extends PureComponent {
   static defaultProps = {
-    distance: 0.5
+    maxZoom: 14
   }
 
   state = {}
 
-  renderCluster = ({pointCount, coordinate}) => {
-    return <Marker coordinate={coordinate}>{pointCount}</Marker>
+  get radius() {
+    return Dimensions.get('window').width / 100 * 6
   }
 
-  renderSinglePointCluster = ({location}) => {
-    return <Marker coordinate={location}>1</Marker>
+  renderCluster = ({pointCount, coordinate, clusterId}) => {
+    return (
+      <Marker key={`cluster.${clusterId}`} coordinate={coordinate}>
+        {pointCount}
+      </Marker>
+    )
+  }
+
+  renderSinglePointCluster = ({listing: {id}, location}) => {
+    return (
+      <Marker key={`listing.${id}`} coordinate={location}>
+        1
+      </Marker>
+    )
   }
 
   render() {
     const {clusteringEnabled, renderMarker} = this.props
     return (
       <ClusteredMapView
+        radius={this.radius}
         {...this.props}
         animateClusters
         renderCluster={this.renderCluster}

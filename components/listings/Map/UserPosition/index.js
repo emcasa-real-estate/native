@@ -1,7 +1,8 @@
+import {Fragment} from 'react'
 import {View} from 'react-native'
-import {Marker, Callout} from 'react-native-maps'
+import {Marker, Circle, Callout} from 'react-native-maps'
 
-import $styles from './styles'
+import $styles, {circleColor} from './styles'
 
 function UserPositionMarker({
   styles,
@@ -11,29 +12,31 @@ function UserPositionMarker({
   ...props
 }) {
   return (
-    <Marker
-      {...props}
-      coordinate={{
-        latitude: lat,
-        longitude: lng
-      }}
-      zIndex={-1}
-    >
-      <View
-        style={[
-          styles.circle,
-          active && {
-            marginTop: -radius - 7.5,
-            width: radius * 2,
-            height: radius * 2,
-            borderRadius: radius * 2
-          }
-        ]}
+    <Fragment>
+      <Marker
+        {...props}
+        coordinate={{
+          latitude: lat,
+          longitude: lng
+        }}
+        zIndex={-1}
       >
         <View style={styles.dot} />
-      </View>
-      <Callout tooltip />
-    </Marker>
+        <Callout tooltip />
+      </Marker>
+      {active && (
+        <Circle
+          zIndex={-2}
+          radius={300}
+          strokeColor="rgba(0,0,0,0)"
+          fillColor={circleColor}
+          center={{
+            latitude: lat,
+            longitude: lng
+          }}
+        />
+      )}
+    </Fragment>
   )
 }
 

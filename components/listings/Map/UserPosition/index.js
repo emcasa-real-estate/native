@@ -3,7 +3,13 @@ import {Marker, Callout} from 'react-native-maps'
 
 import $styles from './styles'
 
-function UserPositionMarker({styles, address: {lat, lng}, radius, ...props}) {
+function UserPositionMarker({
+  styles,
+  address: {lat, lng},
+  active,
+  radius,
+  ...props
+}) {
   return (
     <Marker
       {...props}
@@ -13,15 +19,18 @@ function UserPositionMarker({styles, address: {lat, lng}, radius, ...props}) {
       }}
       zIndex={-1}
     >
-      <View style={styles.container}>
-        <View
-          style={[
-            styles.circle,
-            {width: radius * 2, height: radius * 2, borderRadius: radius}
-          ]}
-        >
-          <View style={styles.dot} />
-        </View>
+      <View
+        style={[
+          styles.circle,
+          active && {
+            marginTop: -radius - 7.5,
+            width: radius * 2,
+            height: radius * 2,
+            borderRadius: radius * 2
+          }
+        ]}
+      >
+        <View style={styles.dot} />
       </View>
       <Callout tooltip />
     </Marker>

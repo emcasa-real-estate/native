@@ -76,13 +76,17 @@ export default class FormProvider extends PureComponent {
 
   onValidateField = (field, value) => {
     const {onValidate} = this.props
-    const result = {
-      ...this.state.validation,
-      [field]: value
-    }
-    const valid = isValid(result)
-    this.setState({validation: result, valid})
-    if (onValidate) onValidate(valid)
+    this.setState(
+      ({validation}) => ({
+        validation: {
+          ...validation,
+          [field]: value
+        }
+      }),
+      () => {
+        if (onValidate) onValidate(isValid(this.state.validation))
+      }
+    )
   }
 
   onChangeField = (field, value, callback) => {
@@ -100,7 +104,8 @@ export default class FormProvider extends PureComponent {
   onSubmit = () => {
     const {onSubmit} = this.props
     const {value} = this.state
-    if (onSubmit && this.onValidate()) onSubmit(value)
+    console.log('eyy')
+    if (this.onValidate() && onSubmit) onSubmit(value)
   }
 
   get isValid() {

@@ -25,7 +25,7 @@ export default class AddressFormScreen extends Component {
 
   render() {
     return (
-      <Shell title="Endereço" testID="@newListing.Address">
+      <Shell scroll title="Endereço" testID="@newListing.Address">
         <Address onSubmit={this.onSubmit} />
       </Shell>
     )

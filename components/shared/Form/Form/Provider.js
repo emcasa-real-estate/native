@@ -67,7 +67,7 @@ export default class FormProvider extends PureComponent {
   onValidate = () => {
     const {fields} = this.state
     const valid = Object.values(fields).reduce(
-      (valid, field) => valid && field.onValidate(),
+      (valid, field) => field.onValidate() && valid,
       true
     )
     this.setState({valid})

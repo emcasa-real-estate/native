@@ -9,9 +9,9 @@ const getError = (error) => {
   if (!error) return undefined
   switch (error.status) {
     case 401:
-      return 'Senha ou email inválidos.'
+      return 'Senha ou email inválidos'
     default:
-      return 'Ocorreu um erro desconhecido. Por favor, tente novamente.'
+      return 'Ocorreu um erro desconhecido. Por favor, tente novamente'
   }
 }
 

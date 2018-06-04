@@ -1,4 +1,5 @@
 import {Component} from 'react'
+import {View} from 'react-native'
 
 import Shell from '@/containers/shared/Shell'
 import SignUp from '@/containers/auth/SignUp'
@@ -16,7 +17,7 @@ export default class SignUpScreen extends Component {
 
   render() {
     return (
-      <Shell scroll title="Cadastre-se">
+      <Shell scroll title="Cadastre-se" testID="@auth.SignUp">
         <SignUp onSuccess={this.onSuccess} />
       </Shell>
     )

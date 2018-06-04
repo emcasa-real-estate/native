@@ -14,11 +14,6 @@ app.use(
   })
 )
 
-app.use((req, res) => {
-  app.emit('response', {req, res})
-  return res
-})
-
 module.exports = {
   app,
   start: () =>

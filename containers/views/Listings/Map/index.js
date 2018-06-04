@@ -80,8 +80,8 @@ export default class MapScreen extends Component {
       this.setState(
         {
           region: {
-            latitudeDelta: 0.05,
-            longitudeDelta: 0.05,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
             longitude: coords.longitude,
             latitude: coords.latitude
           }

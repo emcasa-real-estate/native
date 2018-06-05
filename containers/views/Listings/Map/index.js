@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import React, {Component} from 'react'
-import {View, Platform, Alert} from 'react-native'
+import {View, Alert} from 'react-native'
 import geolib from 'geolib'
 
 import Shell from '@/containers/shared/Shell'
@@ -14,10 +14,6 @@ import styles from './styles'
 
 const zoom = ({longitudeDelta}) =>
   Math.round(Math.log(360 / longitudeDelta) / Math.LN2)
-
-// https://gis.stackexchange.com/a/127949
-const kmPerPx = ({lat, zoom}) =>
-  156.54303392 * Math.cos(lat * Math.PI / 180) / Math.pow(2, zoom)
 
 @withPermission('location', 'whenInUse')
 export default class MapScreen extends Component {
@@ -79,6 +75,7 @@ export default class MapScreen extends Component {
     return new Promise((resolve) =>
       this.setState(
         {
+          zoom: zoom({longitudeDelta: 0.01}),
           region: {
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
@@ -165,7 +162,6 @@ export default class MapScreen extends Component {
             {this.isWithinBounds && (
               <UserPositionMarker
                 active={this.isWatching}
-                radius={Math.pow(zoom, 1.9) - 50}
                 address={{
                   lat: this.lastUserLocation.latitude,
                   lng: this.lastUserLocation.longitude

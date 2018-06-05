@@ -2,21 +2,9 @@ import StyleSheet from '@/assets/StyleSheet'
 import * as colors from '@/assets/colors'
 import {elevation} from '@/assets/styles'
 
-const CIRCLE_RADIUS = 100
 export default StyleSheet({
   container: {
     position: 'relative'
-  },
-  circle: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: CIRCLE_RADIUS * 2,
-    height: CIRCLE_RADIUS * 2,
-    borderRadius: CIRCLE_RADIUS,
-    ':active': {
-      backgroundColor: colors.blue.medium + '25'
-    }
   },
   dot: {
     width: 15,
@@ -31,3 +19,5 @@ export default StyleSheet({
     }
   }
 })
+
+export const circleColor = colors.blue.medium + '25'

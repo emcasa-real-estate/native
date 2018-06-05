@@ -12,7 +12,7 @@ export default class MarkerAggregator extends PureComponent {
   state = {}
 
   get radius() {
-    return Dimensions.get('window').width / 100 * 6
+    return Dimensions.get('window').width / 100 * 10
   }
 
   renderCluster = ({pointCount, coordinate, clusterId}) => {

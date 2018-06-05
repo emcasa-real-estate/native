@@ -35,7 +35,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new ImagePickerPackage(),
+          new ImagePickerPackage(),
           new SvgPackage(),
           new OrientationPackage(),
           new PhotoViewPackage(),

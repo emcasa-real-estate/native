@@ -11,28 +11,41 @@ import RelatedListings from '@/containers/listings/Feed/Related'
   loading: isLoading(state, navigation.state.params)
 }))
 export default class ListingScreen extends Component {
-  onInterest = () => {
+  navigateTo = (screen) => () => {
     const {navigation} = this.props
-    navigation.navigate('interestForm', navigation.state.params)
+    navigation.navigate(screen, navigation.state.params)
+  }
+
+  renderFooter() {
+    const {navigation, loading} = this.props
+    const {editing} = navigation.state.params
+    if (loading) return null
+    if (editing)
+      return (
+        <Footer
+          color="green"
+          label="Editar"
+          onPress={this.navigateTo('gallery')}
+        />
+      )
+    return (
+      <Footer
+        color="green"
+        label="Marcar Visita"
+        onPress={this.navigateTo('interestForm')}
+      />
+    )
   }
 
   render() {
-    const {navigation, data, loading} = this.props
+    const {navigation, loading} = this.props
     const {id} = navigation.state.params
 
     return (
       <Shell
         scroll
         title={<Price nullable id={id} size={24} />}
-        footer={
-          !loading && data.isActive ? (
-            <Footer
-              color="green"
-              label="Marcar Visita"
-              onPress={this.onInterest}
-            />
-          ) : null
-        }
+        footer={this.renderFooter()}
       >
         <Listing id={id} />
         {!loading && (

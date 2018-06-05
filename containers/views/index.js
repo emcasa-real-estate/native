@@ -4,6 +4,7 @@ import * as account from './Account'
 import * as listing from './Listing'
 import * as listings from './Listings'
 import * as newListing from './NewListing'
+import * as gallery from './Gallery'
 import * as interestForm from './InterestForm'
 import * as favorites from './Favorites'
 
@@ -14,6 +15,7 @@ export default {
   listing,
   listings,
   newListing,
+  gallery,
   interestForm,
   favorites
 }

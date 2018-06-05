@@ -20,7 +20,11 @@ export default class ListingAddressForm extends Component {
           <View style={{zIndex: 1}}>
             <AutoComplete name="address" placeholder="Endereço" />
           </View>
-          <TextInput name="complement" placeholder="Complemento" />
+          <TextInput
+            name="complement"
+            keyboardType="numeric"
+            placeholder="Complemento"
+          />
         </Form>
       </View>
     )

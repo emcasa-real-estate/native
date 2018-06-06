@@ -1,12 +1,38 @@
-import {View, Image, PixelRatio} from 'react-native'
+import {View, Image, TouchableOpacity, PixelRatio} from 'react-native'
 
+import Text from '@/components/shared/Text'
+import Icon from '@/components/shared/Icon'
 import * as image from '@/assets/image'
 import styles, {getDimensions} from './styles'
 
-export default function GalleryImage({filename}) {
+export default function GalleryImage({id, filename, position, onDeleteImage}) {
   const {height, width} = getDimensions()
   return (
     <View style={styles.container}>
+      {position == 0 && (
+        <View style={styles.tag}>
+          <Text style={styles.tagText}>FOTO DE CAPA</Text>
+        </View>
+      )}
+      <View style={styles.button}>
+        <TouchableOpacity
+          onPress={() => onDeleteImage(id)}
+          hitSlop={{
+            top: 15,
+            bottom: 15,
+            left: 15,
+            right: 15
+          }}
+        >
+          <Icon
+            name="trash"
+            type="solid"
+            color="rgba(255,255,255,0.5)"
+            stroke="rgba(0,0,0,0.3)"
+            strokeWidth="20"
+          />
+        </TouchableOpacity>
+      </View>
       <Image
         source={{
           uri: image.url(filename, {

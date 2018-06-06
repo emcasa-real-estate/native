@@ -28,7 +28,7 @@ export default class GalleryImagePicker extends PureComponent {
 
   render() {
     return (
-      <TouchableOpacity style={styles.container}>
+      <TouchableOpacity style={styles.container} onPress={this.onPickImage}>
         <View style={styles.button}>
           <Icon
             name="plus"

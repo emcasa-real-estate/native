@@ -6,7 +6,12 @@ import Progress from './Progress'
 
 export default class ListingGallery extends PureComponent {
   onPickImage = (image) => {
-    this.onUpload([image])
+    this.props.onUpload([
+      {
+        image,
+        position: 0
+      }
+    ])
   }
 
   render() {

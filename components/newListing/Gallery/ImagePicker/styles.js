@@ -4,10 +4,10 @@ import * as colors from '@/assets/colors'
 
 export default StyleSheet.create({
   container: {
-    flex: 1
+    flex: 0
   },
   button: {
-    padding: 50,
+    height: 200,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',

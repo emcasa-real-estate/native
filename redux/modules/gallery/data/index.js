@@ -1,6 +1,5 @@
 import update from 'immutability-helper'
 
-export const CREATE = 'gallery/data/CREATE'
 export const REQUEST = 'gallery/data/REQUEST'
 export const SUCCESS = 'gallery/data/SUCCESS'
 export const FAILURE = 'gallery/data/FAILURE'

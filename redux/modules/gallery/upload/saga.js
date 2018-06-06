@@ -16,8 +16,10 @@ import * as actions from './index'
 
 function* request({id, image, position}) {
   try {
-    const jwt = select(getToken)
-    const filename = yield call(cdn.upload, image)
+    const jwt = yield select(getToken)
+    const {filename} = yield call(cdn.upload, image)
+    // eslint-disable-next-line no-console
+    if (__DEV__) console.info(`Uploaded gallery image ${filename}`)
     const response = yield call(api.create, id, {filename, position}, {jwt})
     yield put(actions.success(id, position, response.image))
   } catch (err) {

@@ -2,7 +2,7 @@ import {Component} from 'react'
 import {connect} from 'react-redux'
 
 import {getImages} from '@/redux/modules/gallery/data/selectors'
-import {load, remove} from '@/redux/modules/gallery/data'
+import {load, remove, changeOrder} from '@/redux/modules/gallery/data'
 import {getProgress, getErrors} from '@/redux/modules/gallery/upload/selectors'
 import {create} from '@/redux/modules/gallery/upload'
 import Shell from '@/containers/shared/Shell'
@@ -14,7 +14,7 @@ import Gallery from '@/components/newListing/Gallery'
     progress: getProgress(state, params),
     errors: getErrors(state, params)
   }),
-  {load, remove, create}
+  {load, remove, create, changeOrder}
 )
 export default class GalleryScreen extends Component {
   componentDidMount() {
@@ -32,6 +32,11 @@ export default class GalleryScreen extends Component {
     remove(params.id, imageId)
   }
 
+  onChangeOrder = (order) => {
+    const {changeOrder, navigation: {state: {params}}} = this.props
+    changeOrder(params.id, order)
+  }
+
   render() {
     const {progress, errors, images} = this.props
     return (
@@ -42,6 +47,7 @@ export default class GalleryScreen extends Component {
           images={images}
           onUpload={this.onUpload}
           onDeleteImage={this.onDeleteImage}
+          onChangeOrder={this.onChangeOrder}
         />
       </Shell>
     )

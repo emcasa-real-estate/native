@@ -4,12 +4,14 @@ import * as upload from '../upload'
 
 export const LOAD = 'gallery/data/LOAD'
 export const REMOVE = 'gallery/data/REMOVE'
+export const CHANGE_ORDER = 'gallery/data/CHANGE_ORDER'
 export const REQUEST = 'gallery/data/REQUEST'
 export const SUCCESS = 'gallery/data/SUCCESS'
 export const FAILURE = 'gallery/data/FAILURE'
 
 export const load = (id) => ({type: LOAD, id})
 export const remove = (id, imageId) => ({type: REMOVE, id, imageId})
+export const changeOrder = (id, order) => ({type: CHANGE_ORDER, id, order})
 export const request = (id) => ({type: REQUEST, id})
 export const success = (id, data) => ({type: SUCCESS, id, data})
 export const failure = (id, error) => ({type: FAILURE, id, error})

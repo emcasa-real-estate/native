@@ -7,6 +7,16 @@ import ImagePicker from './ImagePicker'
 import Image from './Image'
 
 export default class ListingGallery extends PureComponent {
+  state = {
+    order: undefined
+  }
+
+  static getDerivedStateFromProps(props) {
+    return {
+      order: _.map(props.images, 'id')
+    }
+  }
+
   onPickImage = (image) => {
     this.props.onUpload([
       {
@@ -18,14 +28,18 @@ export default class ListingGallery extends PureComponent {
 
   onDeleteImage = (id) => () => this.props.onDeleteImage(id)
 
-  getImageByID = (id) => this.props.images.find((image) => image.id == id)
+  onChangeOrder = (order) => this.setState({order})
 
-  get order() {
-    return this.props.images.map(({id}, order) => [id, order])
+  onReleaseRow = () => {
+    this.props.onChangeOrder(
+      this.state.order.map((id, position) => ({id, position}))
+    )
   }
 
+  getImageByID = (id) => this.props.images.find((image) => image.id == id)
+
   renderImage = ({key, index}) => {
-    const image = this.getImageByID(key[0])
+    const image = this.getImageByID(key)
     return (
       <Image
         key={key}
@@ -42,16 +56,16 @@ export default class ListingGallery extends PureComponent {
   }
 
   render() {
-    const {images} = this.props
-    console.log(images, _.keyBy(images, 'position'))
     return (
       <SortableList
         style={{flex: 1, display: 'flex'}}
         contentContainerStyle={{padding: 15}}
-        data={_.keyBy(images, 'id')}
-        order={this.order}
+        data={_.keyBy(this.props.images, 'id')}
+        order={this.state.order}
         renderRow={this.renderImage}
         renderFooter={this.renderFooter}
+        onChangeOrder={this.onChangeOrder}
+        onReleaseRow={this.onReleaseRow}
       />
     )
   }

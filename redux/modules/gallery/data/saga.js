@@ -26,9 +26,22 @@ function* remove({id, imageId}) {
   }
 }
 
+function* changeOrder({id, order}) {
+  yield put(actions.request(id))
+  try {
+    const jwt = yield select(getToken)
+    console.log(order)
+    console.log(yield call(api.changeOrder, id, order, {jwt}))
+    yield call(request, {id})
+  } catch (err) {
+    yield put(actions.failure(id, err))
+  }
+}
+
 export default function* listingGallerySaga() {
   yield all([
     takeLatest(actions.LOAD, request),
-    takeLatest(actions.REMOVE, remove)
+    takeLatest(actions.REMOVE, remove),
+    takeLatest(actions.CHANGE_ORDER, changeOrder)
   ])
 }

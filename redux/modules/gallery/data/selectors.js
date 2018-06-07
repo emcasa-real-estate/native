@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import {createSelector} from 'reselect'
 
 export const getGalleries = (state) => state.gallery.data
@@ -8,9 +9,8 @@ export const getGalleryData = createSelector(
   (galleries, id) => galleries[id] || {}
 )
 
-export const getImages = createSelector(
-  getGalleryData,
-  (gallery) => gallery.data
+export const getImages = createSelector(getGalleryData, (gallery) =>
+  _.sortBy(gallery.data, 'position')
 )
 
 export const getError = createSelector(

@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import {PureComponent} from 'react'
-import {View} from 'react-native'
 import SortableList from 'react-native-sortable-list'
 
 import ImagePicker from './ImagePicker'
@@ -13,6 +12,7 @@ export default class ListingGallery extends PureComponent {
     if (!state.order || loading !== state.loading)
       return {
         loading,
+        data: _.keyBy(_.sortBy(images, 'id'), 'id'),
         order: _.map(images, 'id')
       }
     return null
@@ -57,12 +57,13 @@ export default class ListingGallery extends PureComponent {
   }
 
   render() {
+    const {data, order} = this.state
     return (
       <SortableList
         style={{flex: 1, display: 'flex'}}
         contentContainerStyle={{padding: 15}}
-        data={_.keyBy(this.props.images, 'id')}
-        order={this.state.order}
+        data={data}
+        order={order}
         renderRow={this.renderImage}
         renderFooter={this.renderFooter}
         onChangeOrder={this.onChangeOrder}

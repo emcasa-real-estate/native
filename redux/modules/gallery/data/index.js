@@ -1,5 +1,7 @@
 import update from 'immutability-helper'
 
+import * as upload from '../upload'
+
 export const LOAD = 'gallery/data/LOAD'
 export const REMOVE = 'gallery/data/REMOVE'
 export const REQUEST = 'gallery/data/REQUEST'
@@ -17,6 +19,7 @@ export default function galleryData(state = {}, action) {
     case REQUEST:
     case SUCCESS:
     case FAILURE:
+    case upload.SUCCESS:
       return update(state, {
         [action.id]: {$set: galleryData.node(state[action.id], action)}
       })
@@ -46,6 +49,10 @@ galleryData.node = (state = initialState, action) => {
           error: undefined,
           data: action.data
         }
+      })
+    case upload.SUCCESS:
+      return update(state, {
+        data: {$push: [action.data]}
       })
     case FAILURE:
       return update(state, {

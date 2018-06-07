@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import * as listingsApi from '@/lib/services/listings'
 import Shell from '@/containers/shared/Shell'
 import Properties from '@/components/newListing/Properties'
+import {withUserListings} from '@/containers/account/UserListingsQuery'
 import {withProfileMutation} from '@/containers/account/ProfileMutation'
 import {getToken, getData} from '@/redux/modules/auth/selectors'
 
@@ -12,6 +13,7 @@ import {getToken, getData} from '@/redux/modules/auth/selectors'
   user: getData(state)
 }))
 @withProfileMutation
+@withUserListings
 export default class PropertiesFormScreen extends Component {
   static defaultProps = {
     user: {}
@@ -22,7 +24,7 @@ export default class PropertiesFormScreen extends Component {
   }
 
   onSubmit = async (value) => {
-    const {navigation, editUserProfile, jwt} = this.props
+    const {navigation, editUserProfile, userListings, jwt} = this.props
     const {params} = navigation.state
     const listing = {
       ...value,
@@ -34,6 +36,7 @@ export default class PropertiesFormScreen extends Component {
     try {
       if (value.phone) editUserProfile({variables: {phone: value.phone}})
       const response = await listingsApi.create({listing, address}, {jwt})
+      userListings.refetch()
       this.setState({loading: false})
       navigation.navigate('success', {listing: response.listing, address})
     } catch (error) {

@@ -35,7 +35,7 @@ export default class GalleryScreen extends Component {
   render() {
     const {progress, errors, images} = this.props
     return (
-      <Shell scroll title="Editar imagens" footer={null}>
+      <Shell title="Editar imagens" footer={null}>
         <Gallery
           progress={progress}
           errors={errors}

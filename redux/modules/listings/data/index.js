@@ -5,11 +5,13 @@ import * as feed from '../feed'
 import * as relations from '../relations'
 
 export const LOAD = 'listings/data/LOAD'
+export const PATCH = 'listings/data/PATCH'
 export const REQUEST = 'listings/data/REQUEST'
 export const SUCCESS = 'listings/data/SUCCESS'
 export const FAILURE = 'listings/data/FAILURE'
 
 export const load = (id) => ({type: LOAD, id})
+export const patch = (id, data) => ({type: PATCH, id, data})
 export const request = (id) => ({type: REQUEST, id})
 export const success = (id, data) => ({type: SUCCESS, id, data})
 export const failure = (id, error) => ({type: FAILURE, id, error})
@@ -21,6 +23,7 @@ const mapFeed = _.flow(
 
 export default function listingsData(state = {}, action) {
   switch (action.type) {
+    case PATCH:
     case REQUEST:
     case SUCCESS:
     case FAILURE:
@@ -62,6 +65,12 @@ listingsData.node = (state = initialState, action) => {
         $merge: {
           loading: false,
           error: action.error
+        }
+      })
+    case PATCH:
+      return update(state, {
+        data: {
+          $apply: (data) => ({...data, ...action.data})
         }
       })
     default:

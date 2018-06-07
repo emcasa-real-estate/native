@@ -9,8 +9,9 @@ export const getGalleryData = createSelector(
   (galleries, id) => galleries[id] || {}
 )
 
-export const getImages = createSelector(getGalleryData, (gallery) =>
-  _.sortBy(gallery.data, 'position')
+export const getImages = createSelector(
+  getGalleryData,
+  (gallery) => (gallery.data ? _.sortBy(gallery.data, 'position') : undefined)
 )
 
 export const getError = createSelector(

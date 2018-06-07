@@ -3,14 +3,19 @@ import {connect} from 'react-redux'
 
 import {getImages} from '@/redux/modules/gallery/data/selectors'
 import {load, remove, changeOrder} from '@/redux/modules/gallery/data'
-import {getProgress, getErrors} from '@/redux/modules/gallery/upload/selectors'
+import {
+  getProgress,
+  getErrors,
+  isLoading
+} from '@/redux/modules/gallery/upload/selectors'
 import {create} from '@/redux/modules/gallery/upload'
-import Shell from '@/containers/shared/Shell'
+import Shell, {LoadingView} from '@/containers/shared/Shell'
 import Gallery from '@/components/newListing/Gallery'
 
 @connect(
   (state, {navigation: {state: {params}}}) => ({
-    images: getImages(state, params) || [],
+    images: getImages(state, params),
+    loading: isLoading(state, params),
     progress: getProgress(state, params),
     errors: getErrors(state, params)
   }),
@@ -38,17 +43,22 @@ export default class GalleryScreen extends Component {
   }
 
   render() {
-    const {progress, errors, images} = this.props
+    const {progress, errors, loading, images} = this.props
     return (
       <Shell title="Editar imagens" footer={null}>
-        <Gallery
-          progress={progress}
-          errors={errors}
-          images={images}
-          onUpload={this.onUpload}
-          onDeleteImage={this.onDeleteImage}
-          onChangeOrder={this.onChangeOrder}
-        />
+        {!images ? (
+          <LoadingView />
+        ) : (
+          <Gallery
+            progress={progress}
+            errors={errors}
+            images={images}
+            loading={loading}
+            onUpload={this.onUpload}
+            onDeleteImage={this.onDeleteImage}
+            onChangeOrder={this.onChangeOrder}
+          />
+        )}
       </Shell>
     )
   }

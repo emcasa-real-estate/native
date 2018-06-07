@@ -33,7 +33,7 @@ export default function galleryData(state = {}, action) {
 const initialState = {
   loading: false,
   error: undefined,
-  data: []
+  data: undefined
 }
 
 galleryData.node = (state = initialState, action) => {

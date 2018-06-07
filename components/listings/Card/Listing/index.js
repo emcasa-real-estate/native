@@ -14,6 +14,7 @@ function ListingCard({
   images,
   width,
   price,
+  isActive,
   favorite,
   onFavorite,
   testUniqueID,
@@ -30,23 +31,25 @@ function ListingCard({
     <View style={styles.container.concat(style, {width})} {...props}>
       <View testID={`@listings.Card.Listing(${testUniqueID})`}>
         <View style={styles.thumbnail}>
-          <TouchableOpacity
-            accessible
-            accessibilityLabel={
-              favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'
-            }
-            testID={'@listings.Card.Listing.favoriteButton'}
-            style={styles.iconButton}
-            onPress={onFavorite}
-            hitSlop={{
-              top: 15,
-              bottom: 15,
-              left: 15,
-              right: 15
-            }}
-          >
-            <LikeIcon contrast active={favorite} />
-          </TouchableOpacity>
+          {isActive && (
+            <TouchableOpacity
+              accessible
+              accessibilityLabel={
+                favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'
+              }
+              testID={'@listings.Card.Listing.favoriteButton'}
+              style={styles.iconButton}
+              onPress={onFavorite}
+              hitSlop={{
+                top: 15,
+                bottom: 15,
+                left: 15,
+                right: 15
+              }}
+            >
+              <LikeIcon contrast active={favorite} />
+            </TouchableOpacity>
+          )}
           <Image thumbnail style={styles.image} {...image} {...imageSize} />
         </View>
         <View style={styles.body}>
@@ -58,7 +61,7 @@ function ListingCard({
               {address.neighborhood.toUpperCase()}
             </Text>
           </View>
-          <Price size={22} styles={{text: styles.priceText}}>
+          <Price nullable size={22} styles={{text: styles.priceText}}>
             {price}
           </Price>
         </View>

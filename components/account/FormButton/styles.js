@@ -15,8 +15,28 @@ export default StyleSheet.create({
     borderBottomWidth: 1
   },
   text: {
+    flex: 1,
     fontSize: 19,
     color: colors.blue.medium
+  },
+  label: {
+    flex: 0,
+    marginRight: 5
+  },
+  labelContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingRight: 10,
+    paddingLeft: 10,
+    height: 25,
+    backgroundColor: colors.blue.medium,
+    borderRadius: 12.5
+  },
+  labelText: {
+    textAlign: 'center',
+    color: 'white',
+    fontWeight: '500'
   }
 })
 

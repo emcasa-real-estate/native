@@ -4,11 +4,13 @@ import Loader from './Loader'
 export default function ListingApp({id, ...props}) {
   return (
     <Loader id={id}>
-      {({data, favorite, onFavorite, onViewTour}) =>
+      {({data, loading, favorite, onFavorite, onViewTour}) =>
+        !loading &&
         data && (
           <View
             {...data}
             {...props}
+            loading={loading}
             favorite={favorite}
             onFavorite={onFavorite}
             onViewTour={onViewTour}

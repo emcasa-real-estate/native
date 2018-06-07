@@ -26,6 +26,7 @@ export default class PropertiesFormScreen extends Component {
     const {params} = navigation.state
     const listing = {
       ...value,
+      price: 0,
       complement: params.complement
     }
     const address = params.address

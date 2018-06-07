@@ -5,11 +5,11 @@ import Icon from '@/components/shared/Icon'
 import * as image from '@/assets/image'
 import styles, {getDimensions} from './styles'
 
-export default function GalleryImage({filename, position, onDelete}) {
+export default function GalleryImage({filename, index, onDelete}) {
   const {height, width} = getDimensions()
   return (
     <View style={styles.container}>
-      {position == 0 && (
+      {index == 0 && (
         <View style={styles.tag}>
           <Text style={styles.tagText}>FOTO DE CAPA</Text>
         </View>

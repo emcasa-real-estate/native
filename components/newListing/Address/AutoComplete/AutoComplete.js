@@ -163,6 +163,7 @@ export default class AutoComplete extends PureComponent {
     return (
       <GooglePlacesAutocomplete
         {...this.props}
+        testID="@newListing.Address.AutoComplete"
         fetchDetails
         suppressDefaultStyles
         text={this.state.text}
@@ -182,6 +183,8 @@ export default class AutoComplete extends PureComponent {
         }}
         textInputProps={{
           ...(this.props.textInputProps || {}),
+          accessible: true,
+          accessibilityLabel: this.props.placeholder + ' autocomplete',
           onSubmitEditing: this.onSubmitEditing,
           onSelectionChange: this.onSelectionChange,
           onChangeText: this.onChangeText,

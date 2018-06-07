@@ -23,7 +23,7 @@ export default class NewListingFormSuccessScreen extends Component {
 
   render() {
     return (
-      <Shell scroll title="Imóvel cadastrado">
+      <Shell scroll title="Imóvel cadastrado" testID="@newListing.Success">
         <FormMessage title="Seja bem-vindo à EmCasa" onClose={this.onClose}>
           <Message valid={this.isValidAddress} />
         </FormMessage>

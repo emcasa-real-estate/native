@@ -8,16 +8,14 @@ export default StyleSheet.create({
     flex: 0
   },
   textInputContainer: {
-    display: 'flex',
-    backgroundColor: 'rgba(0,0,0,0)',
-    paddingTop: 5,
-    height: 50,
+    padding: 14,
     borderWidth: 1,
     borderRadius: 4,
     borderColor: colors.gray.light
   },
   textInput: {
-    fontSize: 18,
+    fontFamily: Platform.OS === 'ios' ? 'Open Sans' : 'OpenSans',
+    fontSize: 17,
     lineHeight: Platform.OS === 'ios' ? null : 18,
     color: colors.gray.dark
   },
@@ -28,5 +26,13 @@ export default StyleSheet.create({
     borderBottomRightRadius: 4,
     marginTop: -3,
     backgroundColor: 'white'
+  },
+  row: {
+    padding: 10
+  },
+  separator: {
+    flex: 1,
+    height: 1,
+    backgroundColor: colors.gray.light
   }
 })

@@ -147,9 +147,10 @@ export default class AutoComplete extends PureComponent {
             }
           },
           () => {
-            requestAnimationFrame(() =>
-              this.autoComplete.current.triggerFocus()
-            )
+            requestAnimationFrame(() => {
+              if (this.autoComplete.current)
+                this.autoComplete.current.triggerFocus()
+            })
           }
         )
       )

@@ -9,7 +9,11 @@ export default class ListingGallery extends PureComponent {
   state = {}
 
   static getDerivedStateFromProps({loading, images}, state) {
-    if (!state.order || loading !== state.loading)
+    if (
+      !state.order ||
+      images.length !== state.order.length ||
+      loading !== state.loading
+    )
       return {
         loading,
         data: _.keyBy(_.sortBy(images, 'id'), 'id'),

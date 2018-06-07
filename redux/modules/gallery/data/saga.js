@@ -5,6 +5,7 @@ import * as api from '@/lib/services/listingGallery'
 import * as actions from './index'
 
 function* request({id}) {
+  yield put(actions.request(id))
   try {
     const jwt = yield select(getToken)
     const response = yield call(api.get, id, {jwt})
@@ -14,6 +15,20 @@ function* request({id}) {
   }
 }
 
+function* remove({id, imageId}) {
+  yield put(actions.request(id))
+  try {
+    const jwt = yield select(getToken)
+    yield call(api.deleteImage, id, imageId, {jwt})
+    yield call(request, {id})
+  } catch (err) {
+    yield put(actions.failure(id, err))
+  }
+}
+
 export default function* listingGallerySaga() {
-  yield all([takeLatest(actions.REQUEST, request)])
+  yield all([
+    takeLatest(actions.LOAD, request),
+    takeLatest(actions.REMOVE, remove)
+  ])
 }

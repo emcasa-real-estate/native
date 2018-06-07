@@ -5,7 +5,7 @@ import Icon from '@/components/shared/Icon'
 import * as image from '@/assets/image'
 import styles, {getDimensions} from './styles'
 
-export default function GalleryImage({id, filename, position, onDeleteImage}) {
+export default function GalleryImage({filename, position, onDelete}) {
   const {height, width} = getDimensions()
   return (
     <View style={styles.container}>
@@ -16,7 +16,7 @@ export default function GalleryImage({id, filename, position, onDeleteImage}) {
       )}
       <View style={styles.button}>
         <TouchableOpacity
-          onPress={() => onDeleteImage(id)}
+          onPress={onDelete}
           hitSlop={{
             top: 15,
             bottom: 15,

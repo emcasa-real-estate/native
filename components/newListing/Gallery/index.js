@@ -15,7 +15,11 @@ export default class ListingGallery extends PureComponent {
     ])
   }
 
-  renderImage = (image) => <Image key={image.id} {...image} />
+  onDeleteImage = (id) => () => this.props.onDeleteImage(id)
+
+  renderImage = (image) => (
+    <Image key={image.id} onDelete={this.onDeleteImage(image.id)} {...image} />
+  )
 
   render() {
     const {images} = this.props

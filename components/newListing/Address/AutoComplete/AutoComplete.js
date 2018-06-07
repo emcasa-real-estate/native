@@ -2,6 +2,7 @@ import _ from 'lodash'
 import React, {PureComponent} from 'react'
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete'
 
+import {gray} from '@/assets/colors'
 import {GOOGLE_PLACES_API_KEY} from '@/lib/config'
 
 const filterComponent = (place, property) => {
@@ -146,9 +147,10 @@ export default class AutoComplete extends PureComponent {
             }
           },
           () => {
-            requestAnimationFrame(() =>
-              this.autoComplete.current.triggerFocus()
-            )
+            requestAnimationFrame(() => {
+              if (this.autoComplete.current)
+                this.autoComplete.current.triggerFocus()
+            })
           }
         )
       )
@@ -162,6 +164,7 @@ export default class AutoComplete extends PureComponent {
       <GooglePlacesAutocomplete
         {...this.props}
         fetchDetails
+        suppressDefaultStyles
         text={this.state.text}
         ref={this.autoComplete}
         autoFocus={false}
@@ -183,7 +186,8 @@ export default class AutoComplete extends PureComponent {
           onSelectionChange: this.onSelectionChange,
           onChangeText: this.onChangeText,
           onBlur: this.onBlur,
-          selection: this.state.selection
+          selection: this.state.selection,
+          placeholderTextColor: gray.light + '90'
         }}
       />
     )

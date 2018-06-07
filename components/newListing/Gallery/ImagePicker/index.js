@@ -1,5 +1,5 @@
 import {PureComponent} from 'react'
-import {View, TouchableOpacity} from 'react-native'
+import {View, TouchableOpacity, ActivityIndicator} from 'react-native'
 import ImagePicker from 'react-native-image-picker'
 
 import Text from '@/components/shared/Text'
@@ -26,19 +26,45 @@ export default class GalleryImagePicker extends PureComponent {
     )
   }
 
+  get loading() {
+    const {progress} = this.props
+    return progress && progress[0] / progress[1] < 1
+  }
+
   render() {
+    const {progress} = this.props
+    const loading = this.loading
+
     return (
-      <TouchableOpacity style={styles.container} onPress={this.onPickImage}>
-        <View style={styles.button}>
-          <Icon
-            name="plus"
-            color={iconColor}
-            stroke={iconColor}
-            size={23}
-            strokeWidth={20}
-          />
-          <Text style={styles.buttonText}>Adicionar foto</Text>
-        </View>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={!loading ? this.onPickImage : undefined}
+      >
+        {loading ? (
+          <View
+            style={[styles.button, styles.buttonLoading, styles.flexContainer]}
+          >
+            <Text style={[styles.buttonText, styles.buttonTextLoading]}>
+              Subindo fotos {progress[0]}/{progress[1]}
+            </Text>
+            <ActivityIndicator
+              style={styles.activityIndicator}
+              color="white"
+              size="large"
+            />
+          </View>
+        ) : (
+          <View style={[styles.button, styles.flexContainer]}>
+            <Icon
+              name="plus"
+              color={iconColor}
+              stroke={iconColor}
+              size={23}
+              strokeWidth={20}
+            />
+            <Text style={styles.buttonText}>Adicionar foto</Text>
+          </View>
+        )}
       </TouchableOpacity>
     )
   }

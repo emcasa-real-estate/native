@@ -3,7 +3,6 @@ import {View} from 'react-native'
 
 import ImagePicker from './ImagePicker'
 import Image from './Image'
-import Progress from './Progress'
 
 export default class ListingGallery extends PureComponent {
   onPickImage = (image) => {
@@ -22,13 +21,12 @@ export default class ListingGallery extends PureComponent {
   )
 
   render() {
-    const {images} = this.props
+    const {images, progress} = this.props
 
     return (
       <View style={{flex: 1, display: 'flex', padding: 15}}>
         {images && images.map(this.renderImage)}
-        <ImagePicker onPickImage={this.onPickImage} />
-        <Progress {...this.props} />
+        <ImagePicker progress={[1, 3]} onPickImage={this.onPickImage} />
       </View>
     )
   }

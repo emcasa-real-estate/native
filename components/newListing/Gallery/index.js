@@ -7,14 +7,15 @@ import ImagePicker from './ImagePicker'
 import Image from './Image'
 
 export default class ListingGallery extends PureComponent {
-  state = {
-    order: undefined
-  }
+  state = {}
 
-  static getDerivedStateFromProps(props) {
-    return {
-      order: _.map(props.images, 'id')
-    }
+  static getDerivedStateFromProps({loading, images}, state) {
+    if (!state.order || loading !== state.loading)
+      return {
+        loading,
+        order: _.map(images, 'id')
+      }
+    return null
   }
 
   onPickImage = (image) => {

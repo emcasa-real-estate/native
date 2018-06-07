@@ -30,8 +30,7 @@ function* changeOrder({id, order}) {
   yield put(actions.request(id))
   try {
     const jwt = yield select(getToken)
-    console.log(order)
-    console.log(yield call(api.changeOrder, id, order, {jwt}))
+    yield call(api.changeOrder, id, order, {jwt})
     yield call(request, {id})
   } catch (err) {
     yield put(actions.failure(id, err))

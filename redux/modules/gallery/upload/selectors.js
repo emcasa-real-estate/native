@@ -8,7 +8,10 @@ export const getUpload = createSelector(
   (uploads, id) => uploads[id] || {}
 )
 
-export const getProgress = createSelector(getUpload, (upload) => upload.data)
+export const getProgress = createSelector(
+  getUpload,
+  (upload) => upload.progress
+)
 
 export const getErrors = createSelector(getUpload, (upload) => upload.error)
 

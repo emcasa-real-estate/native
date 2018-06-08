@@ -1,5 +1,8 @@
+import _ from 'lodash'
 import {Component} from 'react'
 import {connect} from 'react-redux'
+import {withApollo} from 'react-apollo'
+import gql from 'graphql-tag'
 
 import {getImages} from '@/redux/modules/gallery/data/selectors'
 import {load, remove, changeOrder} from '@/redux/modules/gallery/data'
@@ -21,10 +24,15 @@ import Gallery from '@/components/newListing/Gallery'
   }),
   {load, remove, create, changeOrder}
 )
+@withApollo
 export default class GalleryScreen extends Component {
   componentDidMount() {
     const {load, navigation: {state: {params}}} = this.props
     load(params.id)
+  }
+
+  componentDidUpdate(prev) {
+    if (!_.isEqual(prev.images, this.props.images)) this.updateApolloCache()
   }
 
   onUpload = (images) => {
@@ -40,6 +48,32 @@ export default class GalleryScreen extends Component {
   onChangeOrder = (order) => {
     const {changeOrder, navigation: {state: {params}}} = this.props
     changeOrder(params.id, order)
+  }
+
+  updateApolloCache() {
+    const {client, images, navigation: {state: {params}}} = this.props
+    client.writeFragment({
+      id: `Listing:${params.id}`,
+      fragment: gql`
+        fragment images on Listing {
+          images {
+            ... on Image {
+              id
+              filename
+              position
+              description
+            }
+          }
+        }
+      `,
+      data: {
+        __typename: 'Listing',
+        images: images.map((data) => ({
+          ...data,
+          __typename: 'Image'
+        }))
+      }
+    })
   }
 
   render() {

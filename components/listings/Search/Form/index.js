@@ -14,9 +14,11 @@ export default class SearchForm extends Component {
 
   render() {
     const {value, onChange, onSubmit, onPressNeighborhoods} = this.props
+    const type = value.type
     const price = value.price || {}
     const area = value.area || {}
     const rooms = value.rooms || {}
+    const garageSpots = value.garage_spots || {}
     return (
       <Form onChange={onChange} onSubmit={onSubmit} value={value}>
         <Field title="Bairros" onReset={this.onReset('neighborhoods')}>
@@ -45,7 +47,16 @@ export default class SearchForm extends Component {
             min={rooms.min || 1}
             max={rooms.max && rooms.max < 4 ? rooms.max : '4+'}
           />
-          <SlideRange name="rooms" min={1} max={4} />
+          <SlideRange name="rooms" min={1} max={4} />x
+        </Field>
+        <Field title="Vagas de garagem" onReset={this.onReset('garage_spots')}>
+          <Label
+            min={garageSpots.min || 1}
+            max={
+              garageSpots.max && garageSpots.max < 4 ? garageSpots.max : '4+'
+            }
+          />
+          <SlideRange name="garage_spots" min={1} max={4} />
         </Field>
       </Form>
     )

@@ -15,7 +15,7 @@ describe('newListing', () => {
     beforeAll(() => device.reloadReactNative())
     beforeAll(async () => {
       await navigateToLogin()
-      await login({email: 'test@emcasa.com', password: 'passwd'})
+      await login({email: 'test@example.com', password: 'passwd'})
       await actions.navigate()
     })
     require('./Address')

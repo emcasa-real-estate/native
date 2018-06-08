@@ -3,7 +3,12 @@ import {Query} from 'react-apollo'
 import {GET_USER_LISTINGS} from '@/lib/graphql/queries/account'
 
 export const withUserListings = (Target) => (props) => (
-  <Query query={GET_USER_LISTINGS} fetchPolicy="network-only">
+  <Query
+    query={GET_USER_LISTINGS}
+    fetchPolicy={
+      process.env.NODE_ENV === 'e2e' ? 'cache-and-network' : 'network-only'
+    }
+  >
     {(response) => (
       <Target
         {...props}

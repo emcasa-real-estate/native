@@ -2,7 +2,8 @@ import * as actions from './interactions'
 import * as select from './selectors'
 
 describe('newListing/address', () => {
-  context('autocomplete', () => {
+  // skip ui test
+  context.skip('autocomplete', () => {
     it('suggests addresses from text input', async () => {
       await actions.insertAddress('Rua')
       await expect(element(select.autoCompleteInput())).toHaveText('Rua')

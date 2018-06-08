@@ -24,7 +24,7 @@ describe('auth/signUp', () => {
   it('redirects to a success page on success', async () => {
     await action.signUp({
       name: 'Test',
-      email: 'test@emcasa.com',
+      email: 'test@example.com',
       phone: '',
       password: 'passwd'
     })

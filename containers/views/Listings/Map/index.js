@@ -41,7 +41,7 @@ export default class MapScreen extends Component {
           await this.updatePosition(response)
           if (this.isWithinBounds) this.onWatchPosition()
         },
-        console.warn,
+        console.log, // eslint-disable-line no-console
         {timeout: 1000}
       )
     })

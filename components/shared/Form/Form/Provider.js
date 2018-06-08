@@ -104,7 +104,6 @@ export default class FormProvider extends PureComponent {
   onSubmit = () => {
     const {onSubmit} = this.props
     const {value} = this.state
-    console.log('eyy')
     if (this.onValidate() && onSubmit) onSubmit(value)
   }
 

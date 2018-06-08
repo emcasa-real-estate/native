@@ -1,4 +1,4 @@
-import {StyleSheet, Platform} from 'react-native'
+import {StyleSheet} from 'react-native'
 
 import * as colors from '@/assets/colors'
 
@@ -13,15 +13,14 @@ export default StyleSheet.create({
   textInputContainer: {
     display: 'flex',
     backgroundColor: 'rgba(0,0,0,0)',
-    paddingTop: 5,
-    height: 50,
+    padding: 14,
     borderWidth: 1,
     borderRadius: 4,
     borderColor: colors.gray.light
   },
   textInput: {
-    fontSize: 18,
-    lineHeight: Platform.OS === 'ios' ? null : 18,
+    fontFamily: 'Open Sans',
+    fontSize: 17,
     color: colors.gray.dark
   },
   listView: {
@@ -34,5 +33,16 @@ export default StyleSheet.create({
     left: 0,
     width: '100%',
     backgroundColor: 'white'
+  },
+  row: {
+    padding: 10,
+    height: 40,
+    display: 'flex',
+    justifyContent: 'center'
+  },
+  separator: {
+    flex: 1,
+    height: 1,
+    backgroundColor: colors.gray.lighter
   }
 })

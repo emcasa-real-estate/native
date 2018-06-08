@@ -22,6 +22,8 @@ const renderOption = (value) => (
 const StyledDropdown = $styles.inject()(
   ({styles, width, height, dropdownRef, ...props}) => (
     <Dropdown
+      accessible
+      accessibilityLabel={props.placeholder + ' dropdown'}
       ref={dropdownRef}
       style={[styles.container, {width}]}
       dropdownStyle={[styles.dropdown, {width, height}]}

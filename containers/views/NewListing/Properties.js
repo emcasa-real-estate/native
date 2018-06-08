@@ -49,7 +49,7 @@ export default class PropertiesFormScreen extends Component {
     const {user} = this.props
 
     return (
-      <Shell scroll title="Dados principais">
+      <Shell scroll title="Dados principais" testID="@newListing.Properties">
         <Properties
           requirePhone={!user.phone}
           onSubmit={this.onSubmit}

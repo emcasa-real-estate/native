@@ -23,7 +23,7 @@ export default function Navigation({user, active, onNavigate}) {
       <Button
         active={active === 'newListing'}
         icon="tag"
-        onPress={onNavigate('newListing')}
+        onPress={onNavigate(user ? 'newListing' : 'auth')}
       >
         Anunciar
       </Button>

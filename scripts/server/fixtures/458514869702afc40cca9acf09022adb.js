@@ -1,7 +1,7 @@
 var path = require("path");
 
 /**
- * POST /users/login
+ * POST /listings
  *
  * host: localhost:4000
  * accept: application/json
@@ -10,28 +10,28 @@ var path = require("path");
  * connection: keep-alive
  * cookie: _re_key=SFMyNTY.g3QAAAABbQAAABJfdGltYmVyX3Nlc3Npb25faWRtAAAAIGNmYTM0NGYwYTMxMzkwYTBmNDNkYWE2NjkyNWM3NWRm.xL6JRs7yM2j-pmPdCPx8blEVs2cLAUJq_ApcrpweysM
  * accept-language: en-us
- * authorization: undefined
- * content-length: 64
+ * authorization: Token eyJhbGciOiJFUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJSZSIsImV4cCI6MTUzMTA3NDg3MCwiaWF0IjoxNTI4NDgyODcwLCJpc3MiOiJSZSIsImp0aSI6Ijg1Mzk1NzMyLWZlMTEtNDM4ZC05N2Y2LTZjZDYwMjFmOGExZSIsIm5iZiI6MTUyODQ4Mjg2OSwic3ViIjoiMjE1IiwidHlwIjoiYWNjZXNzIn0.APCiTZfdITzppIatvX6WxMsf9Edgxx0QpVPlR8jx60-U5xH9kVThQJE6gREZWhyYpwTMb7tG5m7WQCG0mEM1WIJVABPH0CtzLh1juGDxEr-tXugOp0OC0qZ_Dx7PDYxkyKcnAl_AcG0B3CexRhBpbkSG2Rgb2rsWkqpKFHA9vlVk25T8
+ * content-length: 355
  * accept-encoding: gzip, deflate
  */
 
 module.exports = function (req, res) {
-  res.statusCode = 401;
+  res.statusCode = 201;
 
   res.setHeader("server", "Cowboy");
-  res.setHeader("date", "Sat, 02 Jun 2018 17:32:49 GMT");
-  res.setHeader("content-length", "39");
+  res.setHeader("date", "Fri, 08 Jun 2018 19:12:38 GMT");
+  res.setHeader("content-length", "22");
   res.setHeader("set-cookie", ["_re_key=SFMyNTY.g3QAAAABbQAAABJfdGltYmVyX3Nlc3Npb25faWRtAAAAIGNmYTM0NGYwYTMxMzkwYTBmNDNkYWE2NjkyNWM3NWRm.xL6JRs7yM2j-pmPdCPx8blEVs2cLAUJq_ApcrpweysM; path=/; HttpOnly"]);
   res.setHeader("content-type", "application/json; charset=utf-8");
   res.setHeader("cache-control", "max-age=0, private, must-revalidate");
-  res.setHeader("x-request-id", "6op0s28cpv58kv2a0lg3k7u7krv0ukgd");
+  res.setHeader("x-request-id", "kfe3p0m993a2bn12tu24qk4q5718i8b6");
   res.setHeader("access-control-allow-origin", "*");
   res.setHeader("access-control-expose-headers", "");
   res.setHeader("access-control-allow-credentials", "true");
 
   res.setHeader("x-yakbak-tape", path.basename(__filename, ".js"));
 
-  res.write(new Buffer("eyJlcnJvcnMiOnsiZGV0YWlsIjoiVW5hdXRoZW50aWNhdGVkIn19", "base64"));
+  res.write(new Buffer("eyJsaXN0aW5nIjp7ImlkIjozNjF9fQ==", "base64"));
   res.end();
 
   return __filename;

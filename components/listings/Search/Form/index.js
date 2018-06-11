@@ -1,7 +1,7 @@
 import {Component} from 'react'
 
 import Form from '@/components/shared/Form/Form'
-import Field, {SlideRange, MultiSelect} from '../Field'
+import Field, {SlideRange, MultiSelect, ListingType} from '../Field'
 import Label from './Label'
 import AreaLabel from './AreaLabel'
 import PriceLabel from './PriceLabel'
@@ -14,7 +14,6 @@ export default class SearchForm extends Component {
 
   render() {
     const {value, onChange, onSubmit, onPressNeighborhoods} = this.props
-    const type = value.type
     const price = value.price || {}
     const area = value.area || {}
     const rooms = value.rooms || {}
@@ -27,6 +26,9 @@ export default class SearchForm extends Component {
             title="Ver bairros"
             onPress={onPressNeighborhoods}
           />
+        </Field>
+        <Field title="Tipo de imóvel" onReset={this.onReset('type')}>
+          <ListingType name="types" />
         </Field>
         <Field title="Preço" onReset={this.onReset('price')}>
           <PriceLabel min={price.min || 100000} max={price.max || 10000000} />

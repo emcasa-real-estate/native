@@ -3,6 +3,7 @@ import {Gateway} from 'react-gateway'
 
 import Lock from '@/containers/shared/Orientation/Locked'
 import Shell, {Section, Footer} from '@/components/shared/Shell'
+import LoadingView from '@/components/shared/Shell/LoadingView'
 import Header from './Header'
 import Navigation from './Navigation'
 
@@ -33,4 +34,4 @@ ShellApp.defaultProps = {
   footer: Navigation
 }
 
-export {Section, Header, Footer, Navigation}
+export {Section, Header, Footer, Navigation, LoadingView}

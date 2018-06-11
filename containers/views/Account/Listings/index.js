@@ -4,7 +4,9 @@ import Feed from './Feed'
 export default function UserListingsScreen({navigation}) {
   return (
     <Shell scroll title="Meus imóveis">
-      <Feed onSelect={(id) => navigation.navigate('listing', {id})} />
+      <Feed
+        onSelect={(id) => navigation.navigate('listing', {id, editing: true})}
+      />
     </Shell>
   )
 }

@@ -5,6 +5,7 @@ import {reducer as network} from 'react-native-offline'
 
 import auth from './auth'
 import listings from './listings'
+import gallery from './gallery'
 import interest from './interest'
 import neighborhoods from './neighborhoods'
 
@@ -22,6 +23,7 @@ export default combineReducers({
   network,
   auth: persistent(auth, {whitelist: ['user']}),
   listings,
+  gallery,
   interest,
   neighborhoods
 })

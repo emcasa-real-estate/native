@@ -5744,6 +5744,10 @@ react-native-google-places-autocomplete@FaridSafi/react-native-google-places-aut
     prop-types "^15.5.10"
     qs "^5.2.0"
 
+react-native-image-picker@^0.26.10:
+  version "0.26.10"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-0.26.10.tgz#0bb9ab928984948c67aee0b9e64216bee007a9fc"
+
 react-native-keyboard-manager@^4.0.13-7:
   version "4.0.13-7"
   resolved "https://registry.yarnpkg.com/react-native-keyboard-manager/-/react-native-keyboard-manager-4.0.13-7.tgz#f73661c7a6d28d0aaf51eb9fe6557727b30018b2"
@@ -5818,6 +5822,12 @@ react-native-snap-carousel@^3.6.0:
   dependencies:
     prop-types "^15.6.0"
     react-addons-shallow-compare "15.6.2"
+
+react-native-sortable-list@^0.0.22:
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/react-native-sortable-list/-/react-native-sortable-list-0.0.22.tgz#f23d2626ef0e625836205d46e48b97eb04169ec0"
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-svg@^6.3.1:
   version "6.3.1"

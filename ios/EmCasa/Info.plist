@@ -52,7 +52,7 @@
       </dict>
     </dict>
     <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Este aplicativo usa a sua localização para melhorar a sua experiência com o mapa</string>
+    <string>$(PRODUCT_NAME) usa a sua localização para melhorar a sua experiência com o mapa</string>
     <key>NSCalendarsUsageDescription</key>
     <string>Acesso ao calendário</string>
     <key>NSBluetoothPeripheralUsageDescription</key>
@@ -63,6 +63,14 @@
     <string>Acesso ao sensor de movimento</string>
     <key>NSSpeechRecognitionUsageDescription</key>
     <string>Acesso ao serviço de reconhecimento de fala</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>$(PRODUCT_NAME) precisa de permissão para acessar sua galeria de fotos</string>
+    <key>NSCameraUsageDescription</key>
+    <string>$(PRODUCT_NAME) precisa de permissão para usar a sua câmera</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>$(PRODUCT_NAME) permisa de permissão para adicionar fotos a sua galeria</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>$(PRODUCT_NAME) precisa usar o seu microfone para gravar vídeos</string>
     <key>UIAppFonts</key>
     <array>
       <string>OpenSans-Bold.ttf</string>

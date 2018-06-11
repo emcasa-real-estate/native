@@ -70,6 +70,7 @@
     "react-native-fabric": "^0.5.1",
     "react-native-fabric-crashlytics": "^0.1.8",
     "react-native-fontawesome-pro": "^1.0.12",
+    "react-native-image-picker": "^0.26.10",
     "react-native-google-places-autocomplete":
       "FaridSafi/react-native-google-places-autocomplete",
     "react-native-keyboard-manager": "^4.0.13-7",
@@ -82,6 +83,7 @@
     "react-native-permissions": "^1.1.1",
     "react-native-photo-view": "^1.5.2",
     "react-native-snap-carousel": "^3.6.0",
+    "react-native-sortable-list": "^0.0.22",
     "react-native-svg": "^6.3.1",
     "react-navigation": "^2.2.4",
     "react-redux": "^5.0.7",

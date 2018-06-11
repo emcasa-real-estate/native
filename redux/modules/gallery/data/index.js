@@ -1,38 +1,30 @@
-import _ from 'lodash/fp'
 import update from 'immutability-helper'
 
-import * as feed from '../feed'
-import * as relations from '../relations'
+import * as upload from '../upload'
 
-export const LOAD = 'listings/data/LOAD'
-export const PATCH = 'listings/data/PATCH'
-export const REQUEST = 'listings/data/REQUEST'
-export const SUCCESS = 'listings/data/SUCCESS'
-export const FAILURE = 'listings/data/FAILURE'
+export const LOAD = 'gallery/data/LOAD'
+export const REMOVE = 'gallery/data/REMOVE'
+export const CHANGE_ORDER = 'gallery/data/CHANGE_ORDER'
+export const REQUEST = 'gallery/data/REQUEST'
+export const SUCCESS = 'gallery/data/SUCCESS'
+export const FAILURE = 'gallery/data/FAILURE'
 
 export const load = (id) => ({type: LOAD, id})
-export const patch = (id, data) => ({type: PATCH, id, data})
+export const remove = (id, imageId) => ({type: REMOVE, id, imageId})
+export const changeOrder = (id, order) => ({type: CHANGE_ORDER, id, order})
 export const request = (id) => ({type: REQUEST, id})
 export const success = (id, data) => ({type: SUCCESS, id, data})
 export const failure = (id, error) => ({type: FAILURE, id, error})
 
-const mapFeed = _.flow(
-  _.keyBy('id'),
-  _.mapValues((data) => ({...initialState, data}))
-)
-
-export default function listingsData(state = {}, action) {
+export default function galleryData(state = {}, action) {
   switch (action.type) {
-    case PATCH:
     case REQUEST:
     case SUCCESS:
     case FAILURE:
+    case upload.SUCCESS:
       return update(state, {
-        [action.id]: {$set: listingsData.node(state[action.id], action)}
+        [action.id]: {$set: galleryData.node(state[action.id], action)}
       })
-    case feed.SUCCESS:
-    case relations.SUCCESS:
-      return update(state, {$merge: mapFeed(action.data)})
     default:
       return state
   }
@@ -41,10 +33,10 @@ export default function listingsData(state = {}, action) {
 const initialState = {
   loading: false,
   error: undefined,
-  data: {}
+  data: undefined
 }
 
-listingsData.node = (state = initialState, action) => {
+galleryData.node = (state = initialState, action) => {
   switch (action.type) {
     case REQUEST:
       return update(state, {
@@ -60,17 +52,15 @@ listingsData.node = (state = initialState, action) => {
           data: action.data
         }
       })
+    case upload.SUCCESS:
+      return update(state, {
+        data: {$push: [action.data]}
+      })
     case FAILURE:
       return update(state, {
         $merge: {
           loading: false,
           error: action.error
-        }
-      })
-    case PATCH:
-      return update(state, {
-        data: {
-          $apply: (data) => ({...data, ...action.data})
         }
       })
     default:

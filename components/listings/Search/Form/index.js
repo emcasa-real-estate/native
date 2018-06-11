@@ -27,7 +27,7 @@ export default class SearchForm extends Component {
             onPress={onPressNeighborhoods}
           />
         </Field>
-        <Field title="Tipo de imóvel" onReset={this.onReset('type')}>
+        <Field title="Tipo de imóvel" onReset={this.onReset('types')}>
           <ListingType name="types" />
         </Field>
         <Field title="Preço" onReset={this.onReset('price')}>

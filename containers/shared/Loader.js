@@ -1,8 +1,8 @@
 import _ from 'lodash'
-import {Component} from 'react'
+import React, {PureComponent} from 'react'
 import {View} from 'react-native'
 
-export default class Loader extends Component {
+export default class Loader extends PureComponent {
   static defaultProps = {
     as: View
   }
@@ -22,7 +22,10 @@ export default class Loader extends Component {
   }
 
   renderChildren() {
-    return this.props.children(this.status)
+    const {children} = this.props
+    return React.isValidElement(children)
+      ? children
+      : this.props.children(this.status)
   }
 
   render() {

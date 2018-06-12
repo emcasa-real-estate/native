@@ -7,6 +7,12 @@ import Feed from './Feed'
 import styles from './styles'
 
 export default class ListingsFeedScreen extends PureComponent {
+  static options = {
+    topBar: {
+      visible: false
+    }
+  }
+
   onOpenMap = () => {
     Navigation.push(this.props.componentId, {
       component: {

@@ -20,6 +20,14 @@ import styles from './styles'
   {load}
 )
 export default class MapScreen extends Component {
+  static options = {
+    topBar: {
+      title: {
+        text: 'Buscar imóveis'
+      }
+    }
+  }
+
   state = {active: undefined}
 
   componentDidMount() {

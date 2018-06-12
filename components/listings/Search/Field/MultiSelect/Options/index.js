@@ -1,11 +1,11 @@
-import {Component} from 'react'
+import {PureComponent} from 'react'
 import {FlatList} from 'react-native'
 
 import Option from './Option'
 
 const extractKey = ({value}) => value
 
-export default class MultiSelectField extends Component {
+export default class MultiSelectField extends PureComponent {
   static defaultProps = {
     value: []
   }

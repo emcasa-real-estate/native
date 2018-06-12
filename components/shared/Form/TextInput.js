@@ -5,6 +5,10 @@ import {field} from './Field'
 
 @field()
 export default class TextInputField extends Component {
+  static defaultProps = {
+    value: ''
+  }
+
   input = React.createRef()
 
   componentDidUpdate(prev) {

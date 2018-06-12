@@ -10,9 +10,20 @@ const omitEmpty = _.omitBy(_.isEmpty)
 const activeFilters = _.flow(
   _.entries,
   _.map(([name, value]) => activeFilters[name].call(null, value)),
+  _.filter(_.identity),
   _.join(', ')
 )
 
+activeFilters.types = ([...value]) => {
+  if (value.length === 3) return null // All options are selected by default
+  const result = value.pop()
+  if (value.length) return `${result} e ${value.length}+`
+  return result
+}
+activeFilters.garage_spots = ({min, max}) => {
+  if (!max || max >= 4) return `${min}+ vagas`
+  return `${min}-${max >= 4 ? '4+' : max} vagas`
+}
 activeFilters.rooms = ({min, max}) => {
   if (!max || max >= 4) return `${min}+ quartos`
   return `${min}-${max >= 4 ? '4+' : max} quartos`
@@ -52,7 +63,7 @@ export default function ResultsHeader({onPress, value}) {
           numberOfLines={1}
           minimumFontScale={0.85}
         >
-          {hasFilters ? activeFilters(filters) : 'Sem filtros aplicados'}
+          {(hasFilters && activeFilters(filters)) || 'Sem filtros aplicados'}
         </Text>
         <Text style={styles.button}>Filtrar</Text>
       </View>

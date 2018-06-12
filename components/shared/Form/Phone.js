@@ -15,3 +15,7 @@ export default function Phone({validations, ...props}) {
     />
   )
 }
+
+Phone.defaultProps = {
+  value: ''
+}

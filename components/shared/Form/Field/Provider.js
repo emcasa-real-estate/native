@@ -17,7 +17,7 @@ export const withField = (Target) =>
     <Target
       {...props}
       {...validation[name] || OK}
-      value={value[name] || ''}
+      value={value[name]}
       validation={undefined}
       focus={focus === name}
       name={name}

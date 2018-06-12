@@ -1,10 +1,21 @@
 patch-package
+--- a/node_modules/react-native/React/Views/RCTFont.h
++++ b/node_modules/react-native/React/Views/RCTFont.h
+@@ -18,7 +18,7 @@ typedef UIFont *(^RCTFontHandler)(CGFloat fontSize, NSString *fontWeightDescript
+  * "semibold", "extrabold", "bold", "heavy", or "black".
+  */
+ RCT_EXTERN void RCTSetDefaultFontHandler(RCTFontHandler handler);
+-RCT_EXTERN BOOL RCTHasFontHandlerSet();
++RCT_EXTERN BOOL RCTHasFontHandlerSet(void);
+
+ @interface RCTFont : NSObject
+
 --- a/node_modules/react-native/react.gradle
 +++ b/node_modules/react-native/react.gradle
 @@ -70,6 +70,21 @@ gradle.projectsEvaluated {
                      resourcesDir.mkdirs()
                  }
- 
+
 +               doLast {
 +                    def moveFunc = { resSuffix ->
 +                        File originalDir = file("${resourcesDir}/drawable-${resSuffix}")
@@ -19,7 +30,7 @@ patch-package
 +                    moveFunc.curry("xhdpi").call()
 +                    moveFunc.curry("xxhdpi").call()
 +                    moveFunc.curry("xxxhdpi").call()
-+                } 
++                }
                  // Set up inputs and outputs so gradle can cache the result
                  inputs.files fileTree(dir: reactRoot, excludes: inputExcludes)
                  outputs.dir jsBundleDir

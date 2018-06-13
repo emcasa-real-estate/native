@@ -1,4 +1,4 @@
-import {AppRegistry, YellowBox, Platform} from 'react-native'
+import {YellowBox, Platform} from 'react-native'
 import KeyboardManager from 'react-native-keyboard-manager'
 
 import initNavigation from './screens'
@@ -11,7 +11,7 @@ YellowBox.ignoreWarnings([
   'Module RCTImageLoader requires main queue setup',
   'Module ReactNativeKeyboardManager requires main queue setup',
   'Warning: isMounted(...) is deprecated',
-  'Remove debugger'
+  'Remote debugger'
 ])
 
 initNavigation()

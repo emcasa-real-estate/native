@@ -4,10 +4,9 @@ import {Navigation} from 'react-native-navigation'
 
 import * as colors from '@/assets/colors'
 import {withProvider} from '@/containers/shared/Provider'
-import sharedScreens from './shared'
+import * as sharedScreens from './shared'
 
 const SCREENS = _.flow(
-  _.merge,
   _.values,
   _.filter((screen) => typeof screen === 'function')
 )(sharedScreens)

@@ -16,6 +16,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.reactnativenavigation.NavigationApplication;
+import com.reactnativenavigation.react.NavigationReactNativeHost;
 
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
@@ -25,26 +26,31 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainApplication extends NavigationApplication {
+  @Override
+  protected ReactNativeHost createReactNativeHost() {
+    return new NavigationReactNativeHost(this) {
+      @Override
+      protected String getJSMainModuleName() {
+        return "index";
+      }
+    };
+  }
+
 	@Override
 	public boolean isDebug() {
 		return BuildConfig.DEBUG;
 	}
 
   @Override
-  protected String getJSMainModuleName() {
-    return "index";
-  }
-
-  @Override
-  protected List<ReactPackage> createAdditionalReactPackages() {
+  public List<ReactPackage> createAdditionalReactPackages() {
     return Arrays.<ReactPackage>asList(
-        new MainReactPackage(),
-        new ImagePickerPackage(),
-        new SvgPackage(),
-        new OrientationPackage(),
-        new PhotoViewPackage(),
-        new MapsPackage(),
-        new FabricPackage()
+      new MainReactPackage(),
+      new ImagePickerPackage(),
+      new SvgPackage(),
+      new OrientationPackage(),
+      new PhotoViewPackage(),
+      new MapsPackage(),
+      new FabricPackage()
     );
   }
 

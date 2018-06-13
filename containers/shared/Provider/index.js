@@ -1,13 +1,13 @@
 import React, {PureComponent} from 'react'
 import {Provider} from 'react-redux'
 import {PersistGate} from 'redux-persist/integration/react'
-import createEmitter from 'namespace-emitter'
+import EventEmitter from 'events'
 
 import {store, persistor} from '@/redux'
 import ApolloProvider from './ApolloProvider'
 
 export default class AppProvider extends PureComponent {
-  static events = createEmitter()
+  static events = new EventEmitter()
 
   render() {
     const {children} = this.props
@@ -63,7 +63,7 @@ export const withProvider = (Target) =>
         <AppProvider>
           <Target
             ref={this.child}
-            eventEmitter={AppProvider.emitter}
+            eventEmitter={AppProvider.events}
             {...this.props}
           />
         </AppProvider>

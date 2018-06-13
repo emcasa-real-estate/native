@@ -1,0 +1,47 @@
+import _ from 'lodash/fp'
+import {Platform} from 'react-native'
+import {Navigation} from 'react-native-navigation'
+
+import * as colors from '@/assets/colors'
+import {withProvider} from '@/containers/shared/Provider'
+import sharedScreens from './shared'
+
+const SCREENS = _.flow(
+  _.merge,
+  _.values,
+  _.filter((screen) => typeof screen === 'function')
+)(sharedScreens)
+
+const setDefaults = () =>
+  Navigation.setDefaultOptions({
+    topBar: {
+      height: 50,
+      title: {
+        height: 50,
+        fontFamily: Platform.OS === 'ios' ? 'Open Sans' : 'OpenSans',
+        color: colors.gray.dark
+      }
+    }
+  })
+
+const registerScreens = () =>
+  SCREENS.map((Screen) =>
+    Navigation.registerComponent(Screen.screen, () => withProvider(Screen))
+  )
+
+const setRoot = () =>
+  Navigation.setRoot({
+    root: {
+      stack: {
+        children: [{component: {id: 'root', name: 'shared.HelloWorld'}}]
+      }
+    }
+  })
+
+export default function initNavigation() {
+  registerScreens()
+  Navigation.events().registerAppLaunchedListener(() => {
+    setDefaults()
+    setRoot()
+  })
+}

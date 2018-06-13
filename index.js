@@ -1,8 +1,7 @@
 import {AppRegistry, YellowBox, Platform} from 'react-native'
 import KeyboardManager from 'react-native-keyboard-manager'
 
-import App from '@/containers/App'
-import Provider from '@/containers/Provider'
+import initNavigation from './screens'
 
 // Temporary fix for
 // https://github.com/facebook/react-native/issues/17504
@@ -11,12 +10,11 @@ YellowBox.ignoreWarnings([
   'Class RCTCxxModule was not exported',
   'Module RCTImageLoader requires main queue setup',
   'Module ReactNativeKeyboardManager requires main queue setup',
-  'Warning: isMounted(...) is deprecated'
+  'Warning: isMounted(...) is deprecated',
+  'Remove debugger'
 ])
 
-AppRegistry.registerComponent('EmCasa', () => App)
-
-AppRegistry.setWrapperComponentProvider(() => Provider)
+initNavigation()
 
 if (Platform.OS === 'ios') {
   KeyboardManager.setEnable(true)

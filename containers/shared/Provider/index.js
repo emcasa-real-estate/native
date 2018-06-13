@@ -1,0 +1,72 @@
+import React, {PureComponent} from 'react'
+import {Provider} from 'react-redux'
+import {PersistGate} from 'redux-persist/integration/react'
+import createEmitter from 'namespace-emitter'
+
+import {store, persistor} from '@/redux'
+import ApolloProvider from './ApolloProvider'
+
+export default class AppProvider extends PureComponent {
+  static events = createEmitter()
+
+  render() {
+    const {children} = this.props
+    return (
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <ApolloProvider>{children}</ApolloProvider>
+        </PersistGate>
+      </Provider>
+    )
+  }
+}
+
+export const withProvider = (Target) =>
+  class extends PureComponent {
+    static displayName = `withProvider(${Target.displayName || Target.name})`
+
+    child = React.createRef()
+
+    static get options() {
+      return Target.options
+    }
+
+    resendEvent = (eventName, params) => {
+      const instance = this.child.current
+      if (instance && instance[eventName]) {
+        instance[eventName](params)
+      }
+    }
+
+    componentDidAppear() {
+      this.resendEvent('componentDidAppear')
+    }
+
+    componentDidDisappear() {
+      this.resendEvent('componentDidDisappear')
+    }
+
+    componentWillUnmount() {
+      this.resendEvent('componentWillUnmount')
+    }
+
+    componentWillReceiveProps(nextProps) {
+      this.resendEvent('componentWillReceiveProps', nextProps)
+    }
+
+    onNavigationButtonPressed(buttonId) {
+      this.resendEvent('onNavigationButtonPressed', buttonId)
+    }
+
+    render() {
+      return (
+        <AppProvider>
+          <Target
+            ref={this.child}
+            eventEmitter={AppProvider.emitter}
+            {...this.props}
+          />
+        </AppProvider>
+      )
+    }
+  }

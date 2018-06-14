@@ -8,6 +8,12 @@ import {
   getOptions,
   getPagination
 } from '@/redux/modules/listings/feed/selectors'
+import {watchPosition, unwatchPosition, setActiveListing} from './module'
+import {
+  getUserPosition,
+  getActiveListing,
+  isWatchingPosition
+} from './module/selectors'
 import ListButton from '@/components/listings/Feed/Button'
 import HeaderButton from './HeaderButton'
 import Map from './Map'
@@ -20,6 +26,14 @@ import styles from './styles'
     options: getOptions(state, {type: 'search'})
   }),
   {load}
+)
+@connect(
+  (state) => ({
+    activeListing: getActiveListing(state),
+    userPosition: getUserPosition(state),
+    watchingPosition: isWatchingPosition(state)
+  }),
+  {watchPosition, unwatchPosition, setActiveListing}
 )
 export default class MapScreen extends Component {
   static screen = 'listings.Map'
@@ -36,11 +50,6 @@ export default class MapScreen extends Component {
     }
   }
 
-  state = {
-    active: undefined,
-    watchingPosition: false
-  }
-
   updateNavigationOptions() {
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
@@ -48,9 +57,7 @@ export default class MapScreen extends Component {
           {
             id: 'mapLocationButton',
             component: {name: HeaderButton.screen},
-            passProps: {
-              onPress: () => this.onToggleWatchPosition()
-            }
+            passProps: this.props
           }
         ]
       }
@@ -72,19 +79,20 @@ export default class MapScreen extends Component {
   }
 
   onToggleWatchPosition = (active) => () =>
-    this.props.eventEmitter.emitToScreen('mapLocationButton', 'onToggle')
+    this.props[active ? 'watchPosition' : 'unwatchPosition'].call()
 
-  onSelect = (id) =>
-    this.setState(({active}) => ({active: id === active ? null : id}))
+  onSelect = (id) => this.props.setActiveListing(id)
 
   render() {
-    const {active} = this.state
+    const {activeListing, watchingPosition, userPosition} = this.props
 
     return (
       <View style={styles.container}>
         <View style={styles.body}>
           <Map
-            active={active}
+            active={activeListing}
+            position={userPosition}
+            watching={watchingPosition}
             onSelect={this.onSelect}
             onWatchPosition={this.onToggleWatchPosition(true)}
             onUnwatchPosition={this.onToggleWatchPosition(false)}
@@ -92,7 +100,7 @@ export default class MapScreen extends Component {
           <ListButton style={styles.button} onPress={this.onReturn} />
         </View>
         <View style={styles.listings}>
-          <Feed active={active} />
+          <Feed active={activeListing} />
         </View>
       </View>
     )

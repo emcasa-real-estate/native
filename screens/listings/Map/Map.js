@@ -40,20 +40,14 @@ export default class ListingsMap extends PureComponent {
     zoom: 12
   }
 
-  lastUserLocation = null
-
   map = React.createRef()
 
-  componentDidMount() {
-    requestAnimationFrame(this.requestInitialPosition)
-  }
+  // componentDidMount() {
+  //   requestAnimationFrame(this.requestInitialPosition)
+  // }
 
   componentWillUnmount() {
     this.onUnwatchPosition()
-  }
-
-  componentDidUpdate() {
-    this.updateWatchID()
   }
 
   requestInitialPosition = async () => {
@@ -69,44 +63,16 @@ export default class ListingsMap extends PureComponent {
     )
   }
 
-  updateWatchID() {
-    const {watching} = this.props
-    if (watching === this.isWatching())
-      if (this.props.watching) this.onUnwatchPosition()
-      else this.watchPosition()
-  }
-
-  updatePosition = async ({coords}) => {
-    this.lastUserLocation = coords
-    return new Promise((resolve) =>
-      this.setState(
-        {
-          zoom: zoom({longitudeDelta: 0.01}),
-          region: {
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01,
-            longitude: coords.longitude,
-            latitude: coords.latitude
-          }
-        },
-        resolve
-      )
-    )
-  }
-
-  isWatching() {
-    return typeof this.state.watchID === 'number'
-  }
-
   isWithinBounds() {
-    if (!this.lastUserLocation) return undefined
+    const {userPosition} = this.props
+    if (!userPosition) return undefined
     // Vista Chinesa - RJ
     const centerOfRJ = {
       latitude: -22.9730992,
       longitude: -43.2524123
     }
     const distance = 17 * 1000
-    return geolib.isPointInCircle(this.lastUserLocation, centerOfRJ, distance)
+    return geolib.isPointInCircle(userPosition, centerOfRJ, distance)
   }
 
   get data() {
@@ -119,46 +85,33 @@ export default class ListingsMap extends PureComponent {
     }))
   }
 
-  onRegionChange = (region) => {
+  onRegionChange = (region) =>
     this.setState({
-      zoom: zoom(region),
       lat: region.latitude,
       lng: region.longitude,
       region
     })
-  }
 
   onSelect = (id) => () => this.props.onSelect(id)
 
-  _onWatchPosition = async () => {
+  shouldWatchPosition = async () => {
     if (!this.isWithinBounds()) {
-      return Alert.alert(
+      Alert.alert(
         'Fora da área de cobertura',
         'A sua região ainda não é coberta pela EmCasa.'
       )
+      return false
     }
     const permission = await this.props.onRequestPermission()
-    if (this.isWatching() || permission !== 'authorized') return
-    const watchID = navigator.geolocation.watchPosition(this.updatePosition)
-    this.setState({watchID})
+    if (this.props.watching || permission !== 'authorized') return false
+    return true
   }
 
-  onWatchPosition = () => {
-    this._onWatchPosition()
-    this.props.onWatchPosition()
+  onWatchPosition = async () => {
+    if (await this.shouldWatchPosition()) this.props.onWatchPosition()
   }
 
-  _onUnwatchPosition = () => {
-    if (!this.isWatching()) return
-    navigator.geolocation.clearWatch(this.state.watchID)
-    this.setState({watchID: null})
-    this.props.onUnwatchPosition()
-  }
-
-  onUnwatchPosition = () => {
-    this._onUnwatchPosition()
-    this.props.onUnwatchPosition()
-  }
+  onUnwatchPosition = () => this.props.onUnwatchPosition()
 
   renderMarker = ({listing}) => {
     const active = this.props.active === listing.id
@@ -175,9 +128,9 @@ export default class ListingsMap extends PureComponent {
   }
 
   render() {
-    const {zoom, region} = this.state
+    const {region} = this.state
     const maxZoomToAggregateMarkers = 14
-    const aggregate = zoom < maxZoomToAggregateMarkers
+    const aggregate = region ? zoom(region) < maxZoomToAggregateMarkers : true
     return (
       <Map
         mapRef={this.map}
@@ -185,18 +138,18 @@ export default class ListingsMap extends PureComponent {
         data={this.data}
         renderMarker={this.renderMarker}
         clusteringEnabled={aggregate}
-        scrollEnabled={!this.isWatching()}
+        scrollEnabled={!this.props.watching}
         onRegionChangeComplete={this.onRegionChange}
         onPanDrag={this.onUnwatchPosition}
         onSelect={this.onSelect}
-        region={this.isWatching() ? region : undefined}
+        region={this.props.watching ? region : undefined}
       >
         {this.isWithinBounds() && (
           <UserPositionMarker
-            active={this.isWatching()}
+            active={this.props.watching}
             address={{
-              lat: this.lastUserLocation.latitude,
-              lng: this.lastUserLocation.longitude
+              lat: this.props.userPosition.latitude,
+              lng: this.props.userPosition.longitude
             }}
           />
         )}

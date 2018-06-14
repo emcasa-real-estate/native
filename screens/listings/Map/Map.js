@@ -26,6 +26,10 @@ const zoom = ({longitudeDelta}) =>
 )
 @withPermission('location', 'whenInUse')
 export default class ListingsMap extends PureComponent {
+  static defaultProps = {
+    watching: undefined
+  }
+
   state = {
     authorized: false,
     watchID: undefined,
@@ -41,23 +45,35 @@ export default class ListingsMap extends PureComponent {
   map = React.createRef()
 
   componentDidMount() {
-    // Request permission to get user's location and focus map if this.isWithinBounds
-    requestAnimationFrame(async () => {
-      const permission = await this.props.onRequestPermission(false)
-      if (permission !== 'authorized') return
-      navigator.geolocation.getCurrentPosition(
-        async (response) => {
-          await this.updatePosition(response)
-          if (this.isWithinBounds()) this.onWatchPosition()
-        },
-        console.log, // eslint-disable-line no-console
-        {timeout: 1000}
-      )
-    })
+    requestAnimationFrame(this.requestInitialPosition)
   }
 
   componentWillUnmount() {
     this.onUnwatchPosition()
+  }
+
+  componentDidUpdate() {
+    this.updateWatchID()
+  }
+
+  requestInitialPosition = async () => {
+    const permission = await this.props.onRequestPermission(false)
+    if (permission !== 'authorized') return
+    navigator.geolocation.getCurrentPosition(
+      async (response) => {
+        await this.updatePosition(response)
+        if (this.isWithinBounds()) this.onWatchPosition()
+      },
+      console.log, // eslint-disable-line no-console
+      {timeout: 1000}
+    )
+  }
+
+  updateWatchID() {
+    const {watching} = this.props
+    if (watching === this.isWatching())
+      if (this.props.watching) this.onUnwatchPosition()
+      else this.watchPosition()
   }
 
   updatePosition = async ({coords}) => {
@@ -114,7 +130,7 @@ export default class ListingsMap extends PureComponent {
 
   onSelect = (id) => () => this.props.onSelect(id)
 
-  onWatchPosition = async () => {
+  _onWatchPosition = async () => {
     if (!this.isWithinBounds()) {
       return Alert.alert(
         'Fora da área de cobertura',
@@ -127,10 +143,21 @@ export default class ListingsMap extends PureComponent {
     this.setState({watchID})
   }
 
-  onUnwatchPosition = () => {
+  onWatchPosition = () => {
+    this._onWatchPosition()
+    this.props.onWatchPosition()
+  }
+
+  _onUnwatchPosition = () => {
     if (!this.isWatching()) return
     navigator.geolocation.clearWatch(this.state.watchID)
     this.setState({watchID: null})
+    this.props.onUnwatchPosition()
+  }
+
+  onUnwatchPosition = () => {
+    this._onUnwatchPosition()
+    this.props.onUnwatchPosition()
   }
 
   renderMarker = ({listing}) => {

@@ -4,12 +4,14 @@ import {Navigation} from 'react-native-navigation'
 
 import * as colors from '@/assets/colors'
 import {withProvider} from '@/containers/shared/Provider'
+import * as listingsScreens from './listings'
 import * as sharedScreens from './shared'
 
 const SCREENS = _.flow(
-  _.values,
+  _.map(_.values),
+  ([...screens]) => _.concat(...screens),
   _.filter((screen) => typeof screen === 'function')
-)(sharedScreens)
+)([sharedScreens, listingsScreens])
 
 const setDefaults = () =>
   Navigation.setDefaultOptions({
@@ -32,7 +34,7 @@ const setRoot = () =>
   Navigation.setRoot({
     root: {
       stack: {
-        children: [{component: {id: 'root', name: 'shared.HelloWorld'}}]
+        children: [{component: {id: 'root', name: 'listings.Feed'}}]
       }
     }
   })

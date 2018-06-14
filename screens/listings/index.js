@@ -1,7 +1,3 @@
-import Feed from './Feed'
-import Map from './Map'
-
-export default {
-  'listings.Feed': Feed,
-  'listings.Map': Map
-}
+export {default as Feed} from './Feed'
+export {default as Map} from './Map'
+export {default as MapHeaderButton} from './Map/HeaderButton'

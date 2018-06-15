@@ -1,14 +1,7 @@
 import React, {PureComponent} from 'react'
 import {Alert} from 'react-native'
 import geolib from 'geolib'
-import {connect} from 'react-redux'
 
-import {load} from '@/redux/modules/listings/feed'
-import {
-  getOptions,
-  getListings,
-  getPagination
-} from '@/redux/modules/listings/feed/selectors'
 import {withPermission} from '@/containers/shared/Permission'
 import UserPositionMarker from '@/components/listings/Map/UserPosition'
 import Map, {Marker, Aggregator} from '@/components/listings/Map'
@@ -16,23 +9,15 @@ import Map, {Marker, Aggregator} from '@/components/listings/Map'
 const zoom = ({longitudeDelta}) =>
   Math.round(Math.log(360 / longitudeDelta) / Math.LN2)
 
-@connect(
-  (state) => ({
-    data: getListings(state, {type: 'search'}),
-    pagination: getPagination(state, {type: 'search'}),
-    options: getOptions(state, {type: 'search'})
-  }),
-  {load}
-)
 @withPermission('location', 'whenInUse')
 export default class ListingsMap extends PureComponent {
   static defaultProps = {
-    watching: undefined
+    watching: undefined,
+    data: []
   }
 
   state = {
     authorized: false,
-    watchID: undefined,
     region: undefined,
     // initial position
     lat: -22.9608099,
@@ -42,37 +27,54 @@ export default class ListingsMap extends PureComponent {
 
   map = React.createRef()
 
-  // componentDidMount() {
-  //   requestAnimationFrame(this.requestInitialPosition)
-  // }
-
-  componentWillUnmount() {
-    this.onUnwatchPosition()
+  static getDerivedStateFromProps(props, state) {
+    if (!props.watching || !props.position) return null
+    if (state.region) {
+      return {
+        region: {
+          ...state.region,
+          ...props.position
+        }
+      }
+    } else {
+      return {
+        region: {
+          longitudeDelta: 0.01,
+          latitudeDelta: 0.01,
+          ...props.position
+        }
+      }
+    }
   }
 
   requestInitialPosition = async () => {
     const permission = await this.props.onRequestPermission(false)
     if (permission !== 'authorized') return
-    navigator.geolocation.getCurrentPosition(
-      async (response) => {
-        await this.updatePosition(response)
-        if (this.isWithinBounds()) this.onWatchPosition()
-      },
-      console.log, // eslint-disable-line no-console
-      {timeout: 1000}
-    )
+    this.props.onRequestPosition()
+  }
+
+  focusOnUserPosition = () => {
+    const region = {
+      longitudeDelta: 0.01,
+      latitudeDelta: 0.01,
+      ...this.props.position
+    }
+    this.setState({
+      region
+    })
+    this.map.current.getMapRef().animateToRegion(region)
   }
 
   isWithinBounds() {
-    const {userPosition} = this.props
-    if (!userPosition) return undefined
+    const {position} = this.props
+    if (!position) return undefined
     // Vista Chinesa - RJ
     const centerOfRJ = {
       latitude: -22.9730992,
       longitude: -43.2524123
     }
     const distance = 17 * 1000
-    return geolib.isPointInCircle(userPosition, centerOfRJ, distance)
+    return geolib.isPointInCircle(position, centerOfRJ, distance)
   }
 
   get data() {
@@ -83,6 +85,22 @@ export default class ListingsMap extends PureComponent {
         latitude: listing.address.lat
       }
     }))
+  }
+
+  componentDidMount() {
+    const {watching} = this.props
+    if (!watching) requestAnimationFrame(this.requestInitialPosition)
+  }
+
+  componentDidUpdate(prev) {
+    const {watching, position} = this.props
+    if (
+      watching &&
+      position &&
+      (prev.watching !== watching || prev.position !== position)
+    ) {
+      this.focusOnUserPosition()
+    }
   }
 
   onRegionChange = (region) =>
@@ -133,7 +151,7 @@ export default class ListingsMap extends PureComponent {
     const aggregate = region ? zoom(region) < maxZoomToAggregateMarkers : true
     return (
       <Map
-        mapRef={this.map}
+        mapClusterRef={this.map}
         as={Aggregator}
         data={this.data}
         renderMarker={this.renderMarker}
@@ -148,8 +166,8 @@ export default class ListingsMap extends PureComponent {
           <UserPositionMarker
             active={this.props.watching}
             address={{
-              lat: this.props.userPosition.latitude,
-              lng: this.props.userPosition.longitude
+              lat: this.props.position.latitude,
+              lng: this.props.position.longitude
             }}
           />
         )}

@@ -4,7 +4,7 @@ export const getMapScreen = (state) => state.screens.listings.Map
 
 export const getUserPosition = createSelector(
   getMapScreen,
-  (screen) => screen.lastUserPosition
+  (screen) => screen.position
 )
 
 export const isWatchingPosition = createSelector(

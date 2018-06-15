@@ -31,7 +31,7 @@ export default class MapHeaderButton extends PureComponent {
 
   onPress = () =>
     this.props[
-      this.props.watchingPosition ? 'watchPosition' : 'unwatchPosition'
+      this.props.watchingPosition ? 'unwatchPosition' : 'watchPosition'
     ].call()
 
   render() {

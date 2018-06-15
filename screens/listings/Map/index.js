@@ -5,10 +5,16 @@ import {Navigation} from 'react-native-navigation'
 
 import {load} from '@/redux/modules/listings/feed'
 import {
+  getListings,
   getOptions,
   getPagination
 } from '@/redux/modules/listings/feed/selectors'
-import {watchPosition, unwatchPosition, setActiveListing} from './module'
+import {
+  watchPosition,
+  unwatchPosition,
+  requestPosition,
+  setActiveListing
+} from './module'
 import {
   getUserPosition,
   getActiveListing,
@@ -22,6 +28,7 @@ import styles from './styles'
 
 @connect(
   (state) => ({
+    data: getListings(state, {type: 'search'}),
     pagination: getPagination(state, {type: 'search'}),
     options: getOptions(state, {type: 'search'})
   }),
@@ -33,7 +40,7 @@ import styles from './styles'
     userPosition: getUserPosition(state),
     watchingPosition: isWatchingPosition(state)
   }),
-  {watchPosition, unwatchPosition, setActiveListing}
+  {watchPosition, unwatchPosition, requestPosition, setActiveListing}
 )
 export default class MapScreen extends Component {
   static screen = 'listings.Map'
@@ -46,22 +53,14 @@ export default class MapScreen extends Component {
       title: {
         text: 'Buscar imóveis',
         alignment: 'center'
-      }
+      },
+      rightButtons: [
+        {
+          id: 'mapLocationButton',
+          component: {name: HeaderButton.screen}
+        }
+      ]
     }
-  }
-
-  updateNavigationOptions() {
-    Navigation.mergeOptions(this.props.componentId, {
-      topBar: {
-        rightButtons: [
-          {
-            id: 'mapLocationButton',
-            component: {name: HeaderButton.screen},
-            passProps: this.props
-          }
-        ]
-      }
-    })
   }
 
   loadAllMarkers() {
@@ -74,26 +73,29 @@ export default class MapScreen extends Component {
   }
 
   componentDidMount() {
-    this.updateNavigationOptions()
     this.loadAllMarkers()
   }
 
   onToggleWatchPosition = (active) => () =>
     this.props[active ? 'watchPosition' : 'unwatchPosition'].call()
 
+  onRequestPosition = () => this.props.requestPosition()
+
   onSelect = (id) => this.props.setActiveListing(id)
 
   render() {
-    const {activeListing, watchingPosition, userPosition} = this.props
+    const {data, activeListing, watchingPosition, userPosition} = this.props
 
     return (
       <View style={styles.container}>
         <View style={styles.body}>
           <Map
+            data={data}
             active={activeListing}
             position={userPosition}
             watching={watchingPosition}
             onSelect={this.onSelect}
+            onRequestPosition={this.onRequestPosition}
             onWatchPosition={this.onToggleWatchPosition(true)}
             onUnwatchPosition={this.onToggleWatchPosition(false)}
           />

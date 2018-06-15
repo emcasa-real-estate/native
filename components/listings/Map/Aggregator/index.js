@@ -32,9 +32,10 @@ export default class MarkerAggregator extends PureComponent {
   }
 
   render() {
-    const {clusteringEnabled, renderMarker} = this.props
+    const {clusteringEnabled, renderMarker, mapClusterRef} = this.props
     return (
       <ClusteredMapView
+        ref={mapClusterRef}
         radius={this.radius}
         {...this.props}
         animateClusters

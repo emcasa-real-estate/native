@@ -1,22 +1,36 @@
 import {StyleSheet} from 'react-native'
 
 import * as colors from '@/assets/colors'
+import {margin, padding} from '@/assets/styles'
 
 export default StyleSheet.create({
-  header: {
+  container: {
+    backgroundColor: 'white',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.gray.light
+  },
+  touchableContainer: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 15,
-    marginBottom: 5
+    ...padding(10, 20, 15)
   },
   text: {
-    width: '80%',
-    margin: 2,
-    fontSize: 19,
-    fontWeight: '300',
-    textAlign: 'center',
+    flex: 1,
+    fontSize: 16,
+    color: colors.gray.light,
+    ...margin(null, 16)
+  },
+  textActive: {
     color: colors.gray.dark
+  },
+  icon: {
+    marginTop: 6,
+    marginBottom: 6
+  },
+  button: {
+    fontSize: 13,
+    color: colors.blue.medium
   }
 })

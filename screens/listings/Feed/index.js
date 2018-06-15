@@ -15,8 +15,9 @@ import Feed from '@/components/listings/Feed/Listing'
 import Card from '@/containers/listings/Card/Listing'
 import MapButton from '@/components/listings/Map/Button'
 import Map from '../Map'
-import Empty from './Empty'
 import Header from './Header'
+import ListEmpty from './ListEmpty'
+import ListHeader from './ListHeader'
 import styles from './styles'
 
 @connect(
@@ -30,16 +31,18 @@ import styles from './styles'
 export default class ListingsFeedScreen extends PureComponent {
   static screen = 'listings.Feed'
 
-  static options = {
-    topBar: {
-      visible: false,
-      height: 0
-    }
-  }
-
   componentDidMount() {
-    const {data} = this.props
+    const {data, componentId} = this.props
     if (_.isEmpty(data)) this.onLoadMore()
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        component: {
+          id: `${componentId}.header`,
+          name: Header.screen,
+          passProps: {target: componentId}
+        }
+      }
+    })
   }
 
   onOpenMap = () => {
@@ -71,8 +74,8 @@ export default class ListingsFeedScreen extends PureComponent {
             pagination={pagination}
             onSelect={this.onSelect}
             Card={Card}
-            ListHeaderComponent={Header}
-            ListEmptyComponent={loading ? undefined : Empty}
+            ListHeaderComponent={ListHeader}
+            ListEmptyComponent={loading ? undefined : ListEmpty}
           />
         </InfiniteScroll>
         <MapButton style={styles.mapButton} onPress={this.onOpenMap} />

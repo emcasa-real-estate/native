@@ -15,5 +15,5 @@ const persistent = (reducer, options = {}) =>
   )
 
 export default combineReducers({
-  Map: persistent(Map, {whitelist: ['watching']})
+  Map: persistent(Map, {whitelist: ['watching', 'position']})
 })

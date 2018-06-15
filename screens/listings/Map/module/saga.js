@@ -63,9 +63,14 @@ function* initializeMapScreen() {
   if (watching) yield fork(watchPosition)
 }
 
+function* terminateMapScreen() {
+  yield put(actions.clear())
+}
+
 export default function* listingsMapScreenSaga() {
   yield all([
     takeEvery(mapScreenAppeared, initializeMapScreen),
+    takeEvery(mapScreenDisappeared, terminateMapScreen),
     takeLatest(actions.WATCH_POSITION, watchPosition),
     takeLatest(actions.REQUEST_POSITION, requestPosition)
   ])

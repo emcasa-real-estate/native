@@ -3,6 +3,7 @@ export const WATCH_POSITION = 'screens/listings.Map/WATCH_POSITION'
 export const UNWATCH_POSITION = 'screens/listings.Map/UNWATCH_POSITION'
 export const UPDATE_POSITION = 'screens/listings.Map/UPDATE_POSITION'
 export const SET_ACTIVE_LISTING = 'screens/listings.Map/SET_ACTIVE_LISTING'
+export const CLEAR = 'screens/listings.Map/CLEAR'
 
 export const requestPosition = () => ({type: REQUEST_POSITION})
 export const watchPosition = () => ({type: WATCH_POSITION})
@@ -12,12 +13,12 @@ export const updatePosition = (position) => ({
   position
 })
 export const setActiveListing = (id) => ({type: SET_ACTIVE_LISTING, id})
+export const clear = () => ({type: CLEAR})
 
 const initialState = {
   position: undefined,
   activeId: undefined,
-  watching: undefined,
-  watchId: undefined
+  watching: undefined
 }
 
 export default function listingsMapScreenReducer(state = initialState, action) {
@@ -30,6 +31,8 @@ export default function listingsMapScreenReducer(state = initialState, action) {
       return {...state, position: action.position}
     case SET_ACTIVE_LISTING:
       return {...state, activeId: action.id}
+    case CLEAR:
+      return {...state, activeId: undefined}
     default:
       return state
   }

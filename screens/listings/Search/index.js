@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import {PureComponent} from 'react'
 import {ScrollView} from 'react-native'
 import {Navigation} from 'react-native-navigation'
@@ -12,7 +13,9 @@ import Neighborhoods from './Neighborhoods'
   (state) => ({
     options: getOptions(state, {type: 'search'})
   }),
-  {updateOptions: updateOptions('search')}
+  {updateOptions: updateOptions('search')},
+  null,
+  {withRef: true}
 )
 export default class ListingSearchScreen extends PureComponent {
   static screen = 'listings.Search'
@@ -30,10 +33,10 @@ export default class ListingSearchScreen extends PureComponent {
     }
   }
 
-  componentWillUnmount() {
+  componentDidDisappear() {
     const {updateOptions} = this.props
     const {options} = this.state
-    updateOptions(options)
+    if (!_.isEqual(options, this.props.options)) updateOptions(options)
   }
 
   onChange = (params) => this.setState({options: params})

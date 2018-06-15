@@ -31,8 +31,20 @@ export const withProvider = (Target) =>
       return Target.options
     }
 
+    get instance() {
+      let instance = this.child.current
+      // Hack to get react-redux/react-apollo wrapped component instance
+      while (instance && instance.getWrappedInstance)
+        try {
+          instance = instance.getWrappedInstance()
+        } catch (_) {
+          return instance
+        }
+      return instance
+    }
+
     resendEvent = (eventName, params) => {
-      const instance = this.child.current
+      const instance = this.instance
       if (instance && instance[eventName]) {
         instance[eventName](params)
       }
@@ -44,14 +56,6 @@ export const withProvider = (Target) =>
 
     componentDidDisappear() {
       this.resendEvent('componentDidDisappear')
-    }
-
-    componentWillUnmount() {
-      this.resendEvent('componentWillUnmount')
-    }
-
-    componentWillReceiveProps(nextProps) {
-      this.resendEvent('componentWillReceiveProps', nextProps)
     }
 
     onNavigationButtonPressed(buttonId) {

@@ -26,14 +26,15 @@ import styles from './styles'
     pagination: getPagination(state, {type: 'search'}),
     loading: isLoading(state, {type: 'search'})
   }),
-  {loadMore: loadMore('search')}
+  {loadMore: loadMore('search')},
+  null,
+  {withRef: true}
 )
 export default class ListingsFeedScreen extends PureComponent {
   static screen = 'listings.Feed'
 
   componentDidMount() {
-    const {data, componentId} = this.props
-    if (_.isEmpty(data)) this.onLoadMore()
+    const {componentId} = this.props
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
         component: {
@@ -43,6 +44,12 @@ export default class ListingsFeedScreen extends PureComponent {
         }
       }
     })
+  }
+
+  componentDidAppear() {
+    const {data} = this.props
+    console.log(data)
+    if (_.isEmpty(data)) this.onLoadMore()
   }
 
   onOpenMap = () => {

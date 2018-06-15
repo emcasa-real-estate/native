@@ -1,13 +1,6 @@
 import _ from 'lodash'
 import {PureComponent} from 'react'
-import {connect} from 'react-redux'
 
-import {load} from '@/redux/modules/listings/feed'
-import {
-  getListings,
-  getPagination,
-  isLoading
-} from '@/redux/modules/listings/feed/selectors'
 import Loader from '@/containers/shared/Loader'
 import InfiniteScroll from '@/containers/shared/InfiniteScroll'
 import Feed from '@/components/listings/Feed/Listing'
@@ -15,14 +8,6 @@ import Card from '@/containers/listings/Card/Listing'
 import Empty from './Empty'
 import Header from './Header'
 
-@connect(
-  (state) => ({
-    data: getListings(state, {type: 'search'}),
-    pagination: getPagination(state, {type: 'search'}),
-    loading: isLoading(state, {type: 'search'})
-  }),
-  {load}
-)
 export default class ListingsFeed extends PureComponent {
   static defaultProps = {
     length: 15,

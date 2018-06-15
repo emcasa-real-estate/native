@@ -1,12 +1,32 @@
+import _ from 'lodash'
 import {PureComponent} from 'react'
 import {View} from 'react-native'
 import {Navigation} from 'react-native-navigation'
+import {connect} from 'react-redux'
 
+import {loadMore} from '@/redux/modules/listings/feed'
+import {
+  getListings,
+  getPagination,
+  isLoading
+} from '@/redux/modules/listings/feed/selectors'
+import InfiniteScroll from '@/containers/shared/InfiniteScroll'
+import Feed from '@/components/listings/Feed/Listing'
+import Card from '@/containers/listings/Card/Listing'
 import MapButton from '@/components/listings/Map/Button'
 import Map from '../Map'
-import Feed from './Feed'
+import Empty from './Empty'
+import Header from './Header'
 import styles from './styles'
 
+@connect(
+  (state) => ({
+    data: getListings(state, {type: 'search'}),
+    pagination: getPagination(state, {type: 'search'}),
+    loading: isLoading(state, {type: 'search'})
+  }),
+  {loadMore: loadMore('search')}
+)
 export default class ListingsFeedScreen extends PureComponent {
   static screen = 'listings.Feed'
 
@@ -15,6 +35,11 @@ export default class ListingsFeedScreen extends PureComponent {
       visible: false,
       height: 0
     }
+  }
+
+  componentDidMount() {
+    const {data} = this.props
+    if (_.isEmpty(data)) this.onLoadMore()
   }
 
   onOpenMap = () => {
@@ -26,13 +51,30 @@ export default class ListingsFeedScreen extends PureComponent {
     })
   }
 
+  onLoadMore = () => {
+    const {loading, loadMore} = this.props
+    if (!loading) loadMore(15)
+  }
+
   render() {
+    const {data, pagination, loading} = this.props
     return (
       <View style={styles.container}>
-        <Feed
-          style={styles.feed}
-          // params={navigation.state.params}
-        />
+        <InfiniteScroll
+          loading={loading}
+          pagination={pagination}
+          onLoad={this.onLoadMore}
+        >
+          <Feed
+            data={data}
+            loading={loading}
+            pagination={pagination}
+            onSelect={this.onSelect}
+            Card={Card}
+            ListHeaderComponent={Header}
+            ListEmptyComponent={loading ? undefined : Empty}
+          />
+        </InfiniteScroll>
         <MapButton style={styles.mapButton} onPress={this.onOpenMap} />
       </View>
     )

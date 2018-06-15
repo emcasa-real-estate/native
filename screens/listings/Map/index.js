@@ -3,7 +3,7 @@ import {View} from 'react-native'
 import {connect} from 'react-redux'
 import {Navigation} from 'react-native-navigation'
 
-import {load} from '@/redux/modules/listings/feed'
+import {loadMore} from '@/redux/modules/listings/feed'
 import {
   getListings,
   getOptions,
@@ -32,7 +32,7 @@ import styles from './styles'
     pagination: getPagination(state, {type: 'search'}),
     options: getOptions(state, {type: 'search'})
   }),
-  {load}
+  {loadMore: loadMore('search')}
 )
 @connect(
   (state) => ({
@@ -64,12 +64,9 @@ export default class MapScreen extends Component {
   }
 
   loadAllMarkers() {
-    const {load, options, pagination} = this.props
+    const {loadMore, pagination} = this.props
     if (!pagination.remainingCount) return
-    load('search', {
-      ...options,
-      page_size: pagination.remainingCount
-    })
+    loadMore(pagination.remainingCount)
   }
 
   componentDidMount() {

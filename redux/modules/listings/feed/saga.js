@@ -1,14 +1,4 @@
-import _ from 'lodash/fp'
-import {
-  put,
-  call,
-  all,
-  race,
-  fork,
-  select,
-  take,
-  takeLatest
-} from 'redux-saga/effects'
+import {put, call, all, select, takeLatest} from 'redux-saga/effects'
 
 import ResponseError from '@/lib/api/ResponseError'
 import {reportError} from '@/redux/modules/fabric'
@@ -27,9 +17,11 @@ function* buildParams(type, options = {}) {
   return result
 }
 
-function* request({key, options}) {
-  yield put(actions.request(key, options))
+function* request({key, count}) {
+  yield put(actions.request(key))
+  const options = yield select(getOptions, {type: key})
   const params = yield call(buildParams, key, options)
+  params.page_size = count
   try {
     const response = yield call(api[key], params)
     yield put(
@@ -41,20 +33,6 @@ function* request({key, options}) {
   }
 }
 
-const filterParams = _.omit(['excluded_listing_ids', 'page_size'])
-
-const eqlOptions = _.overArgs(_.isEqual)(Array(2).fill(filterParams))
-
-function* load(action) {
-  const options = yield select(getOptions, {type: action.key})
-  // Reset results if params will change
-  if (!eqlOptions(options, action.options)) yield put(actions.reset(action.key))
-  yield race({
-    task: fork(request, action),
-    cancel: take(actions.RESET)
-  })
-}
-
 export default function* listingsFeedSaga() {
-  yield all([takeLatest(actions.LOAD, load)])
+  yield all([takeLatest(actions.LOAD_MORE, request)])
 }

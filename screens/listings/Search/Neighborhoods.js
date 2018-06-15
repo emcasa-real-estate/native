@@ -6,13 +6,25 @@ import {connect} from 'react-redux'
 import {getOptions} from '@/redux/modules/listings/feed/selectors'
 import {getNeighborhoods} from '@/redux/modules/neighborhoods/selectors'
 import {MultiSelectOptions} from '@/components/listings/Search/Field'
+import HeaderButton from '@/screens/shared/Header/TextButton'
 
-@connect((state) => ({
-  neighborhoods: getNeighborhoods(state),
-  options: getOptions(state, {type: 'search'})
-}))
+@connect(
+  (state) => ({
+    neighborhoods: getNeighborhoods(state),
+    options: getOptions(state, {type: 'search'})
+  }),
+  null,
+  null,
+  {withRef: true}
+)
 export default class NeighborhoodsScreen extends PureComponent {
   static screen = 'listings.Search.Neighborhoods'
+
+  static options = {
+    topBar: {
+      title: {text: 'Bairros'}
+    }
+  }
 
   static defaultProps = {
     neighborhoods: [],
@@ -26,6 +38,24 @@ export default class NeighborhoodsScreen extends PureComponent {
   constructor(props) {
     super(props)
     this.state.value = props.value
+  }
+
+  componentDidAppear() {
+    const {componentId} = this.props
+    Navigation.mergeOptions(componentId, {
+      topBar: {
+        rightButtons: [
+          {
+            id: `${componentId}_resetButton`,
+            passProps: {
+              label: 'Limpar',
+              onPress: this.onReset
+            },
+            component: {name: HeaderButton.screen}
+          }
+        ]
+      }
+    })
   }
 
   onChange = (value) => {

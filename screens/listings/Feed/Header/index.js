@@ -7,6 +7,7 @@ import {connect} from 'react-redux'
 import {getOptions} from '@/redux/modules/listings/feed/selectors'
 import {abbrevPrice} from '@/assets/format'
 import Text from '@/components/shared/Text'
+import Button from '@/screens/shared/Header/TextButton'
 import Search from '@/screens/listings/Search'
 import styles from './styles'
 
@@ -78,7 +79,7 @@ export default class ListingsFeedHeader extends PureComponent {
           >
             {hasFilters ? activeFilters(filters) : 'Sem filtros aplicados'}
           </Text>
-          <Text style={styles.button}>Filtrar</Text>
+          <Button label="Filtrar" />
         </TouchableOpacity>
       </View>
     )

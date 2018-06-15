@@ -7,6 +7,7 @@ import {connect} from 'react-redux'
 import {updateOptions} from '@/redux/modules/listings/feed'
 import {getOptions} from '@/redux/modules/listings/feed/selectors'
 import Form from '@/components/listings/Search/Form'
+import HeaderButton from '@/screens/shared/Header/TextButton'
 import Neighborhoods from './Neighborhoods'
 
 @connect(
@@ -19,6 +20,12 @@ import Neighborhoods from './Neighborhoods'
 )
 export default class ListingSearchScreen extends PureComponent {
   static screen = 'listings.Search'
+
+  static options = {
+    topBar: {
+      title: {text: 'Filtrar busca'}
+    }
+  }
 
   state = {
     options: {}
@@ -33,10 +40,31 @@ export default class ListingSearchScreen extends PureComponent {
     }
   }
 
+  componentDidAppear() {
+    const {componentId} = this.props
+    Navigation.mergeOptions(componentId, {
+      topBar: {
+        rightButtons: [
+          {
+            id: `${componentId}_resetButton`,
+            passProps: {
+              label: 'Limpar',
+              onPress: this.onReset
+            },
+            component: {name: HeaderButton.screen}
+          }
+        ]
+      }
+    })
+  }
+
   componentDidDisappear() {
-    const {updateOptions} = this.props
+    const {updateOptions, componentId} = this.props
     const {options} = this.state
     if (!_.isEqual(options, this.props.options)) updateOptions(options)
+    Navigation.mergeOptions(componentId, {
+      topBar: {rightButtons: []}
+    })
   }
 
   onChange = (params) => this.setState({options: params})

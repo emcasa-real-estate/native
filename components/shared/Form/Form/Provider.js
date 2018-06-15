@@ -44,10 +44,10 @@ export default class FormProvider extends PureComponent {
   }
 
   static getDerivedStateFromProps({value, defaultValue}, state) {
-    if (!_.isEmpty(value) && !_.isEqual(value, state.value))
-      return {value, valid: false}
+    if (typeof value !== 'undefined' && !_.isEqual(value, state.value))
+      return {value: value || defaultValue, valid: undefined}
     if (!_.isEmpty(defaultValue) && _.isEmpty(state.value))
-      return {value: defaultValue, valid: false}
+      return {value: defaultValue, valid: true}
     return null
   }
 

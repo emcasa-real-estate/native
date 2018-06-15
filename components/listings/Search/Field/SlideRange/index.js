@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import {Component} from 'react'
 import {View, Dimensions} from 'react-native'
 import MultiSlider from '@ptomasroos/react-native-multi-slider'

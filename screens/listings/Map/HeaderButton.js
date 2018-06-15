@@ -1,24 +1,10 @@
 import {PureComponent} from 'react'
-import {View, TouchableOpacity, StyleSheet, Platform} from 'react-native'
 import {connect} from 'react-redux'
 
 import {watchPosition, unwatchPosition} from './module'
 import {isWatchingPosition} from './module/selectors'
 import * as colors from '@/assets/colors'
-import Text from '@/components/shared/Text'
-
-const styles = StyleSheet.create({
-  container: {
-    marginRight: Platform.OS === 'android' ? 15 : 0
-  },
-  text: {
-    color: colors.gray.medium,
-    fontWeight: '500'
-  },
-  textActive: {
-    color: colors.blue.medium
-  }
-})
+import Button from '@/screens/shared/Header/TextButton'
 
 @connect(
   (state) => ({
@@ -38,13 +24,11 @@ export default class MapHeaderButton extends PureComponent {
     const {watchingPosition} = this.props
 
     return (
-      <TouchableOpacity onPress={this.onPress}>
-        <View style={styles.container}>
-          <Text style={[styles.text, watchingPosition && styles.textActive]}>
-            Meu local
-          </Text>
-        </View>
-      </TouchableOpacity>
+      <Button
+        label="Meu local"
+        style={!watchingPosition && {color: colors.gray.medium}}
+        onPress={this.onPress}
+      />
     )
   }
 }

@@ -17,6 +17,7 @@ const setDefaults = () =>
   Navigation.setDefaultOptions({
     topBar: {
       height: 50,
+      hideBackButtonTitle: true,
       title: {
         height: 50,
         fontFamily: Platform.OS === 'ios' ? 'Open Sans' : 'OpenSans',

@@ -7,7 +7,11 @@ export const REQUEST = 'listings/feed/REQUEST'
 export const SUCCESS = 'listings/feed/SUCCESS'
 export const FAILURE = 'listings/feed/FAILURE'
 
-export const updateOptions = (key) => () => ({type: UPDATE_OPTIONS, key})
+export const updateOptions = (key) => (options) => ({
+  type: UPDATE_OPTIONS,
+  key,
+  options
+})
 export const loadMore = (key) => (count = 15) => ({type: LOAD_MORE, key, count})
 export const request = (key) => ({type: REQUEST, key})
 export const success = (key, data, pagination) => ({
@@ -20,6 +24,7 @@ export const failure = (key, error) => ({type: FAILURE, key, error})
 
 function listingsFeed(state = {}, action) {
   switch (action.type) {
+    case UPDATE_OPTIONS:
     case REQUEST:
     case SUCCESS:
     case FAILURE:

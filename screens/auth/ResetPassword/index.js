@@ -8,6 +8,7 @@ import {resetPassword, reset} from '@/redux/modules/auth'
 import Footer from '@/components/shared/Footer'
 import Button from '@/components/shared/Button'
 import ResetPasswordForm from '@/components/auth/ResetPassword'
+import SuccessScreen from '@/screens/shared/Success'
 
 @connect(
   (state) => ({
@@ -54,6 +55,26 @@ export default class ResetPasswordScreen extends PureComponent {
     if (!loading && this.form.current.onValidate()) resetPassword(value)
   }
 
+  onSuccess = () => {
+    Navigation.showModal({
+      component: {
+        id: `${this.props.componentId}_success`,
+        name: SuccessScreen.screenName,
+        passProps: {
+          title: 'Email enviado',
+          children:
+            'Enviamos um e-mail pra você com instruções para criar uma nova senha.',
+          onDismiss: this.onDismiss
+        }
+      }
+    })
+  }
+
+  onDismiss = () => {
+    Navigation.dismissModal(`${this.props.componentId}_success`)
+    Navigation.popToRoot(this.props.componentId)
+  }
+
   render() {
     const {loading, error} = this.props
 
@@ -65,6 +86,7 @@ export default class ResetPasswordScreen extends PureComponent {
             error={error}
             loading={loading}
             onChange={this.onChange}
+            onSubmit={this.onSubmit}
           />
         </ScrollView>
         <Footer>

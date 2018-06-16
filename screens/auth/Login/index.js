@@ -76,6 +76,7 @@ export default class LoginScreen extends PureComponent {
             error={error}
             loading={loading}
             onChange={this.onChange}
+            onSubmit={this.onSubmit}
             onSignUp={this.onSignUp}
             onPasswordRecovery={this.onPasswordRecovery}
           />

@@ -4,7 +4,7 @@ import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import {getUser, getError, isLoading} from '@/redux/modules/auth/selectors'
-import {resetPassword, reset} from '@/redux/modules/auth'
+import {signUp, reset} from '@/redux/modules/auth'
 import Footer from '@/components/shared/Footer'
 import Button from '@/components/shared/Button'
 import SignUpForm from '@/components/auth/SignUp'
@@ -16,7 +16,7 @@ import SuccessScreen from '@/screens/shared/Success'
     error: getError(state),
     loading: isLoading(state)
   }),
-  {resetPassword, reset},
+  {signUp, reset},
   null,
   {withRef: true}
 )
@@ -45,15 +45,15 @@ export default class SignUpScreen extends PureComponent {
 
   onChange = (value) => this.setState({value})
 
-  componentDidUpdate() {
+  componentDidUpdate(prev) {
     const {user} = this.props
-    if (user) this.onSuccess()
+    if (!prev.user && user) this.onSuccess()
   }
 
   onSubmit = () => {
-    const {resetPassword, loading} = this.props
+    const {signUp, loading} = this.props
     const {value} = this.state
-    if (!loading && this.form.current.onValidate()) resetPassword(value)
+    if (!loading && this.form.current.onValidate()) signUp(value)
   }
 
   onSuccess = () => {

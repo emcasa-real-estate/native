@@ -59,13 +59,19 @@ export default class LoginScreen extends PureComponent {
 
   onSignUp = () => {
     Navigation.push(this.props.componentId, {
-      component: {name: SignUpScreen.screenName}
+      component: {
+        id: 'sign_up',
+        name: SignUpScreen.screenName
+      }
     })
   }
 
   onPasswordRecovery = () => {
     Navigation.push(this.props.componentId, {
-      component: {name: ResetPasswordScreen.screenName}
+      component: {
+        id: 'reset_password',
+        name: ResetPasswordScreen.screenName
+      }
     })
   }
 

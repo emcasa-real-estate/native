@@ -3,29 +3,28 @@ import {View, ScrollView} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
-import {getUser, getError, isLoading} from '@/redux/modules/auth/selectors'
-import {signIn, reset} from '@/redux/modules/auth'
+import {getData, getError, isLoading} from '@/redux/modules/auth/selectors'
+import {resetPassword, reset} from '@/redux/modules/auth'
 import Footer from '@/components/shared/Footer'
 import Button from '@/components/shared/Button'
-import LoginForm from '@/components/auth/Login'
-import ResetPasswordScreen from '@/screens/auth/ResetPassword'
+import ResetPasswordForm from '@/components/auth/ResetPassword'
 
 @connect(
   (state) => ({
-    user: getUser(state),
+    response: getData(state),
     error: getError(state),
     loading: isLoading(state)
   }),
-  {signIn, reset},
+  {resetPassword, reset},
   null,
   {withRef: true}
 )
-export default class LoginScreen extends PureComponent {
-  static screenName = 'auth.Login'
+export default class ResetPasswordScreen extends PureComponent {
+  static screenName = 'auth.ResetPassword'
 
   static options = {
     topBar: {
-      title: {text: 'Login'}
+      title: {text: 'Lembrar senha'}
     }
   }
 
@@ -40,29 +39,19 @@ export default class LoginScreen extends PureComponent {
     this.setState({value: {}})
   }
 
-  componentDidUpdate() {
-    const {enabled, user} = this.props
-    if (enabled && user) this.onSuccess()
-  }
-
   onChange = (value) => this.setState({value})
 
+  componentDidUpdate(prev) {
+    const {response, loading, error} = this.props
+    const finishedLoading = prev.loading && !loading
+    const success = !error && response
+    if (finishedLoading && success) this.onSuccess()
+  }
+
   onSubmit = () => {
-    const {signIn, loading} = this.props
+    const {resetPassword, loading} = this.props
     const {value} = this.state
-    if (!loading && this.form.current.onValidate()) signIn(value)
-  }
-
-  onSignUp = () => {
-    Navigation.push(this.props.componentId, {
-      component: {name: null}
-    })
-  }
-
-  onPasswordRecovery = () => {
-    Navigation.push(this.props.componentId, {
-      component: {name: ResetPasswordScreen.screenName}
-    })
+    if (!loading && this.form.current.onValidate()) resetPassword(value)
   }
 
   render() {
@@ -71,13 +60,11 @@ export default class LoginScreen extends PureComponent {
     return (
       <View style={{flex: 1, display: 'flex'}}>
         <ScrollView style={{flex: 1}}>
-          <LoginForm
+          <ResetPasswordForm
             formRef={this.form}
             error={error}
             loading={loading}
             onChange={this.onChange}
-            onSignUp={this.onSignUp}
-            onPasswordRecovery={this.onPasswordRecovery}
           />
         </ScrollView>
         <Footer>

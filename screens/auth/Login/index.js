@@ -8,6 +8,7 @@ import {signIn, reset} from '@/redux/modules/auth'
 import Footer from '@/components/shared/Footer'
 import Button from '@/components/shared/Button'
 import LoginForm from '@/components/auth/Login'
+import SignUpScreen from '@/screens/auth/SignUp'
 import ResetPasswordScreen from '@/screens/auth/ResetPassword'
 
 @connect(
@@ -36,8 +37,11 @@ export default class LoginScreen extends PureComponent {
   form = React.createRef()
 
   componentDidDisappear() {
+    this.setState({value: undefined})
+  }
+
+  componentDidMount() {
     this.props.reset()
-    this.setState({value: {}})
   }
 
   componentDidUpdate() {
@@ -55,7 +59,7 @@ export default class LoginScreen extends PureComponent {
 
   onSignUp = () => {
     Navigation.push(this.props.componentId, {
-      component: {name: null}
+      component: {name: SignUpScreen.screenName}
     })
   }
 
@@ -67,12 +71,14 @@ export default class LoginScreen extends PureComponent {
 
   render() {
     const {loading, error} = this.props
+    const {value} = this.state
 
     return (
       <View style={{flex: 1, display: 'flex'}}>
         <ScrollView style={{flex: 1}}>
           <LoginForm
             formRef={this.form}
+            value={value}
             error={error}
             loading={loading}
             onChange={this.onChange}

@@ -3,16 +3,16 @@ import {View, ScrollView} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
-import {getData, getError, isLoading} from '@/redux/modules/auth/selectors'
+import {getUser, getError, isLoading} from '@/redux/modules/auth/selectors'
 import {resetPassword, reset} from '@/redux/modules/auth'
 import Footer from '@/components/shared/Footer'
 import Button from '@/components/shared/Button'
-import ResetPasswordForm from '@/components/auth/ResetPassword'
+import SignUpForm from '@/components/auth/SignUp'
 import SuccessScreen from '@/screens/shared/Success'
 
 @connect(
   (state) => ({
-    response: getData(state),
+    user: getUser(state),
     error: getError(state),
     loading: isLoading(state)
   }),
@@ -20,12 +20,12 @@ import SuccessScreen from '@/screens/shared/Success'
   null,
   {withRef: true}
 )
-export default class ResetPasswordScreen extends PureComponent {
-  static screenName = 'auth.ResetPassword'
+export default class SignUpScreen extends PureComponent {
+  static screenName = 'auth.SignUp'
 
   static options = {
     topBar: {
-      title: {text: 'Lembrar senha'}
+      title: {text: 'Cadastre-se'}
     }
   }
 
@@ -45,11 +45,9 @@ export default class ResetPasswordScreen extends PureComponent {
 
   onChange = (value) => this.setState({value})
 
-  componentDidUpdate(prev) {
-    const {response, loading, error} = this.props
-    const finishedLoading = prev.loading && !loading
-    const success = !error && response
-    if (finishedLoading && success) this.onSuccess()
+  componentDidUpdate() {
+    const {user} = this.props
+    if (user) this.onSuccess()
   }
 
   onSubmit = () => {
@@ -59,14 +57,15 @@ export default class ResetPasswordScreen extends PureComponent {
   }
 
   onSuccess = () => {
+    const {user: {name}} = this.props
+    const firstName = name.split(' ')[0]
     Navigation.showModal({
       component: {
         id: `${this.props.componentId}_success`,
         name: SuccessScreen.screenName,
         passProps: {
-          title: 'Email enviado',
-          children:
-            'Enviamos um e-mail pra você com instruções para criar uma nova senha.',
+          title: 'Cadastro concluído',
+          children: `${firstName}, enviamos um e-mail para você confirmar seu cadastro.`,
           onDismiss: this.onDismiss
         }
       }
@@ -85,7 +84,7 @@ export default class ResetPasswordScreen extends PureComponent {
     return (
       <View style={{flex: 1, display: 'flex'}}>
         <ScrollView style={{flex: 1}}>
-          <ResetPasswordForm
+          <SignUpForm
             formRef={this.form}
             value={value}
             error={error}

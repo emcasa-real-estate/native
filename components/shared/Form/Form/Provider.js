@@ -5,7 +5,7 @@ import {Provider, Consumer} from '../Context'
 
 const isValid = _.flow(
   _.values,
-  _.findIndex((value) => value === false),
+  _.findIndex(({valid}) => valid === false),
   (index) => index === -1
 )
 
@@ -45,9 +45,9 @@ export default class FormProvider extends PureComponent {
 
   static getDerivedStateFromProps({value, defaultValue}, state) {
     if (!_.isEmpty(value) && !_.isEqual(value, state.value))
-      return {value, valid: false}
+      return {value, valid: undefined}
     if (!_.isEmpty(defaultValue) && _.isEmpty(state.value))
-      return {value: defaultValue, valid: false}
+      return {value: defaultValue, valid: undefined}
     return null
   }
 

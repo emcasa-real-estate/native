@@ -4,12 +4,16 @@ import {Navigation} from 'react-native-navigation'
 
 import * as colors from '@/assets/colors'
 import {withProvider} from '@/containers/shared/Provider'
+import * as authScreens from './auth'
 import * as sharedScreens from './shared'
 
 const SCREENS = _.flow(
   _.values,
   _.filter((screen) => typeof screen === 'function')
-)(sharedScreens)
+)({
+  ...authScreens,
+  ...sharedScreens
+})
 
 const setDefaults = () =>
   Navigation.setDefaultOptions({
@@ -25,14 +29,14 @@ const setDefaults = () =>
 
 const registerScreens = () =>
   SCREENS.map((Screen) =>
-    Navigation.registerComponent(Screen.screen, () => withProvider(Screen))
+    Navigation.registerComponent(Screen.screenName, () => withProvider(Screen))
   )
 
 const setRoot = () =>
   Navigation.setRoot({
     root: {
       stack: {
-        children: [{component: {id: 'root', name: 'shared.HelloWorld'}}]
+        children: [{component: {id: 'root', name: 'auth.Login'}}]
       }
     }
   })

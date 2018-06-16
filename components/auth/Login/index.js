@@ -18,13 +18,12 @@ const getError = (error) => {
 export default function LoginForm({
   onPasswordRecovery,
   onSignUp,
-  onSubmit,
   error,
-  loading
+  ...props
 }) {
   const errorMessage = getError(error)
   return (
-    <Form style={styles.container} onSubmit={onSubmit} loading={loading}>
+    <Form style={styles.container} {...props}>
       {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
       <Email name="email" returnKeyType="next" nextField="password" />
       <Password name="password" returnKeyType="done" />

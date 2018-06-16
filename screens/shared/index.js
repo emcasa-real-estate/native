@@ -1,2 +1,2 @@
-export {default as HelloWorld} from './HelloWorld'
+export {default as HeaderTextButton} from './Header/TextButton'
 export {default as Success} from './Success'

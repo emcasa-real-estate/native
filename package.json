@@ -3,7 +3,9 @@
   "version": "1.1.6",
   "private": true,
   "rnpm": {
-    "assets": ["./assets/fonts"]
+    "assets": [
+      "./assets/fonts"
+    ]
   },
   "scripts": {
     "prepare": "patch-package",
@@ -24,8 +26,7 @@
     "runner-config": "./__e2e__/jest.config.js",
     "configurations": {
       "ios.debug": {
-        "binaryPath":
-          "ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app",
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app",
         "build": "scripts/ios/build.sh",
         "type": "ios.simulator",
         "name": "iPhone 6"
@@ -60,6 +61,7 @@
     "geolib": "^2.0.24",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
+    "hoist-non-react-statics": "^2.5.4",
     "immutability-helper": "^2.6.6",
     "lodash": "^4.17.5",
     "number-abbreviate": "^2.0.0",
@@ -71,8 +73,7 @@
     "react-native-fabric": "^0.5.1",
     "react-native-fabric-crashlytics": "^0.1.8",
     "react-native-fontawesome-pro": "^1.0.12",
-    "react-native-google-places-autocomplete":
-      "FaridSafi/react-native-google-places-autocomplete",
+    "react-native-google-places-autocomplete": "FaridSafi/react-native-google-places-autocomplete",
     "react-native-image-picker": "^0.26.10",
     "react-native-keyboard-manager": "^4.0.13-7",
     "react-native-keyboard-spacer": "^0.4.1",

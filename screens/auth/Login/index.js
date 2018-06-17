@@ -27,6 +27,9 @@ export default class LoginScreen extends PureComponent {
   static options = {
     topBar: {
       title: {text: 'Login'}
+    },
+    bottomTab: {
+      title: 'Login'
     }
   }
 
@@ -40,8 +43,15 @@ export default class LoginScreen extends PureComponent {
     this.setState({value: undefined})
   }
 
-  componentDidMount() {
+  componentDidAppear() {
     this.props.reset()
+    Navigation.mergeOptions(this.props.componentId, {
+      bottomTabs: {
+        translucent: true,
+        drawBehind: true,
+        visible: false
+      }
+    })
   }
 
   componentDidUpdate() {

@@ -8,7 +8,6 @@ import {getUser} from '@/redux/modules/auth/selectors'
 import Menu from '@/components/account/Menu'
 import {withUserListings} from '@/screens/account/shared/UserListingsQuery'
 
-@withUserListings
 @connect(
   (state) => ({
     user: getUser(state)
@@ -17,8 +16,26 @@ import {withUserListings} from '@/screens/account/shared/UserListingsQuery'
   null,
   {withRef: true}
 )
+@withUserListings
 export default class AccountMenuScreen extends PureComponent {
   static screenName = 'account.Menu'
+
+  static options = {
+    bottomTabs: {
+      visible: true
+    },
+    bottomTab: {
+      title: 'Perfil'
+    }
+  }
+
+  componentDidAppear() {
+    Navigation.mergeOptions(this.props.componentId, {
+      bottomTabs: {
+        visible: true
+      }
+    })
+  }
 
   navigateTo = (component) => () => {
     Navigation.push(this.props.componentId, {component})

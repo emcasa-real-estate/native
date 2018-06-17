@@ -1,26 +1,22 @@
 import {PureComponent} from 'react'
-import {View} from 'react-native'
+import {View, Platform} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import {signOut} from '@/redux/modules/auth'
-import {getUser} from '@/redux/modules/auth/selectors'
-import Menu from '@/components/account/Menu'
 import {withUserListings} from '@/screens/account/shared/UserListingsQuery'
+import Menu from '@/components/account/Menu'
+import HeaderScreen from './Header'
 
-@connect(
-  (state) => ({
-    user: getUser(state)
-  }),
-  {signOut},
-  null,
-  {withRef: true}
-)
+@connect(null, {signOut}, null, {withRef: true})
 @withUserListings
 export default class AccountMenuScreen extends PureComponent {
   static screenName = 'account.Menu'
 
   static options = {
+    topBar: {
+      component: {name: HeaderScreen.screenName}
+    },
     bottomTabs: {
       visible: true
     },
@@ -50,7 +46,7 @@ export default class AccountMenuScreen extends PureComponent {
   render() {
     const {userListings} = this.props
     return (
-      <View>
+      <View style={{marginTop: Platform.OS === 'ios' ? 20 : 0}}>
         <Menu
           listingsCount={!userListings.loading && userListings.data.length}
           onSignOut={this.onSignOut}

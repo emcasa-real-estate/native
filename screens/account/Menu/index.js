@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import {signOut} from '@/redux/modules/auth'
 import {withUserListings} from '@/screens/account/shared/UserListingsQuery'
 import Menu from '@/components/account/Menu'
+import EditProfileScreen from '../EditProfile'
 import HeaderScreen from './Header'
 
 @connect(null, {signOut}, null, {withRef: true})
@@ -15,7 +16,8 @@ export default class AccountMenuScreen extends PureComponent {
 
   static options = {
     topBar: {
-      component: {name: HeaderScreen.screenName}
+      component: {name: HeaderScreen.screenName},
+      title: {text: 'Perfil'}
     },
     bottomTabs: {
       visible: true
@@ -52,7 +54,7 @@ export default class AccountMenuScreen extends PureComponent {
           onSignOut={this.onSignOut}
           onEditProfile={this.navigateTo({
             id: 'edit_profile',
-            name: null
+            name: EditProfileScreen.screenName
           })}
           onViewListings={this.navigateTo({
             id: 'user_listings',

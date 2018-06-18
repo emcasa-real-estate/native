@@ -2,7 +2,7 @@ import {Component} from 'react'
 import {ApolloProvider} from 'react-apollo'
 import {connect} from 'react-redux'
 
-import client from '@/lib/graphql/client'
+import client from '@/graphql/client'
 import {getToken} from '@/redux/modules/auth/selectors'
 
 class AppApolloProvider extends Component {

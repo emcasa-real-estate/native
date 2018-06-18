@@ -3,7 +3,7 @@ import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 import {graphql} from 'react-apollo'
 
-import {EDIT_PASSWORD} from '@/lib/graphql/mutations/account'
+import {EDIT_PASSWORD} from '@/graphql/modules/user/mutations'
 import {setContext, clearContext} from '@/screens/module/context'
 import {getUser} from '@/redux/modules/auth/selectors'
 import {getContext} from '@/screens/module/context/selectors'

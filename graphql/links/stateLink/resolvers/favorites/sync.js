@@ -1,5 +1,5 @@
-import {GET_FAVORITE_LISTINGS_IDS} from '@/lib/graphql/queries/favorites'
-import {FAVORITE} from '@/lib/graphql/mutations/favorites'
+import {GET_FAVORITE_LISTINGS_IDS} from '@/graphql/modules/user/queries'
+import {FAVORITE} from '@/graphql/modules/listings/mutations'
 
 const _GET_FAVORITE_LISTINGS_IDS = GET_FAVORITE_LISTINGS_IDS({cache: true})
 const _FAVORITE = FAVORITE({cache: false})

@@ -1,6 +1,6 @@
 import {reportError} from '@/redux/modules/fabric'
 import {getData} from '@/redux/modules/listings/data/selectors'
-import {GET_FAVORITE_LISTINGS} from '@/lib/graphql/queries/favorites'
+import {GET_FAVORITE_LISTINGS} from '@/graphql/modules/user/queries'
 
 const parseListing = (data) => ({
   ...data,

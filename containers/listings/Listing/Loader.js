@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {graphql} from 'react-apollo'
 import {compose, mapProps} from 'recompose'
 
-import {VISUALIZE_TOUR} from '@/lib/graphql/mutations/listings'
+import {VISUALIZE_TOUR} from '@/graphql/modules/listings/mutations'
 import {load} from '@/redux/modules/listings/data'
 import {getData, isLoading} from '@/redux/modules/listings/data/selectors'
 import Loader from '@/containers/shared/Loader'

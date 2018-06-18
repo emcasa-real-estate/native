@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react'
 import {Query} from 'react-apollo'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 
-import {GET_USER_LISTINGS} from '@/lib/graphql/queries/account'
+import {GET_USER_LISTINGS} from '@/graphql/modules/user/queries'
 
 export const withUserListings = (Target) =>
   hoistNonReactStatics(

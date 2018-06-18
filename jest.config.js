@@ -6,5 +6,5 @@ module.exports = {
   transformIgnorePatterns: [
     '/node_modules/(?!(jest-)?react-native|react-navigation)/'
   ],
-  modulePathIgnorePatterns: ['/redux/__mocks__', '/lib/graphql/__mocks__']
+  modulePathIgnorePatterns: ['/redux/__mocks__', '/graphql/__mocks__']
 }

@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {
   GET_FAVORITE_LISTINGS_IDS,
   GET_FAVORITE_LISTINGS
-} from '@/lib/graphql/queries/favorites'
+} from '@/graphql/modules/user/queries'
 import {getToken} from '@/redux/modules/auth/selectors'
 
 const props = (state) => ({jwt: getToken(state)})

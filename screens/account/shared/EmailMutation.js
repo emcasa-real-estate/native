@@ -4,7 +4,7 @@ import {Mutation} from 'react-apollo'
 import {connect} from 'react-redux'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 
-import {EDIT_EMAIL} from '@/lib/graphql/mutations/account'
+import {EDIT_EMAIL} from '@/graphql/modules/user/mutations'
 import {patch} from '@/redux/modules/auth'
 import {getUser} from '@/redux/modules/auth/selectors'
 

@@ -1,44 +1,51 @@
-import _ from 'lodash/fp'
 import React, {PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
+import {graphql} from 'react-apollo'
 
+import {EDIT_PASSWORD} from '@/lib/graphql/mutations/account'
 import {setContext, clearContext} from '@/screens/module/context'
+import {getUser} from '@/redux/modules/auth/selectors'
 import {getContext} from '@/screens/module/context/selectors'
-import {withProfileMutation} from '@/screens/account/shared/ProfileMutation'
-import {withEmailMutation} from '@/screens/account/shared/EmailMutation'
-import ProfileForm from '@/components/account/ProfileForm'
-import EditPasswordScreen from '../EditPassword'
+import PasswordForm from '@/components/account/PasswordForm'
 import SubmitButtonScreen from '../SubmitButton'
 
-@withProfileMutation
-@withEmailMutation
 @connect(
   (state) => getContext(state, {screen: 'account'}),
   {setContext: setContext('account'), clearContext: clearContext('account')},
   null,
   {withRef: true}
 )
-export default class EditProfileScreen extends PureComponent {
-  static screenName = 'account.EditProfile'
+@connect(
+  (state) => ({
+    user: getUser(state)
+  }),
+  null,
+  null,
+  {withRef: true}
+)
+@graphql(
+  EDIT_PASSWORD,
+  {
+    props: ({mutate, ownProps: {user}}) => ({
+      changePassword: (variables) =>
+        mutate({variables: {id: user.id, ...variables}})
+    })
+  },
+  {withRef: true}
+)
+export default class EditPasswordScreen extends PureComponent {
+  static screenName = 'account.EditPassword'
 
   static options = {
     topBar: {
-      title: {text: 'Editar perfil'}
+      title: {text: 'Alterar senha'}
     }
   }
 
   state = {value: {}}
 
   form = React.createRef()
-
-  constructor(props) {
-    super(props)
-    this.state.value = _.flow(
-      _.pick(['name', 'phone', 'email']),
-      _.mapValues((value) => value || '')
-    )(props.user)
-  }
 
   componentDidMount() {
     Navigation.mergeOptions(this.props.componentId, {
@@ -61,36 +68,42 @@ export default class EditProfileScreen extends PureComponent {
   }
 
   onSubmit = async () => {
-    const {user, changeEmail, editUserProfile, setContext} = this.props
+    const {setContext, changePassword} = this.props
     const {value} = this.state
     setContext({loading: true})
-    if (user.email != value.email)
-      await changeEmail({variables: {email: value.email}})
-    if (user.name != value.name || user.phone != value.phone)
-      await editUserProfile({variables: {name: value.name, phone: value.phone}})
-    setContext({loading: false})
+    try {
+      await changePassword(value)
+      this.setState({
+        value: undefined,
+        message: {
+          type: 'success',
+          text: 'A sua senha foi alterada com sucesso.'
+        }
+      })
+      setContext({loading: false})
+    } catch (error) {
+      this.setState({
+        message: {
+          type: 'error',
+          text: 'A senha está incorreta'
+        }
+      })
+      setContext({loading: false})
+    }
   }
 
   onChange = (value) => this.setState({value})
 
-  onEditPassword = () => {
-    Navigation.push(this.props.componentId, {
-      component: {name: EditPasswordScreen.screenName}
-    })
-  }
-
   render() {
-    const {user} = this.props
-    const {value} = this.state
+    const {value, message} = this.state
 
     return (
-      <ProfileForm
+      <PasswordForm
         formRef={this.form}
-        user={user}
+        message={message}
         value={value}
         onSubmit={this.onSubmit}
         onChange={this.onChange}
-        onEditPassword={this.onEditPassword}
       />
     )
   }

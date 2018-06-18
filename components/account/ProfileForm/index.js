@@ -15,7 +15,7 @@ export default class ProfileForm extends Component {
     this.props.value[key] !== (this.props.user[key] || '')
 
   render() {
-    const {onChangePassword, ...props} = this.props
+    const {onEditPassword, ...props} = this.props
 
     return (
       <View style={styles.container}>
@@ -42,7 +42,7 @@ export default class ProfileForm extends Component {
             />
           </Section>
         </Form>
-        <Button onPress={onChangePassword} icon="chevron-right">
+        <Button onPress={onEditPassword} icon="chevron-right">
           Alterar senha
         </Button>
       </View>

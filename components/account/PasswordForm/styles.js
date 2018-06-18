@@ -10,12 +10,17 @@ export default StyleSheet.create({
   input: {
     borderColor: colors.gray.light
   },
-  error: {
+  message: {
     fontSize: 16,
-    color: colors.red.medium,
     marginBottom: 20,
     marginLeft: 20,
     marginRight: 20
+  },
+  errorMessage: {
+    color: colors.red.medium
+  },
+  successMessage: {
+    color: colors.green.medium
   }
 })
 

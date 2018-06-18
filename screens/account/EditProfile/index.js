@@ -5,8 +5,10 @@ import {connect} from 'react-redux'
 
 import {setContext, clearContext} from '@/screens/module/context'
 import {getContext} from '@/screens/module/context/selectors'
-import {withProfileMutation} from '@/screens/account/shared/ProfileMutation'
-import {withEmailMutation} from '@/screens/account/shared/EmailMutation'
+import {
+  withEmailMutation,
+  withProfileMutation
+} from '@/graphql/modules/user/containers'
 import ProfileForm from '@/components/account/ProfileForm'
 import EditPasswordScreen from '../EditPassword'
 import SubmitButtonScreen from '../SubmitButton'

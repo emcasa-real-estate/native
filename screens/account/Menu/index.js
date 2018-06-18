@@ -4,7 +4,7 @@ import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import {signOut} from '@/redux/modules/auth'
-import {withUserListings} from '@/screens/account/shared/UserListingsQuery'
+import {withUserListings} from '@/graphql/modules/user/containers'
 import Menu from '@/components/account/Menu'
 import EditProfileScreen from '../EditProfile'
 import HeaderScreen from './Header'

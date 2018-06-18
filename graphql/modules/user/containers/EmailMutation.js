@@ -1,9 +1,8 @@
 import _ from 'lodash'
-import React, {PureComponent} from 'react'
 import {Mutation} from 'react-apollo'
 import {connect} from 'react-redux'
-import hoistNonReactStatics from 'hoist-non-react-statics'
 
+import createContainer from '@/graphql/createContainer'
 import {EDIT_EMAIL} from '@/graphql/modules/user/mutations'
 import {patch} from '@/redux/modules/auth'
 import {getUser} from '@/redux/modules/auth/selectors'
@@ -36,32 +35,19 @@ const EmailMutationWithData = connect(
 export default EmailMutationWithData
 
 export const withEmailMutation = (Target) =>
-  hoistNonReactStatics(
-    class extends PureComponent {
-      static displayName = `withUserListings(${Target.displayName ||
-        Target.name})`
-
-      instance = React.createRef()
-
-      getWrappedInstance() {
-        return this.instance.current
-      }
-
-      render() {
-        return (
-          <EmailMutationWithData>
-            {(mutate, ctx) => (
-              <Target
-                {...this.props}
-                {...ctx}
-                ref={this.instance}
-                loading={this.props.loading || ctx.loading}
-                changeEmail={mutate}
-              />
-            )}
-          </EmailMutationWithData>
-        )
-      }
-    },
+  createContainer(
+    (props, ref) => (
+      <EmailMutationWithData>
+        {(mutate, ctx) => (
+          <Target
+            {...props}
+            {...ctx}
+            ref={ref}
+            loading={props.loading || ctx.loading}
+            changeEmail={mutate}
+          />
+        )}
+      </EmailMutationWithData>
+    ),
     Target
   )

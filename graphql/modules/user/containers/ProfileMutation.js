@@ -1,9 +1,8 @@
 import _ from 'lodash'
-import React, {PureComponent} from 'react'
 import {Mutation} from 'react-apollo'
 import {connect} from 'react-redux'
-import hoistNonReactStatics from 'hoist-non-react-statics'
 
+import createContainer from '@/graphql/createContainer'
 import {EDIT_PROFILE} from '@/graphql/modules/user/mutations'
 import {patch} from '@/redux/modules/auth'
 import {getUser} from '@/redux/modules/auth/selectors'
@@ -37,31 +36,19 @@ const ProfileMutationWithData = connect(
 export default ProfileMutationWithData
 
 export const withProfileMutation = (Target) =>
-  hoistNonReactStatics(
-    class extends PureComponent {
-      static displayName = `withUserListings(${Target.displayName ||
-        Target.name})`
-
-      instance = React.createRef()
-
-      getWrappedInstance() {
-        return this.instance.current
-      }
-
-      render() {
-        return (
-          <ProfileMutationWithData>
-            {(mutate, ctx) => (
-              <Target
-                {...this.props}
-                {...ctx}
-                loading={this.props.loading || ctx.loading}
-                editUserProfile={mutate}
-              />
-            )}
-          </ProfileMutationWithData>
-        )
-      }
-    },
+  createContainer(
+    (props, ref) => (
+      <ProfileMutationWithData>
+        {(mutate, ctx) => (
+          <Target
+            {...props}
+            {...ctx}
+            ref={ref}
+            loading={props.loading || ctx.loading}
+            editUserProfile={mutate}
+          />
+        )}
+      </ProfileMutationWithData>
+    ),
     Target
   )

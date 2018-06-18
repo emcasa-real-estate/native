@@ -4,25 +4,34 @@ import {Navigation} from 'react-native-navigation'
 
 import * as colors from '@/assets/colors'
 import {withProvider} from '@/containers/shared/Provider'
+import bottomTabs from './tabs'
+import * as authScreens from './auth'
+import * as accountScreens from './account'
 import * as listingsScreens from './listings'
 import * as sharedScreens from './shared'
 
 const SCREENS = _.flow(
   _.map(_.values),
-  ([...screens]) => _.concat(...screens),
+  ([...screens]) => [].concat(...screens),
   _.filter((screen) => typeof screen === 'function')
-)([sharedScreens, listingsScreens])
+)([authScreens, accountScreens, listingsScreens, sharedScreens])
 
 const setDefaults = () =>
   Navigation.setDefaultOptions({
     topBar: {
       height: 50,
-      hideBackButtonTitle: true,
       title: {
         height: 50,
         fontFamily: Platform.OS === 'ios' ? 'Open Sans' : 'OpenSans',
         color: colors.gray.dark
       }
+    },
+    bottomTabs: {
+      animate: true,
+      tabColor: colors.gray.dark,
+      selectedTabColor: colors.blue.medium,
+      fontFamily: Platform.OS === 'ios' ? 'Open Sans' : 'OpenSans',
+      fontSize: 11
     }
   })
 
@@ -34,9 +43,7 @@ const registerScreens = () =>
 const setRoot = () =>
   Navigation.setRoot({
     root: {
-      stack: {
-        children: [{component: {id: 'root', name: 'listings.Feed'}}]
-      }
+      bottomTabs: bottomTabs()
     }
   })
 

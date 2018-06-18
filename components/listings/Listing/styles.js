@@ -35,12 +35,6 @@ export default StyleSheet.create({
   }
 })
 
-export const modalStyles = StyleSheet.create({
-  header: {
-    paddingTop: 60
-  }
-})
-
 export const markerStyles = StyleSheet.create({
   body: {
     width: 40,

@@ -3,14 +3,11 @@ import {View} from 'react-native'
 
 import Icon from '@/components/shared/Icon'
 import Text from '@/components/shared/Text'
-import Modal from '@/components/shared/Modal'
 import Map, {Marker} from '../Map'
-import Gallery from '../Gallery'
-import Matterport from '../Matterport'
 import Description from './Description'
 import Properties from './Properties'
 import Thumbnail from './Thumbnail'
-import styles, {modalStyles, markerStyles, markerColor} from './styles'
+import styles, {markerStyles, markerColor} from './styles'
 
 export default class ListingView extends Component {
   state = {
@@ -26,22 +23,9 @@ export default class ListingView extends Component {
 
   onClose = () => this.setState({view: undefined})
 
-  renderModal() {
-    const {images} = this.props
-    const {view} = this.state
-    switch (view) {
-      case 'gallery':
-        return <Gallery>{images}</Gallery>
-      case 'matterport':
-        return <Matterport code={this.props.matterportCode} />
-      default:
-        return undefined
-    }
-  }
-
   render() {
     const {address} = this.props
-    const {view, ready} = this.state
+    const {ready} = this.state
     return (
       <View testID="@listings.Listing" style={styles.container}>
         <View testID="@listings.Listing.header" style={styles.header}>
@@ -62,17 +46,6 @@ export default class ListingView extends Component {
             </Map>
           </View>
         )}
-        <Modal
-          contrast
-          overlay
-          styles={view === 'matterport' && modalStyles}
-          visible={Boolean(view)}
-          onDismiss={this.onClose}
-        >
-          <View testID="@listings.Listing.modal" style={styles.modal}>
-            {this.renderModal()}
-          </View>
-        </Modal>
       </View>
     )
   }

@@ -7,14 +7,15 @@ import {withProvider} from '@/containers/shared/Provider'
 import bottomTabs from './tabs'
 import * as authScreens from './auth'
 import * as accountScreens from './account'
+import * as listingScreens from './listing'
 import * as listingsScreens from './listings'
 import * as sharedScreens from './shared'
 
 const SCREENS = _.flow(
   _.map(_.values),
   ([...screens]) => [].concat(...screens),
-  _.filter((screen) => typeof screen === 'function' || screen.render)
-)([authScreens, accountScreens, listingsScreens, sharedScreens])
+  _.filter((screen) => screen.screenName)
+)([authScreens, accountScreens, listingScreens, listingsScreens, sharedScreens])
 
 const setDefaults = () =>
   Navigation.setDefaultOptions({

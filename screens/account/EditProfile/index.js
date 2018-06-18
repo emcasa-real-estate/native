@@ -1,7 +1,10 @@
 import _ from 'lodash/fp'
 import React, {PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
+import {connect} from 'react-redux'
 
+import {setContext} from '@/screens/module/context'
+import {getContext} from '@/screens/module/context/selectors'
 import {withProfileMutation} from '@/screens/account/shared/ProfileMutation'
 import {withEmailMutation} from '@/screens/account/shared/EmailMutation'
 import ProfileForm from '@/components/account/ProfileForm'
@@ -9,6 +12,12 @@ import SubmitButtonScreen from '../SubmitButton'
 
 @withProfileMutation
 @withEmailMutation
+@connect(
+  (state) => getContext(state, {screen: 'account'}),
+  {setContext: setContext('account')},
+  null,
+  {withRef: true}
+)
 export default class EditProfileScreen extends PureComponent {
   static screenName = 'account.EditProfile'
 
@@ -18,10 +27,7 @@ export default class EditProfileScreen extends PureComponent {
     }
   }
 
-  state = {
-    loading: false,
-    value: {}
-  }
+  state = {value: {}}
 
   form = React.createRef()
 
@@ -50,14 +56,14 @@ export default class EditProfileScreen extends PureComponent {
   }
 
   onSubmit = async () => {
-    const {user, changeEmail, editUserProfile} = this.props
+    const {user, changeEmail, editUserProfile, setContext} = this.props
     const {value} = this.state
-    this.setState({loading: true})
+    setContext({loading: true})
     if (user.email != value.email)
       await changeEmail({variables: {email: value.email}})
     if (user.name != value.name || user.phone != value.phone)
       await editUserProfile({variables: {name: value.name, phone: value.phone}})
-    this.setState({loading: false})
+    setContext({loading: false})
   }
 
   onChange = (value) => this.setState({value})

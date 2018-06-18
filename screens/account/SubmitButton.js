@@ -2,9 +2,7 @@ import {PureComponent} from 'react'
 import {View, ActivityIndicator, StyleSheet} from 'react-native'
 import {connect} from 'react-redux'
 
-import {withProfileMutation} from '@/screens/account/shared/ProfileMutation'
-import {withEmailMutation} from '@/screens/account/shared/EmailMutation'
-import {isLoading} from '@/redux/modules/auth/selectors'
+import {getContext} from '@/screens/module/context/selectors'
 import TextButton from '@/screens/shared/Header/TextButton'
 
 const styles = StyleSheet.create({
@@ -27,9 +25,9 @@ const styles = StyleSheet.create({
   }
 })
 
-@connect((state) => ({loading: isLoading(state)}), null, null, {withRef: true})
-@withProfileMutation
-@withEmailMutation
+@connect((state) => getContext(state, {screen: 'account'}), null, null, {
+  withRef: true
+})
 export default class AccountHeaderButton extends PureComponent {
   static screenName = 'account.HeaderButton'
 

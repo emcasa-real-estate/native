@@ -27,7 +27,7 @@ const setDefaults = () =>
       }
     },
     bottomTabs: {
-      animate: true,
+      animate: false,
       tabColor: colors.gray.dark,
       selectedTabColor: colors.blue.medium,
       fontFamily: Platform.OS === 'ios' ? 'Open Sans' : 'OpenSans',

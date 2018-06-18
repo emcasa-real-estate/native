@@ -33,6 +33,15 @@ import styles from './styles'
 export default class ListingsFeedScreen extends PureComponent {
   static screenName = 'listings.Feed'
 
+  static options = {
+    bottomTabs: {
+      visible: true
+    },
+    bottomTab: {
+      title: 'Imóveis'
+    }
+  }
+
   componentDidMount() {
     const {componentId} = this.props
     Navigation.mergeOptions(this.props.componentId, {

@@ -40,6 +40,16 @@ export default class ListingSearchScreen extends PureComponent {
     }
   }
 
+  componentDidMount() {
+    Navigation.mergeOptions(this.props.componentId, {
+      bottomTabs: {
+        translucent: true,
+        drawBehind: true,
+        visible: false
+      }
+    })
+  }
+
   componentDidAppear() {
     const {componentId} = this.props
     Navigation.mergeOptions(componentId, {
@@ -59,12 +69,9 @@ export default class ListingSearchScreen extends PureComponent {
   }
 
   componentDidDisappear() {
-    const {updateOptions, componentId} = this.props
+    const {updateOptions} = this.props
     const {options} = this.state
     if (!_.isEqual(options, this.props.options)) updateOptions(options)
-    Navigation.mergeOptions(componentId, {
-      topBar: {rightButtons: []}
-    })
   }
 
   onChange = (params) => this.setState({options: params})

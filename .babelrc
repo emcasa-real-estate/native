@@ -1,7 +1,8 @@
 {
-  "presets": ["babel-preset-react-native-stage-0/decorator-support"],
+  "presets": ["react-native"],
   "plugins": [
     "lodash",
+    "transform-decorators-legacy",
     "react-require",
     [
       "module-resolver",

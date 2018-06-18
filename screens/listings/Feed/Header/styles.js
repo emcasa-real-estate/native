@@ -5,11 +5,15 @@ import {margin, padding} from '@/assets/styles'
 
 export default StyleSheet.create({
   container: {
+    backgroundColor: 'white',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.gray.light
+  },
+  touchableContainer: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: 'white',
     ...padding(10, 20, 15)
   },
   text: {

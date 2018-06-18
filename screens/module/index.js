@@ -1,3 +1,7 @@
 import {combineReducers} from 'redux'
 
-//export default combineReducers({})
+import context from './context'
+
+export default combineReducers({
+  context
+})

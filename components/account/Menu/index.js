@@ -1,11 +1,8 @@
 import {View} from 'react-native'
 
-import {Gateway} from 'react-gateway'
 import Button, {ButtonLabel} from '../FormButton'
-import Header from './Header'
 
 export default function AccountMenu({
-  user,
   listingsCount,
   onEditProfile,
   onViewListings,
@@ -13,9 +10,6 @@ export default function AccountMenu({
 }) {
   return (
     <View>
-      <Gateway into="header">
-        <Header user={user} />
-      </Gateway>
       <Button onPress={onEditProfile} icon="chevron-right">
         Editar perfil
       </Button>

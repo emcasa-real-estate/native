@@ -12,10 +12,10 @@ const getError = (error) => {
   }
 }
 
-export default function SignUpForm({onSubmit, error, loading}) {
+export default function SignUpForm({error, ...props}) {
   const errorMessage = getError(error)
   return (
-    <Form style={styles.container} onSubmit={onSubmit} loading={loading}>
+    <Form style={styles.container} {...props}>
       <Text style={styles.paragraph}>
         Digite abaixo o e-mail cadastrado e vamos te ajudar a criar uma senha
         nova.

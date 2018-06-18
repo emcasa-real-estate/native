@@ -17,10 +17,10 @@ const getError = (error) => {
   }
 }
 
-export default function SignUpForm({onSubmit, error, loading}) {
+export default function SignUpForm({error, ...props}) {
   const errorMessage = getError(error)
   return (
-    <Form style={styles.container} onSubmit={onSubmit} loading={loading}>
+    <Form style={styles.container} {...props}>
       {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
       <TextInput
         name="name"

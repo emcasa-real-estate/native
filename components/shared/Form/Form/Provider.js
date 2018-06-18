@@ -5,7 +5,7 @@ import {Provider, Consumer} from '../Context'
 
 const isValid = _.flow(
   _.values,
-  _.findIndex((value) => value === false),
+  _.findIndex(({valid}) => valid === false),
   (index) => index === -1
 )
 
@@ -35,23 +35,30 @@ export const form = (Target) => ({
 )
 
 export default class FormProvider extends PureComponent {
+  static defaultProps = {
+    defaultValue: {}
+  }
+
   state = {
     focus: undefined,
     valid: true,
-    value: {},
+    value: undefined,
     fields: {},
     validation: {}
   }
 
   static getDerivedStateFromProps({value, defaultValue}, state) {
-    if (!_.isEmpty(value) && !_.isEqual(value, state.value))
-      return {value, valid: false}
-    if (!_.isEmpty(defaultValue) && _.isEmpty(state.value))
-      return {value: defaultValue, valid: false}
+    if (!_.isObject(state.value))
+      return {value: value || defaultValue, validation: {}, valid: true}
+    if (_.isObject(value) && !_.isEqual(value, state.value))
+      return {value, valid: undefined}
     return null
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prev) {
+    const {value, defaultValue} = this.props
+    if (prev.value && !value)
+      this.setState({value: defaultValue, validation: {}, valid: true})
     if (typeof this.state.valid === 'undefined') this.onValidate()
   }
 

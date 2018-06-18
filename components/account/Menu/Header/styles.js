@@ -9,8 +9,10 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: 'white',
-    padding: 10,
-    paddingLeft: 20
+    height: 65,
+    paddingLeft: 20,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.gray.light
   },
   title: {
     flex: 1,

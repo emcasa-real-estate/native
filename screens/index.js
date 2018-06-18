@@ -4,12 +4,19 @@ import {Navigation} from 'react-native-navigation'
 
 import * as colors from '@/assets/colors'
 import {withProvider} from '@/containers/shared/Provider'
+import bottomTabs from './tabs'
+import * as authScreens from './auth'
+import * as accountScreens from './account'
 import * as sharedScreens from './shared'
 
 const SCREENS = _.flow(
   _.values,
   _.filter((screen) => typeof screen === 'function')
-)(sharedScreens)
+)({
+  ...authScreens,
+  ...accountScreens,
+  ...sharedScreens
+})
 
 const setDefaults = () =>
   Navigation.setDefaultOptions({
@@ -20,20 +27,25 @@ const setDefaults = () =>
         fontFamily: Platform.OS === 'ios' ? 'Open Sans' : 'OpenSans',
         color: colors.gray.dark
       }
+    },
+    bottomTabs: {
+      animate: true,
+      tabColor: colors.gray.dark,
+      selectedTabColor: colors.blue.medium,
+      fontFamily: Platform.OS === 'ios' ? 'Open Sans' : 'OpenSans',
+      fontSize: 11
     }
   })
 
 const registerScreens = () =>
   SCREENS.map((Screen) =>
-    Navigation.registerComponent(Screen.screen, () => withProvider(Screen))
+    Navigation.registerComponent(Screen.screenName, () => withProvider(Screen))
   )
 
 const setRoot = () =>
   Navigation.setRoot({
     root: {
-      stack: {
-        children: [{component: {id: 'root', name: 'shared.HelloWorld'}}]
-      }
+      bottomTabs: bottomTabs()
     }
   })
 

@@ -8,6 +8,7 @@ import listings from './listings'
 import gallery from './gallery'
 import interest from './interest'
 import neighborhoods from './neighborhoods'
+import screens from '@/screens/module'
 
 const persistent = (reducer, options = {}) =>
   persistReducer(
@@ -20,6 +21,7 @@ const persistent = (reducer, options = {}) =>
   )
 
 export default combineReducers({
+  screens,
   network,
   auth: persistent(auth, {whitelist: ['user']}),
   listings,

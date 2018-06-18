@@ -31,7 +31,7 @@ export const withProvider = (Target) =>
       return Target.options
     }
 
-    get instance() {
+    getWrappedInstance() {
       let instance = this.child.current
       // Hack to get react-redux/react-apollo wrapped component instance
       while (instance && instance.getWrappedInstance)
@@ -44,7 +44,7 @@ export const withProvider = (Target) =>
     }
 
     resendEvent = (eventName, params) => {
-      const instance = this.instance
+      const instance = this.getWrappedInstance()
       if (instance && instance[eventName]) {
         instance[eventName](params)
       }

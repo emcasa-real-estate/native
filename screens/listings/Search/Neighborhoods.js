@@ -18,7 +18,7 @@ import HeaderButton from '@/screens/shared/Header/TextButton'
   {withRef: true}
 )
 export default class NeighborhoodsScreen extends PureComponent {
-  static screen = 'listings.Search.Neighborhoods'
+  static screenName = 'listings.Search.Neighborhoods'
 
   static options = {
     topBar: {
@@ -51,7 +51,7 @@ export default class NeighborhoodsScreen extends PureComponent {
               label: 'Limpar',
               onPress: this.onReset
             },
-            component: {name: HeaderButton.screen}
+            component: {name: HeaderButton.screenName}
           }
         ]
       }

@@ -19,7 +19,7 @@ import Neighborhoods from './Neighborhoods'
   {withRef: true}
 )
 export default class ListingSearchScreen extends PureComponent {
-  static screen = 'listings.Search'
+  static screenName = 'listings.Search'
 
   static options = {
     topBar: {
@@ -51,7 +51,7 @@ export default class ListingSearchScreen extends PureComponent {
               label: 'Limpar',
               onPress: this.onReset
             },
-            component: {name: HeaderButton.screen}
+            component: {name: HeaderButton.screenName}
           }
         ]
       }
@@ -82,7 +82,7 @@ export default class ListingSearchScreen extends PureComponent {
   onPressNeighborhoods = () => {
     Navigation.push(this.props.componentId, {
       component: {
-        name: Neighborhoods.screen,
+        name: Neighborhoods.screenName,
         passProps: {
           value: this.state.options.neighborhoods,
           onChange: this.onChangeNeighborhoods

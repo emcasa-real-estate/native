@@ -43,7 +43,7 @@ import styles from './styles'
   {watchPosition, unwatchPosition, requestPosition, setActiveListing}
 )
 export default class MapScreen extends Component {
-  static screen = 'listings.Map'
+  static screenName = 'listings.Map'
 
   static options = {
     topBar: {
@@ -57,7 +57,7 @@ export default class MapScreen extends Component {
       rightButtons: [
         {
           id: 'mapLocationButton',
-          component: {name: HeaderButton.screen}
+          component: {name: HeaderButton.screenName}
         }
       ]
     }

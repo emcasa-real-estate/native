@@ -31,7 +31,7 @@ import styles from './styles'
   {withRef: true}
 )
 export default class ListingsFeedScreen extends PureComponent {
-  static screen = 'listings.Feed'
+  static screenName = 'listings.Feed'
 
   componentDidMount() {
     const {componentId} = this.props
@@ -39,7 +39,7 @@ export default class ListingsFeedScreen extends PureComponent {
       topBar: {
         component: {
           id: `${componentId}.header`,
-          name: Header.screen,
+          name: Header.screenName,
           passProps: {target: componentId}
         }
       }
@@ -48,14 +48,13 @@ export default class ListingsFeedScreen extends PureComponent {
 
   componentDidAppear() {
     const {data} = this.props
-    console.log(data)
     if (_.isEmpty(data)) this.onLoadMore()
   }
 
   onOpenMap = () => {
     Navigation.push(this.props.componentId, {
       component: {
-        name: Map.screen,
+        name: Map.screenName,
         passProps: this.props
       }
     })

@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 })
 
 export default class HeaderTextButton extends PureComponent {
-  static screen = 'listings.Header.TextButton'
+  static screenName = 'listings.Header.TextButton'
 
   renderButton() {
     const {label, style} = this.props

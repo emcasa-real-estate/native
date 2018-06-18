@@ -28,7 +28,7 @@ const setDefaults = () =>
 
 const registerScreens = () =>
   SCREENS.map((Screen) =>
-    Navigation.registerComponent(Screen.screen, () => withProvider(Screen))
+    Navigation.registerComponent(Screen.screenName, () => withProvider(Screen))
   )
 
 const setRoot = () =>

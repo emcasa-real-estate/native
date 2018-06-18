@@ -13,7 +13,7 @@ import Button from '@/screens/shared/Header/TextButton'
   {watchPosition, unwatchPosition}
 )
 export default class MapHeaderButton extends PureComponent {
-  static screen = 'listings.MapHeaderButton'
+  static screenName = 'listings.MapHeaderButton'
 
   onPress = () =>
     this.props[

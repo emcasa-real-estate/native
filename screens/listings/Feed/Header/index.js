@@ -48,13 +48,13 @@ const Icon = () => (
   options: getOptions(state, {type: 'search'})
 }))
 export default class ListingsFeedHeader extends PureComponent {
-  static screen = 'listings.Feed.Header'
+  static screenName = 'listings.Feed.Header'
 
   onPress = () => {
     const {target, componentId} = this.props
     Navigation.push(target || componentId, {
       component: {
-        name: Search.screen
+        name: Search.screenName
       }
     })
   }

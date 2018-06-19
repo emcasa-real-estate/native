@@ -8,6 +8,7 @@ import {load} from '@/redux/modules/listings/data'
 import {getData, isLoading} from '@/redux/modules/listings/data/selectors'
 import Shell, {Body, Footer, Section} from '@/components/shared/Shell'
 import Button from '@/components/shared/Button'
+import GalleryScreen from '@/screens/listing/Gallery'
 import Listing from './Listing'
 // import RelatedListings from '@/containers/listings/Feed/Related'
 
@@ -27,7 +28,6 @@ export default class ListingScreen extends PureComponent {
 
   updateNavigation() {
     const {data, componentId} = this.props
-    console.log('eyy')
     Navigation.mergeOptions(componentId, {
       topBar: {
         title: {text: `R$${format.number(data.price)}`}
@@ -56,6 +56,21 @@ export default class ListingScreen extends PureComponent {
     })
   }
 
+  onOpenGallery = () => {
+    const {params, componentId} = this.props
+    const id = `${componentId}_gallery`
+    Navigation.showModal({
+      component: {
+        id,
+        name: GalleryScreen.screenName,
+        passProps: {
+          params,
+          onDismiss: () => Navigation.dismissModal(id)
+        }
+      }
+    })
+  }
+
   renderFooter() {
     const {loading, params} = this.props
     if (loading) return null
@@ -77,7 +92,7 @@ export default class ListingScreen extends PureComponent {
     return (
       <Shell>
         <Body scroll style={{flex: 1}}>
-          {!loading && <Listing {...data} />}
+          {!loading && <Listing {...data} onOpenGallery={this.onOpenGallery} />}
           {/* !loading && (
           <Section title="Veja Também">
             <RelatedListings id={id} />
@@ -89,5 +104,3 @@ export default class ListingScreen extends PureComponent {
     )
   }
 }
-
-export const screen = ListingScreen

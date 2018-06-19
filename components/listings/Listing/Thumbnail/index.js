@@ -24,10 +24,10 @@ const ActionButton = ({children, title, onPress}) => (
 const Icon = (props) => <BaseIcon size={20} color={iconColor} {...props} />
 
 export default class ListingThumbnail extends Component {
-  onOpenGallery = () => this.props.onOpen('gallery')
+  onOpenGallery = () => this.props.onOpenGallery()
 
   onOpenTour = () => {
-    this.props.onOpen('matterport')
+    this.props.onOpenTour()
     this.props.onViewTour()
   }
 

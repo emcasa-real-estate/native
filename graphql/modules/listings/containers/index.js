@@ -3,3 +3,4 @@ export {
   withFavoriteListingIDs,
   withFavoriteListingByID
 } from './FavoritesQuery'
+export {withViewTourMutation} from './ViewTourMutation'

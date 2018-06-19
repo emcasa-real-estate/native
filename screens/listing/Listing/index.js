@@ -3,6 +3,7 @@ import {PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
+import composeWithRef from '@/lib/composeWithRef'
 import * as format from '@/assets/format'
 import {load} from '@/redux/modules/listings/data'
 import {getData, isLoading} from '@/redux/modules/listings/data/selectors'
@@ -13,16 +14,7 @@ import TourScreen from '@/screens/listing/Tour'
 import Listing from './Listing'
 // import RelatedListings from '@/containers/listings/Feed/Related'
 
-@connect(
-  (state, {params}) => ({
-    data: getData(state, params) || {},
-    loading: isLoading(state, params)
-  }),
-  {load},
-  null,
-  {withRef: true}
-)
-export default class ListingScreen extends PureComponent {
+class ListingScreen extends PureComponent {
   static screenName = 'listing.Listing'
 
   static options = {}
@@ -121,3 +113,13 @@ export default class ListingScreen extends PureComponent {
     )
   }
 }
+
+export default composeWithRef(
+  connect(
+    (state, {params}) => ({
+      data: getData(state, params) || {},
+      loading: isLoading(state, params)
+    }),
+    {load}
+  )
+)(ListingScreen)

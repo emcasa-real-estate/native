@@ -2,7 +2,6 @@ import _ from 'lodash'
 import {Mutation} from 'react-apollo'
 import {connect} from 'react-redux'
 
-import createContainer from '@/graphql/createContainer'
 import {EDIT_PROFILE} from '@/graphql/modules/user/mutations'
 import {patch} from '@/redux/modules/auth'
 import {getUser} from '@/redux/modules/auth/selectors'
@@ -35,20 +34,15 @@ const ProfileMutationWithData = connect(
 
 export default ProfileMutationWithData
 
-export const withProfileMutation = (Target) =>
-  createContainer(
-    (props, ref) => (
-      <ProfileMutationWithData>
-        {(mutate, ctx) => (
-          <Target
-            {...props}
-            {...ctx}
-            ref={ref}
-            loading={props.loading || ctx.loading}
-            editUserProfile={mutate}
-          />
-        )}
-      </ProfileMutationWithData>
-    ),
-    Target
-  )
+export const withProfileMutation = (Target) => (props) => (
+  <ProfileMutationWithData>
+    {(mutate, ctx) => (
+      <Target
+        {...props}
+        {...ctx}
+        loading={props.loading || ctx.loading}
+        editUserProfile={mutate}
+      />
+    )}
+  </ProfileMutationWithData>
+)

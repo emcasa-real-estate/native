@@ -3,15 +3,14 @@ import {View, Platform} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
+import composeWithRef from '@/lib/composeWithRef'
 import {signOut} from '@/redux/modules/auth'
 import {withUserListings} from '@/graphql/modules/user/containers'
 import Menu from '@/components/account/Menu'
 import EditProfileScreen from '../EditProfile'
 import HeaderScreen from './Header'
 
-@connect(null, {signOut}, null, {withRef: true})
-@withUserListings
-export default class AccountMenuScreen extends PureComponent {
+class AccountMenuScreen extends PureComponent {
   static screenName = 'account.Menu'
 
   static options = {
@@ -65,3 +64,7 @@ export default class AccountMenuScreen extends PureComponent {
     )
   }
 }
+
+export default composeWithRef(connect(null, {signOut}), withUserListings)(
+  AccountMenuScreen
+)

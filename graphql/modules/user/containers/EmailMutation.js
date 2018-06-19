@@ -2,7 +2,6 @@ import _ from 'lodash'
 import {Mutation} from 'react-apollo'
 import {connect} from 'react-redux'
 
-import createContainer from '@/graphql/createContainer'
 import {EDIT_EMAIL} from '@/graphql/modules/user/mutations'
 import {patch} from '@/redux/modules/auth'
 import {getUser} from '@/redux/modules/auth/selectors'
@@ -34,20 +33,15 @@ const EmailMutationWithData = connect(
 
 export default EmailMutationWithData
 
-export const withEmailMutation = (Target) =>
-  createContainer(
-    (props, ref) => (
-      <EmailMutationWithData>
-        {(mutate, ctx) => (
-          <Target
-            {...props}
-            {...ctx}
-            ref={ref}
-            loading={props.loading || ctx.loading}
-            changeEmail={mutate}
-          />
-        )}
-      </EmailMutationWithData>
-    ),
-    Target
-  )
+export const withEmailMutation = (Target) => (props) => (
+  <EmailMutationWithData>
+    {(mutate, ctx) => (
+      <Target
+        {...props}
+        {...ctx}
+        loading={props.loading || ctx.loading}
+        changeEmail={mutate}
+      />
+    )}
+  </EmailMutationWithData>
+)

@@ -13,7 +13,7 @@ import * as sharedScreens from './shared'
 const SCREENS = _.flow(
   _.map(_.values),
   ([...screens]) => [].concat(...screens),
-  _.filter((screen) => typeof screen === 'function')
+  _.filter((screen) => typeof screen === 'function' || screen.render)
 )([authScreens, accountScreens, listingsScreens, sharedScreens])
 
 const setDefaults = () =>

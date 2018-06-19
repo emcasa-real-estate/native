@@ -3,6 +3,7 @@ import React, {PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
+import composeWithRef from '@/lib/composeWithRef'
 import {setContext, clearContext} from '@/screens/module/context'
 import {getContext} from '@/screens/module/context/selectors'
 import {
@@ -13,15 +14,7 @@ import ProfileForm from '@/components/account/ProfileForm'
 import EditPasswordScreen from '../EditPassword'
 import SubmitButtonScreen from '../SubmitButton'
 
-@withProfileMutation
-@withEmailMutation
-@connect(
-  (state) => getContext(state, {screen: 'account'}),
-  {setContext: setContext('account'), clearContext: clearContext('account')},
-  null,
-  {withRef: true}
-)
-export default class EditProfileScreen extends PureComponent {
+class EditProfileScreen extends PureComponent {
   static screenName = 'account.EditProfile'
 
   static options = {
@@ -97,3 +90,12 @@ export default class EditProfileScreen extends PureComponent {
     )
   }
 }
+
+export default composeWithRef(
+  withProfileMutation,
+  withEmailMutation,
+  connect((state) => getContext(state, {screen: 'account'}), {
+    setContext: setContext('account'),
+    clearContext: clearContext('account')
+  })
+)(EditProfileScreen)

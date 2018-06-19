@@ -3,16 +3,23 @@ import {PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
+import * as format from '@/assets/format'
+import {load} from '@/redux/modules/listings/data'
 import {getData, isLoading} from '@/redux/modules/listings/data/selectors'
 import Shell, {Body, Footer, Section} from '@/components/shared/Shell'
 import Button from '@/components/shared/Button'
-import Listing from '@/components/listings/Listing'
+import Listing from './Listing'
 // import RelatedListings from '@/containers/listings/Feed/Related'
 
-@connect((state, {params}) => ({
-  data: getData(state, params) || {},
-  loading: isLoading(state, params)
-}))
+@connect(
+  (state, {params}) => ({
+    data: getData(state, params) || {},
+    loading: isLoading(state, params)
+  }),
+  {load},
+  null,
+  {withRef: true}
+)
 export default class ListingScreen extends PureComponent {
   static screenName = 'listing.Listing'
 
@@ -20,11 +27,18 @@ export default class ListingScreen extends PureComponent {
 
   updateNavigation() {
     const {data, componentId} = this.props
+    console.log('eyy')
     Navigation.mergeOptions(componentId, {
       topBar: {
-        title: {text: data.price}
+        title: {text: `R$${format.number(data.price)}`}
       }
     })
+  }
+
+  componentDidMount() {
+    const {data, load, params: {id}} = this.props
+    if (_.isEmpty(data)) load(id)
+    else this.updateNavigation()
   }
 
   componentDidUpdate(prev) {
@@ -63,13 +77,7 @@ export default class ListingScreen extends PureComponent {
     return (
       <Shell>
         <Body scroll style={{flex: 1}}>
-          {!loading && (
-            <Listing
-              {...data}
-              onViewTour={() => null}
-              onFavorite={() => null}
-            />
-          )}
+          {!loading && <Listing {...data} />}
           {/* !loading && (
           <Section title="Veja Também">
             <RelatedListings id={id} />

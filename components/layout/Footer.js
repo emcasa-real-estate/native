@@ -10,6 +10,6 @@ const styles = StyleSheet.create({
   }
 })
 
-export default function Footer({children}) {
-  return <View style={styles.container}>{children}</View>
+export default function Footer({style, children}) {
+  return <View style={[styles.container, style]}>{children}</View>
 }

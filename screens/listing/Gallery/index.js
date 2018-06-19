@@ -3,7 +3,7 @@ import {PureComponent} from 'react'
 import {connect} from 'react-redux'
 
 import {getData} from '@/redux/modules/listings/data/selectors'
-import {Modal, Body} from '@/components/shared/Shell'
+import {Modal, Body} from '@/components/layout'
 import Gallery from '@/components/listings/Gallery'
 // import RelatedListings from '@/containers/listings/Feed/Related'
 
@@ -21,10 +21,11 @@ export default class ListingGalleryScreen extends PureComponent {
   static options = {}
 
   render() {
-    const {data} = this.props
+    const {data, onDismiss} = this.props
 
     return (
       <Modal>
+        <Modal.Header iconColor="white" onDismiss={onDismiss} />
         <Body>
           <Gallery>{data.images}</Gallery>
         </Body>

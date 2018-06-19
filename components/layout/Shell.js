@@ -9,16 +9,3 @@ export default function Shell({style, children, testID}) {
     </View>
   )
 }
-
-export function Modal({style, ...props}) {
-  return (
-    <Shell
-      style={[{marginTop: Platform.OS === 'ios' ? 20 : 0}].concat(style)}
-      {...props}
-    />
-  )
-}
-
-export {default as Body} from './Body'
-export {default as Footer} from './Footer'
-export {default as Section} from './Section'

@@ -1,9 +1,7 @@
 import {PureComponent} from 'react'
-import {View, TouchableOpacity} from 'react-native'
 
-import Text from '@/components/shared/Text'
-import Icon from '@/components/shared/Icon'
-import styles, {iconColor} from './styles'
+import {Modal, Body} from '@/components/layout'
+import styles from './styles'
 
 export default class SuccessScreen extends PureComponent {
   static screenName = 'shared.Success'
@@ -12,30 +10,17 @@ export default class SuccessScreen extends PureComponent {
     const {title, children, onDismiss} = this.props
 
     return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity
-            onPress={onDismiss}
-            hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-          >
-            <Icon
-              name="times"
-              size={24}
-              strokeWidth={20}
-              stroke={iconColor}
-              color={iconColor}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.body}>
+      <Modal>
+        <Modal.Header inline onDismiss={onDismiss} />
+        <Body style={styles.body}>
           <Text style={styles.title}>{title}</Text>
           {typeof children === 'string' ? (
             <Text style={styles.message}>{children}</Text>
           ) : (
             children
           )}
-        </View>
-      </View>
+        </Body>
+      </Modal>
     )
   }
 }

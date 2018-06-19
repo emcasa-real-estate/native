@@ -7,7 +7,7 @@ function ListingApp({viewTour, ...props}) {
     <FavoritesMutation id={props.id} favorite={props.favorite}>
       {(favoriteListing) => (
         <Listing
-          onViewTour={() => viewTour()}
+          onViewTour={() => null}
           onFavorite={() => favoriteListing()}
           {...props}
         />

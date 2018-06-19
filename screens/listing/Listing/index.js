@@ -9,6 +9,7 @@ import {getData, isLoading} from '@/redux/modules/listings/data/selectors'
 import {Shell, Body, Footer, Section} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import GalleryScreen from '@/screens/listing/Gallery'
+import TourScreen from '@/screens/listing/Tour'
 import Listing from './Listing'
 // import RelatedListings from '@/containers/listings/Feed/Related'
 
@@ -56,13 +57,13 @@ export default class ListingScreen extends PureComponent {
     })
   }
 
-  onOpenGallery = () => {
+  openModal = (idSuffix, component) => {
     const {params, componentId} = this.props
-    const id = `${componentId}_gallery`
+    const id = `${componentId}_${idSuffix}`
     Navigation.showModal({
       component: {
+        ...component,
         id,
-        name: GalleryScreen.screenName,
         passProps: {
           params,
           onDismiss: () => Navigation.dismissModal(id)
@@ -70,6 +71,16 @@ export default class ListingScreen extends PureComponent {
       }
     })
   }
+
+  onOpenGallery = () =>
+    this.openModal('gallery', {
+      name: GalleryScreen.screenName
+    })
+
+  onOpenTour = () =>
+    this.openModal('tour', {
+      name: TourScreen.screenName
+    })
 
   renderFooter() {
     const {loading, params} = this.props
@@ -92,7 +103,13 @@ export default class ListingScreen extends PureComponent {
     return (
       <Shell>
         <Body scroll style={{flex: 1}}>
-          {!loading && <Listing {...data} onOpenGallery={this.onOpenGallery} />}
+          {!loading && (
+            <Listing
+              {...data}
+              onOpenGallery={this.onOpenGallery}
+              onOpenTour={this.onOpenTour}
+            />
+          )}
           {/* !loading && (
           <Section title="Veja Também">
             <RelatedListings id={id} />

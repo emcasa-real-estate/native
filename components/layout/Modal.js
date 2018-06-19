@@ -15,7 +15,8 @@ export default function Modal({style, ...props}) {
 
 const styles = StyleSheet.create({
   header: {
-    padding: 10
+    padding: 10,
+    display: 'flex'
   },
   headerAbsolute: {
     position: 'absolute',

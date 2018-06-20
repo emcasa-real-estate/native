@@ -2,26 +2,28 @@ import {PureComponent} from 'react'
 import {connect} from 'react-redux'
 
 import {switchTab} from '@/screens/module/navigation'
-import {
-  getNavigationStack,
-  getCurrentTab
-} from '@/screens/module/navigation/selectors'
+import {getCurrentTab} from '@/screens/module/navigation/selectors'
+import {getToken} from '@/redux/modules/auth/selectors'
 import BottomTabs from '@/components/layout/Navigation'
 
 @connect(
   (state) => ({
     currentTab: getCurrentTab(state),
-    stack: getNavigationStack(state)
+    jwt: getToken(state)
   }),
   {switchTab}
 )
 export default class BottomTabsApp extends PureComponent {
   render() {
-    const {stack, currentTab} = this.props
-    const {switchTab} = this.props
+    const {jwt, currentTab, switchTab} = this.props
     return (
       <BottomTabs
-        stack={stack}
+        tabs={[
+          {id: 'listings', icon: 'home', title: 'Imóveis'},
+          jwt
+            ? {id: 'account', icon: 'user', title: 'Perfil'}
+            : {id: 'auth', icon: 'user', title: 'Login'}
+        ]}
         currentTab={currentTab}
         onNavigate={(tab) => switchTab(tab)}
       />

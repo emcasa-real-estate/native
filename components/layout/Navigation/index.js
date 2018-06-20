@@ -3,10 +3,10 @@ import styles from './styles'
 
 import Button from './Button'
 
-export default function Navigation({stack, currentTab, onNavigate}) {
+export default function Navigation({tabs, currentTab, onNavigate}) {
   return (
     <View testID="@shared.Shell.Navigation" style={styles.container}>
-      {stack.map(({id, icon, title}) => (
+      {tabs.map(({id, icon, title}) => (
         <Button
           key={id}
           active={id === currentTab}

@@ -32,15 +32,16 @@ export default class ListingsFeedScreen extends PureComponent {
 
   static options = {
     topBar: {
-      title: {text: 'Imóveis'}
+      title: {text: 'Imóveis', color: 'white'}
     },
     bottomTab: {
       title: 'Imóveis'
     }
   }
 
-  componentDidMount() {
-    const {componentId} = this.props
+  componentDidAppear() {
+    const {data, loading, loadMore, componentId} = this.props
+    if (_.isEmpty(data) && !loading) loadMore(15)
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
         component: {
@@ -50,11 +51,6 @@ export default class ListingsFeedScreen extends PureComponent {
         }
       }
     })
-  }
-
-  componentDidAppear() {
-    const {data, loading, loadMore} = this.props
-    if (_.isEmpty(data) && !loading) loadMore(15)
   }
 
   onOpenMap = () => {

@@ -1,18 +1,23 @@
 import _ from 'lodash'
 import {Navigation} from 'react-native-navigation'
-import {put, all, select, fork, take, takeEvery} from 'redux-saga/effects'
+import {put, all, select, takeEvery} from 'redux-saga/effects'
 
-import {getActiveTabs, buildBottomTabs} from '@/screens/tabs'
-import {getToken} from '@/redux/modules/auth/selectors'
-import * as auth from '@/redux/modules/auth'
+import TABS, {STACK_ROOT} from '@/screens/tabs'
 import * as actions from '../index'
-import {
-  getCurrentScreen,
-  getCurrentTab,
-  getNavigationStackById
-} from '../selectors'
+import {getCurrentTab} from '../selectors'
 
-function setStackRoot({tabs}) {
+function* setStackRoot() {
+  Navigation.setRoot({
+    root: {
+      stack: {
+        children: [{component: {id: STACK_ROOT, name: TABS[STACK_ROOT].name}}]
+      }
+    }
+  })
+  yield put(actions.updateTab(STACK_ROOT))
+}
+
+function switchTab({tab}) {
   Navigation.setDefaultOptions({
     bottomTabs: {
       translucent: true,
@@ -21,40 +26,26 @@ function setStackRoot({tabs}) {
       visible: false
     }
   })
-  Navigation.setRoot({
-    root: {
-      bottomTabs: buildBottomTabs(tabs)
-    }
-  })
-}
-
-function* updateTabs() {
-  const jwt = yield select(getToken)
-  yield put(actions.updateStack(getActiveTabs({jwt})))
-}
-
-function* switchTab({tab}) {
-  const screen = yield select(getCurrentScreen)
-  const currentTab = yield select(getCurrentTab)
-  if (currentTab !== tab)
-    Navigation.mergeOptions(screen.id, {
-      bottomTabs: {
-        currentTabId: tab
+  Navigation.popTo(STACK_ROOT)
+  if (tab !== STACK_ROOT)
+    Navigation.push(STACK_ROOT, {
+      component: {
+        id: tab,
+        name: TABS[tab].name
       }
     })
-  else {
-    const tabOptions = yield select(getNavigationStackById, {id: tab})
-    Navigation.popTo(_.last(tabOptions.stack).id)
-  }
-  yield put(actions.updateTab(tab))
+}
+
+function* updateCurrentTab(action) {
+  const tab = _.findKey(TABS, ({isActive}) => isActive(action))
+  const currentTab = yield select(getCurrentTab)
+  if (tab && tab !== currentTab) yield put(actions.updateTab(tab))
 }
 
 export default function* navigationActionsSaga() {
-  yield take(actions.APP_LAUNCHED)
   yield all([
-    fork(updateTabs),
-    takeEvery(actions.SWITCH_TAB, switchTab),
-    takeEvery(actions.UPDATE_STACK, setStackRoot),
-    takeEvery(auth.SUCCESS, updateTabs)
+    takeEvery(actions.APP_LAUNCHED, setStackRoot),
+    takeEvery(actions.SCREEN_APPEARED, updateCurrentTab),
+    takeEvery(actions.SWITCH_TAB, switchTab)
   ])
 }

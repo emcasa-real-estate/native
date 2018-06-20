@@ -4,7 +4,6 @@ import {Navigation} from 'react-native-navigation'
 
 import * as colors from '@/assets/colors'
 import {withProvider} from '@/screens/containers/Provider'
-import bottomTabs from './tabs'
 import * as authScreens from './auth'
 import * as accountScreens from './account'
 import * as listingScreens from './listing'
@@ -48,17 +47,9 @@ const registerScreens = () =>
     Navigation.registerComponent(Screen.screenName, () => withProvider(Screen))
   )
 
-const setRoot = () =>
-  Navigation.setRoot({
-    root: {
-      bottomTabs: bottomTabs()
-    }
-  })
-
 export default function initNavigation() {
   registerScreens()
   Navigation.events().registerAppLaunchedListener(() => {
     setDefaults()
-    setRoot()
   })
 }

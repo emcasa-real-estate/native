@@ -9,7 +9,7 @@ export default function Navigation({user, active, onNavigate}) {
       <Button
         active={active === 'listings'}
         icon="home"
-        onPress={onNavigate('listings')}
+        onPress={onNavigate('listings_tab')}
       >
         Imóveis
       </Button>

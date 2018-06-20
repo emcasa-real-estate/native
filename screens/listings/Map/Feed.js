@@ -11,7 +11,7 @@ import {
 import Loader from '@/containers/shared/Loader'
 import InfiniteScroll from '@/containers/shared/InfiniteScroll'
 import Feed from '@/components/listings/Feed/Map'
-import Card from '@/containers/listings/Card/Listing'
+import Card from '@/screens/listings/shared/Card'
 
 @connect(
   (state) => ({

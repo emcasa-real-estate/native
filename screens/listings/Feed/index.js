@@ -12,9 +12,10 @@ import {
 } from '@/redux/modules/listings/feed/selectors'
 import InfiniteScroll from '@/containers/shared/InfiniteScroll'
 import Feed from '@/components/listings/Feed/Listing'
-import Card from '@/containers/listings/Card/Listing'
 import MapButton from '@/components/listings/Map/Button'
-import Map from '../Map'
+import MapScreen from '@/screens/listings/Map'
+import ListingScreen from '@/screens/listing/Listing'
+import Card from '@/screens/listings/shared/Card'
 import Header from './Header'
 import ListEmpty from './ListEmpty'
 import ListHeader from './ListHeader'
@@ -34,6 +35,9 @@ export default class ListingsFeedScreen extends PureComponent {
   static screenName = 'listings.Feed'
 
   static options = {
+    topBar: {
+      title: {text: 'Imóveis'}
+    },
     bottomTabs: {
       visible: true
     },
@@ -60,10 +64,21 @@ export default class ListingsFeedScreen extends PureComponent {
     if (_.isEmpty(data)) this.onLoadMore()
   }
 
+  onSelect = (id) => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: ListingScreen.screenName,
+        passProps: {
+          params: {id}
+        }
+      }
+    })
+  }
+
   onOpenMap = () => {
     Navigation.push(this.props.componentId, {
       component: {
-        name: Map.screenName,
+        name: MapScreen.screenName,
         passProps: this.props
       }
     })

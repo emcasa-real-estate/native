@@ -25,11 +25,11 @@ export default class InterestForm extends Component {
   }
 
   render() {
-    const {types, onSubmit} = this.props
+    const {types, ...props} = this.props
     const {activeType} = this.state
 
     return (
-      <Form onSubmit={onSubmit} defaultValue={this.defaultValue}>
+      <Form defaultValue={this.defaultValue} {...props}>
         <View style={styles.container}>
           <Text style={styles.text}>
             Escolha a melhor forma para agendar sua visita

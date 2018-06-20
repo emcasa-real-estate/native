@@ -9,7 +9,6 @@ import {
   isLoading
 } from '@/redux/modules/listings/feed/selectors'
 import InfiniteScroll from '@/screens/containers/InfiniteScroll'
-import Loader from '@/containers/shared/Loader'
 import Feed from '@/components/listings/Feed/Map'
 import Card from '@/screens/listings/shared/Card'
 
@@ -55,16 +54,6 @@ export default class MapFeed extends PureComponent {
   }
 
   render() {
-    return (
-      <Loader
-        as={InfiniteScroll}
-        direction="horizontal"
-        params={this.params}
-        onLoad={this.onLoad}
-        {...this.status}
-      >
-        <Feed {...this.status} onSelect={this.onSelect} Card={Card} />
-      </Loader>
-    )
+    return <Feed {...this.status} onSelect={this.onSelect} Card={Card} />
   }
 }

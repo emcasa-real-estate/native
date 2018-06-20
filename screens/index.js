@@ -3,7 +3,7 @@ import {Platform} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 
 import * as colors from '@/assets/colors'
-import {withProvider} from '@/containers/shared/Provider'
+import {withProvider} from '@/screens/containers/Provider'
 import bottomTabs from './tabs'
 import * as authScreens from './auth'
 import * as accountScreens from './account'

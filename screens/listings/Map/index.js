@@ -1,8 +1,8 @@
 import {Component} from 'react'
 import {View} from 'react-native'
 import {connect} from 'react-redux'
-import {Navigation} from 'react-native-navigation'
 
+import composeWithRef from '@/lib/composeWithRef'
 import {loadMore} from '@/redux/modules/listings/feed'
 import {
   getListings,
@@ -21,28 +21,13 @@ import {
   isWatchingPosition
 } from './module/selectors'
 import ListButton from '@/components/listings/Feed/Button'
+import MapFeed from '@/components/listings/Feed/Map'
+import Feed from '@/screens/listings/shared/Feed'
 import HeaderButton from './HeaderButton'
 import Map from './Map'
-import Feed from './Feed'
 import styles from './styles'
 
-@connect(
-  (state) => ({
-    data: getListings(state, {type: 'search'}),
-    pagination: getPagination(state, {type: 'search'}),
-    options: getOptions(state, {type: 'search'})
-  }),
-  {loadMore: loadMore('search')}
-)
-@connect(
-  (state) => ({
-    activeListing: getActiveListing(state),
-    userPosition: getUserPosition(state),
-    watchingPosition: isWatchingPosition(state)
-  }),
-  {watchPosition, unwatchPosition, requestPosition, setActiveListing}
-)
-export default class MapScreen extends Component {
+class MapScreen extends Component {
   static screenName = 'listings.Map'
 
   static options = {
@@ -81,7 +66,13 @@ export default class MapScreen extends Component {
   onSelect = (id) => this.props.setActiveListing(id)
 
   render() {
-    const {data, activeListing, watchingPosition, userPosition} = this.props
+    const {
+      data,
+      activeListing,
+      watchingPosition,
+      userPosition,
+      componentId
+    } = this.props
 
     return (
       <View style={styles.container}>
@@ -99,9 +90,28 @@ export default class MapScreen extends Component {
           <ListButton style={styles.button} onPress={this.onReturn} />
         </View>
         <View style={styles.listings}>
-          <Feed active={activeListing} />
+          <Feed as={MapFeed} target={componentId} active={activeListing} />
         </View>
       </View>
     )
   }
 }
+
+export default composeWithRef(
+  connect(
+    (state) => ({
+      data: getListings(state, {type: 'search'}),
+      pagination: getPagination(state, {type: 'search'}),
+      options: getOptions(state, {type: 'search'})
+    }),
+    {loadMore: loadMore('search')}
+  ),
+  connect(
+    (state) => ({
+      activeListing: getActiveListing(state),
+      userPosition: getUserPosition(state),
+      watchingPosition: isWatchingPosition(state)
+    }),
+    {watchPosition, unwatchPosition, requestPosition, setActiveListing}
+  )
+)(MapScreen)

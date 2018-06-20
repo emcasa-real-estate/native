@@ -11,6 +11,7 @@ import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import Form from '@/components/interest/Form'
 
+import CalendlyScreen from '@/screens/interest/Calendly'
 import SuccessScreen from '@/screens/shared/Success'
 
 const CALENDLY_ID = 5
@@ -20,18 +21,19 @@ class InterestFormScreen extends PureComponent {
 
   static options = {
     topBar: {
-      title: {text: 'Marcar visita'}
+      title: {text: 'Marcar visita'},
+      backButtonTitle: ''
     }
   }
 
-  state = {value: {}}
+  state = {value: {}, interestType: undefined}
 
   openCalendly = () => {
     const {componentId} = this.props
-    Navigation.push({
+    Navigation.push(componentId, {
       component: {
         id: `${componentId}_calendly`,
-        name: null
+        name: CalendlyScreen.screenName
       }
     })
   }
@@ -57,8 +59,10 @@ class InterestFormScreen extends PureComponent {
 
   componentDidUpdate(prev) {
     const {loading, error} = this.props
+    const {interestType} = this.state
     const finishedLoading = prev.loading && !loading
-    if (finishedLoading && !error) this.openSuccessModal()
+    if (finishedLoading && !error && interestType !== CALENDLY_ID)
+      this.openSuccessModal()
   }
 
   onChange = (value) => this.setState({value})
@@ -66,13 +70,15 @@ class InterestFormScreen extends PureComponent {
   onSubmit = () => {
     const {request, loading, params: {id}} = this.props
     const {value} = this.state
+    const interestType = value.interest_type_id
     if (loading) return
-    if (value.interest_type_id === CALENDLY_ID) {
+    if (interestType === CALENDLY_ID) {
       value.message =
         'Esta mensagem está sendo enviada porque algum usuário tentou agendar uma visita pelo Calendly neste imóvel.'
       this.openCalendly()
     }
     request(id, value)
+    this.setState({interestType})
   }
 
   render() {

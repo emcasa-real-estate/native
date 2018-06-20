@@ -1,6 +1,5 @@
-import _ from 'lodash'
 import {PureComponent} from 'react'
-import {Navigation} from 'react-native'
+import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import {loadMore} from '@/redux/modules/listings/feed'
@@ -21,7 +20,7 @@ import ListingScreen from '@/screens/listing/Listing'
   }),
   {loadMore: loadMore('search')}
 )
-export default class MapFeed extends PureComponent {
+export default class FeedApp extends PureComponent {
   onLoadMore = () => {
     const {loadMore, loading} = this.props
     if (!loading) loadMore()

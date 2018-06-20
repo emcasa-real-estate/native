@@ -3,6 +3,9 @@ import {StyleSheet} from 'react-native'
 import * as colors from '@/assets/colors'
 
 export default StyleSheet.create({
+  container: {
+    backgroundColor: colors.blue.light
+  },
   body: {
     paddingVertical: 10,
     paddingHorizontal: 30

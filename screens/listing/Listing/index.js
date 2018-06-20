@@ -12,9 +12,11 @@ import {getRelatedListings} from '@/redux/modules/listings/relations/selectors'
 import {Shell, Body, Footer, Section} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import Feed from '@/components/listings/Feed/Related'
+import Listing from './Listing'
+
 import GalleryScreen from '@/screens/listing/Gallery'
 import TourScreen from '@/screens/listing/Tour'
-import Listing from './Listing'
+import InterestFormScreen from '@/screens/interest/Form'
 
 class ListingScreen extends PureComponent {
   static screenName = 'listing.Listing'
@@ -107,7 +109,7 @@ class ListingScreen extends PureComponent {
       <Button
         color="green"
         onPress={this.navigateTo({
-          name: null
+          name: InterestFormScreen.screenName
         })}
       >
         {params.editing ? 'Editar' : 'Marcar visita'}

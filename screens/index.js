@@ -9,13 +9,21 @@ import * as authScreens from './auth'
 import * as accountScreens from './account'
 import * as listingScreens from './listing'
 import * as listingsScreens from './listings'
+import * as interestScreens from './interest'
 import * as sharedScreens from './shared'
 
 const SCREENS = _.flow(
   _.map(_.values),
   ([...screens]) => [].concat(...screens),
   _.filter((screen) => screen.screenName)
-)([authScreens, accountScreens, listingScreens, listingsScreens, sharedScreens])
+)([
+  authScreens,
+  accountScreens,
+  listingScreens,
+  listingsScreens,
+  interestScreens,
+  sharedScreens
+])
 
 const setDefaults = () =>
   Navigation.setDefaultOptions({

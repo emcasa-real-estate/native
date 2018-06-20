@@ -5,19 +5,25 @@ import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
 import * as format from '@/assets/format'
-import {load} from '@/redux/modules/listings/data'
+import {load as loadListing} from '@/redux/modules/listings/data'
 import {getData, isLoading} from '@/redux/modules/listings/data/selectors'
+import {load as loadRelatedListings} from '@/redux/modules/listings/relations'
+import {getRelatedListings} from '@/redux/modules/listings/relations/selectors'
 import {Shell, Body, Footer, Section} from '@/components/layout'
 import Button from '@/components/shared/Button'
+import Feed from '@/components/listings/Feed/Related'
 import GalleryScreen from '@/screens/listing/Gallery'
 import TourScreen from '@/screens/listing/Tour'
 import Listing from './Listing'
-// import RelatedListings from '@/containers/listings/Feed/Related'
 
 class ListingScreen extends PureComponent {
   static screenName = 'listing.Listing'
 
-  static options = {}
+  static options = {
+    topBar: {
+      backButtonTitle: ''
+    }
+  }
 
   updateNavigation() {
     const {data, componentId} = this.props
@@ -29,8 +35,15 @@ class ListingScreen extends PureComponent {
   }
 
   componentDidMount() {
-    const {data, load, params: {id}} = this.props
-    if (_.isEmpty(data)) load(id)
+    const {
+      data,
+      loadListing,
+      relatedListings,
+      loadRelatedListings,
+      params: {id}
+    } = this.props
+    if (_.isEmpty(relatedListings)) loadRelatedListings(id)
+    if (_.isEmpty(data)) loadListing(id)
     else this.updateNavigation()
   }
 
@@ -74,6 +87,19 @@ class ListingScreen extends PureComponent {
       name: TourScreen.screenName
     })
 
+  onSelectListing = (id) =>
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: ListingScreen.screenName,
+        passProps: {params: {id}}
+      }
+    })
+
+  renderRelatedListings() {
+    const {relatedListings} = this.props
+    return <Feed data={relatedListings} onSelect={this.onSelectListing} />
+  }
+
   renderFooter() {
     const {loading, params} = this.props
     if (loading) return null
@@ -102,11 +128,11 @@ class ListingScreen extends PureComponent {
               onOpenTour={this.onOpenTour}
             />
           )}
-          {/* !loading && (
-          <Section title="Veja Também">
-            <RelatedListings id={id} />
-          </Section>
-        ) */}
+          {!loading && (
+            <Section title="Veja Também">
+              {this.renderRelatedListings()}
+            </Section>
+          )}
         </Body>
         <Footer>{this.renderFooter()}</Footer>
       </Shell>
@@ -118,8 +144,9 @@ export default composeWithRef(
   connect(
     (state, {params}) => ({
       data: getData(state, params) || {},
-      loading: isLoading(state, params)
+      loading: isLoading(state, params),
+      relatedListings: getRelatedListings(state, params)
     }),
-    {load}
+    {loadListing, loadRelatedListings}
   )
 )(ListingScreen)

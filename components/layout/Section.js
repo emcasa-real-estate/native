@@ -1,5 +1,6 @@
 import {View, StyleSheet} from 'react-native'
 
+import Text from '@/components/shared/Text'
 import * as colors from '@/assets/colors'
 import {margin} from '@/assets/styles'
 

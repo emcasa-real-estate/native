@@ -4,7 +4,6 @@ import * as colors from '@/assets/colors'
 
 const styles = StyleSheet.create({
   container: {
-    padding: 15,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: colors.gray.light
   }

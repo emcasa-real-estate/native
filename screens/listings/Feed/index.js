@@ -1,13 +1,14 @@
 import _ from 'lodash'
 import {PureComponent} from 'react'
-import {View} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import {loadMore} from '@/redux/modules/listings/feed'
 import {getListings, isLoading} from '@/redux/modules/listings/feed/selectors'
+import {Shell, Body, Footer} from '@/components/layout'
 import MapButton from '@/components/listings/Map/Button'
 import ListingFeed from '@/components/listings/Feed/Listing'
+import BottomTabs from '@/screens/containers/BottomTabs'
 import Feed from '@/screens/listings/shared/Feed'
 import Card from '@/screens/listings/shared/Card'
 import Header from './Header'
@@ -68,16 +69,21 @@ export default class ListingsFeedScreen extends PureComponent {
   render() {
     const {loading, componentId} = this.props
     return (
-      <View style={styles.container}>
-        <Feed
-          as={ListingFeed}
-          target={componentId}
-          Card={Card}
-          ListHeaderComponent={ListHeader}
-          ListEmptyComponent={loading ? undefined : ListEmpty}
-        />
-        <MapButton style={styles.mapButton} onPress={this.onOpenMap} />
-      </View>
+      <Shell>
+        <Body style={styles.container}>
+          <Feed
+            as={ListingFeed}
+            target={componentId}
+            Card={Card}
+            ListHeaderComponent={ListHeader}
+            ListEmptyComponent={loading ? undefined : ListEmpty}
+          />
+          <MapButton style={styles.mapButton} onPress={this.onOpenMap} />
+        </Body>
+        <Footer>
+          <BottomTabs />
+        </Footer>
+      </Shell>
     )
   }
 }

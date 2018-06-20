@@ -2,6 +2,7 @@ export const APP_LAUNCHED = 'screens/APP_LAUNCHED'
 export const SCREEN_APPEARED = 'screens/SCREEN_APPEARED'
 export const SCREEN_DISAPPEARED = 'screens/SCREEN_DISAPPEARED'
 export const UPDATE_STACK = 'screens/UPDATE_TABS'
+export const UPDATE_TAB = 'screens/UPDATE_TAB'
 export const SWITCH_TAB = 'screens/SWITCH_TAB'
 
 export const screenAppeared = (id, name) => ({type: SCREEN_APPEARED, id, name})
@@ -11,6 +12,7 @@ export const screenDisappeared = (id, name) => ({
   name
 })
 export const switchTab = (tab) => ({type: SWITCH_TAB, tab})
+export const updateTab = (tab) => ({type: UPDATE_TAB, tab})
 export const updateStack = (tabs) => ({type: UPDATE_STACK, tabs})
 
 const initialState = {
@@ -26,7 +28,7 @@ export default function screenReducer(state = initialState, action) {
         ...state,
         screen: {id: action.id, name: action.name}
       }
-    case SWITCH_TAB:
+    case UPDATE_TAB:
       return {
         ...state,
         tab: action.tab

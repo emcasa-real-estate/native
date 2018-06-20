@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import {Navigation} from 'react-native-navigation'
 import {put, all, select, fork, take, takeEvery} from 'redux-saga/effects'
 
@@ -5,7 +6,11 @@ import {getActiveTabs, buildBottomTabs} from '@/screens/tabs'
 import {getToken} from '@/redux/modules/auth/selectors'
 import * as auth from '@/redux/modules/auth'
 import * as actions from '../index'
-import {getCurrentScreen} from '../selectors'
+import {
+  getCurrentScreen,
+  getCurrentTab,
+  getNavigationStackById
+} from '../selectors'
 
 function setStackRoot({tabs}) {
   Navigation.setDefaultOptions({
@@ -30,11 +35,18 @@ function* updateTabs() {
 
 function* switchTab({tab}) {
   const screen = yield select(getCurrentScreen)
-  Navigation.mergeOptions(screen.id, {
-    bottomTabs: {
-      currentTabId: tab
-    }
-  })
+  const currentTab = yield select(getCurrentTab)
+  if (currentTab !== tab)
+    Navigation.mergeOptions(screen.id, {
+      bottomTabs: {
+        currentTabId: tab
+      }
+    })
+  else {
+    const tabOptions = yield select(getNavigationStackById, {id: tab})
+    Navigation.popTo(_.last(tabOptions.stack).id)
+  }
+  yield put(actions.updateTab(tab))
 }
 
 export default function* navigationActionsSaga() {

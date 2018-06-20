@@ -1,11 +1,13 @@
 import {PureComponent} from 'react'
-import {View, Platform} from 'react-native'
+import {Platform} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
 import {signOut} from '@/redux/modules/auth'
 import {withUserListings} from '@/graphql/modules/user/containers'
+import {Shell, Body, Footer} from '@/components/layout'
+import BottomTabs from '@/screens/containers/BottomTabs'
 import Menu from '@/components/account/Menu'
 import EditProfileScreen from '../EditProfile'
 import HeaderScreen from './Header'
@@ -36,20 +38,25 @@ class AccountMenuScreen extends PureComponent {
   render() {
     const {userListings} = this.props
     return (
-      <View style={{marginTop: Platform.OS === 'ios' ? 20 : 0}}>
-        <Menu
-          listingsCount={!userListings.loading && userListings.data.length}
-          onSignOut={this.onSignOut}
-          onEditProfile={this.navigateTo({
-            id: 'edit_profile',
-            name: EditProfileScreen.screenName
-          })}
-          onViewListings={this.navigateTo({
-            id: 'user_listings',
-            name: null
-          })}
-        />
-      </View>
+      <Shell style={{marginTop: Platform.OS === 'ios' ? 20 : 0}}>
+        <Body>
+          <Menu
+            listingsCount={!userListings.loading && userListings.data.length}
+            onSignOut={this.onSignOut}
+            onEditProfile={this.navigateTo({
+              id: 'edit_profile',
+              name: EditProfileScreen.screenName
+            })}
+            onViewListings={this.navigateTo({
+              id: 'user_listings',
+              name: null
+            })}
+          />
+        </Body>
+        <Footer>
+          <BottomTabs />
+        </Footer>
+      </Shell>
     )
   }
 }

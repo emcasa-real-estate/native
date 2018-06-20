@@ -8,8 +8,8 @@ import {
   getPagination,
   isLoading
 } from '@/redux/modules/listings/feed/selectors'
+import InfiniteScroll from '@/screens/containers/InfiniteScroll'
 import Loader from '@/containers/shared/Loader'
-import InfiniteScroll from '@/containers/shared/InfiniteScroll'
 import Feed from '@/components/listings/Feed/Map'
 import Card from '@/screens/listings/shared/Card'
 
@@ -17,7 +17,7 @@ import Card from '@/screens/listings/shared/Card'
   (state) => ({
     data: getListings(state, {type: 'search'}),
     pagination: getPagination(state, {type: 'search'}),
-    loading: isLoading(state, {type: 'search'})
+    loading: isLoading(state, {type: '  search'})
   }),
   {load}
 )

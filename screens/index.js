@@ -36,11 +36,10 @@ const setDefaults = () =>
       }
     },
     bottomTabs: {
+      translucent: true,
+      drawBehind: true,
       animate: false,
-      tabColor: colors.gray.dark,
-      selectedTabColor: colors.blue.medium,
-      fontFamily: Platform.OS === 'ios' ? 'Open Sans' : 'OpenSans',
-      fontSize: 11
+      visible: false
     }
   })
 

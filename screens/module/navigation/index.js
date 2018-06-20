@@ -1,6 +1,6 @@
-export const SCREEN_APPEARED = 'screen/SCREEN_APPEARED'
-export const SCREEN_DISAPPEARED = 'screen/SCREEN_DISAPPEARED'
-export const SWITCH_TAB = 'screen/SWITCH_TAB'
+export const SCREEN_APPEARED = 'screens/SCREEN_APPEARED'
+export const SCREEN_DISAPPEARED = 'screens/SCREEN_DISAPPEARED'
+export const SWITCH_TAB = 'screens/SWITCH_TAB'
 
 export const screenAppeared = (id, name) => ({type: SCREEN_APPEARED, id, name})
 export const screenDisappeared = (id, name) => ({

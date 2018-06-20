@@ -45,13 +45,6 @@ export default class LoginScreen extends PureComponent {
 
   componentDidAppear() {
     this.props.reset()
-    Navigation.mergeOptions(this.props.componentId, {
-      bottomTabs: {
-        translucent: true,
-        drawBehind: true,
-        visible: false
-      }
-    })
   }
 
   componentDidUpdate() {

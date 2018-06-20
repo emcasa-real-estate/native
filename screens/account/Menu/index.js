@@ -18,20 +18,9 @@ class AccountMenuScreen extends PureComponent {
       component: {name: HeaderScreen.screenName},
       title: {text: 'Perfil'}
     },
-    bottomTabs: {
-      visible: true
-    },
     bottomTab: {
       title: 'Perfil'
     }
-  }
-
-  componentDidAppear() {
-    Navigation.mergeOptions(this.props.componentId, {
-      bottomTabs: {
-        visible: true
-      }
-    })
   }
 
   navigateTo = (component) => () => {

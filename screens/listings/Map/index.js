@@ -60,9 +60,6 @@ export default class MapScreen extends Component {
           component: {name: HeaderButton.screenName}
         }
       ]
-    },
-    bottomTabs: {
-      visible: false
     }
   }
 
@@ -74,13 +71,6 @@ export default class MapScreen extends Component {
 
   componentDidMount() {
     this.loadAllMarkers()
-    Navigation.mergeOptions(this.props.componentId, {
-      bottomTabs: {
-        translucent: true,
-        drawBehind: true,
-        visible: false
-      }
-    })
   }
 
   onToggleWatchPosition = (active) => () =>

@@ -1,8 +1,9 @@
 import {Navigation} from 'react-native-navigation'
 import {eventChannel} from 'redux-saga'
-import {put, fork, call, all, take, takeEvery} from 'redux-saga/effects'
+import {put, fork, call, all, select, take, takeEvery} from 'redux-saga/effects'
 
 import * as actions from './index'
+import {getCurrentScreen} from './selectors'
 
 const emitter = Navigation.events()
 
@@ -24,6 +25,15 @@ const createNavigationDispatcher = (action) =>
 const createNavigationSaga = (fun, action) =>
   takeEvery(createNavigationChannel(fun), createNavigationDispatcher(action))
 
+function* switchTab({tab}) {
+  const screen = yield select(getCurrentScreen)
+  Navigation.mergeOptions(screen.id, {
+    bottomTabs: {
+      currentTabId: tab
+    }
+  })
+}
+
 function* watchNavigationEvents() {
   yield all([
     createNavigationSaga('ComponentDidAppear', actions.screenAppeared),
@@ -31,9 +41,13 @@ function* watchNavigationEvents() {
   ])
 }
 
+function* watchNavigationActions() {
+  yield all([takeEvery(actions.SWITCH_TAB, switchTab)])
+}
+
 export default function* navigationSaga() {
   const channel = createNavigationChannel('AppLaunched')
   yield take(channel)
   yield call(channel.close)
-  yield fork(watchNavigationEvents)
+  yield all([fork(watchNavigationEvents), fork(watchNavigationActions)])
 }

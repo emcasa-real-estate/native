@@ -1,5 +1,6 @@
 export const SCREEN_APPEARED = 'screen/SCREEN_APPEARED'
 export const SCREEN_DISAPPEARED = 'screen/SCREEN_DISAPPEARED'
+export const SWITCH_TAB = 'screen/SWITCH_TAB'
 
 export const screenAppeared = (id, name) => ({type: SCREEN_APPEARED, id, name})
 export const screenDisappeared = (id, name) => ({
@@ -7,3 +8,26 @@ export const screenDisappeared = (id, name) => ({
   id,
   name
 })
+export const switchTab = (tab) => ({type: SWITCH_TAB, tab})
+
+const initialState = {
+  tab: 'listings_tab',
+  screen: {id: undefined, name: undefined}
+}
+
+export default function screenReducer(state = initialState, action) {
+  switch (action) {
+    case SCREEN_APPEARED:
+      return {
+        ...state,
+        screen: {id: action.id, name: action.name}
+      }
+    case SWITCH_TAB:
+      return {
+        ...state,
+        tab: action.tab
+      }
+    default:
+      return state
+  }
+}

@@ -1,0 +1,5 @@
+export const getNavigation = (state) => state.screen.navigation
+
+export const getCurrentScreen = (state) => getNavigation(state).screen
+
+export const getCurrentTab = (state) => getNavigation(state).tab

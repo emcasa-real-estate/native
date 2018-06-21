@@ -1,5 +1,4 @@
 export {default as Feed} from './Feed'
-export {default as FeedHeader} from './Feed/Header'
 export {default as Map} from './Map'
 export {default as MapHeaderButton} from './Map/HeaderButton'
 export {default as Search} from './Search'

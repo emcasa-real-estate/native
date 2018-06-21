@@ -4,7 +4,7 @@ import KeyboardManager from 'react-native-keyboard-manager'
 const reloadKeyboardLayout =
   Platform.OS === 'ios'
     ? () => KeyboardManager.reloadLayoutIfNeeded()
-    : undefined
+    : () => null
 
 export default function Body({style, scroll, children, onLayout}) {
   const ViewComponent = scroll ? ScrollView : View

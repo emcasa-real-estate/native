@@ -1,24 +1,25 @@
 import {PureComponent} from 'react'
-import {Platform} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
 import {signOut} from '@/redux/modules/auth'
 import {withUserListings} from '@/graphql/modules/user/containers'
-import {Shell, Body, Footer} from '@/components/layout'
+import {Shell, Body, Header, Footer} from '@/components/layout'
 import BottomTabs from '@/screens/containers/BottomTabs'
 import Menu from '@/components/account/Menu'
 import EditProfileScreen from '../EditProfile'
-import HeaderScreen from './Header'
+import AccountHeader from './Header'
 
 class AccountMenuScreen extends PureComponent {
   static screenName = 'account.Menu'
 
   static options = {
     topBar: {
-      component: {name: HeaderScreen.screenName},
-      title: {text: 'Perfil'}
+      visible: false,
+      drawBehind: true,
+      height: 0,
+      backButtonTitle: 'Perfil'
     },
     bottomTab: {
       title: 'Perfil'
@@ -38,7 +39,10 @@ class AccountMenuScreen extends PureComponent {
   render() {
     const {userListings} = this.props
     return (
-      <Shell style={{marginTop: Platform.OS === 'ios' ? 20 : 0}}>
+      <Shell>
+        <Header>
+          <AccountHeader />
+        </Header>
         <Body>
           <Menu
             listingsCount={!userListings.loading && userListings.data.length}

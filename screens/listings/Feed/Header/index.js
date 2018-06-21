@@ -1,14 +1,12 @@
 import _ from 'lodash/fp'
 import {PureComponent} from 'react'
 import {View, Image, TouchableOpacity} from 'react-native'
-import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import {getOptions} from '@/redux/modules/listings/feed/selectors'
 import {abbrevPrice} from '@/assets/format'
 import Text from '@/components/shared/Text'
 import Button from '@/screens/shared/Header/TextButton'
-import Search from '@/screens/listings/Search'
 import styles from './styles'
 
 const omitEmpty = _.omitBy(_.isEmpty)
@@ -48,27 +46,13 @@ const Icon = () => (
   options: getOptions(state, {type: 'search'})
 }))
 export default class ListingsFeedHeader extends PureComponent {
-  static screenName = 'listings.Feed.Header'
-
-  onPress = () => {
-    const {target, componentId} = this.props
-    Navigation.push(target || componentId, {
-      component: {
-        name: Search.screenName
-      }
-    })
-  }
-
   render() {
-    const {options} = this.props
+    const {options, onPress} = this.props
     const filters = omitEmpty(options)
     const hasFilters = !_.isEmpty(filters)
     return (
       <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.touchableContainer}
-          onPress={this.onPress}
-        >
+        <TouchableOpacity style={styles.touchableContainer} onPress={onPress}>
           <Icon />
           <Text
             style={[styles.text, hasFilters && styles.textActive]}

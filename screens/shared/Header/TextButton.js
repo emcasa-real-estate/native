@@ -6,6 +6,7 @@ import Text from '@/components/shared/Text'
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: 'white',
     marginRight: Platform.OS === 'android' ? 15 : 0
   },
   text: {
@@ -22,7 +23,7 @@ export default class HeaderTextButton extends PureComponent {
 
     return (
       <View style={styles.container}>
-        <Text style={[styles.text, style]}>{label}</Text>
+        <Text style={[styles.text, style]}>{label || 'Boop'}</Text>
       </View>
     )
   }

@@ -40,18 +40,19 @@ export default class NeighborhoodsScreen extends PureComponent {
     this.state.value = props.value
   }
 
-  componentDidAppear() {
+  componentDidMount() {
     const {componentId} = this.props
+    const buttonProps = {
+      label: 'Limpar',
+      onPress: this.onReset
+    }
     Navigation.mergeOptions(componentId, {
       topBar: {
         rightButtons: [
           {
             id: `${componentId}_resetButton`,
-            passProps: {
-              label: 'Limpar',
-              onPress: this.onReset
-            },
-            component: {name: HeaderButton.screenName}
+            passProps: buttonProps,
+            component: {name: HeaderButton.screenName, passProps: buttonProps}
           }
         ]
       }

@@ -41,27 +41,18 @@ export default class ListingSearchScreen extends PureComponent {
   }
 
   componentDidMount() {
-    Navigation.mergeOptions(this.props.componentId, {
-      bottomTabs: {
-        translucent: true,
-        drawBehind: true,
-        visible: false
-      }
-    })
-  }
-
-  componentDidAppear() {
     const {componentId} = this.props
+    const buttonProps = {
+      label: 'Limpar',
+      onPress: this.onReset
+    }
     Navigation.mergeOptions(componentId, {
       topBar: {
         rightButtons: [
           {
             id: `${componentId}_resetButton`,
-            passProps: {
-              label: 'Limpar',
-              onPress: this.onReset
-            },
-            component: {name: HeaderButton.screenName}
+            passProps: buttonProps,
+            component: {name: HeaderButton.screenName, passProps: buttonProps}
           }
         ]
       }

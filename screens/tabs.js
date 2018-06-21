@@ -1,26 +1,20 @@
-import {Feed} from './listings'
-import {Menu} from './account'
-import {Login} from './auth'
-import {Redirect} from './shared'
+import * as listings from './listings'
+import * as account from './account'
+import * as auth from './auth'
 
-const tab = (id, stack) => ({
-  stack: {
-    id,
-    children: stack.map((component) => ({component}))
+export default {
+  listings: {
+    name: listings.Feed.screenName,
+    isActive: ({name}) => /^listings/.test(name)
+  },
+  account: {
+    name: account.Menu.screenName,
+    isActive: ({name}) => /^account/.test(name)
+  },
+  auth: {
+    name: auth.Login.screenName,
+    isActive: ({name}) => /^auth/.test(name)
   }
-})
+}
 
-export default () => ({
-  children: [
-    tab('listings_tab', [{id: 'listings', name: Feed.screenName}]),
-    tab('account_tab', [{id: 'account', name: Menu.screenName}]),
-    tab(
-      'login_tab',
-      Redirect.createStack(
-        {id: 'login', name: Login.screenName},
-        Login.options,
-        {to: 'listings_tab', title: 'Imóveis'}
-      )
-    )
-  ]
-})
+export const STACK_ROOT = 'listings'

@@ -97,7 +97,7 @@ class InterestFormScreen extends PureComponent {
             onSubmit={this.onSubmit}
           />
         </Body>
-        <Footer>
+        <Footer style={{padding: 15}}>
           <Button disabled={loading} onPress={this.onSubmit}>
             {loading ? 'Enviando...' : 'Enviar'}
           </Button>

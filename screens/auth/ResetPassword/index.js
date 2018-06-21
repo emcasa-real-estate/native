@@ -94,7 +94,7 @@ export default class ResetPasswordScreen extends PureComponent {
             onSubmit={this.onSubmit}
           />
         </ScrollView>
-        <Footer>
+        <Footer style={{padding: 15}}>
           <Button disabled={loading} onPress={this.onSubmit}>
             {loading ? 'Enviando...' : 'Enviar'}
           </Button>

@@ -136,7 +136,7 @@ class ListingScreen extends PureComponent {
             </Section>
           )}
         </Body>
-        <Footer>{this.renderFooter()}</Footer>
+        <Footer style={{padding: 15}}>{this.renderFooter()}</Footer>
       </Shell>
     )
   }

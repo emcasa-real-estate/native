@@ -7,6 +7,8 @@ import {EDIT_PASSWORD} from '@/graphql/modules/user/mutations'
 import {setContext, clearContext} from '@/screens/module/context'
 import {getUser} from '@/redux/modules/auth/selectors'
 import {getContext} from '@/screens/module/context/selectors'
+import {Shell, Body, Footer} from '@/components/layout'
+import BottomTabs from '@/screens/containers/BottomTabs'
 import PasswordForm from '@/components/account/PasswordForm'
 import SubmitButtonScreen from '../SubmitButton'
 
@@ -98,13 +100,20 @@ export default class EditPasswordScreen extends PureComponent {
     const {value, message} = this.state
 
     return (
-      <PasswordForm
-        formRef={this.form}
-        message={message}
-        value={value}
-        onSubmit={this.onSubmit}
-        onChange={this.onChange}
-      />
+      <Shell>
+        <Body>
+          <PasswordForm
+            formRef={this.form}
+            message={message}
+            value={value}
+            onSubmit={this.onSubmit}
+            onChange={this.onChange}
+          />
+        </Body>
+        <Footer>
+          <BottomTabs />
+        </Footer>
+      </Shell>
     )
   }
 }

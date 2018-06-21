@@ -1,8 +1,8 @@
 import {Navigation} from 'react-native-navigation'
 import {eventChannel} from 'redux-saga'
-import {put, fork, call, all, take, takeEvery} from 'redux-saga/effects'
+import {put, all, call, fork, take, takeEvery} from 'redux-saga/effects'
 
-import * as actions from './index'
+import * as actions from '../index'
 
 const emitter = Navigation.events()
 
@@ -31,9 +31,10 @@ function* watchNavigationEvents() {
   ])
 }
 
-export default function* navigationSaga() {
+export default function* navigationEventsSaga() {
   const channel = createNavigationChannel('AppLaunched')
   yield take(channel)
+  yield put({type: actions.APP_LAUNCHED})
   yield call(channel.close)
   yield fork(watchNavigationEvents)
 }

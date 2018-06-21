@@ -45,13 +45,6 @@ export default class LoginScreen extends PureComponent {
 
   componentDidAppear() {
     this.props.reset()
-    Navigation.mergeOptions(this.props.componentId, {
-      bottomTabs: {
-        translucent: true,
-        drawBehind: true,
-        visible: false
-      }
-    })
   }
 
   componentDidUpdate() {
@@ -103,7 +96,7 @@ export default class LoginScreen extends PureComponent {
             onPasswordRecovery={this.onPasswordRecovery}
           />
         </ScrollView>
-        <Footer>
+        <Footer style={{padding: 15}}>
           <Button disabled={loading} onPress={this.onSubmit}>
             {loading ? 'Enviando...' : 'Enviar'}
           </Button>

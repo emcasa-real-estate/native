@@ -1,7 +1,11 @@
 import _ from 'lodash'
 import {PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
+import {connect} from 'react-redux'
 
+import {switchTab} from '@/screens/module/navigation'
+
+@connect(null, {switchTab}, null, {withRef: true})
 export default class RedirectScreen extends PureComponent {
   static screenName = 'shared.Redirect'
 
@@ -28,11 +32,7 @@ export default class RedirectScreen extends PureComponent {
   }
 
   componentDidAppear() {
-    Navigation.mergeOptions(this.props.componentId, {
-      bottomTabs: {
-        currentTabId: this.props.to
-      }
-    })
+    this.props.switchTab(this.props.to)
   }
 
   componentDidDisappear() {

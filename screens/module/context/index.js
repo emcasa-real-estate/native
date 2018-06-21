@@ -1,7 +1,7 @@
 import update from 'immutability-helper'
 
-export const SET_CONTEXT = 'screen/SET_CONTEXT'
-export const CLEAR_CONTEXT = 'screen/CLEAR_CONTEXT'
+export const SET_CONTEXT = 'screens/SET_CONTEXT'
+export const CLEAR_CONTEXT = 'screens/CLEAR_CONTEXT'
 
 export const setContext = (screen) => (data) => ({
   type: SET_CONTEXT,

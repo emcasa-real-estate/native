@@ -1,7 +1,7 @@
 import _ from 'lodash/fp'
 import React from 'react'
 import {PureComponent} from 'react'
-import {View, KeyboardAvoidingView} from 'react-native'
+import {View} from 'react-native'
 
 import Text from '@/components/shared/Text'
 import {field as baseField} from './Provider'

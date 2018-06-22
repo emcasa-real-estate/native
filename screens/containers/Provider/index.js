@@ -22,16 +22,25 @@ export const withProvider = (Target) =>
   class extends PureComponent {
     static displayName = `withProvider(${Target.displayName || Target.name})`
 
-    child = React.createRef()
+    screen = React.createRef()
 
     static get options() {
       return Target.options
     }
 
     getWrappedInstance() {
-      let instance = this.child.current
-      while (instance && instance.getWrappedInstance)
-        instance = instance.getWrappedInstance()
+      let instance = this.screen.current
+      try {
+        while (instance && instance.getWrappedInstance)
+          instance = instance.getWrappedInstance()
+      } catch (error) {
+        throw new Error(
+          `Unable to access ref for screen ${Target.screenName}.\n${
+            error.message
+          }`,
+          error
+        )
+      }
       return instance
     }
 
@@ -57,7 +66,7 @@ export const withProvider = (Target) =>
     render() {
       return (
         <AppProvider>
-          <Target ref={this.child} {...this.props} />
+          <Target ref={this.screen} {...this.props} />
         </AppProvider>
       )
     }

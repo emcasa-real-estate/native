@@ -3,6 +3,7 @@ import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 import {graphql} from 'react-apollo'
 
+import composeWithRef from '@/lib/composeWithRef'
 import {EDIT_PASSWORD} from '@/graphql/modules/user/mutations'
 import {setContext, clearContext} from '@/screens/module/context'
 import {getUser} from '@/redux/modules/auth/selectors'
@@ -12,31 +13,7 @@ import BottomTabs from '@/screens/containers/BottomTabs'
 import PasswordForm from '@/components/account/PasswordForm'
 import SubmitButtonScreen from '../SubmitButton'
 
-@connect(
-  (state) => getContext(state, {screen: 'account'}),
-  {setContext: setContext('account'), clearContext: clearContext('account')},
-  null,
-  {withRef: true}
-)
-@connect(
-  (state) => ({
-    user: getUser(state)
-  }),
-  null,
-  null,
-  {withRef: true}
-)
-@graphql(
-  EDIT_PASSWORD,
-  {
-    props: ({mutate, ownProps: {user}}) => ({
-      changePassword: (variables) =>
-        mutate({variables: {id: user.id, ...variables}})
-    })
-  },
-  {withRef: true}
-)
-export default class EditPasswordScreen extends PureComponent {
+class EditPasswordScreen extends PureComponent {
   static screenName = 'account.EditPassword'
 
   static options = {
@@ -55,9 +32,7 @@ export default class EditPasswordScreen extends PureComponent {
         rightButtons: [
           {
             id: `${this.props.componentId}_submit`,
-            passProps: {
-              onPress: this.onSubmit
-            },
+            passProps: {onPress: this.onSubmit},
             component: {name: SubmitButtonScreen.screenName}
           }
         ]
@@ -117,3 +92,19 @@ export default class EditPasswordScreen extends PureComponent {
     )
   }
 }
+
+export default composeWithRef(
+  connect((state) => getContext(state, {screen: 'account'}), {
+    setContext: setContext('account'),
+    clearContext: clearContext('account')
+  }),
+  connect((state) => ({
+    user: getUser(state)
+  })),
+  graphql(EDIT_PASSWORD, {
+    props: ({mutate, ownProps: {user}}) => ({
+      changePassword: (variables) =>
+        mutate({variables: {id: user.id, ...variables}})
+    })
+  })
+)(EditPasswordScreen)

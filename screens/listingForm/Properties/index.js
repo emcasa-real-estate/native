@@ -20,7 +20,7 @@ class EditPropertiesScreen extends PureComponent {
     params: {}
   }
 
-  static screenName = 'listing.EditProperties'
+  static screenName = 'listingForm.EditProperties'
 
   static options = {
     topBar: {

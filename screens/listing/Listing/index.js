@@ -17,7 +17,7 @@ import Listing from './Listing'
 import GalleryScreen from '@/screens/listing/Gallery'
 import TourScreen from '@/screens/listing/Tour'
 import InterestFormScreen from '@/screens/interest/Form'
-import EditGalleryScreen from '@/screens/listing/EditGallery'
+import EditGalleryScreen from '@/screens/listingForm/Gallery'
 
 class ListingScreen extends PureComponent {
   static screenName = 'listing.Listing'

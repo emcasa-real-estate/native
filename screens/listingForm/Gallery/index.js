@@ -18,7 +18,7 @@ import Progress from '@/components/shared/Progress'
 import Gallery from '@/components/newListing/Gallery'
 
 class EditGalleryScreen extends PureComponent {
-  static screenName = 'listings.EditGallery'
+  static screenName = 'listingForm.EditGallery'
 
   static options = {
     topBar: {

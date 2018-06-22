@@ -1,7 +1,3 @@
 export {default as Listing} from './Listing'
 export {default as Gallery} from './Gallery'
 export {default as Tour} from './Tour'
-export {default as EditAddress} from './EditAddress'
-export {default as EditProperties} from './EditProperties'
-export {default as EditGallery} from './EditGallery'
-export {default as Created} from './Created'

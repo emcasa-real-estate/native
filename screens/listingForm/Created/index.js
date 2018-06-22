@@ -18,7 +18,7 @@ export default class ListingCreatedScreen extends Component {
     params: {}
   }
 
-  static screenName = 'listing.Created'
+  static screenName = 'listingForm.Created'
 
   onClose = () => {
     const {params: {listing: {id}}} = this.props

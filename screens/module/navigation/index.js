@@ -26,7 +26,6 @@ export default function screenReducer(state = initialState, action) {
         screen: {id: action.id, name: action.name}
       }
     case UPDATE_TAB:
-    case SWITCH_TAB:
       return {
         ...state,
         tab: action.tab

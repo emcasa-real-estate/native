@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import {Navigation} from 'react-native-navigation'
-import {put, all, select, takeEvery} from 'redux-saga/effects'
+import {put, all, select, take, takeEvery} from 'redux-saga/effects'
 
 import TABS, {STACK_ROOT} from '@/screens/tabs'
 import * as actions from '../index'
@@ -17,7 +17,10 @@ function* setStackRoot() {
   yield put(actions.updateTab(STACK_ROOT))
 }
 
-function switchTab({tab}) {
+function* switchTab({tab}) {
+  const currentTab = yield select(getCurrentTab)
+  if (tab === currentTab) return
+  yield put(actions.updateTab(tab))
   Navigation.setDefaultOptions({
     bottomTabs: {
       translucent: true,
@@ -27,13 +30,14 @@ function switchTab({tab}) {
     }
   })
   Navigation.popTo(STACK_ROOT)
-  if (tab !== STACK_ROOT)
+  if (tab !== STACK_ROOT) {
     Navigation.push(STACK_ROOT, {
       component: {
         id: tab,
         name: TABS[tab].name
       }
     })
+  }
 }
 
 function* updateCurrentTab(action) {

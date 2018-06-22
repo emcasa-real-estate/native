@@ -3,6 +3,7 @@ import {Navigation} from 'react-native-navigation'
 
 import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
+import Progress from '@/components/shared/Progress'
 import AddressForm from '@/components/newListing/Address'
 
 import EditPropertiesScreen from '@/screens/listing/EditProperties'
@@ -34,6 +35,10 @@ export default class EditAddressScreen extends PureComponent {
     }
   }
 
+  componentDidMount() {
+    Navigation.mergeOptions(this.props.componentId, {})
+  }
+
   onChange = (value) => this.setState({value})
 
   onSubmit = () => {
@@ -53,6 +58,7 @@ export default class EditAddressScreen extends PureComponent {
   render() {
     return (
       <Shell>
+        <Progress progress={1 / 3} />
         <Body>
           <AddressForm
             formRef={this.form}

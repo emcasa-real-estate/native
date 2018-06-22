@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react'
+import React, {Fragment, PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
@@ -12,6 +12,7 @@ import {getToken, getData} from '@/redux/modules/auth/selectors'
 import {setStack} from '@/screens/module/navigation'
 import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
+import Progress from '@/components/shared/Progress'
 import PropertiesForm from '@/components/newListing/Properties'
 
 class EditPropertiesScreen extends PureComponent {
@@ -91,12 +92,32 @@ class EditPropertiesScreen extends PureComponent {
     }
   }
 
+  renderFooter() {
+    const {params: {editing}} = this.props
+    const {loading} = this.state
+    return (
+      <Fragment>
+        {editing && (
+          <Button
+            color="white"
+            onPress={() => Navigation.pop(this.props.componentId)}
+          >
+            Voltar
+          </Button>
+        )}
+        <Button disabled={loading} onPress={this.onSubmit}>
+          {loading ? 'Enviando...' : 'Enviar'}
+        </Button>
+      </Fragment>
+    )
+  }
+
   render() {
     const {user} = this.props
-    const {loading, value} = this.state
-
+    const {value} = this.state
     return (
       <Shell>
+        <Progress progress={2 / 3} />
         <Body scroll>
           <PropertiesForm
             formRef={this.form}
@@ -106,11 +127,7 @@ class EditPropertiesScreen extends PureComponent {
             onSubmit={this.onSubmit}
           />
         </Body>
-        <Footer style={{padding: 15}}>
-          <Button disabled={loading} onPress={this.onSubmit}>
-            {loading ? 'Enviando...' : 'Enviar'}
-          </Button>
-        </Footer>
+        <Footer style={{padding: 15}}>{this.renderFooter()}</Footer>
       </Shell>
     )
   }

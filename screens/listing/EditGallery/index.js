@@ -14,6 +14,7 @@ import {
 } from '@/redux/modules/gallery/upload/selectors'
 import {create} from '@/redux/modules/gallery/upload'
 import {Shell, Body} from '@/components/layout'
+import Progress from '@/components/shared/Progress'
 import Gallery from '@/components/newListing/Gallery'
 
 class EditGalleryScreen extends PureComponent {
@@ -79,6 +80,7 @@ class EditGalleryScreen extends PureComponent {
     const {progress, errors, loading, images} = this.props
     return (
       <Shell>
+        <Progress progress={3 / 3} />
         <Body loading={loading}>
           <Gallery
             progress={progress}

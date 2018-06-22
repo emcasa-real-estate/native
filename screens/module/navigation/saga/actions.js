@@ -3,6 +3,7 @@ import {Navigation} from 'react-native-navigation'
 import {put, all, select, takeEvery} from 'redux-saga/effects'
 
 import TABS, {STACK_ROOT} from '@/screens/tabs'
+import defaultOptions from '@/screens/options'
 import * as actions from '../index'
 import {getCurrentTab, getStackRoot} from '../selectors'
 
@@ -33,14 +34,7 @@ function* switchTab({tab}) {
   const stackRoot = yield select(getStackRoot)
   if (tab === currentTab) return
   yield put(actions.updateTab(tab))
-  Navigation.setDefaultOptions({
-    bottomTabs: {
-      translucent: true,
-      drawBehind: true,
-      animate: false,
-      visible: false
-    }
-  })
+  Navigation.setDefaultOptions(defaultOptions)
   Navigation.popTo(stackRoot.id)
   if (tab !== STACK_ROOT) {
     Navigation.push(stackRoot.id, {

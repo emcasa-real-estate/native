@@ -41,7 +41,7 @@ export default function listingsData(state = {}, action) {
 const initialState = {
   loading: false,
   error: undefined,
-  data: {}
+  data: undefined
 }
 
 listingsData.node = (state = initialState, action) => {

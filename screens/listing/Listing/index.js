@@ -17,6 +17,7 @@ import Listing from './Listing'
 import GalleryScreen from '@/screens/listing/Gallery'
 import TourScreen from '@/screens/listing/Tour'
 import InterestFormScreen from '@/screens/interest/Form'
+import EditGalleryScreen from '@/screens/listing/EditGallery'
 
 class ListingScreen extends PureComponent {
   static screenName = 'listing.Listing'
@@ -31,7 +32,11 @@ class ListingScreen extends PureComponent {
     const {data, componentId} = this.props
     Navigation.mergeOptions(componentId, {
       topBar: {
-        title: {text: `R$${format.number(data.price)}`}
+        title: {
+          text: data.price
+            ? `R$${format.number(data.price)}`
+            : 'Preço a definir'
+        }
       }
     })
   }
@@ -109,7 +114,9 @@ class ListingScreen extends PureComponent {
       <Button
         color="green"
         onPress={this.navigateTo({
-          name: InterestFormScreen.screenName
+          name: params.editing
+            ? EditGalleryScreen.screenName
+            : InterestFormScreen.screenName
         })}
       >
         {params.editing ? 'Editar' : 'Marcar visita'}
@@ -118,23 +125,24 @@ class ListingScreen extends PureComponent {
   }
 
   render() {
-    const {loading, data} = this.props
+    const {data} = this.props
 
     return (
       <Shell>
         <Body scroll style={{flex: 1}}>
-          {!loading && (
+          {data && (
             <Listing
               {...data}
               onOpenGallery={this.onOpenGallery}
               onOpenTour={this.onOpenTour}
             />
           )}
-          {!loading && (
-            <Section title="Veja Também">
-              {this.renderRelatedListings()}
-            </Section>
-          )}
+          {data &&
+            data.isActive && (
+              <Section title="Veja Também">
+                {this.renderRelatedListings()}
+              </Section>
+            )}
         </Body>
         <Footer style={{padding: 15}}>{this.renderFooter()}</Footer>
       </Shell>
@@ -145,7 +153,7 @@ class ListingScreen extends PureComponent {
 export default composeWithRef(
   connect(
     (state, {params}) => ({
-      data: getData(state, params) || {},
+      data: getData(state, params),
       loading: isLoading(state, params),
       relatedListings: getRelatedListings(state, params)
     }),

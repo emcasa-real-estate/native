@@ -6,16 +6,10 @@ import Phone from '@/components/shared/Form/Phone'
 import NumberPicker from './NumberPicker'
 import styles from './styles'
 
-export default function ListingPropertiesForm({
-  onSubmit,
-  loading,
-  requirePhone
-}) {
+export default function ListingPropertiesForm({requirePhone, ...props}) {
   return (
     <Form
       style={styles.container}
-      loading={loading}
-      onSubmit={onSubmit}
       defaultValue={{
         rooms: 0,
         bathrooms: 0,
@@ -23,6 +17,7 @@ export default function ListingPropertiesForm({
         maintenance_fee: 0,
         property_tax: 0
       }}
+      {...props}
     >
       <Dropdown
         name="type"

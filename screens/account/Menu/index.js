@@ -8,8 +8,10 @@ import {withUserListings} from '@/graphql/modules/user/containers'
 import {Shell, Body, Header, Footer} from '@/components/layout'
 import BottomTabs from '@/screens/containers/BottomTabs'
 import Menu from '@/components/account/Menu'
-import EditProfileScreen from '../EditProfile'
 import AccountHeader from './Header'
+
+import EditProfileScreen from '@/screens/account/EditProfile'
+import UserListingsScreen from '@/screens/account/Listings'
 
 class AccountMenuScreen extends PureComponent {
   static screenName = 'account.Menu'
@@ -53,7 +55,7 @@ class AccountMenuScreen extends PureComponent {
             })}
             onViewListings={this.navigateTo({
               id: 'user_listings',
-              name: null
+              name: UserListingsScreen.screenName
             })}
           />
         </Body>

@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import {Navigation} from 'react-native-navigation'
-import {put, all, select, take, takeEvery} from 'redux-saga/effects'
+import {put, all, select, takeEvery} from 'redux-saga/effects'
 
 import TABS, {STACK_ROOT} from '@/screens/tabs'
 import * as actions from '../index'

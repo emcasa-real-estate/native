@@ -17,6 +17,7 @@ import Listing from './Listing'
 import GalleryScreen from '@/screens/listing/Gallery'
 import TourScreen from '@/screens/listing/Tour'
 import InterestFormScreen from '@/screens/interest/Form'
+import EditGalleryScreen from '@/screens/listing/EditGallery'
 
 class ListingScreen extends PureComponent {
   static screenName = 'listing.Listing'
@@ -113,7 +114,9 @@ class ListingScreen extends PureComponent {
       <Button
         color="green"
         onPress={this.navigateTo({
-          name: InterestFormScreen.screenName
+          name: params.editing
+            ? EditGalleryScreen.screenName
+            : InterestFormScreen.screenName
         })}
       >
         {params.editing ? 'Editar' : 'Marcar visita'}

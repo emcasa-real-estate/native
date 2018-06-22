@@ -9,6 +9,7 @@ import {
   withProfileMutation
 } from '@/graphql/modules/user/containers'
 import {getToken, getData} from '@/redux/modules/auth/selectors'
+import {setStack} from '@/screens/module/navigation'
 import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import PropertiesForm from '@/components/newListing/Properties'
@@ -22,7 +23,8 @@ class EditPropertiesScreen extends PureComponent {
 
   static options = {
     topBar: {
-      title: {text: 'Dados principais'}
+      title: {text: 'Dados principais'},
+      backButtonTitle: ''
     }
   }
 
@@ -45,11 +47,36 @@ class EditPropertiesScreen extends PureComponent {
     }
   }
 
+  navigateToListing = ({id}) => {
+    this.props.setStack([
+      {name: 'account.Menu'},
+      {name: 'account.Listings'},
+      {name: 'listing.Listing', passProps: {params: {id, editing: true}}}
+    ])
+  }
+
+  openSuccessModal({listing, address}) {
+    const {componentId} = this.props
+    Navigation.showModal({
+      component: {
+        id: `${componentId}_success`,
+        name: 'listing.Created',
+        passProps: {
+          params: {listing, address},
+          onDismiss: () => {
+            Navigation.dismissModal(`${componentId}_success`)
+            this.navigateToListing(listing)
+          }
+        }
+      }
+    })
+  }
+
   onChange = (value) => this.setState({value})
 
   onSubmit = async () => {
     const {editUserProfile, userListings, jwt} = this.props
-    const {phone} = this.value
+    const {phone} = this.state.value
     const {listing, address} = this.value
     if (!this.form.current.onValidate()) return
     this.setState({loading: true})
@@ -58,7 +85,7 @@ class EditPropertiesScreen extends PureComponent {
       const response = await listingsApi.create({listing, address}, {jwt})
       userListings.refetch()
       this.setState({loading: false})
-      // navigation.navigate('success', {listing: response.listing, address})
+      this.openSuccessModal({listing: response.listing, address})
     } catch (error) {
       this.setState({errors: error.errors, loading: false})
     }
@@ -90,10 +117,13 @@ class EditPropertiesScreen extends PureComponent {
 }
 
 export default composeWithRef(
-  connect((state) => ({
-    jwt: getToken(state),
-    user: getData(state)
-  })),
+  connect(
+    (state) => ({
+      jwt: getToken(state),
+      user: getData(state)
+    }),
+    {setStack}
+  ),
   withProfileMutation,
   withUserListings
 )(EditPropertiesScreen)

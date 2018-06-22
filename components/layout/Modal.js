@@ -1,6 +1,7 @@
 import {View, TouchableOpacity, StyleSheet, Platform} from 'react-native'
 
 import * as colors from '@/assets/colors'
+import Text from '@/components/shared/Text'
 import Icon from '@/components/shared/Icon'
 import Shell from './Shell'
 
@@ -16,7 +17,8 @@ export default function Modal({style, ...props}) {
 const styles = StyleSheet.create({
   header: {
     padding: 10,
-    display: 'flex'
+    display: 'flex',
+    flexDirection: 'row'
   },
   headerAbsolute: {
     position: 'absolute',
@@ -24,10 +26,17 @@ const styles = StyleSheet.create({
     left: 0,
     width: '100%',
     zIndex: 1
+  },
+  title: {
+    flex: 1,
+    textAlign: 'center',
+    marginLeft: -20,
+    fontSize: 18,
+    color: colors.gray.dark
   }
 })
 
-Modal.Header = ({style, inline, iconColor, onDismiss}) => (
+Modal.Header = ({style, children, inline, iconColor, onDismiss}) => (
   <View style={[styles.header, !inline && styles.headerAbsolute, style]}>
     <TouchableOpacity
       onPress={onDismiss}
@@ -41,6 +50,7 @@ Modal.Header = ({style, inline, iconColor, onDismiss}) => (
         color={iconColor}
       />
     </TouchableOpacity>
+    {children && <Text style={styles.title}>{children}</Text>}
   </View>
 )
 

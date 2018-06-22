@@ -4,7 +4,7 @@ import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import {getNeighborhoods} from '@/redux/modules/neighborhoods/selectors'
-import {Shell, Body, Footer} from '@/components/layout'
+import {Modal, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import Text from '@/components/shared/Text'
 import Icon from '@/components/shared/Icon'
@@ -14,6 +14,12 @@ import styles, {validTextColor, invalidTextColor} from './styles'
   withRef: true
 })
 export default class ListingCreatedScreen extends Component {
+  static defaultProps = {
+    params: {}
+  }
+
+  static screenName = 'listing.Created'
+
   onClose = () => {
     const {params: {listing: {id}}} = this.props
     Navigation.setStackRoot(this.props.componentId, {
@@ -68,15 +74,19 @@ export default class ListingCreatedScreen extends Component {
     )
   }
   render() {
+    const {onDismiss} = this.props
     return (
-      <Shell>
-        <Body>{this.renderMessage()}</Body>
+      <Modal>
+        <Modal.Header inline onPress={onDismiss}>
+          Imóvel cadastrado
+        </Modal.Header>
+        <Body style={{padding: 15}}>{this.renderMessage()}</Body>
         <Footer style={{padding: 15}}>
-          <Button onPress={this.onClose}>
+          <Button color="green" onPress={onDismiss}>
             Ok
           </Button>
         </Footer>
-      </Shell>
+      </Modal>
     )
   }
 }

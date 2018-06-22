@@ -26,17 +26,25 @@ export default class EditAddressScreen extends PureComponent {
 
   form = React.createRef()
 
+  get value() {
+    const {value} = this.state
+    return {
+      address: value.address.details,
+      complement: value.complement
+    }
+  }
+
   onChange = (value) => this.setState({value})
 
   onSubmit = () => {
     const {componentId, params} = this.props
-    const {value} = this.state
+    const {address, complement} = this.value
     if (this.form.current.onValidate())
       Navigation.push(componentId, {
         component: {
           name: EditPropertiesScreen.screenName,
           passProps: {
-            params: {...params, address: value}
+            params: {...params, address, complement}
           }
         }
       })

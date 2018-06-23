@@ -9,11 +9,15 @@ import {
   withProfileMutation
 } from '@/graphql/modules/user/containers'
 import {getToken, getData} from '@/redux/modules/auth/selectors'
+import {setListing, setValue} from '@/screens/listingForm/reducer'
+import {getValue} from '@/screens/listingForm/selectors'
 import {setStack} from '@/screens/module/navigation'
 import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import Progress from '@/components/shared/Progress'
 import PropertiesForm from '@/components/newListing/Properties'
+
+import CreatedScreen from '@/screens/listingForm/Created'
 
 class EditPropertiesScreen extends PureComponent {
   static defaultProps = {
@@ -29,22 +33,15 @@ class EditPropertiesScreen extends PureComponent {
     }
   }
 
-  state = {
-    value: {}
-  }
+  state = {}
 
   form = React.createRef()
 
   get value() {
-    const {params: {address, complement}} = this.props
-    const {value} = this.state
+    const {value: {address, ...listing}} = this.props
     return {
-      address,
-      listing: {
-        ...value,
-        complement,
-        price: 0
-      }
+      address: address.details,
+      listing
     }
   }
 
@@ -61,7 +58,7 @@ class EditPropertiesScreen extends PureComponent {
     Navigation.showModal({
       component: {
         id: `${componentId}_success`,
-        name: 'listing.Created',
+        name: CreatedScreen.screenName,
         passProps: {
           params: {listing, address},
           onDismiss: () => {
@@ -73,11 +70,16 @@ class EditPropertiesScreen extends PureComponent {
     })
   }
 
-  onChange = (value) => this.setState({value})
+  onChange = (value) => this.props.setValue(value)
 
   onSubmit = async () => {
-    const {editUserProfile, userListings, jwt} = this.props
-    const {phone} = this.state.value
+    const {
+      editUserProfile,
+      userListings,
+      setListing,
+      jwt,
+      value: {phone}
+    } = this.props
     const {listing, address} = this.value
     if (!this.form.current.onValidate()) return
     this.setState({loading: true})
@@ -86,6 +88,7 @@ class EditPropertiesScreen extends PureComponent {
       const response = await listingsApi.create({listing, address}, {jwt})
       userListings.refetch()
       this.setState({loading: false})
+      setListing(response.listing)
       this.openSuccessModal({listing: response.listing, address})
     } catch (error) {
       this.setState({errors: error.errors, loading: false})
@@ -113,8 +116,7 @@ class EditPropertiesScreen extends PureComponent {
   }
 
   render() {
-    const {user} = this.props
-    const {value} = this.state
+    const {user, value} = this.props
     return (
       <Shell>
         <Progress progress={2 / 3} />
@@ -137,9 +139,10 @@ export default composeWithRef(
   connect(
     (state) => ({
       jwt: getToken(state),
-      user: getData(state)
+      user: getData(state),
+      value: getValue(state)
     }),
-    {setStack}
+    {setListing, setValue, setStack}
   ),
   withProfileMutation,
   withUserListings

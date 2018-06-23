@@ -1,4 +1,4 @@
-import * as listing from './listing'
+import * as listingForm from './listingForm'
 import * as listings from './listings'
 import * as account from './account'
 import * as auth from './auth'
@@ -9,7 +9,7 @@ export default {
     isActive: ({name}) => /^listings/.test(name)
   },
   newListing: {
-    name: listing.EditAddress.screenName,
+    name: listingForm.Address.screenName,
     isActive: () => undefined
   },
   account: {

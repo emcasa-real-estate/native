@@ -3,9 +3,8 @@ import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
-import {getData} from '@/redux/modules/listings/data/selectors'
-import {setContext, clearContext} from '@/screens/module/context'
-import {getContext} from '@/screens/module/context/selectors'
+import {setValue, setListing, reset} from '@/screens/listingForm/reducer'
+import {getValue} from '@/screens/listingForm/selectors'
 import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import Progress from '@/components/shared/Progress'
@@ -15,8 +14,7 @@ import EditPropertiesScreen from '@/screens/listingForm/Properties'
 
 class EditAddressScreen extends PureComponent {
   static defaultProps = {
-    params: {},
-    value: {}
+    params: {}
   }
 
   static screenName = 'listingForm.EditAddress'
@@ -30,7 +28,7 @@ class EditAddressScreen extends PureComponent {
   form = React.createRef()
 
   get value() {
-    const {value} = this.state
+    const {value} = this.props
     return {
       address: value.address.details,
       complement: value.complement
@@ -38,22 +36,16 @@ class EditAddressScreen extends PureComponent {
   }
 
   componentDidMount() {
-    const {componentId, setContext} = this.props
+    const {componentId, setListing, params: {id}} = this.props
     Navigation.mergeOptions(componentId, {})
-    if (this.props.listing) {
-      const {address, complement, ...listing} = listing
-      setContext({
-        value: {address, complement, ...listing}
-      })
-    }
+    if (id) setListing({id})
   }
 
   componentWillUnmount() {
-    this.props.clearContext()
+    this.props.reset()
   }
 
-  onChange = (value) =>
-    this.props.setContext({value: {...this.props.value, ...value}})
+  onChange = (value) => this.props.setValue(value)
 
   onSubmit = () => {
     const {componentId, params} = this.props
@@ -87,11 +79,10 @@ class EditAddressScreen extends PureComponent {
 }
 
 export default composeWithRef(
-  connect((state, {params = {}}) => ({
-    listing: params.id && getData(state, params)
-  })),
-  connect((state) => getContext(state, {screen: 'edit_listing'}), {
-    setContext: setContext('edit_listing'),
-    clearContext: clearContext('edit_listing')
-  })
+  connect(
+    (state) => ({
+      value: getValue(state)
+    }),
+    {setValue, setListing, reset}
+  )
 )(EditAddressScreen)

@@ -6,8 +6,14 @@ import createSagaMiddleware, {END} from 'redux-saga'
 import reducer from './modules/reducer'
 import saga from './modules/saga'
 
-export default function create() {
-  const sagaMiddleware = createSagaMiddleware()
+export default function createReduxStore(client) {
+  const sagaMiddleware = createSagaMiddleware({
+    context: {
+      get graphql() {
+        return client.graphql
+      }
+    }
+  })
   const middleware = [sagaMiddleware]
   if (__DEV__) {
     const {createLogger} = require('redux-logger')
@@ -40,10 +46,3 @@ export default function create() {
   }
   return store
 }
-
-// Create store outside entry point to avoid creating a new one on HMR
-export const store = create()
-export const persistor = store.persistor
-
-// Clear cache before each test case for e2e tests
-if (process.env.NODE_ENV === 'e2e') persistor.purge()

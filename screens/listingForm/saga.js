@@ -1,12 +1,27 @@
-import {put, all, race, take, takeEvery} from 'redux-saga/effects'
+import _ from 'lodash'
+import {put, all, select, takeEvery} from 'redux-saga/effects'
 
-import * as listings from '@/redux/modules/listings/data'
+import {getData as getListingData} from '@/redux/modules/listings/data/selectors'
 import * as actions from './reducer'
 
-function* fetchListing({id}) {
-  yield put(listings.load(id))
-  const [success] = yield race([take(listings.SUCCESS), take(listings.FAILURE)])
-  if (success) yield put(actions.setValue(success.data))
+const listingValue = ({address, ...listing}) => ({
+  ..._.mapValues(listing, (value) => (value ? String(value) : undefined)),
+  address: {
+    details: address,
+    text: {
+      street: address.street,
+      street_number: String(address.streetNumber),
+      value: `${address.street}, ${address.streetNumber} - ${address.city} - ${
+        address.state
+      }`
+    }
+  }
+})
+
+function* fetchListing({listing: {id}}) {
+  let listing = yield select(getListingData, {id})
+
+  yield put(actions.setValue(listingValue(listing)))
 }
 
 export default function* listingFormScreenSaga() {

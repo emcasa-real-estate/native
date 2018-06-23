@@ -17,7 +17,7 @@ import Listing from './Listing'
 import GalleryScreen from '@/screens/listing/Gallery'
 import TourScreen from '@/screens/listing/Tour'
 import InterestFormScreen from '@/screens/interest/Form'
-import EditGalleryScreen from '@/screens/listingForm/Gallery'
+import EditAddressScreen from '@/screens/listingForm/Address'
 
 class ListingScreen extends PureComponent {
   static screenName = 'listing.Listing'
@@ -115,7 +115,7 @@ class ListingScreen extends PureComponent {
         color="green"
         onPress={this.navigateTo({
           name: params.editing
-            ? EditGalleryScreen.screenName
+            ? EditAddressScreen.screenName
             : InterestFormScreen.screenName
         })}
       >

@@ -1,16 +1,11 @@
-import React, {Fragment, PureComponent} from 'react'
+import React, {PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
-import * as listingsApi from '@/lib/services/listings'
-import {
-  withUserListings,
-  withProfileMutation
-} from '@/graphql/modules/user/containers'
-import {getToken, getData} from '@/redux/modules/auth/selectors'
-import {setListing, setValue} from '@/screens/listingForm/reducer'
-import {getValue} from '@/screens/listingForm/selectors'
+import {getUser} from '@/redux/modules/auth/selectors'
+import {setListing, setValue, submit} from '@/screens/listingForm/reducer'
+import {getValue, getListing, isLoading} from '@/screens/listingForm/selectors'
 import {setStack} from '@/screens/module/navigation'
 import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
@@ -37,30 +32,14 @@ class EditPropertiesScreen extends PureComponent {
 
   form = React.createRef()
 
-  get value() {
-    const {value: {address, ...listing}} = this.props
-    return {
-      address: address.details,
-      listing
-    }
-  }
-
-  navigateToListing = ({id}) => {
-    this.props.setStack([
-      {name: 'account.Menu'},
-      {name: 'account.Listings'},
-      {name: 'listing.Listing', passProps: {params: {id, editing: true}}}
-    ])
-  }
-
-  openSuccessModal({listing, address}) {
-    const {componentId} = this.props
+  openSuccessModal() {
+    const {componentId, listing, value: {address}} = this.props
     Navigation.showModal({
       component: {
         id: `${componentId}_success`,
         name: CreatedScreen.screenName,
         passProps: {
-          params: {listing, address},
+          params: {listing, address: address.details},
           onDismiss: () => {
             Navigation.dismissModal(`${componentId}_success`)
             this.navigateToListing(listing)
@@ -70,34 +49,29 @@ class EditPropertiesScreen extends PureComponent {
     })
   }
 
-  onChange = (value) => this.props.setValue(value)
-
-  onSubmit = async () => {
-    const {
-      editUserProfile,
-      userListings,
-      setListing,
-      jwt,
-      value: {phone}
-    } = this.props
-    const {listing, address} = this.value
-    if (!this.form.current.onValidate()) return
-    this.setState({loading: true})
-    try {
-      if (phone) editUserProfile({variables: {phone}})
-      const response = await listingsApi.create({listing, address}, {jwt})
-      userListings.refetch()
-      this.setState({loading: false})
-      setListing(response.listing)
-      this.openSuccessModal({listing: response.listing, address})
-    } catch (error) {
-      this.setState({errors: error.errors, loading: false})
-    }
+  navigateToListing = ({id}) => {
+    const params = {id, editing: true}
+    this.props.setStack([
+      {name: 'account.Menu'},
+      {name: 'account.Listings'},
+      {name: 'listing.Listing', passProps: {params}},
+      {name: 'listingForm.EditAddress', passProps: {params}},
+      {name: 'listingForm.EditProperties', passProps: {params}},
+      {name: 'listingForm.EditGallery', passProps: {params}}
+    ])
   }
 
+  componentDidUpdate(prev) {
+    const {listing, loading} = this.props
+    if (!prev.listing && listing && !loading) this.openSuccessModal()
+  }
+
+  onChange = (value) => this.props.setValue(value)
+
+  onSubmit = () => this.props.submit()
+
   render() {
-    const {user, value} = this.props
-    const {loading} = this.state
+    const {user, value, loading} = this.props
     return (
       <Shell>
         <Progress progress={2 / 3} />
@@ -123,12 +97,11 @@ class EditPropertiesScreen extends PureComponent {
 export default composeWithRef(
   connect(
     (state) => ({
-      jwt: getToken(state),
-      user: getData(state),
-      value: getValue(state)
+      user: getUser(state),
+      value: getValue(state),
+      listing: getListing(state),
+      loading: isLoading(state)
     }),
-    {setListing, setValue, setStack}
-  ),
-  withProfileMutation,
-  withUserListings
+    {setListing, setValue, submit, setStack}
+  )
 )(EditPropertiesScreen)

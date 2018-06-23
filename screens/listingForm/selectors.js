@@ -1,7 +1,9 @@
-import {createSelector} from 'reselect'
-
-import {getData} from '@/redux/modules/listings/data/selectors'
-
 export const listingFormScreen = (state) => state.screens.listingForm
-export const getListingId = (state) => listingFormScreen(state).listingId
+
+export const getListing = (state) => listingFormScreen(state).listing
+
 export const getValue = (state) => listingFormScreen(state).value
+
+export const getError = (state) => listingFormScreen(state).error
+
+export const isLoading = (state) => listingFormScreen(state).loading

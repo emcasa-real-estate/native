@@ -35,7 +35,7 @@ function* switchTab({tab}) {
   if (tab === currentTab) return
   yield put(actions.updateTab(tab))
   Navigation.setDefaultOptions(defaultOptions)
-  Navigation.popTo(stackRoot.id)
+  if (currentTab !== STACK_ROOT) Navigation.popTo(stackRoot.id)
   if (tab !== STACK_ROOT) {
     Navigation.push(stackRoot.id, {
       component: {

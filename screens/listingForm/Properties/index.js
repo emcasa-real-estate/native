@@ -13,6 +13,7 @@ import Progress from '@/components/shared/Progress'
 import PropertiesForm from '@/components/newListing/Properties'
 
 import CreatedScreen from '@/screens/listingForm/Created'
+import SubmitButtonScreen from '@/screens/listingForm/SubmitButton'
 
 class EditPropertiesScreen extends PureComponent {
   static defaultProps = {
@@ -59,6 +60,21 @@ class EditPropertiesScreen extends PureComponent {
       {name: 'listingForm.EditProperties', passProps: {params}},
       {name: 'listingForm.EditGallery', passProps: {params}}
     ])
+  }
+
+  componentDidAppear() {
+    const {componentId, params: {id, editing}} = this.props
+    if (id && editing)
+      Navigation.mergeOptions(componentId, {
+        topBar: {
+          rightButtons: [
+            {
+              id: `${componentId}_submit`,
+              component: {name: SubmitButtonScreen.screenName}
+            }
+          ]
+        }
+      })
   }
 
   componentDidUpdate(prev) {

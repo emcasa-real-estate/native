@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import _ from 'lodash/fp'
 import {
   put,
   all,
@@ -14,11 +14,23 @@ import {GET_USER_LISTINGS} from '@/graphql/modules/user/queries'
 import {getData as getListingData} from '@/redux/modules/listings/data/selectors'
 import {getToken} from '@/redux/modules/auth/selectors'
 import * as actions from './reducer'
-import {getValue} from './selectors'
+import {getValue, getListing} from './selectors'
 
-const listingValue = ({address, ...listing}) => ({
-  ..._.mapValues(listing, (value) => (value ? String(value) : undefined)),
-  address: {
+const listingValue = _.flow(
+  _.mapKeys(_.snakeCase),
+  _.pick([
+    'complement',
+    'rooms',
+    'bathrooms',
+    'garage_spots',
+    'maintenance_fee',
+    'tax_property'
+  ]),
+  _.map(String)
+)
+
+const addressValue = _.flow(
+  ({address}) => ({
     details: address,
     text: {
       street: address.street,
@@ -27,16 +39,22 @@ const listingValue = ({address, ...listing}) => ({
         address.state
       }`
     }
-  }
+  }),
+  _.mapKeys(_.snakeCase)
+)
+
+const formValue = (listing) => ({
+  ...listingValue(listing),
+  address: addressValue(listing)
 })
 
 function* fetchListing({listing: {id}}) {
   let listing = yield select(getListingData, {id})
 
-  yield put(actions.setValue(listingValue(listing)))
+  yield put(actions.setValue(formValue(listing)))
 }
 
-function* submit() {
+function* createListing() {
   const {address, phone, ...listing} = yield select(getValue)
   const jwt = yield select(getToken)
   const graphql = yield getContext('graphql')
@@ -60,6 +78,29 @@ function* submit() {
   } catch (error) {
     yield put(actions.failure(error))
   }
+}
+
+function* updateListing() {
+  const {address, phone, ...listing} = yield select(getValue)
+  const {id} = yield select(getListing)
+  const jwt = yield select(getToken)
+  try {
+    const response = yield call(
+      api.update,
+      id,
+      {listing, address: address.details},
+      {jwt}
+    )
+    console.log(response)
+    yield put(actions.success({id}))
+  } catch (error) {
+    yield put(actions.failure(error))
+  }
+}
+
+function* submit() {
+  const listing = yield select(getListing)
+  yield call(listing && listing.id ? updateListing : createListing)
 }
 
 export default function* listingFormScreenSaga() {

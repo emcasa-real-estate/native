@@ -11,6 +11,7 @@ import Progress from '@/components/shared/Progress'
 import AddressForm from '@/components/newListing/Address'
 
 import EditPropertiesScreen from '@/screens/listingForm/Properties'
+import SubmitButtonScreen from '@/screens/listingForm/SubmitButton'
 
 class EditAddressScreen extends PureComponent {
   static defaultProps = {
@@ -36,13 +37,27 @@ class EditAddressScreen extends PureComponent {
   }
 
   componentDidMount() {
-    const {componentId, setListing, params: {id}} = this.props
-    Navigation.mergeOptions(componentId, {})
+    const {setListing, params: {id}} = this.props
     if (id) setListing({id})
   }
 
   componentWillUnmount() {
     this.props.reset()
+  }
+
+  componentDidAppear() {
+    const {componentId, params: {id, editing}} = this.props
+    if (id && editing)
+      Navigation.mergeOptions(componentId, {
+        topBar: {
+          rightButtons: [
+            {
+              id: `${componentId}_submit`,
+              component: {name: SubmitButtonScreen.screenName}
+            }
+          ]
+        }
+      })
   }
 
   onChange = (value) => this.props.setValue(value)

@@ -7,9 +7,13 @@ export default {
     name: listings.Feed.screenName,
     isActive: ({name}) => /^listings/.test(name)
   },
+  favorites: {
+    name: account.Favorites.screenName,
+    isActive: ({name}) => /^account\.Favorites/.test(name)
+  },
   account: {
     name: account.Menu.screenName,
-    isActive: ({name}) => /^account/.test(name)
+    isActive: ({name}) => /^account\.(?!Favorites)/.test(name)
   },
   auth: {
     name: auth.Login.screenName,

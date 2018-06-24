@@ -24,6 +24,7 @@ const listingValue = _.flow(
   _.mapValues((value) => (value ? String(value) : undefined)),
   _.pick([
     'complement',
+    'price',
     'type',
     'area',
     'floor',
@@ -33,7 +34,8 @@ const listingValue = _.flow(
     'maintenance_fee',
     'property_tax',
     'description'
-  ])
+  ]),
+  ({price, ...data}) => ({...data, price: price || undefined})
 )
 
 const addressText = ({city, state, street, street_number, neighborhood}) => {
@@ -88,7 +90,7 @@ function* createListing() {
       })
     const response = yield call(
       api.create,
-      {listing, address: address.details},
+      {listing: {price: 0, ...listing}, address: address.details},
       {jwt}
     )
     yield call(graphql.query, {

@@ -10,8 +10,9 @@ const compare = (value, source) =>
     true
   )
 
-const compareListings = ({address, ...value}, listing) => {
+const compareListings = ({address, price, ...value}, listing) => {
   return (
+    ((!price && !listing.price) || price == listing.price) &&
     compare(value, listing) &&
     compare(_.omit(address.details, ['lng', 'lat']), listing.address)
   )

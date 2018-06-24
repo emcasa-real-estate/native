@@ -11,6 +11,7 @@ export default function ListingPropertiesForm({requirePhone, ...props}) {
     <Form
       style={styles.container}
       defaultValue={{
+        price: undefined,
         rooms: 0,
         bathrooms: 0,
         garage_spots: 0,
@@ -29,9 +30,13 @@ export default function ListingPropertiesForm({requirePhone, ...props}) {
         ]}
         validations={[required('O tipo de imóvel é obrigatório')]}
       />
-      <NumberPicker label="Quartos" name="rooms" />
-      <NumberPicker label="Banheiros" name="bathrooms" />
-      <NumberPicker label="Vagas de garagem" name="garage_spots" />
+      <TextInput
+        name="price"
+        placeholder="Preço"
+        keyboardType="numeric"
+        returnKeyType="next"
+        nextField="area"
+      />
       <TextInput
         name="floor"
         placeholder="Andar"
@@ -68,6 +73,9 @@ export default function ListingPropertiesForm({requirePhone, ...props}) {
           nextField="description"
         />
       )}
+      <NumberPicker label="Quartos" name="rooms" />
+      <NumberPicker label="Banheiros" name="bathrooms" />
+      <NumberPicker label="Vagas de garagem" name="garage_spots" />
       <TextInput multiline name="description" placeholder="Descrição" />
     </Form>
   )

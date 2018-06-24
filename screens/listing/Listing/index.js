@@ -64,7 +64,9 @@ class ListingScreen extends PureComponent {
     Navigation.push(componentId, {
       component: {
         ...component,
-        passProps: {params}
+        passProps: {
+          params: {...params, parent: componentId}
+        }
       }
     })
   }

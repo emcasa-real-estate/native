@@ -51,11 +51,11 @@ class EditPropertiesScreen extends PureComponent {
   }
 
   navigateToListing = ({id}) => {
-    const params = {id, editing: true}
+    const params = {id, editing: true, parent: `new_listing_${id}`}
     this.props.setStack([
       {name: 'account.Menu'},
       {name: 'account.Listings'},
-      {name: 'listing.Listing', passProps: {params}},
+      {name: 'listing.Listing', passProps: {params}, id: params.parent},
       {name: 'listingForm.EditAddress', passProps: {params}},
       {name: 'listingForm.EditProperties', passProps: {params}},
       {name: 'listingForm.EditGallery', passProps: {params}}
@@ -63,14 +63,18 @@ class EditPropertiesScreen extends PureComponent {
   }
 
   componentDidAppear() {
-    const {componentId, params: {id, editing}} = this.props
-    if (id && editing)
+    const {componentId, params} = this.props
+    if (params.id)
       Navigation.mergeOptions(componentId, {
         topBar: {
           rightButtons: [
             {
               id: `${componentId}_submit`,
-              component: {name: SubmitButtonScreen.screenName}
+              passProps: {params},
+              component: {
+                name: SubmitButtonScreen.screenName,
+                passProps: {params}
+              }
             }
           ]
         }

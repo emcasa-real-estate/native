@@ -1,4 +1,5 @@
 import {PureComponent} from 'react'
+import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import * as colors from '@/assets/colors'
@@ -11,8 +12,9 @@ class ListingFormSubmitButton extends PureComponent {
   static screenName = 'listingForm.SubmitButton'
 
   onPress = () => {
-    const {loading, hasChanges, submit} = this.props
+    const {loading, hasChanges, submit, params} = this.props
     if (!loading && hasChanges) submit()
+    Navigation.popTo(params.parent)
   }
 
   render() {

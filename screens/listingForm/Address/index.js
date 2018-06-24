@@ -46,14 +46,18 @@ class EditAddressScreen extends PureComponent {
   }
 
   componentDidAppear() {
-    const {componentId, params: {id, editing}} = this.props
-    if (id && editing)
+    const {componentId, params} = this.props
+    if (params.id)
       Navigation.mergeOptions(componentId, {
         topBar: {
           rightButtons: [
             {
               id: `${componentId}_submit`,
-              component: {name: SubmitButtonScreen.screenName}
+              passProps: {params},
+              component: {
+                name: SubmitButtonScreen.screenName,
+                passProps: {params}
+              }
             }
           ]
         }

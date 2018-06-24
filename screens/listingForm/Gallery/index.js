@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import {PureComponent} from 'react'
+import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 import {withApollo} from 'react-apollo'
 import gql from 'graphql-tag'
@@ -17,6 +18,8 @@ import {Shell, Body} from '@/components/layout'
 import Progress from '@/components/shared/Progress'
 import Gallery from '@/components/newListing/Gallery'
 
+import SubmitButtonScreen from '@/screens/listingForm/SubmitButton'
+
 class EditGalleryScreen extends PureComponent {
   static screenName = 'listingForm.EditGallery'
 
@@ -29,6 +32,25 @@ class EditGalleryScreen extends PureComponent {
   componentDidMount() {
     const {load, params: {id}} = this.props
     load(id)
+  }
+
+  componentDidAppear() {
+    const {componentId, params} = this.props
+    if (params.id)
+      Navigation.mergeOptions(componentId, {
+        topBar: {
+          rightButtons: [
+            {
+              id: `${componentId}_submit`,
+              passProps: {params},
+              component: {
+                name: SubmitButtonScreen.screenName,
+                passProps: {params}
+              }
+            }
+          ]
+        }
+      })
   }
 
   componentDidUpdate(prev) {

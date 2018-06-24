@@ -13,6 +13,7 @@ import Progress from '@/components/shared/Progress'
 import PropertiesForm from '@/components/newListing/Properties'
 
 import CreatedScreen from '@/screens/listingForm/Created'
+import EditGalleryScreen from '@/screens/listingForm/Gallery'
 import SubmitButtonScreen from '@/screens/listingForm/SubmitButton'
 
 class EditPropertiesScreen extends PureComponent {
@@ -88,10 +89,20 @@ class EditPropertiesScreen extends PureComponent {
 
   onChange = (value) => this.props.setValue(value)
 
-  onSubmit = () => this.props.submit()
+  onSubmit = () => {
+    const {componentId, params, submit} = this.props
+    if (params.id)
+      Navigation.push(componentId, {
+        component: {
+          name: EditGalleryScreen.screenName,
+          passProps: {params}
+        }
+      })
+    else if (this.form.current.onValidate()) submit()
+  }
 
   render() {
-    const {user, value, loading} = this.props
+    const {user, value, loading, params} = this.props
     return (
       <Shell>
         <Progress progress={2 / 3} />
@@ -106,7 +117,7 @@ class EditPropertiesScreen extends PureComponent {
         </Body>
         <Footer style={{padding: 15}}>
           <Button disabled={loading} onPress={this.onSubmit}>
-            {loading ? 'Enviando...' : 'Enviar'}
+            {params.id ? 'Próximo' : loading ? 'Enviando...' : 'Enviar'}
           </Button>
         </Footer>
       </Shell>

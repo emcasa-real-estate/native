@@ -3,8 +3,10 @@ import {createSelector} from 'reselect'
 
 import {getData} from '@/redux/modules/listings/data/selectors'
 
-const compareListings = ({address, phone, ...value}, listing) => {
-  return _.findIndex(value, (val, key) => listing[key] == val) === -1
+const compare = (value, source) =>
+  _.findIndex(value, (val, key) => source[key] == val) === -1
+const compareListings = ({address, ...value}, listing) => {
+  return compare(value, listing) && compare(address, listing.address)
 }
 
 export const listingFormScreen = (state) => state.screens.listingForm
@@ -19,6 +21,6 @@ export const isLoading = (state) => listingFormScreen(state).loading
 
 export const hasUnsavedChanges = createSelector(
   getValue,
-  getData,
+  (state) => getData(state, getListing(state)),
   compareListings
 )

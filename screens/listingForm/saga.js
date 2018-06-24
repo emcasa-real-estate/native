@@ -11,8 +11,9 @@ import {
 import * as api from '@/lib/services/listings'
 import {EDIT_PROFILE} from '@/graphql/modules/user/mutations'
 import {GET_USER_LISTINGS} from '@/graphql/modules/user/queries'
-import {getData as getListingData} from '@/redux/modules/listings/data/selectors'
 import {getToken} from '@/redux/modules/auth/selectors'
+import {getData as getListingData} from '@/redux/modules/listings/data/selectors'
+import * as listingData from '@/redux/modules/listings/data'
 import * as actions from './reducer'
 import {getValue, getListing} from './selectors'
 
@@ -21,11 +22,15 @@ const listingValue = _.flow(
   _.mapValues((value) => (value ? String(value) : undefined)),
   _.pick([
     'complement',
+    'type',
+    'area',
+    'floor',
     'rooms',
     'bathrooms',
     'garage_spots',
     'maintenance_fee',
-    'tax_property'
+    'property_tax',
+    'description'
   ])
 )
 
@@ -87,7 +92,7 @@ function* createListing() {
 }
 
 function* updateListing() {
-  const {address, phone, ...listing} = yield select(getValue)
+  const {address, ...listing} = yield select(getValue)
   const {id} = yield select(getListing)
   const jwt = yield select(getToken)
   try {
@@ -97,7 +102,7 @@ function* updateListing() {
       {listing, address: address.details},
       {jwt}
     )
-    console.log(response)
+    yield put(listingData.patch(id, response.listing))
     yield put(actions.success({id}))
   } catch (error) {
     yield put(actions.failure(error))

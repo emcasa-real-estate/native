@@ -27,6 +27,7 @@ export default function listingFormScreenReducer(state = initialState, action) {
   switch (action.type) {
     case SET_VALUE:
       return {
+        ...state,
         value: {
           ...state.value,
           ...action.value

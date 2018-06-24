@@ -21,7 +21,7 @@ export default class BottomTabsApp extends PureComponent {
         tabs={[
           {id: 'listings', icon: 'home', title: 'Imóveis'},
           {id: 'favorites', icon: 'heart', title: 'Favoritos'},
-          {id: 'newListing', icon: 'tag', title: 'Anunciar'},
+          {id: jwt ? 'newListing' : 'auth', icon: 'tag', title: 'Anunciar'},
           jwt
             ? {id: 'account', icon: 'user', title: 'Perfil'}
             : {id: 'auth', icon: 'user', title: 'Login'}

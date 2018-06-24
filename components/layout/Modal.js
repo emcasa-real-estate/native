@@ -27,7 +27,12 @@ const styles = StyleSheet.create({
     width: '100%',
     zIndex: 1
   },
+  button: {
+    zIndex: 1,
+    width: 20
+  },
   title: {
+    zIndex: 0,
     flex: 1,
     textAlign: 'center',
     marginLeft: -20,
@@ -38,18 +43,20 @@ const styles = StyleSheet.create({
 
 Modal.Header = ({style, children, inline, iconColor, onDismiss}) => (
   <View style={[styles.header, !inline && styles.headerAbsolute, style]}>
-    <TouchableOpacity
-      onPress={onDismiss}
-      hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-    >
-      <Icon
-        name="times"
-        size={24}
-        strokeWidth={20}
-        stroke={iconColor}
-        color={iconColor}
-      />
-    </TouchableOpacity>
+    <View style={styles.button}>
+      <TouchableOpacity
+        onPress={onDismiss}
+        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+      >
+        <Icon
+          name="times"
+          size={24}
+          strokeWidth={20}
+          stroke={iconColor}
+          color={iconColor}
+        />
+      </TouchableOpacity>
+    </View>
     {children && <Text style={styles.title}>{children}</Text>}
   </View>
 )

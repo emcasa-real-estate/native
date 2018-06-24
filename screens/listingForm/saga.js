@@ -18,6 +18,7 @@ import {getValue, getListing} from './selectors'
 
 const listingValue = _.flow(
   _.mapKeys(_.snakeCase),
+  _.mapValues((value) => (value ? String(value) : undefined)),
   _.pick([
     'complement',
     'rooms',
@@ -25,22 +26,27 @@ const listingValue = _.flow(
     'garage_spots',
     'maintenance_fee',
     'tax_property'
-  ]),
-  _.map(String)
+  ])
 )
 
+const addressText = ({city, state, street, street_number, neighborhood}) => {
+  let text = `${street}, ${street_number} - `
+  if (neighborhood) text += `${neighborhood}, `
+  text += `${city} - ${state}`
+  return text
+}
+
 const addressValue = _.flow(
-  ({address}) => ({
+  _.get('address'),
+  _.mapKeys(_.snakeCase),
+  (address) => ({
     details: address,
     text: {
       street: address.street,
-      street_number: String(address.streetNumber),
-      value: `${address.street}, ${address.streetNumber} - ${address.city} - ${
-        address.state
-      }`
+      street_number: String(address.street_number),
+      value: addressText(address)
     }
-  }),
-  _.mapKeys(_.snakeCase)
+  })
 )
 
 const formValue = (listing) => ({

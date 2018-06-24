@@ -74,6 +74,8 @@ class EditAddressScreen extends PureComponent {
   }
 
   render() {
+    const {params: {id}, value} = this.props
+    if (id && !value.address) return null
     return (
       <Shell>
         <Progress progress={1 / 3} />

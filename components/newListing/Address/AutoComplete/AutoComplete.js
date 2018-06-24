@@ -44,12 +44,18 @@ export default class AutoComplete extends PureComponent {
 
   state = {
     text: '',
+    active: false,
     selection: {start: 0, end: 0}
   }
 
   autoComplete = React.createRef()
 
   request = null
+
+  constructor(props) {
+    super(props)
+    if (props.value.text) this.state.text = props.value.text.value
+  }
 
   get text() {
     return this.state.text
@@ -99,10 +105,6 @@ export default class AutoComplete extends PureComponent {
     if (place) this.autoComplete.current._onPress(place)
   }
 
-  componentDidMount() {
-    this.updateAddressText()
-  }
-
   componentDidUpdate(prev) {
     if (!_.isEqual(prev.value, this.props.value) && this.props.value)
       this.updateAddressText()
@@ -115,6 +117,7 @@ export default class AutoComplete extends PureComponent {
   }
 
   onBlur = async () => {
+    this.setState({active: false})
     if (this.props.textInputProps && this.props.textInputProps.onBlur)
       this.props.textInputProps.onBlur()
     if (this.props.onBlur) this.props.onBlur()
@@ -124,6 +127,8 @@ export default class AutoComplete extends PureComponent {
       if (this.hasAddressChanged()) this.selectBestMatch()
     }, 500)
   }
+
+  onFocus = () => this.setState({active: true})
 
   onChangeText = (text) => {
     this.setState({text})
@@ -166,6 +171,7 @@ export default class AutoComplete extends PureComponent {
         testID="@newListing.Address.AutoComplete"
         fetchDetails
         suppressDefaultStyles
+        listViewDisplayed={this.state.active}
         text={this.state.text}
         ref={this.autoComplete}
         autoFocus={false}
@@ -183,12 +189,14 @@ export default class AutoComplete extends PureComponent {
         }}
         textInputProps={{
           ...(this.props.textInputProps || {}),
+          value: this.state.text,
           accessible: true,
           accessibilityLabel: this.props.placeholder + ' autocomplete',
           onSubmitEditing: this.onSubmitEditing,
           onSelectionChange: this.onSelectionChange,
           onChangeText: this.onChangeText,
           onBlur: this.onBlur,
+          onFocus: this.onFocus,
           selection: this.state.selection,
           placeholderTextColor: gray.light + '90'
         }}

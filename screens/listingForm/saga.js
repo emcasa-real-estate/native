@@ -3,7 +3,9 @@ import {
   put,
   all,
   call,
+  race,
   select,
+  take,
   takeLatest,
   getContext
 } from 'redux-saga/effects'
@@ -61,7 +63,15 @@ const formValue = (listing) => ({
 
 function* fetchListing({listing: {id}}) {
   let listing = yield select(getListingData, {id})
-
+  if (_.isEmpty(listing)) {
+    yield put(listingData.load(id))
+    const {success} = yield race({
+      success: take(listingData.SUCCESS),
+      failure: take(listingData.FAILURE)
+    })
+    if (!success) return
+    listing = success.data
+  }
   yield put(actions.setValue(formValue(listing)))
 }
 
@@ -85,6 +95,7 @@ function* createListing() {
       query: GET_USER_LISTINGS,
       fetchPolicy: 'network-only'
     })
+    yield call(fetchListing, {listing: response.listing})
     yield put(actions.success(response.listing))
   } catch (error) {
     yield put(actions.failure(error))

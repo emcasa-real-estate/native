@@ -3,7 +3,12 @@ import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
-import {setValue, setListing, reset} from '@/screens/listingForm/reducer'
+import {
+  setValue,
+  setListing,
+  setRoot,
+  reset
+} from '@/screens/listingForm/reducer'
 import {getValue} from '@/screens/listingForm/selectors'
 import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
@@ -37,12 +42,15 @@ class EditAddressScreen extends PureComponent {
   }
 
   componentDidMount() {
-    const {setListing, params: {id}} = this.props
+    const {componentId, setListing, setRoot, params: {id}} = this.props
+    console.log('eyy lmao')
+    setRoot(componentId)
     if (id) setListing({id})
   }
 
   componentWillUnmount() {
-    this.props.reset()
+    const {componentId, reset} = this.props
+    reset(componentId)
   }
 
   componentDidAppear() {
@@ -104,6 +112,6 @@ export default composeWithRef(
     (state) => ({
       value: getValue(state)
     }),
-    {setValue, setListing, reset}
+    {setValue, setListing, setRoot, reset}
   )
 )(EditAddressScreen)

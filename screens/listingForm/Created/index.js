@@ -73,17 +73,18 @@ export default class ListingCreatedScreen extends Component {
       </View>
     )
   }
+
   render() {
     const {onDismiss} = this.props
     return (
       <Modal>
-        <Modal.Header inline onPress={onDismiss}>
+        <Modal.Header inline onDismiss={onDismiss}>
           Imóvel cadastrado
         </Modal.Header>
         <Body style={{padding: 15}}>{this.renderMessage()}</Body>
         <Footer style={{padding: 15}}>
           <Button color="green" onPress={onDismiss}>
-            Ok
+            Continuar
           </Button>
         </Footer>
       </Modal>

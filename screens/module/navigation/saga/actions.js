@@ -12,7 +12,7 @@ const uniqId = () =>
     .toString(36)
     .substr(2, 9)
 
-function* setStack({stack}) {
+function* setStack({stack, tab}) {
   stack.unshift({id: `${STACK_ROOT}_${uniqId()}`, name: TABS[STACK_ROOT].name})
   Navigation.setRoot({
     root: {
@@ -21,7 +21,7 @@ function* setStack({stack}) {
       }
     }
   })
-  yield put(actions.updateTab(STACK_ROOT))
+  yield put(actions.updateTab(tab || STACK_ROOT))
   yield put(actions.updateStackRoot(stack[0]))
 }
 

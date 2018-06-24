@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
 import {getUser} from '@/redux/modules/auth/selectors'
-import {setListing, setValue, submit} from '@/screens/listingForm/reducer'
+import {setValue, submit} from '@/screens/listingForm/reducer'
 import {getValue, getListing, isLoading} from '@/screens/listingForm/selectors'
 import {setStack} from '@/screens/module/navigation'
 import {Shell, Body, Footer} from '@/components/layout'
@@ -53,19 +53,22 @@ class EditPropertiesScreen extends PureComponent {
 
   navigateToListing = ({id}) => {
     const params = {id, editing: true, parent: `new_listing_${id}`}
-    this.props.setStack([
-      {name: 'account.Menu'},
-      {name: 'account.Listings'},
-      {name: 'listing.Listing', passProps: {params}, id: params.parent},
-      {name: 'listingForm.EditAddress', passProps: {params}},
-      {name: 'listingForm.EditProperties', passProps: {params}},
-      {name: 'listingForm.EditGallery', passProps: {params}}
-    ])
+    this.props.setStack(
+      [
+        {name: 'account.Menu'},
+        {name: 'account.Listings'},
+        {name: 'listing.Listing', passProps: {params}, id: params.parent},
+        {name: 'listingForm.EditAddress', passProps: {params}},
+        {name: 'listingForm.EditProperties', passProps: {params}},
+        {name: 'listingForm.EditGallery', passProps: {params}}
+      ],
+      'account'
+    )
   }
 
   componentDidAppear() {
     const {componentId, params} = this.props
-    if (params.id)
+    if (params.id) {
       Navigation.mergeOptions(componentId, {
         topBar: {
           rightButtons: [
@@ -80,11 +83,12 @@ class EditPropertiesScreen extends PureComponent {
           ]
         }
       })
+    }
   }
 
   componentDidUpdate(prev) {
-    const {listing, loading} = this.props
-    if (!prev.listing && listing && !loading) this.openSuccessModal()
+    const {listing, loading, params: {id}} = this.props
+    if (!id && !prev.listing && listing && !loading) this.openSuccessModal()
   }
 
   onChange = (value) => this.props.setValue(value)
@@ -130,9 +134,9 @@ export default composeWithRef(
     (state) => ({
       user: getUser(state),
       value: getValue(state),
-      listing: getListing(state),
-      loading: isLoading(state)
+      loading: isLoading(state),
+      listing: getListing(state)
     }),
-    {setListing, setValue, submit, setStack}
+    {setValue, submit, setStack}
   )
 )(EditPropertiesScreen)

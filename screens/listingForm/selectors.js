@@ -29,6 +29,9 @@ export const isLoading = (state) => listingFormScreen(state).loading
 
 export const hasUnsavedChanges = createSelector(
   getValue,
-  (state) => getData(state, getListing(state)),
-  (value, listing) => !compareListings(value, listing)
+  (state) => {
+    const listing = getListing(state)
+    return listing ? getData(state, listing) : undefined
+  },
+  (value, listing) => listing && !compareListings(value, listing)
 )

@@ -1,5 +1,6 @@
 export const SET_VALUE = 'screens/listingForm/SET_VALUE'
 export const SET_LISTING = 'screens/listingForm/SET_LISTING'
+export const SET_ROOT = 'screens/listingForm/SET_ROOT'
 export const RESET = 'screens/listingForm/RESET'
 export const SUBMIT = 'screens/listingForm/SUBMIT'
 export const REQUEST = 'screens/listingForm/REQUEST'
@@ -7,8 +8,9 @@ export const SUCCESS = 'screens/listingForm/SUCCESS'
 export const FAILURE = 'screens/listingForm/FAILURE'
 
 export const setValue = (value) => ({type: SET_VALUE, value})
+export const setRoot = (root) => ({type: SET_VALUE, root})
 export const setListing = (listing) => ({type: SET_LISTING, listing})
-export const reset = () => ({type: RESET})
+export const reset = (root) => ({type: RESET, root})
 export const submit = () => ({type: SUBMIT})
 export const request = () => ({type: REQUEST})
 export const success = (listing) => ({type: SUCCESS, listing})
@@ -36,6 +38,11 @@ export default function listingFormScreenReducer(state = initialState, action) {
         ...state,
         listing: action.listing
       }
+    case SET_ROOT:
+      return {
+        ...state,
+        root: action.root
+      }
     case REQUEST:
       return {
         ...state,
@@ -55,7 +62,7 @@ export default function listingFormScreenReducer(state = initialState, action) {
         loading: false
       }
     case RESET:
-      return initialState
+      return action.root === state.root ? initialState : state
     default:
       return state
   }

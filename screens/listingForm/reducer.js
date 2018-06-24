@@ -18,9 +18,7 @@ const initialState = {
   listing: undefined,
   loading: false,
   error: undefined,
-  value: {
-    price: 0
-  }
+  value: {}
 }
 
 export default function listingFormScreenReducer(state = initialState, action) {

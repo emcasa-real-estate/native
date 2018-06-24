@@ -12,9 +12,13 @@ export default {
     name: listingForm.Address.screenName,
     isActive: () => undefined
   },
+  favorites: {
+    name: account.Favorites.screenName,
+    isActive: ({name}) => /^account\.Favorites/.test(name)
+  },
   account: {
     name: account.Menu.screenName,
-    isActive: ({name}) => /^account/.test(name)
+    isActive: ({name}) => /^account\.(?!Favorites)/.test(name)
   },
   auth: {
     name: auth.Login.screenName,

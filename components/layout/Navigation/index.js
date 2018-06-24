@@ -8,7 +8,7 @@ export default function Navigation({tabs, currentTab, onNavigate}) {
     <View testID="@shared.Shell.Navigation" style={styles.container}>
       {tabs.map(({id, icon, title}) => (
         <Button
-          key={id}
+          key={`${title}_${id}`}
           active={id === currentTab}
           icon={icon}
           onPress={() => onNavigate(id)}

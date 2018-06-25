@@ -60,7 +60,6 @@ function* requestPosition({options}) {
 
 function* initializeMapScreen() {
   const {watching} = yield select(getMapScreen)
-  console.log('....', watching)
   if (watching) yield fork(watchPosition)
 }
 

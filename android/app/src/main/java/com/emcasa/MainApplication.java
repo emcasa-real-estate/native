@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import com.facebook.react.ReactApplication;
 import com.imagepicker.ImagePickerPackage;
 import com.horcrux.svg.SvgPackage;
-import com.github.yamill.orientation.OrientationPackage;
 import com.reactnative.photoview.PhotoViewPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.smixx.fabric.FabricPackage;
@@ -47,7 +46,6 @@ public class MainApplication extends NavigationApplication {
       new MainReactPackage(),
       new ImagePickerPackage(),
       new SvgPackage(),
-      new OrientationPackage(),
       new PhotoViewPackage(),
       new MapsPackage(),
       new FabricPackage()

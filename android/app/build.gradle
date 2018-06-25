@@ -204,7 +204,6 @@ dependencies {
     implementation project(':react-native-navigation')
     implementation project(':react-native-image-picker')
     implementation project(':react-native-svg')
-    implementation project(':react-native-orientation')
     implementation project(':react-native-photo-view')
     implementation project(':react-native-maps')
     implementation project(':react-native-fabric')

@@ -3,7 +3,14 @@ import {StyleSheet} from 'react-native'
 import * as colors from '@/assets/colors'
 
 export default StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
   body: {
+    width: 150,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -23,10 +30,9 @@ export default StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 15,
-    borderWidth: 1,
+    borderWidth: 1.25,
     borderColor: colors.blue.medium
-  },
-  buttonText: {
-    fontSize: 20
   }
 })
+
+export const iconColor = colors.blue.medium

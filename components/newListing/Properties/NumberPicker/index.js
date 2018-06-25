@@ -2,8 +2,9 @@ import {Component} from 'react'
 import {View, TouchableOpacity} from 'react-native'
 
 import Text from '@/components/shared/Text'
+import Icon from '@/components/shared/Icon'
 import {field} from '@/components/shared/Form/Field'
-import styles from './styles'
+import styles, {iconColor} from './styles'
 
 @field()
 export default class NumberPicker extends Component {
@@ -31,13 +32,25 @@ export default class NumberPicker extends Component {
         <View style={styles.body}>
           <TouchableOpacity onPress={this.onChange(-1)}>
             <View style={styles.button}>
-              <Text style={styles.buttonText}>-</Text>
+              <Icon
+                name="minus"
+                color={iconColor}
+                stroke={iconColor}
+                strokeWidth={30}
+                size={12}
+              />
             </View>
           </TouchableOpacity>
           <Text style={styles.value}>{this.value}</Text>
           <TouchableOpacity onPress={this.onChange(1)}>
             <View style={styles.button}>
-              <Text style={styles.buttonText}>+</Text>
+              <Icon
+                name="plus"
+                color={iconColor}
+                stroke={iconColor}
+                strokeWidth={30}
+                size={12}
+              />
             </View>
           </TouchableOpacity>
         </View>

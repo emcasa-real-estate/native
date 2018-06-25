@@ -2,16 +2,16 @@ import React, {PureComponent} from 'react'
 import {Provider} from 'react-redux'
 import {PersistGate} from 'redux-persist/integration/react'
 
-import {store, persistor} from '@/redux'
+import client from '@/lib/client'
 import ApolloProvider from './ApolloProvider'
 
 export default class AppProvider extends PureComponent {
   render() {
     const {children} = this.props
     return (
-      <Provider store={store}>
-        <PersistGate persistor={persistor}>
-          <ApolloProvider>{children}</ApolloProvider>
+      <Provider store={client.store}>
+        <PersistGate persistor={client.store.persistor}>
+          <ApolloProvider client={client.graphql}>{children}</ApolloProvider>
         </PersistGate>
       </Provider>
     )

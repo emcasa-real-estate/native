@@ -10,6 +10,7 @@
     "start": "scripts/env react-native start",
     "android": "scripts/env react-native run-android",
     "ios": "scripts/env react-native run-ios",
+    "xcode": "open ios/EmCasa.xcworkspace",
     "devtools": "react-devtools",
     "log-android": "react-native log-android",
     "log-ios": "react-native log-ios",

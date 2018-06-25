@@ -12,7 +12,7 @@ export const screenDisappeared = (id, name) => ({
   id,
   name
 })
-export const setStack = (stack) => ({type: SET_STACK, stack})
+export const setStack = (stack, tab) => ({type: SET_STACK, stack, tab})
 export const updateStackRoot = ({id, name}) => ({
   type: UPDATE_STACK_ROOT,
   id,

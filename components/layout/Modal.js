@@ -16,7 +16,8 @@ export default function Modal({style, ...props}) {
 
 const styles = StyleSheet.create({
   header: {
-    padding: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     display: 'flex',
     flexDirection: 'row'
   },
@@ -60,6 +61,8 @@ Modal.Header = ({style, children, inline, iconColor, onDismiss}) => (
     {children && <Text style={styles.title}>{children}</Text>}
   </View>
 )
+
+Modal.Header.displayName = 'Modal.Header'
 
 Modal.Header.defaultProps = {
   iconColor: colors.gray.dark

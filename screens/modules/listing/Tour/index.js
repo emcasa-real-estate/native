@@ -35,7 +35,7 @@ export default class ListingTourScreen extends PureComponent {
       <Modal>
         <Modal.Header
           iconColor="white"
-          style={{marginTop: 60, alignItems: 'flex-end'}}
+          style={{marginTop: 60, justifyContent: 'flex-end'}}
           onDismiss={onDismiss}
         />
         <Body onLayout={this.onLayout}>

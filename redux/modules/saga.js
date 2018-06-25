@@ -7,7 +7,7 @@ import listings from './listings/saga'
 import gallery from './gallery/saga'
 import interest from './interest/saga'
 import neighborhoods from './neighborhoods/saga'
-import screens from '@/screens/module/saga'
+import screens from '@/screens/modules/saga'
 
 export default function* root() {
   yield all([

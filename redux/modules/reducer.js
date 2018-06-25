@@ -8,7 +8,7 @@ import listings from './listings'
 import gallery from './gallery'
 import interest from './interest'
 import neighborhoods from './neighborhoods'
-import screens from '@/screens/module'
+import screens from '@/screens/modules/reducer'
 
 const persistent = (reducer, options = {}) =>
   persistReducer(

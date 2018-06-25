@@ -1,7 +1,7 @@
-import * as listingForm from './listingForm'
-import * as listings from './listings'
-import * as account from './account'
-import * as auth from './auth'
+import * as listingForm from './modules/listingForm/screens'
+import * as listings from './modules/listings/screens'
+import * as account from './modules/account/screens'
+import * as auth from './modules/auth/screens'
 
 export default {
   listings: {

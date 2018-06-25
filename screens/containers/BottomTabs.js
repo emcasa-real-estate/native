@@ -1,8 +1,8 @@
 import {PureComponent} from 'react'
 import {connect} from 'react-redux'
 
-import {switchTab} from '@/screens/module/navigation'
-import {getCurrentTab} from '@/screens/module/navigation/selectors'
+import {switchTab} from '@/screens/modules/navigation'
+import {getCurrentTab} from '@/screens/modules/navigation/selectors'
 import {getToken} from '@/redux/modules/auth/selectors'
 import BottomTabs from '@/components/layout/Navigation'
 

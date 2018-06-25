@@ -7,18 +7,35 @@ export default StyleSheet.create({
     flex: 1,
     display: 'flex',
     justifyContent: 'flex-end',
-    padding: 20
+    paddingHorizontal: 20,
+    paddingBottom: 5,
+    backgroundColor: colors.gray.dark + '50'
   },
   button: {
     borderRadius: 5,
-    borderWidth: 1,
-    borderColor: colors.gray.light,
-    backgroundColor: colors.gray.offWhite
+    backgroundColor: colors.gray.offWhite,
+    height: 55,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 15,
+    paddingHorizontal: 20
+  },
+  buttonContainer: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   buttonText: {
-    fontSize: 20,
-    paddingTop: 10,
-    color: colors.gray.medium
+    fontSize: 18,
+    color: colors.gray.dark
+  },
+  closeButtonText: {
+    fontWeight: '500',
+    color: colors.blue.medium
   },
   buttonTextLoading: {
     color: 'white'
@@ -28,4 +45,6 @@ export default StyleSheet.create({
   }
 })
 
-export const iconColor = colors.blue.medium
+export const iconColor = colors.gray.dark
+
+export const buttonUnderlayColor = colors.gray.lighter

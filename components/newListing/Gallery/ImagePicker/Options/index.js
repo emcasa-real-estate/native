@@ -11,7 +11,9 @@ export default function ImagePickerOptions({onDismiss, onPickImage}) {
       <View style={styles.body}>
         <Camera onPickImage={onPickImage} />
         <CameraRoll onPickImage={onPickImage} />
-        <Button onPress={onDismiss}>Cancelar</Button>
+        <Button style={styles.closeButtonText} onPress={onDismiss}>
+          Cancelar
+        </Button>
       </View>
     </View>
   )

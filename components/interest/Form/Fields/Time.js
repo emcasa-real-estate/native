@@ -5,7 +5,11 @@ import {field} from '@/components/shared/Form/Field'
 
 function Time({onChange, value, interval, ...props}) {
   return (
-    <Picker selectedValue={value} onValueChange={onChange} {...props}>
+    <Picker
+      selectedValue={value}
+      onValueChange={(val) => onChange(val)}
+      {...props}
+    >
       {interval.map((time) => (
         <Picker.Item key={time} value={time} label={time} />
       ))}

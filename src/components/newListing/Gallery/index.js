@@ -22,15 +22,6 @@ export default class ListingGallery extends PureComponent {
     return null
   }
 
-  onPickImage = (image) => {
-    this.props.onUpload([
-      {
-        image,
-        position: 0
-      }
-    ])
-  }
-
   onDeleteImage = (id) => () => this.props.onDeleteImage(id)
 
   onChangeOrder = (order) => this.setState({order})
@@ -38,6 +29,15 @@ export default class ListingGallery extends PureComponent {
   onReleaseRow = () => {
     this.props.onChangeOrder(
       this.state.order.map((id, position) => ({id, position}))
+    )
+  }
+
+  onPickImage = (images) => {
+    this.props.onUpload(
+      images.map((image) => ({
+        image,
+        position: 0
+      }))
     )
   }
 

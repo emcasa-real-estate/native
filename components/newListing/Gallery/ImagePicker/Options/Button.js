@@ -1,9 +1,9 @@
-import {View, TouchableHighlight} from 'react-native'
+import {TouchableHighlight} from 'react-native'
 
 import Text from '@/components/shared/Text'
 import styles, {buttonUnderlayColor} from './styles'
 
-export default function ImagePickerOptions({children, style, onPress}) {
+export default function ImagePickerButton({children, style, onPress}) {
   return (
     <TouchableHighlight
       style={styles.button}

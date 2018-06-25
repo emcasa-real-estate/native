@@ -19,10 +19,9 @@ export default class CameraPicker extends PureComponent {
   onSelectPhoto = () => {
     ImagePicker.launchCamera(this.options, (response) => {
       // eslint-disable-next-line no-console
-      console.log(response)
       if (response.error) console.log(response.error)
       else if (!response.didCancel && response.uri) {
-        this.props.onPickImage(response)
+        this.props.onPickImage([response])
       }
     })
   }

@@ -7,6 +7,7 @@ export default StyleSheet.create({
     flex: 1,
     display: 'flex',
     justifyContent: 'flex-end',
+    alignItems: 'stretch',
     paddingHorizontal: 20,
     paddingBottom: 5,
     backgroundColor: colors.gray.dark + '50'
@@ -36,12 +37,6 @@ export default StyleSheet.create({
   closeButtonText: {
     fontWeight: '500',
     color: colors.blue.medium
-  },
-  buttonTextLoading: {
-    color: 'white'
-  },
-  activityIndicator: {
-    marginTop: 20
   }
 })
 

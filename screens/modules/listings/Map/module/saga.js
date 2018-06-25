@@ -28,10 +28,10 @@ const createWatchChannel = () =>
   })
 
 const mapScreenAppeared = ({type, name}) =>
-  type === navigation.SCREEN_APPEARED && name === MapScreen.screen
+  type === navigation.SCREEN_APPEARED && name === MapScreen.screenName
 
 const mapScreenDisappeared = ({type, name}) =>
-  type === navigation.SCREEN_DISAPPEARED && name === MapScreen.screen
+  type === navigation.SCREEN_DISAPPEARED && name === MapScreen.screenName
 
 function* updatePosition({coords}) {
   yield put(actions.updatePosition(coords))
@@ -60,6 +60,7 @@ function* requestPosition({options}) {
 
 function* initializeMapScreen() {
   const {watching} = yield select(getMapScreen)
+  console.log('....', watching)
   if (watching) yield fork(watchPosition)
 }
 

@@ -89,7 +89,8 @@ export default class ListingsMap extends PureComponent {
 
   componentDidMount() {
     const {watching} = this.props
-    if (!watching) requestAnimationFrame(this.requestInitialPosition)
+    if (typeof watching === 'undefined')
+      requestAnimationFrame(this.requestInitialPosition)
   }
 
   componentDidUpdate(prev) {

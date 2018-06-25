@@ -43,7 +43,6 @@ class EditAddressScreen extends PureComponent {
 
   componentDidMount() {
     const {componentId, setListing, setRoot, params: {id}} = this.props
-    console.log('eyy lmao')
     setRoot(componentId)
     if (id) setListing({id})
   }

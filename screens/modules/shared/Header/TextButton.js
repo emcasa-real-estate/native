@@ -14,7 +14,8 @@ const styles = StyleSheet.create({
   container: {
     position: 'relative',
     backgroundColor: 'white',
-    marginRight: Platform.OS === 'android' ? 15 : 0
+    marginRight: Platform.OS === 'android' ? 15 : 0,
+    marginTop: Platform.OS === 'android' ? 15 : 0
   },
   indicator: {
     position: 'absolute',

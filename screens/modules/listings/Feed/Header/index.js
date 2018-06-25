@@ -6,7 +6,6 @@ import {connect} from 'react-redux'
 import {getOptions} from '@/redux/modules/listings/feed/selectors'
 import {abbrevPrice} from '@/assets/format'
 import Text from '@/components/shared/Text'
-import Button from '@/screens/modules/shared/Header/TextButton'
 import styles from './styles'
 
 const omitEmpty = _.omitBy(_.isEmpty)
@@ -63,7 +62,7 @@ export default class ListingsFeedHeader extends PureComponent {
           >
             {hasFilters ? activeFilters(filters) : 'Sem filtros aplicados'}
           </Text>
-          <Button label="Filtrar" />
+          <Text style={styles.buttonText}>Filtrar</Text>
         </TouchableOpacity>
       </View>
     )

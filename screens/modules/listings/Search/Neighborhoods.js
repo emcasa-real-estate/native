@@ -40,7 +40,7 @@ export default class NeighborhoodsScreen extends PureComponent {
     this.state.value = props.value
   }
 
-  componentDidMount() {
+  componentDidAppear() {
     const {componentId} = this.props
     const buttonProps = {
       label: 'Limpar',

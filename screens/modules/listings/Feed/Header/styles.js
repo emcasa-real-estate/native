@@ -29,8 +29,8 @@ export default StyleSheet.create({
     marginTop: 6,
     marginBottom: 6
   },
-  button: {
-    fontSize: 13,
+  buttonText: {
+    fontWeight: '500',
     color: colors.blue.medium
   }
 })

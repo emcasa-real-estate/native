@@ -47,9 +47,9 @@ export default class LoginScreen extends PureComponent {
     this.props.reset()
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prev) {
     const {user, componentId} = this.props
-    if (user) Navigation.popToRoot(componentId)
+    if (user && !prev.user) Navigation.popToRoot(componentId)
   }
 
   onChange = (value) => this.setState({value})

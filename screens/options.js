@@ -11,6 +11,8 @@ export default {
     buttonColor: colors.blue.medium,
     backButtonTitle: '',
     height: 50,
+    elevation: 1,
+    borderColor: colors.gray.light,
     title: {
       fontSize: 18,
       fontWeight: '400',

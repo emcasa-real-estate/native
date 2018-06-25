@@ -8,7 +8,7 @@ export const SUCCESS = 'screens/listingForm/SUCCESS'
 export const FAILURE = 'screens/listingForm/FAILURE'
 
 export const setValue = (value) => ({type: SET_VALUE, value})
-export const setRoot = (root) => ({type: SET_VALUE, root})
+export const setRoot = (root) => ({type: SET_ROOT, root})
 export const setListing = (listing) => ({type: SET_LISTING, listing})
 export const reset = (root) => ({type: RESET, root})
 export const submit = () => ({type: SUBMIT})
@@ -17,6 +17,7 @@ export const success = (listing) => ({type: SUCCESS, listing})
 export const failure = (error) => ({type: FAILURE, error})
 
 const initialState = {
+  root: undefined,
   listing: undefined,
   loading: false,
   error: undefined,

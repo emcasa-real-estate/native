@@ -17,7 +17,11 @@ import Matterport from '@/components/listings/Matterport'
 export default class ListingTourScreen extends PureComponent {
   static screenName = 'listing.Tour'
 
-  static options = {}
+  static options = {
+    layout: {
+      orientation: ['portrait', 'landscape']
+    }
+  }
 
   state = {layout: {}}
 

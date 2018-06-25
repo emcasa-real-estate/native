@@ -3,6 +3,9 @@ import {Platform} from 'react-native'
 import * as colors from '@/assets/colors'
 
 export default {
+  layout: {
+    orientation: ['portrait']
+  },
   topBar: {
     backButtonTitle: '',
     title: {

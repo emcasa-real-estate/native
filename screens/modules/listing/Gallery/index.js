@@ -17,7 +17,11 @@ import Gallery from '@/components/listings/Gallery'
 export default class ListingGalleryScreen extends PureComponent {
   static screenName = 'listing.Gallery'
 
-  static options = {}
+  static options = {
+    layout: {
+      orientation: ['portrait', 'landscape']
+    }
+  }
 
   render() {
     const {data, onDismiss} = this.props

@@ -1,7 +1,9 @@
+import _ from 'lodash'
 import React, {PureComponent} from 'react'
 import {Provider} from 'react-redux'
 import {PersistGate} from 'redux-persist/integration/react'
 
+import defaultOptions from '@/screens/options'
 import client from '@/lib/client'
 import ApolloProvider from './ApolloProvider'
 
@@ -24,9 +26,7 @@ export const withProvider = (Target) =>
 
     screen = React.createRef()
 
-    static get options() {
-      return Target.options
-    }
+    static options = _.defaultsDeep(Target.options || {}, defaultOptions)
 
     getWrappedInstance() {
       let instance = this.screen.current

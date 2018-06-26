@@ -9,7 +9,7 @@ import {
   setRoot,
   reset
 } from '@/screens/modules/listingForm/reducer'
-import { getValue } from '@/screens/modules/listingForm/selectors'
+import {getValue} from '@/screens/modules/listingForm/selectors'
 import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import Progress from '@/components/shared/Progress'

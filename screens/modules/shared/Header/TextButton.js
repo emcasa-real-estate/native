@@ -44,18 +44,21 @@ export default class HeaderTextButton extends PureComponent {
     const {label, style, loading} = this.props
 
     return (
-      <View style={styles.container}>
-        {loading && (
-          <View style={styles.indicator}>
-            <ActivityIndicator />
-          </View>
-        )}
-        <Text style={[styles.text, loading && styles.textLoading, style]}>
-          {label}
-        </Text>
+      <View>
+        <View style={styles.container}>
+          {loading && (
+            <View style={styles.indicator}>
+              <ActivityIndicator />
+            </View>
+          )}
+          <Text style={[styles.text, loading && styles.textLoading, style]}>
+            {label}
+          </Text>
+        </View>
       </View>
     )
   }
+
   render() {
     const {loading, onPress} = this.props
 

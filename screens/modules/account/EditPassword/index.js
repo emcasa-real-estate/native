@@ -26,14 +26,15 @@ class EditPasswordScreen extends PureComponent {
 
   form = React.createRef()
 
-  componentDidMount() {
+  componentDidAppear() {
+    const passProps = {onPress: this.onSubmit}
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
         rightButtons: [
           {
+            passProps,
             id: `${this.props.componentId}_submit`,
-            passProps: {onPress: this.onSubmit},
-            component: {name: SubmitButtonScreen.screenName}
+            component: {name: SubmitButtonScreen.screenName, passProps}
           }
         ]
       }

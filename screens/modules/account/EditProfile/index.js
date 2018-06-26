@@ -6,10 +6,7 @@ import {connect} from 'react-redux'
 import composeWithRef from '@/lib/composeWithRef'
 import {setContext, clearContext} from '@/screens/modules/context'
 import {getContext} from '@/screens/modules/context/selectors'
-import {
-  withEmailMutation,
-  withProfileMutation
-} from '@/graphql/containers'
+import {withEmailMutation, withProfileMutation} from '@/graphql/containers'
 import {Shell, Body, Footer} from '@/components/layout'
 import BottomTabs from '@/screens/containers/BottomTabs'
 import ProfileForm from '@/components/account/ProfileForm'
@@ -37,16 +34,15 @@ class EditProfileScreen extends PureComponent {
     )(props.user)
   }
 
-  componentDidMount() {
+  componentDidAppear() {
+    const passProps = {onPress: this.onSubmit}
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
         rightButtons: [
           {
+            passProps,
             id: `${this.props.componentId}_submit`,
-            passProps: {
-              onPress: this.onSubmit
-            },
-            component: {name: SubmitButtonScreen.screenName}
+            component: {name: SubmitButtonScreen.screenName, passProps}
           }
         ]
       }

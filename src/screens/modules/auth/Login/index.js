@@ -1,5 +1,4 @@
 import React, {PureComponent} from 'react'
-import {View, ScrollView} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
@@ -84,7 +83,7 @@ export default class LoginScreen extends PureComponent {
 
     return (
       <Shell testID="@auth.Login">
-        <Body style={{flex: 1}}>
+        <Body scroll>
           <LoginForm
             formRef={this.form}
             value={value}

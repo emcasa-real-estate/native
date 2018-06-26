@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 
 import {getData, getError, isLoading} from '@/redux/modules/auth/selectors'
 import {resetPassword, reset} from '@/redux/modules/auth'
-import Footer from '@/components/shared/Footer'
+import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import ResetPasswordForm from '@/components/auth/ResetPassword'
 import SuccessScreen from '@/screens/modules/shared/Success'
@@ -83,8 +83,8 @@ export default class ResetPasswordScreen extends PureComponent {
     const {value} = this.state
 
     return (
-      <View style={{flex: 1, display: 'flex'}}>
-        <ScrollView style={{flex: 1}}>
+      <Shell testID="@auth.ResetPassword">
+        <Body scroll>
           <ResetPasswordForm
             formRef={this.form}
             value={value}
@@ -93,13 +93,13 @@ export default class ResetPasswordScreen extends PureComponent {
             onChange={this.onChange}
             onSubmit={this.onSubmit}
           />
-        </ScrollView>
+        </Body>
         <Footer style={{padding: 15}}>
           <Button disabled={loading} onPress={this.onSubmit}>
             {loading ? 'Enviando...' : 'Enviar'}
           </Button>
         </Footer>
-      </View>
+      </Shell>
     )
   }
 }

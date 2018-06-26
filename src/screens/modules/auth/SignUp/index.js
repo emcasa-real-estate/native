@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 
 import {getUser, getError, isLoading} from '@/redux/modules/auth/selectors'
 import {signUp, reset} from '@/redux/modules/auth'
-import Footer from '@/components/shared/Footer'
+import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import SignUpForm from '@/components/auth/SignUp'
 import SuccessScreen from '@/screens/modules/shared/Success'
@@ -82,8 +82,8 @@ export default class SignUpScreen extends PureComponent {
     const {value} = this.state
 
     return (
-      <View style={{flex: 1, display: 'flex'}}>
-        <ScrollView style={{flex: 1}}>
+      <Shell testID="@auth.SignUp">
+        <Body scroll>
           <SignUpForm
             formRef={this.form}
             value={value}
@@ -92,13 +92,13 @@ export default class SignUpScreen extends PureComponent {
             onChange={this.onChange}
             onSubmit={this.onSubmit}
           />
-        </ScrollView>
+        </Body>
         <Footer style={{padding: 15}}>
           <Button disabled={loading} onPress={this.onSubmit}>
             {loading ? 'Enviando...' : 'Enviar'}
           </Button>
         </Footer>
-      </View>
+      </Shell>
     )
   }
 }

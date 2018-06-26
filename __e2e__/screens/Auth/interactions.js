@@ -5,13 +5,17 @@ export async function navigateToLogin() {
     .toBeVisible()
     .withTimeout(2000)
   await element(select.navButton()).tap()
-  await waitFor(element(select.loginScreen())).toBeVisible()
+  await waitFor(element(select.loginScreen()))
+    .toBeVisible()
+    .withTimeout(5000)
 }
 
 export async function navigateToSignUp() {
   await navigateToLogin()
   await element(select.signUpButton()).tap()
-  await waitFor(element(select.signUpScreen())).toBeVisible()
+  await waitFor(element(select.signUpScreen()))
+    .toBeVisible()
+    .withTimeout(5000)
 }
 
 export async function login({email, password}) {

@@ -22,6 +22,8 @@ export default class AppProvider extends PureComponent {
 
 export const withProvider = (Target) =>
   class extends PureComponent {
+    static defaultProps = {params: {}}
+
     static displayName = `withProvider(${Target.displayName || Target.name})`
 
     screen = React.createRef()

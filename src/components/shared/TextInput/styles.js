@@ -17,7 +17,7 @@ export default StyleSheet({
       borderColor: colors.red.medium
     },
     ':multiline': {
-      paddingTop: 10
+      paddingTop: Platform.OS === 'ios' ? 10 : 5
     }
   },
   input: {

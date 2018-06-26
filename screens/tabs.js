@@ -10,7 +10,7 @@ export default {
   },
   newListing: {
     name: listingForm.Address.screenName,
-    isActive: () => undefined
+    isActive: ({name}) => /^listingForm/.test(name)
   },
   favorites: {
     name: account.Favorites.screenName,

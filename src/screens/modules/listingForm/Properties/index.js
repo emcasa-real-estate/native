@@ -108,7 +108,7 @@ class EditPropertiesScreen extends PureComponent {
   render() {
     const {user, value, loading, params} = this.props
     return (
-      <Shell>
+      <Shell testID="@listingForm.Properties">
         <Progress progress={2 / 3} />
         <Body scroll>
           <PropertiesForm

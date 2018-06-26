@@ -88,7 +88,7 @@ class EditAddressScreen extends PureComponent {
     const {params: {id}, value} = this.props
     if (id && !value.address) return null
     return (
-      <Shell>
+      <Shell testID="@listingForm.Address">
         <Progress progress={1 / 3} />
         <Body>
           <AddressForm

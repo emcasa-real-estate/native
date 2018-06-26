@@ -77,7 +77,7 @@ export default class ListingCreatedScreen extends Component {
   render() {
     const {onDismiss} = this.props
     return (
-      <Modal>
+      <Modal testID="@listingForm.Created">
         <Modal.Header inline onDismiss={onDismiss}>
           Imóvel cadastrado
         </Modal.Header>

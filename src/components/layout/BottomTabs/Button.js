@@ -6,7 +6,12 @@ import styles, {iconColor} from './styles'
 
 export default function NavButton({children, icon, active, ...props}) {
   return (
-    <TouchableOpacity style={styles.buttonContainer} {...props}>
+    <TouchableOpacity
+      accessible
+      accessibilityLabel={children}
+      style={styles.buttonContainer}
+      {...props}
+    >
       <Icon
         name={icon}
         color={iconColor[active ? 'active' : 'default']}

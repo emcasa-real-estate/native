@@ -170,6 +170,7 @@ export default class AutoComplete extends PureComponent {
         {...this.props}
         fetchDetails
         suppressDefaultStyles
+        testID="address_auto_complete"
         listViewDisplayed={this.state.active}
         text={this.state.text}
         ref={this.autoComplete}

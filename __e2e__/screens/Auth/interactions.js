@@ -4,7 +4,7 @@ import * as shared from '../shared/selectors'
 export async function navigateToLogin() {
   await waitFor(element(shared.bottomTabs()))
     .toBeVisible()
-    .withTimeout(2000)
+    .withTimeout(12000)
   await element(shared.bottomTabButton('Login')).tap()
   await waitFor(element(select.loginScreen()))
     .toBeVisible()

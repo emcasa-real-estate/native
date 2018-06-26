@@ -1,7 +1,7 @@
 import * as actions from './interactions'
 import * as select from './selectors'
 
-describe('newListing/properties', () => {
+describe('listingForm.Properties', () => {
   beforeEach(async () => {
     await element(
       by.type('RCTCustomScrollView').withAncestor(select.propertiesScreen())

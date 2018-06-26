@@ -101,7 +101,7 @@ class EditGalleryScreen extends PureComponent {
   render() {
     const {progress, errors, loading, images} = this.props
     return (
-      <Shell>
+      <Shell testID="@listingForm.Gallery">
         <Progress progress={3 / 3} />
         <Body loading={loading}>
           <Gallery

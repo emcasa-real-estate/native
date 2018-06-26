@@ -1,10 +1,11 @@
+import * as shared from '../shared/selectors'
 import * as select from './selectors'
 
 export async function navigate() {
-  await waitFor(element(by.id('bottom_tabs')))
+  await waitFor(element(shared.bottomTabs()))
     .toBeVisible()
     .withTimeout(2000)
-  await element(select.navButton()).tap()
+  await element(shared.bottomTabButton('Anunciar')).tap()
   await waitFor(element(select.addressScreen())).toBeVisible()
 }
 
@@ -23,7 +24,7 @@ export async function insertAddress(text) {
 
 export async function submitProperties({type, floor, area, phone}) {
   if (type) {
-    await element(select.dropDown('Tipo de imóvel')).tap()
+    await element(shared.dropDown('Tipo de imóvel')).tap()
     await element(by.text(type)).tap()
   }
   for (const [value, label] of [
@@ -31,8 +32,8 @@ export async function submitProperties({type, floor, area, phone}) {
     [area, 'Área (m²)'],
     [phone, 'Telefone (obrigatório)']
   ]) {
-    await element(select.input(label)).tap()
-    if (value) await element(select.input(label)).typeText(value)
+    await element(shared.input(label)).tap()
+    if (value) await element(shared.input(label)).typeText(value)
     await element(by.label('done').and(by.type('UIButtonLabel'))).tap()
     await waitFor(element(by.type('UIRemoteKeyboardWindow')))
       .toBeNotVisible()

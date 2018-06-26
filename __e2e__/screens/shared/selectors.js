@@ -1,3 +1,5 @@
+export const backButton = () => by.type('_UIButtonBarButton')
+
 export const bottomTabs = () => by.id('bottom_tabs')
 
 export const bottomTabButton = (label) =>

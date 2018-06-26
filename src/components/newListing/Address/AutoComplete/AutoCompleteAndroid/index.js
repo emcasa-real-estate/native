@@ -1,5 +1,12 @@
 import React, {PureComponent} from 'react'
-import {View, TouchableWithoutFeedback, TextInput, Modal} from 'react-native'
+import {
+  View,
+  TouchableWithoutFeedback,
+  TextInput,
+  Modal,
+  Dimensions,
+  PixelRatio
+} from 'react-native'
 
 import AutoComplete from '../AutoComplete'
 import styles from './styles'
@@ -20,11 +27,13 @@ export default class AutoCompleteAndroid extends PureComponent {
   }
 
   onShowModal = () =>
-    this.inputButton.current.measure((_, __, width, height, pageX, pageY) =>
+    this.inputButton.current.measure((x, y, width, height, pageX, pageY) =>
       this.setState(
         {
           active: true,
           layout: {
+            x,
+            y,
             width,
             height,
             pageX,
@@ -54,12 +63,15 @@ export default class AutoCompleteAndroid extends PureComponent {
   get modalLayout() {
     const {layout} = this.state
     if (!layout) return undefined
-    const {width, pageX, pageY} = layout
+    const windowLayout = Dimensions.get('window')
+    const {width, height, pageX, pageY} = layout
+    const offsetBottom = windowLayout.height - pageY - height
     return {
       width,
       marginLeft: pageX,
       marginRight: pageX,
-      top: pageY,
+      top:
+        PixelRatio.roundToNearestPixel(windowLayout.height - offsetBottom) - 7,
       flex: 1
     }
   }

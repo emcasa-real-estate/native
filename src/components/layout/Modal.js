@@ -29,14 +29,14 @@ const styles = StyleSheet.create({
     zIndex: 1
   },
   button: {
-    zIndex: 1,
-    width: 20
+    flex: 0
   },
   title: {
-    zIndex: 0,
-    flex: 1,
+    flex: 1
+  },
+  titleText: {
     textAlign: 'center',
-    marginLeft: -20,
+    marginRight: 20,
     fontSize: 18,
     color: colors.gray.dark
   }
@@ -58,7 +58,11 @@ Modal.Header = ({style, children, inline, iconColor, onDismiss}) => (
         />
       </TouchableOpacity>
     </View>
-    {children && <Text style={styles.title}>{children}</Text>}
+    {children && (
+      <View style={styles.title}>
+        <Text style={styles.titleText}>{children}</Text>
+      </View>
+    )}
   </View>
 )
 

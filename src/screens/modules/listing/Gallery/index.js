@@ -28,8 +28,8 @@ export default class ListingGalleryScreen extends PureComponent {
 
     return (
       <Modal>
-        <Modal.Header iconColor="white" onDismiss={onDismiss} />
         <Body>
+          <Modal.Header iconColor="white" onDismiss={onDismiss} />
           <Gallery>{data.images}</Gallery>
         </Body>
       </Modal>

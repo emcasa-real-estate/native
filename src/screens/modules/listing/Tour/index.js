@@ -33,12 +33,12 @@ export default class ListingTourScreen extends PureComponent {
 
     return (
       <Modal>
-        <Modal.Header
-          iconColor="white"
-          style={{marginTop: 60, justifyContent: 'flex-end'}}
-          onDismiss={onDismiss}
-        />
         <Body onLayout={this.onLayout}>
+          <Modal.Header
+            iconColor="white"
+            style={{marginTop: 60, justifyContent: 'flex-end'}}
+            onDismiss={onDismiss}
+          />
           <Matterport code={data.matterportCode} {...layout} />
         </Body>
       </Modal>

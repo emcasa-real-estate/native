@@ -1,5 +1,6 @@
 import {Component} from 'react'
 import {View} from 'react-native'
+import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
@@ -64,6 +65,8 @@ class MapScreen extends Component {
   onRequestPosition = () => this.props.requestPosition()
 
   onSelect = (id) => this.props.setActiveListing(id)
+
+  onReturn = () => Navigation.pop(this.props.componentId)
 
   render() {
     const {

@@ -13,3 +13,7 @@ export default function Password({validations, ...props}) {
     />
   )
 }
+
+Password.defaultProps = {
+  value: ''
+}

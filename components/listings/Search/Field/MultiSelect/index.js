@@ -1,4 +1,4 @@
-import {Component} from 'react'
+import {PureComponent} from 'react'
 import {TouchableOpacity, View} from 'react-native'
 
 import Icon from '@/components/shared/Icon'
@@ -9,7 +9,7 @@ import Button from './Button'
 import styles, {iconColor} from './styles'
 
 @field()
-export default class MultiSelectField extends Component {
+export default class MultiSelectField extends PureComponent {
   static Options = Options
 
   static defaultProps = {

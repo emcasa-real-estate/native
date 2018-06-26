@@ -176,7 +176,7 @@ jobs:
     - run: |-
         xcrun simctl install "iPhone 6" ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app
         xcrun simctl launch "iPhone 6" com.EmCasa.native && sleep 5
-    - run: yarn e2e --reuse --debug-synchronization 10000
+    - run: yarn e2e --debug-synchronization 10000
     - store_artifacts:
         path: tmp/screenshots
         destination: screenshots

@@ -27,7 +27,7 @@ export default class ListingGalleryScreen extends PureComponent {
     const {data, onDismiss} = this.props
 
     return (
-      <Modal>
+      <Modal testID="@listing.Gallery">
         <Body>
           <Modal.Header iconColor="white" onDismiss={onDismiss} />
           <Gallery>{data.images}</Gallery>

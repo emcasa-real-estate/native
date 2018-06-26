@@ -46,6 +46,7 @@ Modal.Header = ({style, children, inline, iconColor, onDismiss}) => (
   <View style={[styles.header, !inline && styles.headerAbsolute, style]}>
     <View style={styles.button}>
       <TouchableOpacity
+        testID="close_modal_button"
         onPress={onDismiss}
         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
       >

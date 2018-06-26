@@ -1,17 +1,34 @@
 import * as select from './selectors'
-import navigate from './navigate'
+import * as actions from './interactions'
 
 describe('listing', () => {
-  beforeAll(navigate)
+  beforeAll(actions.navigate)
 
-  it('displays a webview', async () => {
-    await expect(element(select.header())).toBeVisible()
-    await expect(element(select.headerWebView())).toBeVisible()
+  it('displays a webview in the thumbnail', async () => {
+    await expect(element(select.thumbnail())).toBeVisible()
+    await expect(
+      element(by.type('RCTWebView').withAncestor(select.thumbnail()))
+    ).toBeVisible()
   })
 
-  it('opens a webview modal', async () => {
+  it('opens the 3d tour modal', async () => {
     await element(select.tourButton()).tap()
-    await waitFor(element(select.modal())).toBeVisible()
-    await expect(element(select.modalWebView()))
+    await waitFor(element(select.listingScreen())).toBeNotVisible()
+    await expect(element(select.tourScreen())).toBeVisible()
+    await expect(
+      element(by.type('RCTWebView').withAncestor(select.tourScreen()))
+    ).toExist()
+    await element(by.id('close_modal_button')).tap()
+    await waitFor(element(select.tourScreen())).toBeNotVisible()
+    await expect(element(select.tourScreen())).toBeNotVisible()
+  })
+
+  it('opens the gallery modal', async () => {
+    await element(select.galleryButton()).tap()
+    await waitFor(element(select.listingScreen())).toBeNotVisible()
+    await expect(element(select.galleryScreen())).toBeVisible()
+    await element(by.id('close_modal_button')).tap()
+    await waitFor(element(select.galleryScreen())).toBeNotVisible()
+    await expect(element(select.galleryScreen())).toBeNotVisible()
   })
 })

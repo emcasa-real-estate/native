@@ -32,7 +32,7 @@ export default class ListingTourScreen extends PureComponent {
     const {layout} = this.state
 
     return (
-      <Modal>
+      <Modal testID="@listing.Tour">
         <Body onLayout={this.onLayout}>
           <Modal.Header
             iconColor="white"

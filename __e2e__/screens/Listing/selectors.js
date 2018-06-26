@@ -1,13 +1,17 @@
-export const listing = () => by.id('@listings.Listing')
+export const listingScreen = () => by.id('@listing.Listing')
 
-export const map = () => by.id('@listings.Listing.map')
+export const galleryScreen = () => by.id('@listing.Gallery')
 
-export const modal = () => by.id('@listings.Listing.modal')
-export const modalWebView = () => by.type('RCTWebView').withAncestor(modal())
+export const tourScreen = () => by.id('@listing.Tour')
 
-export const header = () => by.id('@listings.Listing.header')
-export const headerWebView = () => by.type('RCTWebView').withAncestor(header())
+export const map = () => by.id('listing_map')
+
+export const thumbnail = () => by.id('listing_thumbnail')
+
+export const galleryButton = () => by.label('Ver imagens')
 
 export const tourButton = () => by.label('Ver em tela cheia')
+
 export const likeButton = () => by.label('Acidionar aos favoritos')
+
 export const unlikeButton = () => by.label('Remover dos favoritos')

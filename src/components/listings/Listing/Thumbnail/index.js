@@ -35,6 +35,7 @@ export default class ListingThumbnail extends Component {
 
   render() {
     const {
+      testID,
       active,
       images,
       favorite,
@@ -47,7 +48,7 @@ export default class ListingThumbnail extends Component {
     height = width * 0.64
 
     return (
-      <View style={styles.container}>
+      <View style={styles.container} testID={testID}>
         <View
           onMoveShouldSetResponder={() => true}
           onStartShouldSetResponder={() => true}

@@ -29,7 +29,11 @@ export default class ListingView extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Thumbnail active={ready} {...this.props} />
+          <Thumbnail
+            active={ready}
+            testID="listing_thumbnail"
+            {...this.props}
+          />
           <View style={styles.heading}>
             <Text style={styles.h1}>{address.street}</Text>
             <Text style={styles.h2}>{address.neighborhood.toUpperCase()}</Text>
@@ -38,7 +42,7 @@ export default class ListingView extends Component {
         </View>
         <Description {...this.props} />
         {ready && (
-          <View>
+          <View testID="listing_map">
             <Map zoom="close" style={styles.map} {...address}>
               <Marker styles={markerStyles} address={address}>
                 <Icon name="home" color={markerColor} size={20} />

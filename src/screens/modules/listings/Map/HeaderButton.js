@@ -10,7 +10,9 @@ import Button from '@/screens/modules/shared/Header/TextButton'
   (state) => ({
     watchingPosition: isWatchingPosition(state)
   }),
-  {watchPosition, unwatchPosition}
+  {watchPosition, unwatchPosition},
+  null,
+  {withRef: true}
 )
 export default class MapHeaderButton extends PureComponent {
   static screenName = 'listings.MapHeaderButton'

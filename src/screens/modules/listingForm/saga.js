@@ -13,7 +13,7 @@ import {
 import * as api from '@/lib/services/listings'
 import {EDIT_PROFILE} from '@/graphql/modules/user/mutations'
 import {GET_USER_LISTINGS} from '@/graphql/modules/user/queries'
-import {getToken} from '@/redux/modules/auth/selectors'
+import {getUser, getToken} from '@/redux/modules/auth/selectors'
 import {getData as getListingData} from '@/redux/modules/listings/data/selectors'
 import * as listingData from '@/redux/modules/listings/data'
 import * as actions from './reducer'
@@ -79,6 +79,7 @@ function* fetchListing({listing: {id}}) {
 
 function* createListing() {
   const {address, phone, ...listing} = yield select(getValue)
+  const {id, name} = yield select(getUser)
   const jwt = yield select(getToken)
   const graphql = yield getContext('graphql')
   yield put(actions.request())
@@ -86,7 +87,7 @@ function* createListing() {
     if (phone)
       yield call(graphql.mutate, {
         mutation: EDIT_PROFILE,
-        variables: {phone}
+        variables: {id, name, phone}
       })
     const response = yield call(
       api.create,

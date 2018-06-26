@@ -21,6 +21,6 @@ describe('listingForm', () => {
       await actions.navigate()
     })
     require('./Address')
-    // require('./Properties')
+    require('./Properties')
   })
 })

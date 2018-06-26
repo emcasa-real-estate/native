@@ -2,7 +2,7 @@ import * as listings from '../listings/selectors'
 import * as select from './selectors'
 import * as action from './interactions'
 
-describe('auth/login', () => {
+describe('auth.Login', () => {
   beforeAll(action.navigateToLogin)
 
   it('validates input data', async () => {

@@ -1,3 +1,4 @@
+import * as shared from '../shared/selectors'
 import * as select from './selectors'
 import * as actions from './interactions'
 
@@ -18,7 +19,7 @@ describe('listing', () => {
     await expect(
       element(by.type('RCTWebView').withAncestor(select.tourScreen()))
     ).toExist()
-    await element(by.id('close_modal_button')).tap()
+    await element(shared.modalCloseButton()).tap()
     await waitFor(element(select.tourScreen())).toBeNotVisible()
     await expect(element(select.tourScreen())).toBeNotVisible()
   })
@@ -27,7 +28,7 @@ describe('listing', () => {
     await element(select.galleryButton()).tap()
     await waitFor(element(select.listingScreen())).toBeNotVisible()
     await expect(element(select.galleryScreen())).toBeVisible()
-    await element(by.id('close_modal_button')).tap()
+    await element(shared.modalCloseButton()).tap()
     await waitFor(element(select.galleryScreen())).toBeNotVisible()
     await expect(element(select.galleryScreen())).toBeNotVisible()
   })

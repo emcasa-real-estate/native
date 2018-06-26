@@ -1,7 +1,7 @@
 import * as select from './selectors'
 
 export async function navigate() {
-  await waitFor(element(by.id('@shared.Shell.Navigation')))
+  await waitFor(element(by.id('bottom_tabs')))
     .toBeVisible()
     .withTimeout(2000)
   await element(select.navButton()).tap()

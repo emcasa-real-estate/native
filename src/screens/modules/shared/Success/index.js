@@ -5,13 +5,15 @@ import Text from '@/components/shared/Text'
 import styles from './styles'
 
 export default class SuccessScreen extends PureComponent {
+  static defaultProps = {testID: '@shared.Success'}
+
   static screenName = 'shared.Success'
 
   render() {
-    const {title, children, onDismiss} = this.props
+    const {testID, title, children, onDismiss} = this.props
 
     return (
-      <Modal style={styles.container}>
+      <Modal testID={testID} style={styles.container}>
         <Modal.Header inline onDismiss={onDismiss} />
         <Body style={styles.body}>
           <Text style={styles.title}>{title}</Text>

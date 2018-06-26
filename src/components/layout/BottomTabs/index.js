@@ -3,9 +3,9 @@ import styles from './styles'
 
 import Button from './Button'
 
-export default function Navigation({tabs, currentTab, onNavigate}) {
+export default function BottomTabs({tabs, currentTab, onNavigate}) {
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="bottom_tabs">
       {tabs.map(({id, icon, title}) => (
         <Button
           key={`${title}_${id}`}

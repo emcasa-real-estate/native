@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {switchTab} from '@/screens/modules/navigation'
 import {getCurrentTab} from '@/screens/modules/navigation/selectors'
 import {getToken} from '@/redux/modules/auth/selectors'
-import BottomTabs from '@/components/layout/Navigation'
+import BottomTabs from '@/components/layout/BottomTabs'
 
 @connect(
   (state) => ({

@@ -1,5 +1,7 @@
 import {StyleSheet} from 'react-native'
 
+import * as colors from '@/assets/colors'
+
 export default StyleSheet.create({
   container: {
     position: 'relative',
@@ -10,7 +12,7 @@ export default StyleSheet.create({
     width: '100%'
   },
   image: {
-    backgroundColor: 'red'
+    backgroundColor: colors.gray.darker
   },
   pagination: {
     position: 'absolute',

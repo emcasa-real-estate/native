@@ -71,7 +71,7 @@ export default class ListingsFeedHeader extends PureComponent {
             numberOfLines={1}
             minimumFontScale={0.85}
           >
-            {hasFilters ? activeFilters(filters) : 'Sem filtros aplicados'}
+            {(hasFilters && activeFilters(filters)) || 'Sem filtros aplicados'}
           </Text>
           <Text style={styles.buttonText}>Filtrar</Text>
         </TouchableOpacity>

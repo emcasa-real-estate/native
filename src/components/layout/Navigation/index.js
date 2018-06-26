@@ -5,7 +5,7 @@ import Button from './Button'
 
 export default function Navigation({tabs, currentTab, onNavigate}) {
   return (
-    <View testID="@shared.Shell.Navigation" style={styles.container}>
+    <View style={styles.container}>
       {tabs.map(({id, icon, title}) => (
         <Button
           key={`${title}_${id}`}

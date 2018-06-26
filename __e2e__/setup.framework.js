@@ -2,7 +2,7 @@ import path from 'path'
 import detox from 'detox'
 import {exec} from 'child_process'
 
-import pkg from '@/package.json'
+import pkg from '../package.json'
 
 const DEVICE_NAME = process.env.DEVICE_NAME || 'booted'
 const SCREENSHOT_PATH =

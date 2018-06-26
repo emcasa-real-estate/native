@@ -27,8 +27,8 @@ export default class ListingView extends Component {
     const {address} = this.props
     const {ready} = this.state
     return (
-      <View testID="@listings.Listing" style={styles.container}>
-        <View testID="@listings.Listing.header" style={styles.header}>
+      <View style={styles.container}>
+        <View style={styles.header}>
           <Thumbnail active={ready} {...this.props} />
           <View style={styles.heading}>
             <Text style={styles.h1}>{address.street}</Text>
@@ -38,7 +38,7 @@ export default class ListingView extends Component {
         </View>
         <Description {...this.props} />
         {ready && (
-          <View testID="@listings.Listing.map">
+          <View>
             <Map zoom="close" style={styles.map} {...address}>
               <Marker styles={markerStyles} address={address}>
                 <Icon name="home" color={markerColor} size={20} />

@@ -67,7 +67,7 @@ export default class ListingsFeedScreen extends PureComponent {
   render() {
     const {loading, componentId} = this.props
     return (
-      <Shell>
+      <Shell testID="@listings.Feed">
         <Header>
           <SearchHeader onPress={this.onOpenSearch} />
         </Header>

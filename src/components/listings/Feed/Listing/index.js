@@ -11,7 +11,7 @@ export default function ListingFeed({onSelect, pagination, Card, ...props}) {
   return (
     <FlatList
       {...props}
-      testID="@listings.Feed.Listing"
+      testID="listing_feed"
       pagination={pagination}
       keyExtractor={keyExtractor}
       renderItem={({item, index}) => (

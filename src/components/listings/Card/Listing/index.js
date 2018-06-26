@@ -17,6 +17,7 @@ function ListingCard({
   isActive,
   favorite,
   onFavorite,
+  testID,
   testUniqueID,
   ...props
 }) {
@@ -29,7 +30,7 @@ function ListingCard({
 
   return (
     <View style={styles.container.concat(style, {width})} {...props}>
-      <View testID={`@listings.Card.Listing(${testUniqueID})`}>
+      <View testID={`listing_card(${testUniqueID})`}>
         <View style={styles.thumbnail}>
           {isActive && (
             <TouchableOpacity
@@ -37,7 +38,7 @@ function ListingCard({
               accessibilityLabel={
                 favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'
               }
-              testID={'@listings.Card.Listing.favoriteButton'}
+              testID="favorite_button"
               style={styles.iconButton}
               onPress={onFavorite}
               hitSlop={{
@@ -68,6 +69,10 @@ function ListingCard({
       </View>
     </View>
   )
+}
+
+ListingCard.defaultProps = {
+  testUniqueID: ''
 }
 
 export default touchable($styles.inject()(ListingCard))

@@ -168,7 +168,6 @@ export default class AutoComplete extends PureComponent {
     return (
       <GooglePlacesAutocomplete
         {...this.props}
-        testID="@newListing.Address.AutoComplete"
         fetchDetails
         suppressDefaultStyles
         listViewDisplayed={this.state.active}

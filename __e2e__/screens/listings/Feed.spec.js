@@ -2,9 +2,7 @@ import * as select from './selectors'
 
 describe('listings/results', () => {
   beforeAll(async () => {
-    await waitFor(element(select.feed()))
-      .toExist()
-      .withTimeout(6000)
+    await waitFor(element(select.feed())).toBeVisible()
   })
 
   it('loads more listings on scroll', async () => {
@@ -14,11 +12,11 @@ describe('listings/results', () => {
     await element(select.feed()).swipe('up', 'fast', 0.6)
     await waitFor(element(select.nthCard(16)))
       .toExist()
-      .withTimeout(20000)
+      .withTimeout(5000)
     await expect(element(select.nthCard(16))).toExist()
   })
 
-  context('', () => {
+  context('favorites', () => {
     beforeAll(() => device.reloadReactNative())
     beforeEach(() => element(select.feed()).swipe('down', 'fast', 0.5))
 

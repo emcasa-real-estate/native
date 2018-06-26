@@ -1,7 +1,7 @@
 import {YellowBox, Platform} from 'react-native'
 import KeyboardManager from 'react-native-keyboard-manager'
 
-import initNavigation from './screens'
+import initNavigation from '@/screens'
 
 // Temporary fix for
 // https://github.com/facebook/react-native/issues/17504
@@ -17,7 +17,6 @@ initNavigation()
 
 if (Platform.OS === 'ios') {
   KeyboardManager.setEnable(true)
-  KeyboardManager.setEnableDebugging(__DEV__)
   KeyboardManager.setKeyboardDistanceFromTextField(100)
   KeyboardManager.setPreventShowingBottomBlankSpace(true)
   KeyboardManager.setEnableAutoToolbar(process.env.NODE_ENV === 'e2e')

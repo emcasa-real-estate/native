@@ -4,5 +4,5 @@ module.exports = {
   automock: false,
   unmockedModulePathPatterns: ['/node_modules/'],
   transformIgnorePatterns: ['/node_modules/(?!(jest-)?react-native)/'],
-  modulePathIgnorePatterns: ['/redux/__mocks__', '/graphql/__mocks__']
+  modulePathIgnorePatterns: ['/src/redux/__mocks__', '/src/graphql/__mocks__']
 }

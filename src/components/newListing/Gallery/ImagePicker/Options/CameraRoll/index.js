@@ -1,8 +1,8 @@
 import {PureComponent} from 'react'
 import {View, TouchableOpacity, Image, Modal, CameraRoll} from 'react-native'
 
-import Text from '@/components/shared/Text'
 import Icon from '@/components/shared/Icon'
+import ListPicker from './Picker'
 import styles from './styles'
 
 const getImage = ({node}) => ({
@@ -82,8 +82,16 @@ export default class CameraRollPicker extends PureComponent {
             <Icon name="plus" />
           </View>
         </TouchableOpacity>
-        <Modal visible={showModal} onRequestClose={this.onCloseModal}>
-          <View style={{flex: 1, backgroundColor: 'red'}} />
+        <Modal
+          animationType="slide"
+          visible={showModal}
+          onRequestClose={this.onCloseModal}
+        >
+          <ListPicker
+            images={images}
+            onDismiss={this.onCloseModal}
+            onSelect={this.onSelectImages}
+          />
         </Modal>
       </View>
     )

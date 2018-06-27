@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
 
 export default class Body extends PureComponent {
   state = {
-    children: undefined
+    children: undefined,
+    layout: {}
   }
 
   static getDerivedStateFromProps({children, loading}) {
@@ -59,11 +60,22 @@ export default class Body extends PureComponent {
     ? () => KeyboardManager.reloadLayoutIfNeeded()
     : () => null
 
+  onLayout = ({nativeEvent: {layout}}) => {
+    this.reloadKeyboardLayout()
+    this.setState({
+      layout: {
+        width: layout.width,
+        height: layout.height
+      }
+    })
+  }
+
   renderOverlay() {
+    const {children, layout} = this.state
     return (
-      <View style={this.state.children ? styles.statusBar : styles.overlay}>
+      <View style={[children ? styles.statusBar : styles.overlay, layout]}>
         <ActivityIndicator
-          size={this.state.children ? 'small' : 'large'}
+          size={children ? 'small' : 'large'}
           color={colors.blue.medium}
         />
       </View>
@@ -71,18 +83,12 @@ export default class Body extends PureComponent {
   }
 
   render() {
-    const {style, scroll, loading, onLayout} = this.props
+    const {style, scroll, loading} = this.props
     const {children} = this.state
     const ViewComponent = scroll ? ScrollView : View
 
     return (
-      <ViewComponent
-        style={[styles.container, style]}
-        onLayout={(e) => {
-          this.reloadKeyboardLayout()
-          onLayout && onLayout(e)
-        }}
-      >
+      <ViewComponent style={[styles.container, style]} onLayout={this.onLayout}>
         {loading && this.renderOverlay()}
         <View style={styles.body}>{children}</View>
       </ViewComponent>

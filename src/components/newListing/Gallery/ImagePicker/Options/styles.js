@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native'
 
 import * as colors from '@/assets/colors'
+import {elevation} from '@/assets/styles'
 
 export default StyleSheet.create({
   container: {
@@ -21,7 +22,8 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 15,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
+    ...elevation(1)
   },
   buttonContainer: {
     flex: 1,

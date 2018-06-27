@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native'
 
 import * as colors from '@/assets/colors'
+import {elevation} from '@/assets/styles'
 
 export default StyleSheet.create({
   container: {
@@ -21,7 +22,9 @@ export default StyleSheet.create({
     backgroundColor: colors.gray.offWhite
   },
   cell: {
-    padding: 2.5
+    margin: 2.5,
+    borderRadius: 5,
+    ...elevation(1)
   }
 })
 

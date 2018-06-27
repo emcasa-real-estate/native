@@ -103,7 +103,7 @@ class EditGalleryScreen extends PureComponent {
     return (
       <Shell testID="@listingForm.Gallery">
         <Progress progress={3 / 3} />
-        <Body loading={loading}>
+        <Body loading={!images || loading}>
           <Gallery
             progress={progress}
             errors={errors}

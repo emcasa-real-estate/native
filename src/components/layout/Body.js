@@ -21,8 +21,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    width: '100%',
-    height: '100%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -33,7 +31,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    width: '100%',
+    height: 30,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -77,7 +75,7 @@ export default class Body extends PureComponent {
   renderOverlay() {
     const {children, layout} = this.state
     return (
-      <View style={[children ? styles.statusBar : styles.overlay, layout]}>
+      <View style={[layout, children ? styles.statusBar : styles.overlay]}>
         <ActivityIndicator
           size={children ? 'small' : 'large'}
           color={colors.blue.medium}

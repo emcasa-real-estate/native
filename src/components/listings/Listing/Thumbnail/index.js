@@ -76,9 +76,11 @@ export default class ListingThumbnail extends Component {
             )}
           </View>
           <View style={styles.actionCell}>
-            <ActionButton title="Ver imagens" onPress={this.onOpenGallery}>
-              <Icon name="image" />
-            </ActionButton>
+            {images.length && (
+              <ActionButton title="Ver imagens" onPress={this.onOpenGallery}>
+                <Icon name="image" />
+              </ActionButton>
+            )}
             {matterportCode && (
               <ActionButton
                 title="Ver em tela cheia"

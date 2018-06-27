@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import {PureComponent} from 'react'
 import {View, TouchableOpacity, Image, Modal, CameraRoll} from 'react-native'
 
@@ -35,7 +36,7 @@ export default class CameraRollPicker extends PureComponent {
 
   async componentDidMount() {
     const {edges, page_info} = await CameraRoll.getPhotos({
-      first: this.props.rowLength - 1
+      first: 2
     })
     this.setState({
       images: edges.map(getImage),
@@ -69,6 +70,17 @@ export default class CameraRollPicker extends PureComponent {
     )
   }
 
+  renderPlaceholder(index) {
+    const size = this.cellSize
+    return (
+      <View key={`placeholder_${index}`} style={styles.cell}>
+        <View style={[styles.button, {width: size, height: size}]}>
+          <Icon name="image" />
+        </View>
+      </View>
+    )
+  }
+
   render() {
     const {rowLength} = this.props
     const {images, showModal} = this.state
@@ -76,7 +88,13 @@ export default class CameraRollPicker extends PureComponent {
 
     return (
       <View style={styles.container} onLayout={this.onLayout}>
-        {images.slice(0, rowLength - 1).map(this.renderImage)}
+        {_.times(
+          rowLength - 1,
+          (index) =>
+            images[index]
+              ? this.renderImage(images[index], index)
+              : this.renderPlaceholder(index)
+        )}
         <TouchableOpacity style={styles.cell} onPress={this.onOpenModal}>
           <View style={[styles.button, {height: size, width: size}]}>
             <Icon name="plus" />

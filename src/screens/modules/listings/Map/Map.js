@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react'
 import {Alert} from 'react-native'
 import geolib from 'geolib'
 
-import {withPermission} from '@/screens/containers/Permission'
+import {withPermission} from '@/containers/Permission'
 import UserPositionMarker from '@/components/listings/Map/UserPosition'
 import Map, {Marker, Aggregator} from '@/components/listings/Map'
 

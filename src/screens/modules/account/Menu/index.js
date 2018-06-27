@@ -6,7 +6,7 @@ import composeWithRef from '@/lib/composeWithRef'
 import {signOut} from '@/redux/modules/auth'
 import {withUserListings} from '@/graphql/containers'
 import {Shell, Body, Header, Footer} from '@/components/layout'
-import BottomTabs from '@/screens/containers/BottomTabs'
+import BottomTabs from '@/screens/modules/navigation/BottomTabs'
 import Menu from '@/components/account/Menu'
 import AccountHeader from './Header'
 

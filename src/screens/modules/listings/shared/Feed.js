@@ -8,7 +8,7 @@ import {
   getPagination,
   isLoading
 } from '@/redux/modules/listings/feed/selectors'
-import InfiniteScroll from '@/screens/containers/InfiniteScroll'
+import InfiniteScroll from '@/containers/InfiniteScroll'
 
 import ListingScreen from '@/screens/modules/listing/Listing'
 

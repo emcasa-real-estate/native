@@ -5,7 +5,7 @@ import composeWithRef from '@/lib/composeWithRef'
 import {withFavoriteListings} from '@/graphql/containers'
 import {Shell, Body, Footer} from '@/components/layout'
 import Feed from '@/components/listings/Feed/Listing'
-import BottomTabs from '@/screens/containers/BottomTabs'
+import BottomTabs from '@/screens/modules/navigation/BottomTabs'
 import Card from '@/screens/modules/listings/shared/Card'
 import ListEmpty from './ListEmpty'
 

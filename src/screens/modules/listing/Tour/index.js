@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 import {getData} from '@/redux/modules/listings/data/selectors'
 import {Modal, Body} from '@/components/layout'
 import Matterport from '@/components/listings/Matterport'
-// import RelatedListings from '@/containers/listings/Feed/Related'
 
 @connect(
   (state, {params}) => ({

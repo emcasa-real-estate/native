@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 import {getData} from '@/redux/modules/listings/data/selectors'
 import {Modal, Body} from '@/components/layout'
 import Gallery from '@/components/listings/Gallery'
-// import RelatedListings from '@/containers/listings/Feed/Related'
 
 @connect(
   (state, {params}) => ({

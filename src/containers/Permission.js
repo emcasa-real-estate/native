@@ -35,13 +35,14 @@ export default class PermissionProvider extends PureComponent {
       case 'restricted':
         // already authorized or blocked
         return currentResponse
-      case 'undetermined':
-        response = await Permissions.request(permission, options)
-        break
       case 'denied':
         if (!alert) break
         if (Platform.OS === 'ios') return this.showAlertIOS()
         else response = await Permissions.request(permission, options)
+        break
+      default:
+        response = await Permissions.request(permission, options)
+        break
     }
     this.setState({value: response})
     return response

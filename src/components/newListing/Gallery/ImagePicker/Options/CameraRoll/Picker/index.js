@@ -5,7 +5,7 @@ import {View, ScrollView, TouchableOpacity, Image} from 'react-native'
 import InfiniteScroll from '@/containers/InfiniteScroll'
 import Icon from '@/components/shared/Icon'
 import Header from './Header'
-import styles, {iconColor} from './styles'
+import styles from './styles'
 
 export default class CameraRollListPicker extends PureComponent {
   static defaultProps = {
@@ -50,7 +50,13 @@ export default class CameraRollListPicker extends PureComponent {
       >
         {isSelected && (
           <View style={styles.icon}>
-            <Icon name="check" color={iconColor} />
+            <Icon
+              name="check-circle"
+              type="solid"
+              color="#ffffff95"
+              stroke="#00000020"
+              strokeWidth={20}
+            />
           </View>
         )}
         <Image

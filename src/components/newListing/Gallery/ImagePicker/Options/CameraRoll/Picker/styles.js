@@ -40,5 +40,3 @@ export default StyleSheet.create({
     padding: 2.5
   }
 })
-
-export const iconColor = colors.gray.dark

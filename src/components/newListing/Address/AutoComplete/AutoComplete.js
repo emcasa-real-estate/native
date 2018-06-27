@@ -86,7 +86,7 @@ export default class AutoComplete extends PureComponent {
   }
 
   async awaitRequests() {
-    if (this.autoComplete.current && this.autoComplete.current._requests)
+    if (this.autoComplete)
       await Promise.all(this.autoComplete.current._requests)
   }
 

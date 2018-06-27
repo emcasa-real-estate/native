@@ -53,7 +53,7 @@ export default class AutoCompleteAndroid extends Component {
 
   onHideModal = async () => {
     await this.autoComplete.current.selectBestMatch()
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    // await new Promise((resolve) => setTimeout(resolve, 500))
     await this.autoComplete.current.awaitRequests()
     requestAnimationFrame(() => this.setState({active: false}))
   }

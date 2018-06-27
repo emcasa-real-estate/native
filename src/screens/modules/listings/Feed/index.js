@@ -71,7 +71,7 @@ export default class ListingsFeedScreen extends PureComponent {
         <Header>
           <SearchHeader onPress={this.onOpenSearch} />
         </Header>
-        <Body style={styles.container}>
+        <Body loading={loading !== false} style={styles.container}>
           <Feed
             as={ListingFeed}
             target={componentId}

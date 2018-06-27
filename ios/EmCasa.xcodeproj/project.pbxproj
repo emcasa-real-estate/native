@@ -1721,7 +1721,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
 					"$(SRCROOT)/../node_modules/react-native-navigation/lib/ios/**",
 				);
 				INFOPLIST_FILE = EmCasa/Info.plist;
@@ -1756,7 +1755,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation",
 					"$(SRCROOT)/../node_modules/react-native-navigation/lib/ios/**",
 				);
 				INFOPLIST_FILE = EmCasa/Info.plist;
@@ -2028,9 +2026,8 @@
 				GOOGLE_MAPS_API_KEY = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
 					"$(BUILD_DIR)/Release-$(PLATFORM_NAME)/include",
+					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-navigation/lib/ios/**",
 				);
 				INFOPLIST_FILE = EmCasa/Info.plist;

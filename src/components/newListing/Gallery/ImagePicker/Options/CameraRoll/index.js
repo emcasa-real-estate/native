@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import _ from 'lodash/fp'
 import {PureComponent} from 'react'
 import {View, TouchableOpacity, Image, Modal, CameraRoll} from 'react-native'
 
@@ -36,7 +36,7 @@ export default class CameraRollPicker extends PureComponent {
 
   async componentDidMount() {
     const {edges, page_info} = await CameraRoll.getPhotos({
-      first: 2
+      first: this.props.rowLength
     })
     this.setState({
       images: edges.map(getImage),
@@ -45,22 +45,38 @@ export default class CameraRollPicker extends PureComponent {
     })
   }
 
+  onLoadMore = async () => {
+    if (!this.state.hasNextPage) return
+    const {edges, page_info} = await CameraRoll.getPhotos({
+      first: 15,
+      after: this.state.endCursor
+    })
+    this.setState(({images}) => ({
+      images: images.concat(edges.map(getImage)),
+      hasNextPage: page_info.has_next_page,
+      endCursor: page_info.end_cursor
+    }))
+  }
+
   onLayout = ({nativeEvent: {layout}}) => this.setState({layout})
 
-  onOpenModal = () => this.setState({showModal: true})
+  onOpenModal = _.flow(_.once(this.onLoadMore), () =>
+    this.setState({showModal: true})
+  )
 
   onCloseModal = () => this.setState({showModal: false})
 
   onSelectImages = (images) =>
     this.props.onPickImage(images.map((index) => this.state.images[index]))
 
-  renderImage = ({uri}, i) => {
+  renderImage = (index) => {
+    const {uri} = this.state.images[index]
     const size = this.cellSize
     return (
       <TouchableOpacity
         key={uri}
         style={styles.cell}
-        onPress={() => this.onSelectImages([i])}
+        onPress={() => this.onSelectImages([index])}
       >
         <Image
           source={{uri}}
@@ -81,20 +97,21 @@ export default class CameraRollPicker extends PureComponent {
     )
   }
 
+  renderImagesRow = _.times(
+    (index) =>
+      this.state.images[index]
+        ? this.renderImage(index)
+        : this.renderPlaceholder(index)
+  )
+
   render() {
     const {rowLength} = this.props
-    const {images, showModal} = this.state
+    const {images, showModal, hasNextPage} = this.state
     const size = this.cellSize
 
     return (
       <View style={styles.container} onLayout={this.onLayout}>
-        {_.times(
-          rowLength - 1,
-          (index) =>
-            images[index]
-              ? this.renderImage(images[index], index)
-              : this.renderPlaceholder(index)
-        )}
+        {this.renderImagesRow(rowLength - 1)}
         <TouchableOpacity style={styles.cell} onPress={this.onOpenModal}>
           <View style={[styles.button, {height: size, width: size}]}>
             <Icon name="plus" />
@@ -109,6 +126,8 @@ export default class CameraRollPicker extends PureComponent {
             images={images}
             onDismiss={this.onCloseModal}
             onSelect={this.onSelectImages}
+            onLoadMore={this.onLoadMore}
+            hasNextPage={hasNextPage}
           />
         </Modal>
       </View>

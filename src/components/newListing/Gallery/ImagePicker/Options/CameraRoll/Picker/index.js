@@ -2,6 +2,7 @@ import _ from 'lodash'
 import {PureComponent} from 'react'
 import {View, ScrollView, TouchableOpacity, Image} from 'react-native'
 
+import InfiniteScroll from '@/containers/InfiniteScroll'
 import Icon from '@/components/shared/Icon'
 import Header from './Header'
 import styles, {iconColor} from './styles'
@@ -62,7 +63,7 @@ export default class CameraRollListPicker extends PureComponent {
   }
 
   render() {
-    const {images, onDismiss} = this.props
+    const {images, onDismiss, onLoadMore, hasNextPage} = this.props
     const {selected} = this.state
 
     return (
@@ -72,11 +73,13 @@ export default class CameraRollListPicker extends PureComponent {
           onDismiss={onDismiss}
           onSubmit={this.onSubmit}
         />
-        <ScrollView style={{flex: 1}}>
-          <View style={styles.body} onLayout={this.onLayout}>
-            {images.map(this.renderImage)}
-          </View>
-        </ScrollView>
+        <InfiniteScroll onLoad={onLoadMore} hasNextPage={hasNextPage}>
+          <ScrollView style={{flex: 1}}>
+            <View style={styles.body} onLayout={this.onLayout}>
+              {images.map(this.renderImage)}
+            </View>
+          </ScrollView>
+        </InfiniteScroll>
       </View>
     )
   }

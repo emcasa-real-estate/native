@@ -41,13 +41,12 @@ export default class FeedApp extends PureComponent {
     return (
       <InfiniteScroll
         loading={loading}
-        pagination={pagination}
+        hasNextPage={pagination.remainingCount !== 0}
         onLoad={this.onLoadMore}
       >
         <Feed
           data={data}
           loading={loading}
-          pagination={pagination}
           onSelect={this.onSelect}
           {...props}
         />

@@ -4,7 +4,8 @@ import {
   ScrollView,
   ActivityIndicator,
   Platform,
-  StyleSheet
+  StyleSheet,
+  Dimensions
 } from 'react-native'
 import KeyboardManager from 'react-native-keyboard-manager'
 
@@ -48,7 +49,10 @@ const styles = StyleSheet.create({
 export default class Body extends PureComponent {
   state = {
     children: undefined,
-    layout: {}
+    layout: {
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height
+    }
   }
 
   static getDerivedStateFromProps({children, loading}) {

@@ -31,7 +31,10 @@ export default class CameraRollListPicker extends PureComponent {
 
   onCloseModal = () => this.setState({showModal: false})
 
-  onSubmit = () => this.props.onSelect(this.state.selected)
+  onSubmit = () => {
+    this.props.onDismiss()
+    this.props.onSelect(this.state.selected)
+  }
 
   onSelectImage = (i) => () =>
     this.setState(({selected}) => ({selected: [...selected, i]}))

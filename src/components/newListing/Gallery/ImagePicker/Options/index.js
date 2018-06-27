@@ -14,10 +14,11 @@ import styles from './styles'
   })
 )
 export default class ImagePickerOptions extends PureComponent {
-  onPickImage = (images) => {
-    this.props.onPickImage(images)
-    this.props.onDismiss()
-  }
+  onPickImage = (images) =>
+    requestAnimationFrame(() => {
+      this.props.onDismiss()
+      requestAnimationFrame(() => this.props.onPickImage(images))
+    })
 
   componentDidMount() {
     this.props.onRequestPermission()

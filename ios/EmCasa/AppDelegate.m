@@ -11,7 +11,7 @@
 
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
-#import <ReactNativeNavigation/ReactNativeNavigation.h>
+#import "ReactNativeNavigation.h"
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>

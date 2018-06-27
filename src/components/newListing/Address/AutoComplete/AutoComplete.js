@@ -86,7 +86,7 @@ export default class AutoComplete extends PureComponent {
   }
 
   async awaitRequests() {
-    if (this.autoComplete.current)
+    if (this.autoComplete.current && this.autoComplete.current._requests)
       await Promise.all(this.autoComplete.current._requests)
   }
 
@@ -133,14 +133,16 @@ export default class AutoComplete extends PureComponent {
   onChangeText = (text) => {
     this.setState({text})
     if (!text) this.props.onChange({})
+    if (this.props.onChangeText) this.props.onChangeText(text)
   }
 
   onChange = (place, _details) => {
-    const {onChange, onValidate, onChangeComplete} = this.props
+    const {onChange, onChangeText, onValidate, onChangeComplete} = this.props
     const text = addressText(place)
     const details = placeDetails(_details)
     this.setState({text: text.value})
     onChange({text, details}, onValidate)
+    if (onChangeText) onChangeText(text.value)
     if (isNaN(text.street_number)) {
       const start = text.street.length + 2
       requestAnimationFrame(() =>

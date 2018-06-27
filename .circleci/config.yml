@@ -100,8 +100,7 @@ aliases:
       --platform android
       --entry-file index.js
       --assets-dest android/app/src/main/res/
-      --bundle-output android/app/src/main/assets/index.android.bundle &&
-      rm android/app/src/main/res/**/node_modules_reactnavigation*
+      --bundle-output android/app/src/main/assets/index.android.bundle
   - &bump-ios
     command: |-
       cd ios

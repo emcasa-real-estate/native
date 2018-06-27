@@ -30,7 +30,9 @@ class EditPropertiesScreen extends PureComponent {
     }
   }
 
-  state = {}
+  state = {
+    active: false
+  }
 
   form = React.createRef()
 
@@ -68,6 +70,7 @@ class EditPropertiesScreen extends PureComponent {
 
   componentDidAppear() {
     const {componentId, params} = this.props
+    this.setState({active: true})
     if (params.id) {
       Navigation.mergeOptions(componentId, {
         topBar: {
@@ -86,9 +89,13 @@ class EditPropertiesScreen extends PureComponent {
     }
   }
 
+  componentDidDisappear() {
+    this.setState({active: false})
+  }
+
   componentDidUpdate(prev) {
     const {listing, loading, params: {id}} = this.props
-    if (!id && !prev.listing && listing && !loading) this.openSuccessModal()
+    if (this.state.active && !id && !prev.listing && listing && !loading) this.openSuccessModal()
   }
 
   onChange = (value) => this.props.setValue(value)

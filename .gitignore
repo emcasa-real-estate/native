@@ -57,3 +57,6 @@ report.xml
 
 # cocoapods
 /ios/Pods
+
+# firebase credentials
+ios/EmCasa/GoogleService-Info.plist

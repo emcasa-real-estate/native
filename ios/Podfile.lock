@@ -2,16 +2,37 @@ PODS:
   - Crashlytics (3.10.1):
     - Fabric (~> 1.7.5)
   - Fabric (1.7.5)
+  - Firebase/Core (4.13.0):
+    - FirebaseAnalytics (= 4.2.0)
+    - FirebaseCore (= 4.0.20)
+  - FirebaseAnalytics (4.2.0):
+    - FirebaseCore (~> 4.0)
+    - FirebaseInstanceID (~> 2.0)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+    - nanopb (~> 0.3)
+  - FirebaseCore (4.0.20):
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+  - FirebaseInstanceID (2.0.10):
+    - FirebaseCore (~> 4.0)
   - GoogleMaps (2.6.0):
     - GoogleMaps/Maps (= 2.6.0)
   - GoogleMaps/Base (2.6.0)
   - GoogleMaps/Maps (2.6.0):
     - GoogleMaps/Base
+  - GoogleToolboxForMac/Defines (2.1.4)
+  - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
+    - GoogleToolboxForMac/Defines (= 2.1.4)
   - IQKeyboardManager (6.0.2)
+  - nanopb (0.3.8):
+    - nanopb/decode (= 0.3.8)
+    - nanopb/encode (= 0.3.8)
+  - nanopb/decode (0.3.8)
+  - nanopb/encode (0.3.8)
 
 DEPENDENCIES:
   - Crashlytics
   - Fabric
+  - Firebase/Core
   - GoogleMaps
   - IQKeyboardManager
 
@@ -19,15 +40,27 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Crashlytics
     - Fabric
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseCore
+    - FirebaseInstanceID
     - GoogleMaps
+    - GoogleToolboxForMac
     - IQKeyboardManager
+    - nanopb
 
 SPEC CHECKSUMS:
   Crashlytics: aee1a064cbbf99b32efa3f056a5f458d846bc8ff
   Fabric: ae7146a5f505ea370a1e44820b4b1dc8890e2890
+  Firebase: 5ec5e863d269d82d66b4bf56856726f8fb8f0fb3
+  FirebaseAnalytics: 7ef69e76a5142f643aeb47c780e1cdce4e23632e
+  FirebaseCore: 90cb1c53d69b556f112a1bf72b5fcfaad7650790
+  FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
   GoogleMaps: 42f91c68b7fa2f84d5c86597b18ceb99f5414c7f
+  GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   IQKeyboardManager: c49d59e358aeeffaa0280aa305093c2b194d2607
+  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
 
-PODFILE CHECKSUM: 4bed4ffc49adc8dd9d4aaab394483eb6b25575bb
+PODFILE CHECKSUM: aa4cea09e404335ff356028b0c7cc9d83ba20f0f
 
 COCOAPODS: 1.5.2

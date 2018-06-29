@@ -15,7 +15,7 @@ export default function createReduxStore(client) {
     }
   })
   const middleware = [sagaMiddleware]
-  if (__DEV__) {
+  if (false) {
     const {createLogger} = require('redux-logger')
     const ignoreActions = Object.values(offlineActionTypes)
     middleware.push(

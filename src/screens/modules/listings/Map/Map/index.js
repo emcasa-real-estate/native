@@ -18,20 +18,12 @@ export default class MapApp extends PureComponent {
   }
 
   componentDidMount() {
-    const {watching, isWithinBounds, onWatchPosition} = this.props
-    if (typeof watching === 'undefined') {
-      if (isWithinBounds) onWatchPosition()
-      else requestAnimationFrame(this.requestInitialPermission)
-    }
+    requestAnimationFrame(this.requestInitialPermission)
   }
 
-  shouldWatchPosition = async () => {
-    if (!this.props.isWithinBounds) {
-      return false
-    }
-    const permission = await this.props.onRequestPermission()
-    if (this.props.watching || permission !== 'authorized') return false
-    return true
+  componentDidUpdate() {
+    const {watching, isWithinBounds, onWatchPosition} = this.props
+    if (typeof watching === 'undefined' && isWithinBounds) onWatchPosition()
   }
 
   get data() {
@@ -45,8 +37,8 @@ export default class MapApp extends PureComponent {
   }
 
   onWatchPosition = async () => {
-    const permission = await this.props.onRequestPermission()
-    if (permission === 'authorized') this.props.onWatchPosition()
+    if ((await this.props.onRequestPermission()) === 'authorized')
+      this.props.onWatchPosition()
   }
 
   render() {

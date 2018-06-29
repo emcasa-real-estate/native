@@ -1,6 +1,4 @@
 import React, {PureComponent} from 'react'
-import {Alert} from 'react-native'
-import geolib from 'geolib'
 
 import UserPositionMarker from '@/components/listings/Map/UserPosition'
 import Map, {Marker, Aggregator} from '@/components/listings/Map'
@@ -50,12 +48,12 @@ export default class MapAndroid extends PureComponent {
     const aggregate = region ? zoom(region) < maxZoomToAggregateMarkers : true
     return (
       <Map
+        provider="google"
         showsUserLocation={true}
         showsMyLocationButton={true}
         followsUserLocation={watching}
         mapClusterRef={this.map}
         as={Aggregator}
-        provider="google"
         data={data}
         renderMarker={this.renderMarker}
         clusteringEnabled={aggregate}

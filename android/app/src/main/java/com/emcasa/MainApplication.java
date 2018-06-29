@@ -5,7 +5,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
 import com.facebook.react.ReactApplication;
-import io.invertase.firebase.RNFirebasePackage;
 import com.imagepicker.ImagePickerPackage;
 import com.horcrux.svg.SvgPackage;
 import com.reactnative.photoview.PhotoViewPackage;
@@ -19,6 +18,8 @@ import com.reactnativenavigation.react.NavigationReactNativeHost;
 
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
+import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -44,6 +45,7 @@ public class MainApplication extends NavigationApplication {
     return Arrays.<ReactPackage>asList(
       new MainReactPackage(),
       new RNFirebasePackage(),
+      new RNFirebaseMessagingPackage(),
       new ImagePickerPackage(),
       new SvgPackage(),
       new PhotoViewPackage(),

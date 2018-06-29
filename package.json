@@ -3,7 +3,9 @@
   "version": "1.1.6",
   "private": true,
   "rnpm": {
-    "assets": ["./src/assets/fonts"]
+    "assets": [
+      "./src/assets/fonts"
+    ]
   },
   "scripts": {
     "prepare": "patch-package",
@@ -25,8 +27,7 @@
     "runner-config": "./__e2e__/jest.config.js",
     "configurations": {
       "ios.debug": {
-        "binaryPath":
-          "ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app",
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app",
         "build": "scripts/ios/build.sh",
         "type": "ios.simulator",
         "name": "iPhone 6"
@@ -69,9 +70,9 @@
     "react-native": "0.55.4",
     "react-native-fabric": "^0.5.1",
     "react-native-fabric-crashlytics": "^0.1.8",
+    "react-native-firebase": "^4.2.0",
     "react-native-fontawesome-pro": "^1.0.12",
-    "react-native-google-places-autocomplete":
-      "FaridSafi/react-native-google-places-autocomplete",
+    "react-native-google-places-autocomplete": "FaridSafi/react-native-google-places-autocomplete",
     "react-native-image-picker": "^0.26.10",
     "react-native-keyboard-manager": "^4.0.13-7",
     "react-native-keyboard-spacer": "^0.4.1",
@@ -99,12 +100,12 @@
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.3",
     "babel-jest": "^22.4.3",
-    "babel-plugin-module-resolver": "^3.1.1",
-    "babel-plugin-react-require": "^3.0.0",
-    "babel-plugin-transform-inline-environment-variables": "^0.4.1",
     "babel-plugin-jest-hoist": "^22.4.3",
     "babel-plugin-lodash": "^3.3.2",
+    "babel-plugin-module-resolver": "^3.1.1",
+    "babel-plugin-react-require": "^3.0.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react-native": "^4.0.0",
     "detox": "^7.4.3",

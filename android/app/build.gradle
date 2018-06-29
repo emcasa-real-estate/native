@@ -208,6 +208,7 @@ dependencies {
     implementation project(':react-native-photo-view')
     implementation project(':react-native-maps')
     implementation project(':react-native-fabric')
+    implementation(project(':react-native-firebase')) {transitive = false}
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation "com.android.support:appcompat-v7:26.1.0"
     implementation "com.android.support:support-annotations:26.1.0"

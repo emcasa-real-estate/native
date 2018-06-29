@@ -60,3 +60,4 @@ report.xml
 
 # firebase credentials
 ios/EmCasa/GoogleService-Info.plist
+android/app/google-services.json

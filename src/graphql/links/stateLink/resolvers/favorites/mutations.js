@@ -1,4 +1,4 @@
-import {reportError} from '@/redux/modules/fabric'
+import {reportError} from '@/redux/modules/firebase/crashlytics'
 import {getData} from '@/redux/modules/listings/data/selectors'
 import {GET_FAVORITE_LISTINGS} from '@/graphql/modules/user/queries'
 

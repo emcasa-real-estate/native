@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.modules.core.PermissionAwareActivity;
 import com.facebook.react.modules.core.PermissionListener;
-import com.smixx.fabric.FabricPackage;
 import com.reactnativenavigation.NavigationActivity;
 
 public class MainActivity extends NavigationActivity implements PermissionAwareActivity {

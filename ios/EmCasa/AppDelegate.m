@@ -9,23 +9,18 @@
 
 #import "AppDelegate.h"
 
-#import "Orientation.h"
-
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import "ReactNativeNavigation.h"
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-
-@import GoogleMaps;
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  NSURL *jsCodeLocation;
-
-  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+  NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                moduleName:@"EmCasa"
@@ -39,18 +34,11 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
 
-  [Fabric with:@[[Crashlytics class]]];
+  [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
 
-  [GMSServices provideAPIKey:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"GoogleMapsApiKey"]];
+  [Fabric with:@[[Crashlytics class]]];
 
   return YES;
 }
 
-- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
-  while ([[UIDevice currentDevice] isGeneratingDeviceOrientationNotifications]) {
-      [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
-  }
-
-  return [Orientation getOrientation];
-}
 @end

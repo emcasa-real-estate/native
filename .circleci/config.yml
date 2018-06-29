@@ -100,8 +100,7 @@ aliases:
       --platform android
       --entry-file index.js
       --assets-dest android/app/src/main/res/
-      --bundle-output android/app/src/main/assets/index.android.bundle &&
-      rm android/app/src/main/res/**/node_modules_reactnavigation*
+      --bundle-output android/app/src/main/assets/index.android.bundle
   - &bump-ios
     command: |-
       cd ios
@@ -176,7 +175,7 @@ jobs:
     - run: |-
         xcrun simctl install "iPhone 6" ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app
         xcrun simctl launch "iPhone 6" com.EmCasa.native && sleep 5
-    - run: yarn e2e --reuse --debug-synchronization 10000
+    - run: yarn e2e --debug-synchronization 10000
     - store_artifacts:
         path: tmp/screenshots
         destination: screenshots
@@ -207,7 +206,7 @@ jobs:
     - run: *configure-release
     - run: *configure-keychain
     - run: *bump-ios
-    - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-ios-staging.png --platforms ios
+    - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-ios-staging.png --platforms ios
     - run: BUILD_CONFIGURATION=Beta .circleci/ios/build.sh
     - run: .circleci/ios/sign.sh
     - run: >-
@@ -231,7 +230,7 @@ jobs:
     - run: *configure-release
     - run: *bump-android
     - run: *bundle-android
-    - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-android-staging.png --platforms android
+    - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-android-staging.png --platforms android
     - run: export TERM=xterm && cd android && ./gradlew assembleStaging
     - run: >-
         bundle exec fastlane run crashlytics
@@ -255,7 +254,7 @@ jobs:
     - run: *configure-release
     - run: *configure-keychain
     - run: *bump-ios
-    - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-ios.png --platforms ios
+    - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-ios.png --platforms ios
     - run: BUILD_CONFIGURATION=Release .circleci/ios/build.sh
     - run: .circleci/ios/sign.sh
     - run: >-
@@ -280,7 +279,7 @@ jobs:
     - run: *configure-release
     - run: *bump-android
     - run: *bundle-android
-    - run: node_modules/.bin/app-icon generate -i ~/emcasa/assets/img/icon-android.png --platforms android
+    - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-android.png --platforms android
     - run: export TERM=xterm && cd android && ./gradlew assembleRelease
     - run: export TERM=xterm && cd android && ./gradlew publishApkRelease
 

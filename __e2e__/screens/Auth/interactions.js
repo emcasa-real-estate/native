@@ -1,22 +1,27 @@
 import * as select from './selectors'
+import * as shared from '../shared/selectors'
 
 export async function navigateToLogin() {
-  await waitFor(element(by.id('@shared.Shell.Navigation')))
+  await waitFor(element(shared.bottomTabs()))
     .toBeVisible()
-    .withTimeout(2000)
-  await element(select.navButton()).tap()
-  await waitFor(element(select.loginScreen())).toBeVisible()
+    .withTimeout(12000)
+  await element(shared.bottomTabButton('Login')).tap()
+  await waitFor(element(select.loginScreen()))
+    .toBeVisible()
+    .withTimeout(5000)
 }
 
 export async function navigateToSignUp() {
   await navigateToLogin()
   await element(select.signUpButton()).tap()
-  await waitFor(element(select.signUpScreen())).toBeVisible()
+  await waitFor(element(select.signUpScreen()))
+    .toBeVisible()
+    .withTimeout(5000)
 }
 
 export async function login({email, password}) {
   const input = (label) =>
-    select.input(label).withAncestor(select.loginScreen())
+    shared.input(label).withAncestor(select.loginScreen())
   await element(input('Email')).tap()
   await element(input('Email')).clearText()
   await element(input('Email')).typeText(email + '\n')
@@ -25,7 +30,7 @@ export async function login({email, password}) {
 
 export async function signUp({name, email, phone, password}) {
   const input = (label) =>
-    select.input(label).withAncestor(select.signUpScreen())
+    shared.input(label).withAncestor(select.signUpScreen())
   await element(input('Nome')).tap()
   await element(input('Nome')).clearText()
   await element(input('Nome')).typeText(name + '\n')

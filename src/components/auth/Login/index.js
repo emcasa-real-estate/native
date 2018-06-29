@@ -1,0 +1,43 @@
+import {View} from 'react-native'
+
+import Text from '@/components/shared/Text'
+import Link from '@/components/shared/Link'
+import Form, {Email, Password} from '@/components/shared/Form'
+import styles from './styles'
+
+const getError = (error) => {
+  if (!error) return undefined
+  switch (error.status) {
+    case 401:
+      return 'Senha ou email inválidos'
+    default:
+      return 'Ocorreu um erro desconhecido. Por favor, tente novamente'
+  }
+}
+
+export default function LoginForm({
+  onPasswordRecovery,
+  onSignUp,
+  error,
+  ...props
+}) {
+  const errorMessage = getError(error)
+  return (
+    <Form style={styles.container} {...props}>
+      {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
+      <Email name="email" returnKeyType="next" nextField="password" />
+      <Password name="password" returnKeyType="done" />
+      <View style={styles.inlineText}>
+        <Link style={styles.text} onPress={onPasswordRecovery}>
+          Esqueci a minha senha
+        </Link>
+      </View>
+      <View style={styles.inlineText}>
+        <Text style={styles.text}>Não tem cadastro?</Text>
+        <Link style={styles.text} onPress={onSignUp}>
+          Cadastre-se
+        </Link>
+      </View>
+    </Form>
+  )
+}

@@ -1,8 +1,8 @@
-import * as landing from '../Landing/selectors'
+import * as listings from '../listings/selectors'
 import * as select from './selectors'
 import * as action from './interactions'
 
-describe('auth/login', () => {
+describe('auth.Login', () => {
   beforeAll(action.navigateToLogin)
 
   it('validates input data', async () => {
@@ -21,6 +21,6 @@ describe('auth/login', () => {
     await waitFor(element(select.loginScreen()))
       .toBeNotVisible()
       .withTimeout(1000)
-    await expect(element(landing.feed())).toBeVisible()
+    await expect(element(listings.feedScreen())).toBeVisible()
   })
 })

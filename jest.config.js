@@ -3,8 +3,6 @@ module.exports = {
   preset: 'react-native',
   automock: false,
   unmockedModulePathPatterns: ['/node_modules/'],
-  transformIgnorePatterns: [
-    '/node_modules/(?!(jest-)?react-native|react-navigation)/'
-  ],
-  modulePathIgnorePatterns: ['/redux/__mocks__', '/lib/graphql/__mocks__']
+  transformIgnorePatterns: ['/node_modules/(?!(jest-)?react-native)/'],
+  modulePathIgnorePatterns: ['/src/redux/__mocks__', '/src/graphql/__mocks__']
 }

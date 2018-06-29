@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "217459706739",
+    "firebase_url": "https://emcasa-198300.firebaseio.com",
+    "project_id": "emcasa-198300",
+    "storage_bucket": "emcasa-198300.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217459706739:android:83ed095025f6ae91",
+        "android_client_info": {
+          "package_name": "com.emcasa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "217459706739-445fhdsd26h8m8nhr9mkf06734jmakg0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.emcasa",
+            "certificate_hash": "5ca530ec87d8360daecd711f7eef2b43a7d0987f"
+          }
+        },
+        {
+          "client_id": "217459706739-leprm549i5l1uukse3av7il8gbhnupgc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq5vpo7ifboD4pHa6ko95SjxdbR314q-o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "217459706739-leprm549i5l1uukse3av7il8gbhnupgc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "217459706739-uslu2mdnrkhfb7h2mrplfpb8spmtfdso.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.EmCasa.native-beta"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217459706739:android:376008b22b2c268b",
+        "android_client_info": {
+          "package_name": "com.emcasa.beta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "217459706739-leprm549i5l1uukse3av7il8gbhnupgc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq5vpo7ifboD4pHa6ko95SjxdbR314q-o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

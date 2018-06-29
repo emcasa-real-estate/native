@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>217459706739-uslu2mdnrkhfb7h2mrplfpb8spmtfdso.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.217459706739-uslu2mdnrkhfb7h2mrplfpb8spmtfdso</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB_0E75rGc8S0MKwmqsm3vbO6RxOB8QLvQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>217459706739</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.EmCasa.native-beta</string>
+	<key>PROJECT_ID</key>
+	<string>emcasa-198300</string>
+	<key>STORAGE_BUCKET</key>
+	<string>emcasa-198300.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:217459706739:ios:2138053e9926d434</string>
+	<key>DATABASE_URL</key>
+	<string>https://emcasa-198300.firebaseio.com</string>
+</dict>
+</plist>

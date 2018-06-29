@@ -144,6 +144,7 @@ android {
     buildTypes {
         debug {
             ext.enableCrashlytics = !!fabricApiKey
+            applicationIdSuffix '.beta'
         }
         staging {
             signingConfig signingConfigs.release

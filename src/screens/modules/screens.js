@@ -8,7 +8,7 @@ import * as listingsScreens from './listings/screens'
 import * as interestScreens from './interest/screens'
 import * as sharedScreens from './shared/screens'
 
-export default _.flow(
+const screens = _.flow(
   _.map(_.values),
   ([...screens]) => [].concat(...screens),
   _.filter((screen) => screen.screenName)
@@ -21,3 +21,8 @@ export default _.flow(
   interestScreens,
   sharedScreens
 ])
+
+export default screens
+
+export const getScreenByName = (name) =>
+  screens.find((Screen) => Screen.screenName === name)

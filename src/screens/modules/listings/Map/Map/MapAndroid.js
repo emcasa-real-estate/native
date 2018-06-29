@@ -42,15 +42,14 @@ export default class MapAndroid extends PureComponent {
   }
 
   render() {
-    const {data, watching} = this.props
+    const {data, watching, position, isWithinBounds} = this.props
     const {region} = this.state
     const maxZoomToAggregateMarkers = 14
     const aggregate = region ? zoom(region) < maxZoomToAggregateMarkers : true
+
     return (
       <Map
         provider="google"
-        showsUserLocation={true}
-        showsMyLocationButton={true}
         followsUserLocation={watching}
         mapClusterRef={this.map}
         as={Aggregator}
@@ -59,7 +58,17 @@ export default class MapAndroid extends PureComponent {
         clusteringEnabled={aggregate}
         onRegionChangeComplete={this.onRegionChange}
         onSelect={this.onSelect}
-      />
+      >
+        {isWithinBounds && (
+          <UserPositionMarker
+            active={watching}
+            address={{
+              lat: position.latitude,
+              lng: position.longitude
+            }}
+          />
+        )}
+      </Map>
     )
   }
 }

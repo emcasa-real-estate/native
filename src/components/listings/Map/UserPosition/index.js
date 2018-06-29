@@ -21,7 +21,9 @@ function UserPositionMarker({
         }}
         zIndex={-1}
       >
-        <View style={styles.dot} />
+        <View style={styles.container}>
+          <View style={styles.dot} />
+        </View>
         <Callout tooltip />
       </Marker>
       {active && (

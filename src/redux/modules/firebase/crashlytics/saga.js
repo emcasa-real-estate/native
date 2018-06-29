@@ -1,6 +1,5 @@
 import {takeLatest, all, fork, select} from 'redux-saga/effects'
 import Firebase from 'react-native-firebase'
-import {init as initErrorReporting} from 'react-native-fabric-crashlytics'
 
 import {getUser} from '@/redux/modules/auth/selectors'
 import * as auth from '@/redux/modules/auth'
@@ -22,8 +21,6 @@ function identifySession({data}) {
 function* initialize() {
   const data = yield select(getUser)
   yield fork(identifySession, {data})
-  // Send uncaught errors to Crashlytics
-  initErrorReporting()
 }
 
 export default function* crashlyticsSaga() {

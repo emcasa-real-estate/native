@@ -20,6 +20,7 @@ import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
+import io.invertase.firebase.fabric.crashlytics.RNFirebaseCrashlyticsPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -46,6 +47,7 @@ public class MainApplication extends NavigationApplication {
       new MainReactPackage(),
       new RNFirebasePackage(),
       new RNFirebaseMessagingPackage(),
+      new RNFirebaseCrashlyticsPackage(),
       new ImagePickerPackage(),
       new SvgPackage(),
       new PhotoViewPackage(),

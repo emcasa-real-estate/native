@@ -1,26 +1,21 @@
 import {PureComponent} from 'react'
 import {connect} from 'react-redux'
 
+import composeWithRef from '@/lib/composeWithRef'
+import {withPermission} from '@/containers/Permission'
 import {watchPosition, unwatchPosition} from './module'
 import {isWatchingPosition} from './module/selectors'
 import * as colors from '@/assets/colors'
 import Button from '@/screens/modules/shared/Header/TextButton'
 
-@connect(
-  (state) => ({
-    watchingPosition: isWatchingPosition(state)
-  }),
-  {watchPosition, unwatchPosition},
-  null,
-  {withRef: true}
-)
-export default class MapHeaderButton extends PureComponent {
+class MapHeaderButton extends PureComponent {
   static screenName = 'listings.MapHeaderButton'
 
-  onPress = () =>
-    this.props[
-      this.props.watchingPosition ? 'unwatchPosition' : 'watchPosition'
-    ].call()
+  onPress = async () => {
+    if (this.props.watchingPosition) this.props.unwatchPosition()
+    else if ((await this.props.onRequestPermission()) === 'authorized')
+      this.props.watchPosition()
+  }
 
   render() {
     const {watchingPosition} = this.props
@@ -34,3 +29,13 @@ export default class MapHeaderButton extends PureComponent {
     )
   }
 }
+
+export default composeWithRef(
+  connect(
+    (state) => ({
+      watchingPosition: isWatchingPosition(state)
+    }),
+    {watchPosition, unwatchPosition}
+  ),
+  withPermission('location', 'whenInUse')
+)(MapHeaderButton)

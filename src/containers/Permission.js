@@ -35,6 +35,7 @@ export default class PermissionProvider extends PureComponent {
       case 'restricted':
         // already authorized or blocked
         return currentResponse
+      case undefined:
       case 'undetermined':
         response = await Permissions.request(permission, options)
         break

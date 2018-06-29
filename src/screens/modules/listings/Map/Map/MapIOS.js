@@ -9,8 +9,7 @@ import Map, {Marker, Aggregator} from '@/components/listings/Map'
 const zoom = ({longitudeDelta}) =>
   Math.round(Math.log(360 / longitudeDelta) / Math.LN2)
 
-@withPermission('location', 'whenInUse')
-export default class ListingsMap extends PureComponent {
+export default class MapIOS extends PureComponent {
   static defaultProps = {
     watching: undefined,
     data: []
@@ -87,12 +86,6 @@ export default class ListingsMap extends PureComponent {
     }))
   }
 
-  componentDidMount() {
-    const {watching} = this.props
-    if (typeof watching === 'undefined')
-      requestAnimationFrame(this.requestInitialPosition)
-  }
-
   componentDidUpdate(prev) {
     const {watching, position} = this.props
     if (
@@ -112,25 +105,6 @@ export default class ListingsMap extends PureComponent {
     })
 
   onSelect = (id) => () => this.props.onSelect(id)
-
-  shouldWatchPosition = async () => {
-    if (!this.isWithinBounds()) {
-      Alert.alert(
-        'Fora da área de cobertura',
-        'A sua região ainda não é coberta pela EmCasa.'
-      )
-      return false
-    }
-    const permission = await this.props.onRequestPermission()
-    if (this.props.watching || permission !== 'authorized') return false
-    return true
-  }
-
-  onWatchPosition = async () => {
-    if (await this.shouldWatchPosition()) this.props.onWatchPosition()
-  }
-
-  onUnwatchPosition = () => this.props.onUnwatchPosition()
 
   renderMarker = ({listing}) => {
     const active = this.props.active === listing.id

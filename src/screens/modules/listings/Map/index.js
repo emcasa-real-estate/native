@@ -19,7 +19,8 @@ import {
 import {
   getUserPosition,
   getActiveListing,
-  isWatchingPosition
+  isWatchingPosition,
+  isWithinBounds
 } from './module/selectors'
 import ListButton from '@/components/listings/Feed/Button'
 import MapFeed from '@/components/listings/Feed/Map'
@@ -73,6 +74,7 @@ class MapScreen extends Component {
       data,
       activeListing,
       watchingPosition,
+      isWithinBounds,
       userPosition,
       componentId
     } = this.props
@@ -85,6 +87,7 @@ class MapScreen extends Component {
             active={activeListing}
             position={userPosition}
             watching={watchingPosition}
+            isWithinBounds={isWithinBounds}
             onSelect={this.onSelect}
             onRequestPosition={this.onRequestPosition}
             onWatchPosition={this.onToggleWatchPosition(true)}
@@ -113,7 +116,8 @@ export default composeWithRef(
     (state) => ({
       activeListing: getActiveListing(state),
       userPosition: getUserPosition(state),
-      watchingPosition: isWatchingPosition(state)
+      watchingPosition: isWatchingPosition(state),
+      isWithinBounds: isWithinBounds(state)
     }),
     {watchPosition, unwatchPosition, requestPosition, setActiveListing}
   )

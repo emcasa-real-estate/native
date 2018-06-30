@@ -59,7 +59,6 @@ class EditGalleryScreen extends PureComponent {
 
   onUpload = (images) => {
     const {create, params: {id}} = this.props
-    console.log(images)
     create(id, images)
   }
 

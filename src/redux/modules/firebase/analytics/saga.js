@@ -6,6 +6,7 @@ import * as navigation from '@/screens/modules/navigation'
 import * as auth from '@/redux/modules/auth'
 import {getUser} from '@/redux/modules/auth/selectors'
 import * as actions from './index'
+import analyticsEventsSaga from './events'
 
 const analytics = Firebase.analytics()
 
@@ -34,6 +35,7 @@ export default function* analyticsSaga() {
     takeLatest(actions.LOG_EVENT, logEvent),
     takeLatest(auth.SUCCESS, identifySession),
     takeLatest(navigation.SCREEN_APPEARED, logCurrentScreen),
+    fork(analyticsEventsSaga),
     fork(initialize)
   ])
 }

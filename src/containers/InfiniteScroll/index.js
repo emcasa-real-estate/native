@@ -25,16 +25,11 @@ export default class InfiniteScroll extends Component {
   onScroll = ({nativeEvent}) => {
     if (
       !this.props.loading &&
-      !this.isLastPage &&
+      this.props.hasNextPage &&
       this.isOverThreshold(nativeEvent)
     ) {
       this.onLoad()
     }
-  }
-
-  get isLastPage() {
-    const {pagination} = this.props
-    return pagination.remainingCount === 0
   }
 
   render() {

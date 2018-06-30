@@ -1,10 +1,17 @@
-import {createStore, applyMiddleware, compose} from 'redux'
+import {createStore, applyMiddleware} from 'redux'
 import {persistStore} from 'redux-persist'
 import {offlineActionTypes} from 'react-native-offline'
 import createSagaMiddleware, {END} from 'redux-saga'
 
 import reducer from './modules/reducer'
 import saga from './modules/saga'
+
+const compose = (...args) => {
+  let compose
+  if (__DEV__) compose = require('redux-devtools-extension').composeWithDevTools
+  else compose = require('redux').compose
+  return compose(...args)
+}
 
 export default function createReduxStore(client) {
   const sagaMiddleware = createSagaMiddleware({

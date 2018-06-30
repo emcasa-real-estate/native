@@ -19,7 +19,8 @@ import {
 import {
   getUserPosition,
   getActiveListing,
-  isWatchingPosition
+  isWatchingPosition,
+  isWithinBounds
 } from './module/selectors'
 import ListButton from '@/components/listings/Feed/Button'
 import MapFeed from '@/components/listings/Feed/Map'
@@ -49,6 +50,8 @@ class MapScreen extends Component {
     }
   }
 
+  state = {active: false}
+
   loadAllMarkers() {
     const {loadMore, pagination} = this.props
     if (!pagination.remainingCount) return
@@ -57,6 +60,19 @@ class MapScreen extends Component {
 
   componentDidMount() {
     this.loadAllMarkers()
+  }
+
+  componentWillUnmount() {
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {rightButtons: []}
+    })
+  }
+  componentDidAppear() {
+    this.setState({active: true})
+  }
+
+  componentDidDisappear() {
+    this.setState({active: false})
   }
 
   onToggleWatchPosition = (active) => () =>
@@ -73,6 +89,7 @@ class MapScreen extends Component {
       data,
       activeListing,
       watchingPosition,
+      isWithinBounds,
       userPosition,
       componentId
     } = this.props
@@ -80,16 +97,19 @@ class MapScreen extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.body}>
-          <Map
-            data={data}
-            active={activeListing}
-            position={userPosition}
-            watching={watchingPosition}
-            onSelect={this.onSelect}
-            onRequestPosition={this.onRequestPosition}
-            onWatchPosition={this.onToggleWatchPosition(true)}
-            onUnwatchPosition={this.onToggleWatchPosition(false)}
-          />
+          {this.state.active && (
+            <Map
+              data={data}
+              active={activeListing}
+              position={userPosition}
+              watching={watchingPosition}
+              isWithinBounds={isWithinBounds}
+              onSelect={this.onSelect}
+              onRequestPosition={this.onRequestPosition}
+              onWatchPosition={this.onToggleWatchPosition(true)}
+              onUnwatchPosition={this.onToggleWatchPosition(false)}
+            />
+          )}
           <ListButton style={styles.button} onPress={this.onReturn} />
         </View>
         <View style={styles.listings}>
@@ -113,7 +133,8 @@ export default composeWithRef(
     (state) => ({
       activeListing: getActiveListing(state),
       userPosition: getUserPosition(state),
-      watchingPosition: isWatchingPosition(state)
+      watchingPosition: isWatchingPosition(state),
+      isWithinBounds: isWithinBounds(state)
     }),
     {watchPosition, unwatchPosition, requestPosition, setActiveListing}
   )

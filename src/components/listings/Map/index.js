@@ -21,6 +21,7 @@ export default function ListingMap({
   zoom,
   lat,
   lng,
+  initialRegion,
   style,
   as: MapView,
   ...props
@@ -29,11 +30,13 @@ export default function ListingMap({
     <MapView
       ref={mapRef}
       style={[{flex: 1, width: '100%', height: '100%'}, style]}
-      initialRegion={{
-        latitude: lat,
-        longitude: lng,
-        ...Zoom[zoom]
-      }}
+      initialRegion={
+        initialRegion || {
+          latitude: lat,
+          longitude: lng,
+          ...Zoom[zoom]
+        }
+      }
       {...props}
     >
       {children}

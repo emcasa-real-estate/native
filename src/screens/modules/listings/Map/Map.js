@@ -1,6 +1,5 @@
+import _ from 'lodash'
 import React, {PureComponent} from 'react'
-import {Alert} from 'react-native'
-import geolib from 'geolib'
 
 import {withPermission} from '@/containers/Permission'
 import UserPositionMarker from '@/components/listings/Map/UserPosition'
@@ -10,71 +9,56 @@ const zoom = ({longitudeDelta}) =>
   Math.round(Math.log(360 / longitudeDelta) / Math.LN2)
 
 @withPermission('location', 'whenInUse')
-export default class ListingsMap extends PureComponent {
-  static defaultProps = {
-    watching: undefined,
-    data: []
-  }
-
+export default class MapApp extends PureComponent {
   state = {
-    authorized: false,
-    region: undefined,
-    // initial position
-    lat: -22.9608099,
-    lng: -43.2096142,
-    zoom: 12
+    zoom: 12,
+    region: {
+      longitude: -43.2096142,
+      latitude: -22.9608099,
+      longitudeDelta: 0.1,
+      latitudeDelta: 0.1
+    }
   }
 
   map = React.createRef()
 
-  static getDerivedStateFromProps(props, state) {
-    if (!props.watching || !props.position) return null
-    if (state.region) {
-      return {
-        region: {
-          ...state.region,
-          ...props.position
-        }
-      }
-    } else {
-      return {
-        region: {
-          longitudeDelta: 0.01,
-          latitudeDelta: 0.01,
-          ...props.position
-        }
-      }
-    }
-  }
-
-  requestInitialPosition = async () => {
+  requestInitialPermission = async () => {
     const permission = await this.props.onRequestPermission(false)
-    if (permission !== 'authorized') return
-    this.props.onRequestPosition()
+    if (permission === 'authorized') this.props.onRequestPosition()
   }
 
-  focusOnUserPosition = () => {
-    const region = {
+  animateToUserCoordinates = () =>
+    this.map.current.getMapRef().animateToCoordinate(this.props.position)
+
+  animateToUserRegion = () =>
+    this.map.current.getMapRef().animateToRegion({
+      ...this.props.position,
       longitudeDelta: 0.01,
-      latitudeDelta: 0.01,
-      ...this.props.position
-    }
-    this.setState({
-      region
+      latitudeDelta: 0.01
     })
-    this.map.current.getMapRef().animateToRegion(region)
+
+  constructor(props) {
+    super(props)
+    if (props.watching && props.isWithinBounds)
+      this.state.region = {
+        longitude: props.position.longitude,
+        latitude: props.position.latitude,
+        longitudeDelta: 0.01,
+        latitudeDelta: 0.01
+      }
   }
 
-  isWithinBounds() {
-    const {position} = this.props
-    if (!position) return undefined
-    // Vista Chinesa - RJ
-    const centerOfRJ = {
-      latitude: -22.9730992,
-      longitude: -43.2524123
-    }
-    const distance = 17 * 1000
-    return geolib.isPointInCircle(position, centerOfRJ, distance)
+  componentDidMount() {
+    requestAnimationFrame(this.requestInitialPermission)
+  }
+
+  componentDidUpdate(prev) {
+    const {watching, position, isWithinBounds, onWatchPosition} = this.props
+    if (!isWithinBounds) return
+    else if (typeof watching === 'undefined') onWatchPosition()
+    else if (watching && !prev.watching) this.animateToUserRegion()
+    else if (watching && !_.isEqual(prev.position, position))
+      this.animateToUserCoordinates()
   }
 
   get data() {
@@ -87,21 +71,9 @@ export default class ListingsMap extends PureComponent {
     }))
   }
 
-  componentDidMount() {
-    const {watching} = this.props
-    if (typeof watching === 'undefined')
-      requestAnimationFrame(this.requestInitialPosition)
-  }
-
-  componentDidUpdate(prev) {
-    const {watching, position} = this.props
-    if (
-      watching &&
-      position &&
-      (prev.watching !== watching || prev.position !== position)
-    ) {
-      this.focusOnUserPosition()
-    }
+  onWatchPosition = async () => {
+    if ((await this.props.onRequestPermission()) === 'authorized')
+      this.props.onWatchPosition()
   }
 
   onRegionChange = (region) =>
@@ -112,25 +84,6 @@ export default class ListingsMap extends PureComponent {
     })
 
   onSelect = (id) => () => this.props.onSelect(id)
-
-  shouldWatchPosition = async () => {
-    if (!this.isWithinBounds()) {
-      Alert.alert(
-        'Fora da área de cobertura',
-        'A sua região ainda não é coberta pela EmCasa.'
-      )
-      return false
-    }
-    const permission = await this.props.onRequestPermission()
-    if (this.props.watching || permission !== 'authorized') return false
-    return true
-  }
-
-  onWatchPosition = async () => {
-    if (await this.shouldWatchPosition()) this.props.onWatchPosition()
-  }
-
-  onUnwatchPosition = () => this.props.onUnwatchPosition()
 
   renderMarker = ({listing}) => {
     const active = this.props.active === listing.id
@@ -147,9 +100,11 @@ export default class ListingsMap extends PureComponent {
   }
 
   render() {
+    const {watching, position, isWithinBounds} = this.props
     const {region} = this.state
     const maxZoomToAggregateMarkers = 14
     const aggregate = region ? zoom(region) < maxZoomToAggregateMarkers : true
+
     return (
       <Map
         mapClusterRef={this.map}
@@ -157,18 +112,16 @@ export default class ListingsMap extends PureComponent {
         data={this.data}
         renderMarker={this.renderMarker}
         clusteringEnabled={aggregate}
-        scrollEnabled={!this.props.watching}
         onRegionChangeComplete={this.onRegionChange}
-        onPanDrag={this.onUnwatchPosition}
         onSelect={this.onSelect}
-        region={this.props.watching ? region : undefined}
+        initialRegion={region}
       >
-        {this.isWithinBounds() && (
+        {isWithinBounds && (
           <UserPositionMarker
-            active={this.props.watching}
+            active={watching}
             address={{
-              lat: this.props.position.latitude,
-              lng: this.props.position.longitude
+              lat: position.latitude,
+              lng: position.longitude
             }}
           />
         )}

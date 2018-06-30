@@ -104,6 +104,10 @@ class ListingScreen extends PureComponent {
       }
     })
 
+  get isLoading() {
+    return !this.props.data || this.props.loading
+  }
+
   renderRelatedListings() {
     const {relatedListings} = this.props
     return <Feed data={relatedListings} onSelect={this.onSelectListing} />
@@ -131,14 +135,12 @@ class ListingScreen extends PureComponent {
 
     return (
       <Shell>
-        <Body scroll style={{flex: 1}}>
-          {data && (
-            <Listing
-              {...data}
-              onOpenGallery={this.onOpenGallery}
-              onOpenTour={this.onOpenTour}
-            />
-          )}
+        <Body scroll loading={this.isLoading}>
+          <Listing
+            {...data || {}}
+            onOpenGallery={this.onOpenGallery}
+            onOpenTour={this.onOpenTour}
+          />
           {data &&
             data.isActive && (
               <Section title="Veja Também">
@@ -146,7 +148,9 @@ class ListingScreen extends PureComponent {
               </Section>
             )}
         </Body>
-        <Footer style={{padding: 15}}>{this.renderFooter()}</Footer>
+        {!this.isLoading && (
+          <Footer style={{padding: 15}}>{this.renderFooter()}</Footer>
+        )}
       </Shell>
     )
   }

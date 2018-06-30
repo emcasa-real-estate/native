@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react'
+import React, {Component} from 'react'
 import {
   View,
   TouchableWithoutFeedback,
@@ -11,8 +11,13 @@ import {
 import AutoComplete from '../AutoComplete'
 import styles from './styles'
 
-export default class AutoCompleteAndroid extends PureComponent {
+export default class AutoCompleteAndroid extends Component {
+  static defaultProps = {
+    value: {}
+  }
+
   state = {
+    text: '',
     active: false,
     layout: null
   }
@@ -21,9 +26,9 @@ export default class AutoCompleteAndroid extends PureComponent {
   inputButtonText = React.createRef()
   autoComplete = React.createRef()
 
-  get text() {
-    if (!this.autoComplete.current) return ''
-    return this.autoComplete.current.text
+  constructor(props) {
+    super(props)
+    if (props.value.text) this.state.text = props.value.text.value
   }
 
   onShowModal = () =>
@@ -48,7 +53,7 @@ export default class AutoCompleteAndroid extends PureComponent {
 
   onHideModal = async () => {
     await this.autoComplete.current.selectBestMatch()
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    // await new Promise((resolve) => setTimeout(resolve, 500))
     await this.autoComplete.current.awaitRequests()
     requestAnimationFrame(() => this.setState({active: false}))
   }
@@ -59,6 +64,8 @@ export default class AutoCompleteAndroid extends PureComponent {
       this.setState({active: false})
     })
   }
+
+  onChangeText = (text) => this.setState({text})
 
   get modalLayout() {
     const {layout} = this.state
@@ -88,7 +95,7 @@ export default class AutoCompleteAndroid extends PureComponent {
               ref={this.inputButtonText}
               style={[styles.textInput, styles.textInputButton]}
               editable={false}
-              value={this.text}
+              value={this.state.text}
               placeholder={this.props.placeholder}
               selection={{start: 0, end: 0}}
               underlineColorAndroid="rgba(0,0,0,0)"
@@ -106,6 +113,7 @@ export default class AutoCompleteAndroid extends PureComponent {
                   ref={this.autoComplete}
                   styles={styles}
                   onChangeComplete={this.onChangeComplete}
+                  onChangeText={this.onChangeText}
                   {...this.props}
                 />
               </View>

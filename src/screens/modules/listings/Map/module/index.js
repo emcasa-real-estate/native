@@ -1,4 +1,4 @@
-export const REQUEST_POSITION = 'screens/listings.Map/WATCH_POSITION'
+export const REQUEST_POSITION = 'screens/listings.Map/REQUEST_POSITION'
 export const WATCH_POSITION = 'screens/listings.Map/WATCH_POSITION'
 export const UNWATCH_POSITION = 'screens/listings.Map/UNWATCH_POSITION'
 export const UPDATE_POSITION = 'screens/listings.Map/UPDATE_POSITION'

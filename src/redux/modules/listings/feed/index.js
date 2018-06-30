@@ -37,7 +37,7 @@ function listingsFeed(state = {}, action) {
 }
 
 const initialState = {
-  loading: false,
+  loading: undefined,
   error: null,
   options: {},
   pagination: {},

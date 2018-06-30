@@ -11,9 +11,10 @@ import {
   takeLatest,
   takeEvery
 } from 'redux-saga/effects'
+import {Alert} from 'react-native'
 
 import * as navigation from '@/screens/modules/navigation'
-import {getMapScreen} from './selectors'
+import {getMapScreen, isWithinBounds} from './selectors'
 import * as actions from './index'
 import MapScreen from '../index'
 
@@ -38,6 +39,15 @@ function* updatePosition({coords}) {
 }
 
 function* watchPosition() {
+  const shouldWatch = yield select(isWithinBounds)
+  if (!shouldWatch) {
+    Alert.alert(
+      'Fora da área de cobertura',
+      'A sua região ainda não é coberta pela EmCasa.'
+    )
+    yield put(actions.unwatchPosition())
+    return
+  }
   const channel = yield call(createWatchChannel)
   yield takeLatest(channel, updatePosition)
   yield race({

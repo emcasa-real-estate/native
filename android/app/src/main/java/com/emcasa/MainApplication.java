@@ -21,6 +21,7 @@ import io.fabric.sdk.android.Fabric;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import io.invertase.firebase.fabric.crashlytics.RNFirebaseCrashlyticsPackage;
+import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -46,6 +47,7 @@ public class MainApplication extends NavigationApplication {
     return Arrays.<ReactPackage>asList(
       new MainReactPackage(),
       new RNFirebasePackage(),
+      new RNFirebaseAnalyticsPackage(),
       new RNFirebaseMessagingPackage(),
       new RNFirebaseCrashlyticsPackage(),
       new ImagePickerPackage(),

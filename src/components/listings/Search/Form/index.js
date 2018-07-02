@@ -30,15 +30,17 @@ export default class SearchForm extends Component {
             step={100000}
             min={100000}
             max={10000000}
-            renderLabel={(value) => `R$ ${format.abbrevPrice(value)}`}
+            renderLabel={(value) =>
+              format.abbrevPrice(value) + (value === 10000000 ? '+' : '')
+            }
           />
         </Field>
         <Field title="Área" onReset={this.onReset('area')}>
           <SlideRange
             name="area"
-            max={1000}
+            max={999}
             step={10}
-            renderLabel={(value) => `${value} m²`}
+            renderLabel={(value) => `${value === 999 ? '+999' : value}m²`}
           />
         </Field>
         <Field title="Quartos" onReset={this.onReset('rooms')}>

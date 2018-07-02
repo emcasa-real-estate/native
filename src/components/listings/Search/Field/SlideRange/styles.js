@@ -1,15 +1,14 @@
+import _ from 'lodash'
 import {StyleSheet} from 'react-native'
 
 import * as colors from '@/assets/colors'
-import {elevation} from '@/assets/styles'
+import {elevation, rightTriangle} from '@/assets/styles'
 
 export const LABEL_HEIGHT = 25
 export const LABEL_WIDTH = 60
-export const TIP_HEIGHT = 6
+export const TIP_SIZE = 5
 
-const TIP_SIZE = Math.sqrt(Math.pow(TIP_HEIGHT, 2) / 2) * 2
-
-export default StyleSheet.create({
+const styles = StyleSheet.create({
   body: {
     marginHorizontal: 60,
     marginBottom: 60,
@@ -48,7 +47,7 @@ export default StyleSheet.create({
   label: {
     position: 'absolute',
     top: 0,
-    height: LABEL_HEIGHT + TIP_HEIGHT,
+    height: LABEL_HEIGHT + TIP_SIZE,
     marginLeft: 60 - LABEL_WIDTH / 2
   },
   labelBody: {
@@ -62,14 +61,40 @@ export default StyleSheet.create({
   },
   labelTip: {
     position: 'absolute',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
     zIndex: 0,
-    bottom: 2,
+    bottom: 0,
     left: '50%',
-    marginTop: -TIP_HEIGHT,
-    marginLeft: -TIP_HEIGHT / 2,
-    width: TIP_SIZE,
-    height: TIP_SIZE,
-    backgroundColor: 'white',
-    transform: [{rotate: '45deg'}]
-  }
+    //marginTop: -TIP_HEIGHT,
+    marginLeft: -TIP_SIZE,
+    width: TIP_SIZE * 2,
+    height: TIP_SIZE
+  },
+  labelTipSide: rightTriangle({
+    color: 'white',
+    size: TIP_SIZE
+  })
 })
+
+export default styles
+
+const TIP_OFFSET_LOWER_BOUND = -(LABEL_WIDTH - TIP_SIZE) / 2
+
+const TIP_OFFSET_UPPER_BOUND = LABEL_WIDTH / 2 - TIP_SIZE * 2 - 2
+
+export const labelTip = {
+  container: (offset) => [
+    styles.labelTip,
+    {
+      marginLeft: _.clamp(
+        -TIP_SIZE / 2 + offset,
+        TIP_OFFSET_LOWER_BOUND,
+        TIP_OFFSET_UPPER_BOUND
+      )
+    }
+  ],
+  right: () => [styles.labelTipSide, {transform: [{rotate: '90deg'}]}],
+  left: () => [styles.labelTipSide]
+}

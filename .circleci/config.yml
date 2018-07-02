@@ -97,6 +97,7 @@ aliases:
   - &bundle-android
     command: >-
       node_modules/.bin/react-native bundle
+      --dev false
       --platform android
       --entry-file index.js
       --assets-dest android/app/src/main/res/

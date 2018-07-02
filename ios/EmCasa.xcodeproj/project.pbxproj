@@ -41,7 +41,6 @@
 		771841EFF177410ABD7A8777 /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27AF0EE749DB426EB358DFCF /* libRNFirebase.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
-		B19C244ACB3D472EB10421F2 /* libSMXCrashlytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 225DE1D715094D96B64BE883 /* libSMXCrashlytics.a */; };
 		C347F62B20E5835400C76519 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C347F5FB20E5835400C76519 /* GoogleService-Info.plist */; };
 		C350457520B37A4000C05F9A /* libReactNativeKeyboardManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C350456F20B379FC00C05F9A /* libReactNativeKeyboardManager.a */; };
 		C350457720B37A8600C05F9A /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C350457620B37A8600C05F9A /* IQKeyboardManager.bundle */; };
@@ -442,7 +441,6 @@
 		1628E5320CD54949AD213729 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-Bold.ttf"; path = "../src/assets/fonts/OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		1A78C75678D844D4A6D6FF76 /* OpenSans-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-Light.ttf"; path = "../src/assets/fonts/OpenSans-Light.ttf"; sourceTree = "<group>"; };
 		1DC0995126FE247C998EF169 /* Pods-EmCasa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmCasa.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmCasa/Pods-EmCasa.release.xcconfig"; sourceTree = "<group>"; };
-		225DE1D715094D96B64BE883 /* libSMXCrashlytics.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSMXCrashlytics.a; sourceTree = "<group>"; };
 		27AF0EE749DB426EB358DFCF /* libRNFirebase.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFirebase.a; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* EmCasa-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EmCasa-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* EmCasa-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "EmCasa-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -508,7 +506,6 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				C3E6462A2093CD2000CABB50 /* libRNPhotoView.a in Frameworks */,
 				DD38508A522671808AAB45C4 /* Pods_EmCasa.framework in Frameworks */,
-				B19C244ACB3D472EB10421F2 /* libSMXCrashlytics.a in Frameworks */,
 				53FA17B8F54C4A6B907D089C /* libRNPhotoView.a in Frameworks */,
 				771841EFF177410ABD7A8777 /* libRNFirebase.a in Frameworks */,
 			);
@@ -794,7 +791,6 @@
 		C3113654204DC8A2003BDB80 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				225DE1D715094D96B64BE883 /* libSMXCrashlytics.a */,
 				0325E4F318A6456E85013DC4 /* libRNPhotoView.a */,
 				27AF0EE749DB426EB358DFCF /* libRNFirebase.a */,
 			);

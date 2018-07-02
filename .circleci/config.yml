@@ -193,6 +193,7 @@ jobs:
     <<: *macos
     environment:
       API_URL: https://em-casa-backend-staging.herokuapp.com
+      NODE_ENV: production
       CODESIGN_PROFILE: ad-hoc
       BUNDLE_IDENTIFIER_SUFFIX: -beta
     steps:
@@ -219,6 +220,7 @@ jobs:
     <<: *android
     environment:
       API_URL: https://em-casa-backend-staging.herokuapp.com
+      NODE_ENV: production
     steps:
     - attach_workspace:
         at: ~/emcasa
@@ -243,6 +245,7 @@ jobs:
     <<: *macos
     environment:
       API_URL: https://em-casa-backend.herokuapp.com
+      NODE_ENV: production
       CODESIGN_PROFILE: app-store
     steps:
     - attach_workspace:
@@ -269,6 +272,7 @@ jobs:
     <<: *android
     environment:
       API_URL: https://em-casa-backend.herokuapp.com
+      NODE_ENV: production
     steps:
     - attach_workspace:
         at: ~/emcasa

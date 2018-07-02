@@ -51,6 +51,11 @@ export default class SlideRangeField extends Component {
     }
   }
 
+  get labelOverlap() {
+    const {position} = this.state
+    const distance = position.max - position.min - LABEL_WIDTH
+    return distance < 1 ? Math.abs(distance) : 0
+  }
   onChangeSlider = ([min, max]) => {
     this.props.onChange({min, max})
     this.updateLayout()
@@ -66,11 +71,15 @@ export default class SlideRangeField extends Component {
 
   renderLabel = (key) => {
     const {renderLabel} = this.props
+    const overlap = this.labelOverlap
+    let position = this.state.position[key]
     const value = this.displayValue[key]
-    const position = this.state.position[key]
-    const zIndex = key === 'min' ? 0 : 1
+    const delta = key === 'min' ? -1 : 1
+    if (overlap) position += (overlap / 2 + 2) * delta
     return (
-      <Label style={{left: position, zIndex}}>{renderLabel(value, key)}</Label>
+      <Label style={{left: position}} tipOffset={-overlap / 2 * delta}>
+        {renderLabel(value, key)}
+      </Label>
     )
   }
 

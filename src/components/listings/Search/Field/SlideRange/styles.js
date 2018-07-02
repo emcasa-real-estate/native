@@ -3,9 +3,9 @@ import {StyleSheet} from 'react-native'
 import * as colors from '@/assets/colors'
 import {elevation} from '@/assets/styles'
 
-const LABEL_HEIGHT = 25
-const LABEL_WIDTH = 60
-const TIP_HEIGHT = 6
+export const LABEL_HEIGHT = 25
+export const LABEL_WIDTH = 60
+export const TIP_HEIGHT = 6
 
 const TIP_SIZE = Math.sqrt(Math.pow(TIP_HEIGHT, 2) / 2) * 2
 

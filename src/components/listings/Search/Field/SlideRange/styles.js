@@ -56,8 +56,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 4,
     justifyContent: 'center',
-
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: colors.gray.offWhite
   },
   labelTip: {
     position: 'absolute',
@@ -67,13 +67,12 @@ const styles = StyleSheet.create({
     zIndex: 0,
     bottom: 0,
     left: '50%',
-    //marginTop: -TIP_HEIGHT,
     marginLeft: -TIP_SIZE,
     width: TIP_SIZE * 2,
     height: TIP_SIZE
   },
   labelTipSide: rightTriangle({
-    color: 'white',
+    color: colors.gray.offWhite,
     size: TIP_SIZE
   })
 })

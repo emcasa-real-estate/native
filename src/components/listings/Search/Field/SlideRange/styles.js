@@ -1,11 +1,19 @@
 import {StyleSheet} from 'react-native'
 
 import * as colors from '@/assets/colors'
-import {elevation, margin} from '@/assets/styles'
+import {elevation} from '@/assets/styles'
+
+const LABEL_HEIGHT = 25
+const LABEL_WIDTH = 60
+const TIP_HEIGHT = 6
+
+const TIP_SIZE = Math.sqrt(Math.pow(TIP_HEIGHT, 2) / 2) * 2
 
 export default StyleSheet.create({
   body: {
-    margin: 60
+    marginHorizontal: 60,
+    marginBottom: 60,
+    marginTop: 10
   },
   slider: {
     height: null
@@ -31,5 +39,37 @@ export default StyleSheet.create({
     backgroundColor: colors.blue.medium,
     marginBottom: -2.5,
     ...elevation(3)
+  },
+  labelContainer: {
+    position: 'relative',
+    height: 50,
+    ...elevation(2)
+  },
+  label: {
+    position: 'absolute',
+    top: 0,
+    height: LABEL_HEIGHT + TIP_HEIGHT,
+    marginLeft: 60 - LABEL_WIDTH / 2
+  },
+  labelBody: {
+    width: LABEL_WIDTH,
+    height: LABEL_HEIGHT,
+    backgroundColor: 'white',
+    borderRadius: 4,
+    justifyContent: 'center',
+
+    alignItems: 'center'
+  },
+  labelTip: {
+    position: 'absolute',
+    zIndex: 0,
+    bottom: 2,
+    left: '50%',
+    marginTop: -TIP_HEIGHT,
+    marginLeft: -TIP_HEIGHT / 2,
+    width: TIP_SIZE,
+    height: TIP_SIZE,
+    backgroundColor: 'white',
+    transform: [{rotate: '45deg'}]
   }
 })

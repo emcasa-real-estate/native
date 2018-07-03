@@ -53,6 +53,7 @@ export default class SearchForm extends Component {
         </Field>
         <Field title="Quartos" onReset={this.onReset('rooms')}>
           <SlideRange
+            snapped
             name="rooms"
             min={1}
             max={4}
@@ -62,6 +63,7 @@ export default class SearchForm extends Component {
         </Field>
         <Field title="Vagas de garagem" onReset={this.onReset('garage_spots')}>
           <SlideRange
+            snapped
             name="garage_spots"
             min={1}
             max={4}

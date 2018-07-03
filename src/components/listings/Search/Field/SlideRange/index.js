@@ -84,11 +84,12 @@ export default class SlideRangeField extends Component {
   }
 
   renderSlider() {
-    const {min, max, step} = this.props
+    const {min, max, step, snapped} = this.props
     const value = this.displayValue
     return (
       <MultiSlider
         ref={this.slider}
+        snapped={snapped}
         values={[value.min, value.max]}
         min={min}
         max={max}

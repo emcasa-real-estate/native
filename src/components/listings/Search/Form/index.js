@@ -2,7 +2,12 @@ import {Component} from 'react'
 
 import * as format from '@/assets/format'
 import Form from '@/components/shared/Form/Form'
-import Field, {SlideRange, MultiSelect, ListingType} from '../Field'
+import Field, {
+  SlideRange,
+  OptionRange,
+  MultiSelect,
+  ListingType
+} from '../Field'
 
 export default class SearchForm extends Component {
   onReset = (field) => () => {
@@ -52,23 +57,25 @@ export default class SearchForm extends Component {
           />
         </Field>
         <Field title="Quartos" onReset={this.onReset('rooms')}>
-          <SlideRange
-            snapped
+          <OptionRange
             name="rooms"
-            min={1}
-            max={4}
-            onChange={this.onChangeRange(1, 4)}
-            renderLabel={(value) => (value === 4 ? '+4' : value)}
+            options={[
+              {value: 1, label: '1'},
+              {value: 2, label: '2'},
+              {value: 3, label: '3'},
+              {value: 4, label: '4+'}
+            ]}
           />
         </Field>
         <Field title="Vagas de garagem" onReset={this.onReset('garage_spots')}>
-          <SlideRange
-            snapped
+          <OptionRange
             name="garage_spots"
-            min={1}
-            max={4}
-            onChange={this.onChangeRange(1, 4)}
-            renderLabel={(value) => (value === 4 ? '+4' : value)}
+            options={[
+              {value: 1, label: '1'},
+              {value: 2, label: '2'},
+              {value: 3, label: '3'},
+              {value: 4, label: '4+'}
+            ]}
           />
         </Field>
       </Form>

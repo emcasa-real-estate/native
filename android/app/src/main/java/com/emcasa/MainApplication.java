@@ -5,6 +5,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
 import com.facebook.react.ReactApplication;
+import cl.json.RNSharePackage;
+import cl.json.ShareApplication;
 import com.imagepicker.ImagePickerPackage;
 import com.horcrux.svg.SvgPackage;
 import com.reactnative.photoview.PhotoViewPackage;
@@ -24,7 +26,7 @@ import com.smixx.fabric.FabricPackage;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainApplication extends NavigationApplication {
+public class MainApplication extends NavigationApplication implements ShareApplication {
   @Override
   protected ReactNativeHost createReactNativeHost() {
     return new NavigationReactNativeHost(this) {
@@ -44,12 +46,18 @@ public class MainApplication extends NavigationApplication {
   public List<ReactPackage> createAdditionalReactPackages() {
     return Arrays.<ReactPackage>asList(
       new MainReactPackage(),
+      new RNSharePackage(),
       new ImagePickerPackage(),
       new SvgPackage(),
       new PhotoViewPackage(),
       new MapsPackage(),
       new FabricPackage()
     );
+  }
+
+  @Override
+  public String getFileProviderAuthority() {
+    return "com.emcasa.provider";
   }
 
   @Override

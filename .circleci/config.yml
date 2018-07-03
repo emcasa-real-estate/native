@@ -246,6 +246,7 @@ jobs:
     <<: *macos
     environment:
       API_URL: https://em-casa-backend.herokuapp.com
+      FRONTEND_URL: https://www.emcasa.com
       NODE_ENV: production
       CODESIGN_PROFILE: app-store
     steps:
@@ -273,6 +274,7 @@ jobs:
     <<: *android
     environment:
       API_URL: https://em-casa-backend.herokuapp.com
+      FRONTEND_URL: https://www.emcasa.com
       NODE_ENV: production
     steps:
     - attach_workspace:

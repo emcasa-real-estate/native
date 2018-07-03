@@ -44,7 +44,7 @@ class ListingScreen extends PureComponent {
       }
     } = this.props.data
     return {
-      url: `https://emcasa.com/imoveis/${stateSlug}/${citySlug}/${neighborhoodSlug}/${streetSlug}/id-${id}`,
+      url: `https://www.emcasa.com/imoveis/${stateSlug}/${citySlug}/${neighborhoodSlug}/${streetSlug}/id-${id}`,
       title: `${type} na ${street}, ${neighborhood}, ${city}`
     }
   }

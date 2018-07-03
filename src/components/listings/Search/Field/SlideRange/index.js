@@ -56,6 +56,11 @@ export default class SlideRangeField extends Component {
     const distance = position.max - position.min - LABEL_WIDTH
     return distance < 1 ? Math.abs(distance) : 0
   }
+
+  componentDidMount() {
+    this.updateLayout()
+  }
+
   onChangeSlider = ([min, max]) => {
     this.props.onChange({min, max})
     this.updateLayout()

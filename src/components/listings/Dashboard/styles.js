@@ -30,6 +30,38 @@ export default StyleSheet.create({
   propValueText: {
     fontSize: 16,
     color: colors.gray.dark
+  },
+  headerContainer: {
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.gray.lighter
+  },
+  header: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  description: {
+    flex: 0.5,
+    marginLeft: 10
+  },
+  h1: {
+    fontSize: 20,
+    color: colors.gray.dark,
+    marginBottom: 5
+  },
+  h2: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.gray.medium
+  },
+  imageContainer: {
+    flex: 0.5,
+    borderRadius: 5,
+    overflow: 'hidden'
+  },
+  image: {
+    borderRadius: 5
   }
 })
 

@@ -3,6 +3,7 @@ import {View} from 'react-native'
 import * as format from '@/assets/format'
 import Text from '@/components/shared/Text'
 import Icon from '@/components/shared/Icon'
+import Header from './Header'
 import styles, {iconColor} from './styles'
 
 function Property({title, icon, value}) {
@@ -25,10 +26,12 @@ export default function ListingDashboard({
   visualisations,
   tourVisualisations,
   favoriteCount,
-  matterportCode
+  matterportCode,
+  ...props
 }) {
   return (
     <View style={styles.container}>
+      <Header {...props} />
       <Property
         title="Data de criação"
         icon="calendar-check"

@@ -23,11 +23,6 @@ PODS:
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/Logger (~> 2.1)
     - Protobuf (~> 3.5)
-  - GoogleMaps (2.6.0):
-    - GoogleMaps/Maps (= 2.6.0)
-  - GoogleMaps/Base (2.6.0)
-  - GoogleMaps/Maps (2.6.0):
-    - GoogleMaps/Base
   - GoogleToolboxForMac/Defines (2.1.4)
   - GoogleToolboxForMac/Logger (2.1.4):
     - GoogleToolboxForMac/Defines (= 2.1.4)
@@ -46,7 +41,6 @@ DEPENDENCIES:
   - Fabric
   - Firebase/Core
   - Firebase/Messaging
-  - GoogleMaps
   - IQKeyboardManager
 
 SPEC REPOS:
@@ -58,7 +52,6 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseInstanceID
     - FirebaseMessaging
-    - GoogleMaps
     - GoogleToolboxForMac
     - IQKeyboardManager
     - nanopb
@@ -72,12 +65,11 @@ SPEC CHECKSUMS:
   FirebaseCore: 90cb1c53d69b556f112a1bf72b5fcfaad7650790
   FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
   FirebaseMessaging: 75cdb862e86c30e0913a2ff307e48d49357c5b73
-  GoogleMaps: 42f91c68b7fa2f84d5c86597b18ceb99f5414c7f
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   IQKeyboardManager: c49d59e358aeeffaa0280aa305093c2b194d2607
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
 
-PODFILE CHECKSUM: f7d722c758de68670ae4f313755418847262a1b2
+PODFILE CHECKSUM: 33a3d3c6203185ce5edf8a53dc393df4d7029da1
 
 COCOAPODS: 1.5.2

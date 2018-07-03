@@ -12,7 +12,7 @@ export async function upload({uri, type, fileName}) {
     method: 'POST',
     body: data
   })
-  if (Math.floor(response.status / 100) !== 2) {
+  if (!response.ok) {
     throw new Error('Failed to upload image')
   }
   const json = await response.json()

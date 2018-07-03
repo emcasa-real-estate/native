@@ -8,7 +8,7 @@ import BottomTabs from '@/screens/modules/navigation/BottomTabs'
 import Card from '@/screens/modules/listings/shared/Card'
 import Feed from '@/components/listings/Feed/Listing'
 
-import ListingScreen from '@/screens/modules/listing/Listing'
+import DashboardScreen from '@/screens/modules/listing/Dashboard'
 
 class UserListingsScreen extends PureComponent {
   static screenName = 'account.Listings'
@@ -23,8 +23,8 @@ class UserListingsScreen extends PureComponent {
     const {componentId} = this.props
     Navigation.push(componentId, {
       component: {
-        name: ListingScreen.screenName,
-        passProps: {params: {id, editing: true}}
+        name: DashboardScreen.screenName,
+        passProps: {params: {id}}
       }
     })
   }

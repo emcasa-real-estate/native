@@ -31,3 +31,14 @@ export const spacing = (prefix) =>
 export const padding = spacing('padding')
 
 export const margin = spacing('margin')
+
+export const rightTriangle = ({color, size}) => ({
+  width: 0,
+  height: 0,
+  backgroundColor: 'transparent',
+  borderStyle: 'solid',
+  borderRightWidth: size,
+  borderTopWidth: size,
+  borderRightColor: 'transparent',
+  borderTopColor: color
+})

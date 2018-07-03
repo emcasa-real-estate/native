@@ -88,10 +88,14 @@ export default class FieldProvider extends PureComponent {
     if (onFocus) onFocus()
   }
 
-  onChange = (value, callback) => {
+  onChange = (_value, callback) => {
     const {onChangeField, onChange, name} = this.props
+    let value = _value
+    if (onChange) {
+      const result = onChange(value)
+      value = typeof result !== 'undefined' ? result : value
+    }
     onChangeField(name, value, callback)
-    if (onChange) onChange(value)
   }
 
   render() {

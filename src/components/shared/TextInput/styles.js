@@ -10,9 +10,6 @@ export default StyleSheet({
     borderRadius: 4,
     borderColor: colors.gray.light,
     ...padding(Platform.OS === 'ios' ? 14 : 3, 14),
-    ':value': {
-      borderColor: colors.blue.medium
-    },
     ':invalid': {
       borderColor: colors.red.medium
     },

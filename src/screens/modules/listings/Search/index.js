@@ -27,8 +27,14 @@ export default class ListingSearchScreen extends PureComponent {
     }
   }
 
+  defaultValue = {
+    type: [],
+    rooms: {min: 1, max: 4},
+    garage_spots: {min: 1, max: 4}
+  }
+
   state = {
-    options: {}
+    options: this.defaultValue
   }
 
   static getDerivedStateFromProps(props, state) {

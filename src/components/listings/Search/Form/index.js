@@ -1,8 +1,12 @@
 import {Component} from 'react'
 
 import Form from '@/components/shared/Form/Form'
-import Field, {SlideRange, MultiSelect, ListingType} from '../Field'
-import Label from './Label'
+import Field, {
+  SlideRange,
+  OptionRange,
+  MultiSelect,
+  ListingType
+} from '../Field'
 import AreaLabel from './AreaLabel'
 import PriceLabel from './PriceLabel'
 
@@ -16,8 +20,6 @@ export default class SearchForm extends Component {
     const {value, onChange, onSubmit, onPressNeighborhoods} = this.props
     const price = value.price || {}
     const area = value.area || {}
-    const rooms = value.rooms || {}
-    const garageSpots = value.garage_spots || {}
     return (
       <Form onChange={onChange} onSubmit={onSubmit} value={value}>
         <Field title="Bairros" onReset={this.onReset('neighborhoods')}>
@@ -45,20 +47,26 @@ export default class SearchForm extends Component {
           <SlideRange name="area" max={1000} step={10} Label={AreaLabel} />
         </Field>
         <Field title="Quartos" onReset={this.onReset('rooms')}>
-          <Label
-            min={rooms.min || 1}
-            max={rooms.max && rooms.max < 4 ? rooms.max : '4+'}
+          <OptionRange
+            name="rooms"
+            options={[
+              {value: 1, label: '1'},
+              {value: 2, label: '2'},
+              {value: 3, label: '3'},
+              {value: 4, label: '4+'}
+            ]}
           />
-          <SlideRange name="rooms" min={1} max={4} />
         </Field>
         <Field title="Vagas de garagem" onReset={this.onReset('garage_spots')}>
-          <Label
-            min={garageSpots.min || 1}
-            max={
-              garageSpots.max && garageSpots.max < 4 ? garageSpots.max : '4+'
-            }
+          <OptionRange
+            name="garage_spots"
+            options={[
+              {value: 1, label: '1'},
+              {value: 2, label: '2'},
+              {value: 3, label: '3'},
+              {value: 4, label: '4+'}
+            ]}
           />
-          <SlideRange name="garage_spots" min={1} max={4} />
         </Field>
       </Form>
     )

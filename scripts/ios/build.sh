@@ -2,7 +2,7 @@
 set +ex
 ROOT=$PWD
 
-cd ios && xcodebuild \
+BUNDLE_IDENTIFIER_SUFFIX=-beta cd ios && xcodebuild \
   -scheme EmCasa \
   -workspace $ROOT/ios/EmCasa.xcworkspace \
   -configuration Debug \

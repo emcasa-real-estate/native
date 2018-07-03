@@ -1,7 +1,7 @@
 import {put, call, all, select, takeLatest} from 'redux-saga/effects'
 
 import ResponseError from '@/lib/api/ResponseError'
-import {reportError} from '@/redux/modules/fabric'
+import {reportError} from '@/redux/modules/firebase/crashlytics'
 import * as api from '@/lib/services/listings'
 import * as actions from './index'
 import {getOptions, getListingIds} from './selectors'

@@ -1,7 +1,5 @@
 import {call, put, all, select, takeLatest} from 'redux-saga/effects'
 
-import ResponseError from '@/lib/api/ResponseError'
-import {reportError} from '@/redux/modules/fabric'
 import {getToken} from '../../auth/selectors'
 import {getImages} from '../../gallery/data/selectors'
 import * as galleryData from '../../gallery/data'
@@ -17,7 +15,6 @@ function* request({id}) {
     yield put(actions.success(id, response.listing))
   } catch (err) {
     yield put(actions.failure(id, err))
-    if (!(err instanceof ResponseError)) yield put(reportError(err))
   }
 }
 

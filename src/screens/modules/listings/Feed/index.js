@@ -65,7 +65,8 @@ export default class ListingsFeedScreen extends PureComponent {
   }
 
   render() {
-    const {loading, componentId} = this.props
+    const {loading, data, componentId} = this.props
+    console.log(this.props)
     return (
       <Shell testID="@listings.Feed">
         <Header>
@@ -77,7 +78,9 @@ export default class ListingsFeedScreen extends PureComponent {
             target={componentId}
             Card={Card}
             ListHeaderComponent={ListHeader}
-            ListEmptyComponent={loading ? undefined : ListEmpty}
+            ListEmptyComponent={
+              loading === false && !data.length ? ListEmpty : undefined
+            }
           />
           <MapButton style={styles.mapButton} onPress={this.onOpenMap} />
         </Body>

@@ -10,6 +10,22 @@ import Form from '@/components/listings/Search/Form'
 import HeaderButton from '@/screens/modules/shared/Header/TextButton'
 import Neighborhoods from './Neighborhoods'
 
+const defaultValue = {
+  neighborhoods: [],
+  types: ['Casa', 'Apartamento', 'Cobertura'],
+  price: {min: undefined, max: undefined},
+  area: {min: undefined, max: undefined},
+  rooms: {min: undefined, max: undefined},
+  garage_spots: {min: undefined, max: undefined}
+}
+
+const compareDefaults = (value, defaultValue) => {
+  if (_.isArray(value) && _.isArray(defaultValue))
+    return !_.isEqual(value.sort(), defaultValue.sort())
+  else if (typeof value !== 'undefined') return !_.isEqual(value, defaultValue)
+  else return false
+}
+
 @connect(
   (state) => ({
     options: getOptions(state, {type: 'search'})
@@ -40,6 +56,7 @@ export default class ListingSearchScreen extends PureComponent {
   static getDerivedStateFromProps(props, state) {
     return {
       options: {
+        ...defaultValue,
         ...props.options,
         ...state.options
       }
@@ -67,7 +84,9 @@ export default class ListingSearchScreen extends PureComponent {
 
   componentDidDisappear() {
     const {updateOptions} = this.props
-    const {options} = this.state
+    const options = _.pickBy(this.state.options, (value, key) =>
+      compareDefaults(value, defaultValue[key])
+    )
     if (!_.isEqual(options, this.props.options)) updateOptions(options)
   }
 

@@ -1,8 +1,10 @@
 import _ from 'lodash'
 import {PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
+import Share from 'react-native-share'
 import {connect} from 'react-redux'
 
+import {FRONTEND_URL} from '@/lib/config'
 import composeWithRef from '@/lib/composeWithRef'
 import * as format from '@/assets/format'
 import {load as loadListing} from '@/redux/modules/listings/data'
@@ -25,6 +27,26 @@ class ListingScreen extends PureComponent {
   static options = {
     topBar: {
       backButtonTitle: ''
+    }
+  }
+
+  get shareOptions() {
+    const {
+      id,
+      type,
+      address: {
+        street,
+        neighborhood,
+        city,
+        streetSlug,
+        neighborhoodSlug,
+        citySlug,
+        stateSlug
+      }
+    } = this.props.data
+    return {
+      url: `${FRONTEND_URL}/imoveis/${stateSlug}/${citySlug}/${neighborhoodSlug}/${streetSlug}/id-${id}`,
+      message: `${type} na ${street}, ${neighborhood}, ${city}`
     }
   }
 
@@ -96,6 +118,14 @@ class ListingScreen extends PureComponent {
       name: TourScreen.screenName
     })
 
+  onShare = async () => {
+    try {
+      await Share.open(this.shareOptions)
+    } catch (error) {
+      /* User closed modal */
+    }
+  }
+
   onSelectListing = (id) =>
     Navigation.push(this.props.componentId, {
       component: {
@@ -140,6 +170,7 @@ class ListingScreen extends PureComponent {
             {...data || {}}
             onOpenGallery={this.onOpenGallery}
             onOpenTour={this.onOpenTour}
+            onShare={this.onShare}
           />
           {data &&
             data.isActive && (

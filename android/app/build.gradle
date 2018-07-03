@@ -201,6 +201,7 @@ repositories {
 }
 
 dependencies {
+    implementation project(':react-native-share')
     implementation project(':react-native-navigation')
     implementation project(':react-native-image-picker')
     implementation project(':react-native-svg')

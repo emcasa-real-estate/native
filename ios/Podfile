@@ -8,8 +8,6 @@ target 'EmCasa' do
   pod 'Fabric'
   pod 'Crashlytics'
 
-  pod 'GoogleMaps'
-
   pod 'IQKeyboardManager'
 
   target 'EmCasaTests' do

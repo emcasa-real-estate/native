@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'relative',
     backgroundColor: 'white',
-    marginRight: Platform.OS === 'android' ? 15 : 0
+    paddingRight: Platform.OS === 'android' ? 15 : 0
   },
   indicator: {
     position: 'absolute',
@@ -40,12 +40,25 @@ const styles = StyleSheet.create({
 export default class HeaderTextButton extends PureComponent {
   static screenName = 'shared.Header.TextButton'
 
+  state = {}
+
+  onLayout = ({nativeEvent: {layout}}) =>
+    this.setState({
+      layout: {
+        width: layout.width,
+        height: layout.height
+      }
+    })
+
   renderButton() {
     const {label, style, loading} = this.props
 
     return (
       <View>
-        <View style={styles.container}>
+        <View
+          style={[styles.container, this.state.layout]}
+          onLayout={this.onLayout}
+        >
           {loading && (
             <View style={styles.indicator}>
               <ActivityIndicator />

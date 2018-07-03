@@ -41,7 +41,8 @@ export default class ListingThumbnail extends Component {
       favorite,
       matterportCode,
       isActive,
-      onFavorite
+      onFavorite,
+      onShare
     } = this.props
     const image = images[0] || {}
     let {width, height} = Dimensions.get('window')
@@ -82,12 +83,13 @@ export default class ListingThumbnail extends Component {
               </ActionButton>
             )}
             {matterportCode && (
-              <ActionButton
-                title="Ver em tela cheia"
-                icon="fullscreen"
-                onPress={this.onOpenTour}
-              >
+              <ActionButton title="Ver em tela cheia" onPress={this.onOpenTour}>
                 <Icon name="expand" />
+              </ActionButton>
+            )}
+            {isActive && (
+              <ActionButton title="Compartilhar" onPress={onShare}>
+                <Icon name="share-alt" />
               </ActionButton>
             )}
           </View>

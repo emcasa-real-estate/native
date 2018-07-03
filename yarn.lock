@@ -5537,6 +5537,10 @@ react-native-photo-view@^1.5.2:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-share@^1.0.27:
+  version "1.0.27"
+  resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-1.0.27.tgz#1861afe0d1256bde95d19520ca5d5c3cd348ffad"
+
 react-native-snap-carousel@^3.7.2:
   version "3.7.2"
   resolved "https://registry.yarnpkg.com/react-native-snap-carousel/-/react-native-snap-carousel-3.7.2.tgz#da94f7b16076ec055c0980d169d1f85eef852d03"

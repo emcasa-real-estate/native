@@ -6,10 +6,12 @@ import Icon from '@/components/shared/Icon'
 import ListPicker from './Picker'
 import styles from './styles'
 
+const ext = (fileType) => fileType.split('/')[1]
+
 const getImage = ({node}) => ({
   type: node.type,
   uri: node.image.uri,
-  fileName: node.image.filename,
+  fileName: node.image.filename || `image.${ext(node.type)}`,
   width: node.image.width,
   height: node.image.height
 })
@@ -21,6 +23,7 @@ export default class CameraRollPicker extends PureComponent {
 
   state = {
     layout: undefined,
+    loading: false,
     images: [],
     hasNextPage: true,
     showModal: false
@@ -34,28 +37,30 @@ export default class CameraRollPicker extends PureComponent {
     return layout.width / rowLength - cellPadding * 2
   }
 
-  async componentDidMount() {
-    const {edges, page_info} = await CameraRoll.getPhotos({
-      first: this.props.rowLength
-    })
-    this.setState({
-      images: edges.map(getImage),
-      hasNextPage: page_info.has_next_page,
-      endCursor: page_info.end_cursor
-    })
-  }
-
-  onLoadMore = async () => {
+  loadMoreImages = async () => {
     if (!this.state.hasNextPage) return
     const {edges, page_info} = await CameraRoll.getPhotos({
       first: 15,
       after: this.state.endCursor
     })
+    console.log(edges)
     this.setState(({images}) => ({
       images: images.concat(edges.map(getImage)),
       hasNextPage: page_info.has_next_page,
       endCursor: page_info.end_cursor
     }))
+  }
+
+  async componentDidMount() {
+    this.loadMoreImages()
+  }
+
+  onLoadMore = () => {
+    if (this.state.loading) return
+    this.setState({loading: true}, async () => {
+      await this.loadMoreImages()
+      this.setState({loading: false})
+    })
   }
 
   onLayout = ({nativeEvent: {layout}}) => this.setState({layout})

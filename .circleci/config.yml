@@ -97,6 +97,7 @@ aliases:
   - &bundle-android
     command: >-
       node_modules/.bin/react-native bundle
+      --dev false
       --platform android
       --entry-file index.js
       --assets-dest android/app/src/main/res/
@@ -193,6 +194,7 @@ jobs:
     <<: *macos
     environment:
       API_URL: https://em-casa-backend-staging.herokuapp.com
+      NODE_ENV: production
       CODESIGN_PROFILE: ad-hoc
       BUNDLE_IDENTIFIER_SUFFIX: -beta
     steps:
@@ -219,6 +221,7 @@ jobs:
     <<: *android
     environment:
       API_URL: https://em-casa-backend-staging.herokuapp.com
+      NODE_ENV: production
     steps:
     - attach_workspace:
         at: ~/emcasa
@@ -243,6 +246,8 @@ jobs:
     <<: *macos
     environment:
       API_URL: https://em-casa-backend.herokuapp.com
+      FRONTEND_URL: https://www.emcasa.com
+      NODE_ENV: production
       CODESIGN_PROFILE: app-store
     steps:
     - attach_workspace:
@@ -269,6 +274,8 @@ jobs:
     <<: *android
     environment:
       API_URL: https://em-casa-backend.herokuapp.com
+      FRONTEND_URL: https://www.emcasa.com
+      NODE_ENV: production
     steps:
     - attach_workspace:
         at: ~/emcasa

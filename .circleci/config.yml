@@ -175,7 +175,7 @@ jobs:
     - run: yarn build_e2e
     - run: |-
         xcrun simctl install "iPhone 6" ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app
-        xcrun simctl launch "iPhone 6" com.EmCasa.native && sleep 5
+        xcrun simctl launch "iPhone 6" com.EmCasa.native-debug && sleep 5
     - run: yarn e2e --debug-synchronization 10000
     - store_artifacts:
         path: tmp/screenshots
@@ -208,6 +208,7 @@ jobs:
     - run: *configure-release
     - run: *configure-keychain
     - run: *bump-ios
+    - run: cp ~/emcasa/tmp/.secrets/ios/GoogleService-Info.staging.plist ~/emcasa/ios/EmCasa/GoogleService-Info.plist
     - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-ios-staging.png --platforms ios
     - run: BUILD_CONFIGURATION=Beta .circleci/ios/build.sh
     - run: .circleci/ios/sign.sh
@@ -233,6 +234,7 @@ jobs:
     - run: *configure-release
     - run: *bump-android
     - run: *bundle-android
+    - run: cp ~/emcasa/tmp/.secrets/android/google-services.staging.json ~/emcasa/android/app/google-services.json
     - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-android-staging.png --platforms android
     - run: export TERM=xterm && cd android && ./gradlew assembleStaging
     - run: >-
@@ -259,6 +261,7 @@ jobs:
     - run: *configure-release
     - run: *configure-keychain
     - run: *bump-ios
+    - run: cp ~/emcasa/tmp/.secrets/ios/GoogleService-Info.production.plist ~/emcasa/ios/EmCasa/GoogleService-Info.plist
     - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-ios.png --platforms ios
     - run: BUILD_CONFIGURATION=Release .circleci/ios/build.sh
     - run: .circleci/ios/sign.sh
@@ -286,6 +289,7 @@ jobs:
     - run: *configure-release
     - run: *bump-android
     - run: *bundle-android
+    - run: cp ~/emcasa/tmp/.secrets/android/google-services.production.json ~/emcasa/android/app/google-services.json
     - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-android.png --platforms android
     - run: export TERM=xterm && cd android && ./gradlew assembleRelease
     - run: export TERM=xterm && cd android && ./gradlew publishApkRelease

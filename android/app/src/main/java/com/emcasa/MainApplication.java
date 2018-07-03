@@ -11,7 +11,6 @@ import com.imagepicker.ImagePickerPackage;
 import com.horcrux.svg.SvgPackage;
 import com.reactnative.photoview.PhotoViewPackage;
 import com.airbnb.android.react.maps.MapsPackage;
-import com.smixx.fabric.FabricPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -21,7 +20,10 @@ import com.reactnativenavigation.react.NavigationReactNativeHost;
 
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
-import com.smixx.fabric.FabricPackage;
+import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
+import io.invertase.firebase.fabric.crashlytics.RNFirebaseCrashlyticsPackage;
+import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -46,12 +48,15 @@ public class MainApplication extends NavigationApplication implements ShareAppli
   public List<ReactPackage> createAdditionalReactPackages() {
     return Arrays.<ReactPackage>asList(
       new MainReactPackage(),
+      new RNFirebasePackage(),
+      new RNFirebaseAnalyticsPackage(),
+      new RNFirebaseMessagingPackage(),
+      new RNFirebaseCrashlyticsPackage(),
       new RNSharePackage(),
       new ImagePickerPackage(),
       new SvgPackage(),
       new PhotoViewPackage(),
-      new MapsPackage(),
-      new FabricPackage()
+      new MapsPackage()
     );
   }
 

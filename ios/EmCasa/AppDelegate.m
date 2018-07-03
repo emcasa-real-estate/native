@@ -16,6 +16,8 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
+@import Firebase;
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -37,6 +39,8 @@
   [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
 
   [Fabric with:@[[Crashlytics class]]];
+
+  [FIRApp configure];
 
   return YES;
 }

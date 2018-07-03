@@ -7,14 +7,14 @@ export default StyleSheet.create({
     flex: 1,
     display: 'flex'
   },
-  body: {
+  row: {
     flex: 1,
     display: 'flex',
-    justifyContent: 'center'
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
-  footer: {
-    padding: 10,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderColor: colors.gray.$f0f0
+  propTitle: {
+    display: 'flex',
+    flexDirection: 'row'
   }
 })

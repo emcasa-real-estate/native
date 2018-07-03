@@ -10,23 +10,38 @@ function Property({title, icon, value}) {
     <View style={styles.row}>
       <View style={styles.propTitle}>
         <Icon name={icon} />
-        <Text>{title}</Text>
+        <Text style={styles.propTitleText}>{title}</Text>
       </View>
       <View style={styles.propValue}>
-        <Text>{value}</Text>
+        <Text style={styles.propValueText}>{value}</Text>
       </View>
     </View>
   )
 }
 
-export default function ListingDashboard({insertedAt}) {
+export default function ListingDashboard({
+  insertedAt,
+  interestCount,
+  inPersonVisitCount,
+  visualisations,
+  tourVisualisations,
+  matterportCode
+}) {
   return (
     <View style={styles.container}>
       <Property
         title="Data de criação"
-        icon="calendar"
+        icon="calendar-alt"
         value={format.date(new Date(insertedAt))}
       />
+      <Property title="Visualizações" icon="eye" value={visualisations} />
+      {matterportCode && (
+        <Property
+          title="Visualizações do Tour 3D"
+          icon="eye"
+          value={tourVisualisations}
+        />
+      )}
     </View>
   )
 }

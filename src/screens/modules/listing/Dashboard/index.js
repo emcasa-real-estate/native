@@ -35,7 +35,7 @@ export default class ListingDashboardScreen extends PureComponent {
     const {data, loading} = this.props
 
     return (
-      <Shell testID="@listing.Tour">
+      <Shell testID="@listing.Dashboard">
         <Body loading={loading !== false} onLayout={this.onLayout}>
           {data && <Dashboard {...data} />}
         </Body>

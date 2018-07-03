@@ -7,7 +7,10 @@ export const CDN_UPLOAD_PRESET =
   process.env.CDN_UPLOAD_PRESET || 'emcasa-staging'
 
 export const CDN_UPLOAD_URL =
-  process.env.CDN_UPLOAD_URL || 'https://api.cloudinary.com/v1_1/emcasa/upload/'
+  process.env.CDN_UPLOAD_URL || 'https://api.cloudinary.com/v1_1/emcasa/upload'
+
+export const FRONTEND_URL =
+  process.env.FRONTEND_URL || 'https://staging.emcasa.com'
 
 export const API_URL =
   Platform.select({

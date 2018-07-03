@@ -4,6 +4,7 @@ import {Navigation} from 'react-native-navigation'
 import Share from 'react-native-share'
 import {connect} from 'react-redux'
 
+import {FRONTEND_URL} from '@/lib/config'
 import composeWithRef from '@/lib/composeWithRef'
 import * as format from '@/assets/format'
 import {load as loadListing} from '@/redux/modules/listings/data'
@@ -44,7 +45,7 @@ class ListingScreen extends PureComponent {
       }
     } = this.props.data
     return {
-      url: `https://www.emcasa.com/imoveis/${stateSlug}/${citySlug}/${neighborhoodSlug}/${streetSlug}/id-${id}`,
+      url: `${FRONTEND_URL}/imoveis/${stateSlug}/${citySlug}/${neighborhoodSlug}/${streetSlug}/id-${id}`,
       message: `${type} na ${street}, ${neighborhood}, ${city}`
     }
   }

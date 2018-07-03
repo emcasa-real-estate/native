@@ -10,6 +10,12 @@ export default class SearchForm extends Component {
     onChange({...value, [field]: undefined})
   }
 
+  onChangeRange = (min, max) => (value) => {
+    if (value.min <= min) value.min = undefined
+    if (value.max >= max) value.max = undefined
+    return value
+  }
+
   render() {
     const {value, onChange, onSubmit, onPressNeighborhoods} = this.props
     return (
@@ -30,8 +36,9 @@ export default class SearchForm extends Component {
             step={100000}
             min={100000}
             max={10000000}
+            onChange={this.onChangeRange(100000, 10000000)}
             renderLabel={(value) =>
-              format.abbrevPrice(value) + (value === 10000000 ? '+' : '')
+              format.abbrevPrice(value) + (value >= 10000000 ? '+' : '')
             }
           />
         </Field>
@@ -40,7 +47,8 @@ export default class SearchForm extends Component {
             name="area"
             max={999}
             step={10}
-            renderLabel={(value) => `${value === 999 ? '+999' : value}m²`}
+            onChange={this.onChangeRange(0, 999)}
+            renderLabel={(value) => `${value >= 999 ? '+999' : value}m²`}
           />
         </Field>
         <Field title="Quartos" onReset={this.onReset('rooms')}>
@@ -48,6 +56,7 @@ export default class SearchForm extends Component {
             name="rooms"
             min={1}
             max={4}
+            onChange={this.onChangeRange(1, 4)}
             renderLabel={(value) => (value === 4 ? '+4' : value)}
           />
         </Field>
@@ -56,6 +65,7 @@ export default class SearchForm extends Component {
             name="garage_spots"
             min={1}
             max={4}
+            onChange={this.onChangeRange(1, 4)}
             renderLabel={(value) => (value === 4 ? '+4' : value)}
           />
         </Field>

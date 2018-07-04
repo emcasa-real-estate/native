@@ -3,11 +3,7 @@ import {put, all, select, takeEvery} from 'redux-saga/effects'
 
 import * as auth from '@/redux/modules/auth'
 import * as interestForm from '@/redux/modules/interest/form'
-import * as listingsFeed from '@/redux/modules/listings/feed'
-import {
-  getOptions as getSearchOptions,
-  getPagination as getSearchPagination
-} from '@/redux/modules/listings/feed/selectors'
+import * as listingsSearch from '@/screens/modules/listings/Search/module'
 import {getInterestType} from '@/redux/modules/interest/types/selectors'
 import * as actions from './index'
 
@@ -30,13 +26,9 @@ export default function* analyticsEventsSaga() {
         type: getInterestType(state, {id: params.interest_type_id})
       }))
     ),
-    takeEvery(listingsFeed.LOAD_MORE, function*() {
-      const params = yield select(getSearchOptions, {type: 'search'})
-      const isFirstPage =
-        (yield select(getSearchPagination, {type: 'search'})).count === 0
-      const hasSearchParams = !_.isEmpty(params)
-      if (isFirstPage && hasSearchParams)
-        yield put(actions.logEvent('search_listings', {params}))
-    })
+    takeEvery(
+      listingsSearch.UPDATE_FILTERS,
+      createEvent('search_listings', ({filters}) => ({filters}))
+    )
   ])
 }

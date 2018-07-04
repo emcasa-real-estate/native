@@ -23,6 +23,7 @@ function Property({title, icon, value}) {
 export default function ListingDashboard({
   insertedAt,
   inPersonVisitCount,
+  interestCount,
   visualisations,
   tourVisualisations,
   favoriteCount,
@@ -49,6 +50,11 @@ export default function ListingDashboard({
       <Property
         title="Visitas marcadas"
         icon="calendar-alt"
+        value={interestCount}
+      />
+      <Property
+        title="Visitas realizadas"
+        icon="home"
         value={inPersonVisitCount}
       />
     </View>

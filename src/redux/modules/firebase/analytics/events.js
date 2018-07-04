@@ -28,7 +28,7 @@ export default function* analyticsEventsSaga() {
     ),
     takeEvery(
       listingsSearch.UPDATE_FILTERS,
-      createEvent('search_listings', ({filters}) => ({filters}))
+      createEvent('search_listings', (state, {filters}) => ({filters}))
     )
   ])
 }

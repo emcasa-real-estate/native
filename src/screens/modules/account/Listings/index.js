@@ -5,10 +5,11 @@ import composeWithRef from '@/lib/composeWithRef'
 import {withUserListings} from '@/graphql/containers'
 import {Shell, Body, Footer} from '@/components/layout'
 import BottomTabs from '@/screens/modules/navigation/BottomTabs'
-import Card from '@/screens/modules/listings/shared/Card'
-import Feed from '@/components/listings/Feed/Listing'
+import Feed from '@/components/listings/Feed/UserListing'
 
+import EditListingScreen from '@/screens/modules/listingForm/Address'
 import DashboardScreen from '@/screens/modules/listing/Dashboard'
+import ListingScreen from '@/screens/modules/listing/Listing'
 
 class UserListingsScreen extends PureComponent {
   static screenName = 'account.Listings'
@@ -19,11 +20,31 @@ class UserListingsScreen extends PureComponent {
     }
   }
 
-  onSelect = (id) => {
+  onEditListing = (id) => {
+    const {componentId} = this.props
+    Navigation.push(componentId, {
+      component: {
+        name: EditListingScreen.screenName,
+        passProps: {params: {id}}
+      }
+    })
+  }
+
+  onViewListingStats = (id) => {
     const {componentId} = this.props
     Navigation.push(componentId, {
       component: {
         name: DashboardScreen.screenName,
+        passProps: {params: {id}}
+      }
+    })
+  }
+
+  onViewListing = (id) => {
+    const {componentId} = this.props
+    Navigation.push(componentId, {
+      component: {
+        name: ListingScreen.screenName,
         passProps: {params: {id}}
       }
     })
@@ -37,8 +58,9 @@ class UserListingsScreen extends PureComponent {
           <Feed
             data={data}
             loading={loading}
-            onSelect={this.onSelect}
-            Card={Card}
+            onEdit={this.onEditListing}
+            onViewStats={this.onViewListingStats}
+            onViewListing={this.onViewListing}
           />
         </Body>
         <Footer>

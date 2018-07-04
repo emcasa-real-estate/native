@@ -7,6 +7,7 @@ import {connect} from 'react-redux'
 import {FRONTEND_URL} from '@/lib/config'
 import composeWithRef from '@/lib/composeWithRef'
 import * as format from '@/assets/format'
+import {logEvent} from '@/redux/modules/firebase/analytics'
 import {load as loadListing} from '@/redux/modules/listings/data'
 import {getData, isLoading} from '@/redux/modules/listings/data/selectors'
 import {load as loadRelatedListings} from '@/redux/modules/listings/relations'
@@ -119,8 +120,10 @@ class ListingScreen extends PureComponent {
     })
 
   onShare = async () => {
+    const {logEvent, params: {id}} = this.props
     try {
-      await Share.open(this.shareOptions)
+      const {app} = await Share.open(this.shareOptions)
+      logEvent('share_listing', {id, app})
     } catch (error) {
       /* User closed modal */
     }
@@ -194,6 +197,6 @@ export default composeWithRef(
       loading: isLoading(state, params),
       relatedListings: getRelatedListings(state, params)
     }),
-    {loadListing, loadRelatedListings}
+    {loadListing, loadRelatedListings, logEvent}
   )
 )(ListingScreen)

@@ -13,7 +13,7 @@ const thumbnailOverlay = {
   position: 'absolute',
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: '#ffffff98'
+  backgroundColor: '#ffffff90'
 }
 
 export default StyleSheet.create({

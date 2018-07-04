@@ -3,6 +3,7 @@ import {View, TouchableOpacity, Dimensions} from 'react-native'
 import Text from '@/components/shared/Text'
 import Icon from '@/components/shared/Icon'
 import Image from '@/components/listings/Image'
+import touchable from '../touchable'
 import styles, {iconColor, linkColor} from './styles'
 
 function Button({title, icon, onPress}) {
@@ -21,12 +22,12 @@ function Button({title, icon, onPress}) {
   )
 }
 
-export default function UserListingCard({
+function UserListingCard({
   style,
+  active,
   address,
   images,
   width,
-  price,
   testUniqueID,
   onEdit,
   onViewStats,
@@ -44,21 +45,25 @@ export default function UserListingCard({
     <View style={[styles.container, style]} {...props}>
       <View testID={`listing_card(${testUniqueID})`}>
         <View style={styles.thumbnail}>
-          <View style={styles.topBar}>
-            <TouchableOpacity style={styles.link} onPress={onViewListing}>
-              <Text style={styles.linkText}>Visualizar</Text>
-              <Icon name="share" size={16} color={linkColor} />
-            </TouchableOpacity>
-          </View>
+          {active && (
+            <View style={styles.topBar}>
+              <TouchableOpacity style={styles.link} onPress={onViewListing}>
+                <Text style={styles.linkText}>Visualizar</Text>
+                <Icon name="share" size={16} color={linkColor} />
+              </TouchableOpacity>
+            </View>
+          )}
           <Image thumbnail style={styles.image} {...image} {...imageSize} />
-          <View style={styles.bottomBar}>
-            <Button
-              title="Estatísticas"
-              icon="chart-line"
-              onPress={onViewStats}
-            />
-            <Button title="Editar" icon="cogs" onPress={onEdit} />
-          </View>
+          {active && (
+            <View style={styles.bottomBar}>
+              <Button
+                title="Estatísticas"
+                icon="chart-line"
+                onPress={onViewStats}
+              />
+              <Button title="Editar" icon="cogs" onPress={onEdit} />
+            </View>
+          )}
         </View>
         <View style={styles.body}>
           <View style={styles.row}>
@@ -81,3 +86,5 @@ UserListingCard.defaultProps = {
     return Dimensions.get('window').width
   }
 }
+
+export default touchable(UserListingCard)

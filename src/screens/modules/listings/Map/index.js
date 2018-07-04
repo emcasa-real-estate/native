@@ -4,12 +4,7 @@ import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
-import {loadMore} from '@/redux/modules/listings/feed'
-import {
-  getListings,
-  getOptions,
-  getPagination
-} from '@/redux/modules/listings/feed/selectors'
+import {withListingsFeed} from '@/graphql/containers'
 import {
   watchPosition,
   unwatchPosition,
@@ -52,21 +47,12 @@ class MapScreen extends Component {
 
   state = {active: false}
 
-  loadAllMarkers() {
-    const {loadMore, pagination} = this.props
-    if (!pagination.remainingCount) return
-    loadMore(pagination.remainingCount)
-  }
-
-  componentDidMount() {
-    this.loadAllMarkers()
-  }
-
   componentWillUnmount() {
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {rightButtons: []}
     })
   }
+
   componentDidAppear() {
     this.setState({active: true})
   }
@@ -86,7 +72,7 @@ class MapScreen extends Component {
 
   render() {
     const {
-      data,
+      listingsFeed: {data, remainingCount},
       activeListing,
       watchingPosition,
       isWithinBounds,
@@ -113,7 +99,14 @@ class MapScreen extends Component {
           <ListButton style={styles.button} onPress={this.onReturn} />
         </View>
         <View style={styles.listings}>
-          <Feed as={MapFeed} target={componentId} active={activeListing} />
+          <Feed
+            as={MapFeed}
+            target={componentId}
+            active={activeListing}
+            data={data}
+            remainingCount={remainingCount}
+            onLoadMore={() => null}
+          />
         </View>
       </View>
     )
@@ -123,19 +116,12 @@ class MapScreen extends Component {
 export default composeWithRef(
   connect(
     (state) => ({
-      data: getListings(state, {type: 'search'}),
-      pagination: getPagination(state, {type: 'search'}),
-      options: getOptions(state, {type: 'search'})
-    }),
-    {loadMore: loadMore('search')}
-  ),
-  connect(
-    (state) => ({
       activeListing: getActiveListing(state),
       userPosition: getUserPosition(state),
       watchingPosition: isWatchingPosition(state),
       isWithinBounds: isWithinBounds(state)
     }),
     {watchPosition, unwatchPosition, requestPosition, setActiveListing}
-  )
+  ),
+  withListingsFeed({pageSize: 1000, fetchPolicy: 'cache-then-network'})
 )(MapScreen)

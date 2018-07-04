@@ -56,7 +56,10 @@ export default class HeaderTextButton extends PureComponent {
     return (
       <View>
         <View
-          style={[styles.container, this.state.layout]}
+          style={[
+            styles.container,
+            Platform.OS === 'android' && this.state.layout
+          ]}
           onLayout={this.onLayout}
         >
           {loading && (

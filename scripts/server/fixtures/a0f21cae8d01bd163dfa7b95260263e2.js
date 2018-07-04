@@ -8,7 +8,7 @@ var path = require("path");
  * content-type: application/json
  * user-agent: EmCasa/1 CFNetwork/893.14 Darwin/16.7.0
  * connection: keep-alive
- * cookie: _re_key=SFMyNTY.g3QAAAABbQAAABJfdGltYmVyX3Nlc3Npb25faWRtAAAAIGVmMzAwNzU1N2NjMWI5MDEwYWVmZmRiM2I4ZWVjMmRm.cuDk6MItcPZ0PqWWAlmnyWH7gR5QelXYkILVyixbjGQ
+ * cookie: _re_key=SFMyNTY.g3QAAAABbQAAABJfdGltYmVyX3Nlc3Npb25faWRtAAAAIGFjNzE4ZTRjYzFhZGExODI5MWIzYjA1NjU3N2IwMWY3.5Ao8hz5vG8DELGkyGx5FenaDqVGXhxa20nHd8W1PT2o
  * accept-language: en-us
  * authorization: undefined
  * content-length: 165
@@ -19,11 +19,11 @@ module.exports = function (req, res) {
   res.statusCode = 200;
 
   res.setHeader("server", "Cowboy");
-  res.setHeader("date", "Fri, 08 Jun 2018 19:06:09 GMT");
+  res.setHeader("date", "Wed, 04 Jul 2018 19:42:52 GMT");
   res.setHeader("content-length", "62");
-  res.setHeader("set-cookie", ["_re_key=SFMyNTY.g3QAAAABbQAAABJfdGltYmVyX3Nlc3Npb25faWRtAAAAIGVmMzAwNzU1N2NjMWI5MDEwYWVmZmRiM2I4ZWVjMmRm.cuDk6MItcPZ0PqWWAlmnyWH7gR5QelXYkILVyixbjGQ; path=/; HttpOnly"]);
+  res.setHeader("set-cookie", ["_re_key=SFMyNTY.g3QAAAABbQAAABJfdGltYmVyX3Nlc3Npb25faWRtAAAAIGFjNzE4ZTRjYzFhZGExODI5MWIzYjA1NjU3N2IwMWY3.5Ao8hz5vG8DELGkyGx5FenaDqVGXhxa20nHd8W1PT2o; path=/; HttpOnly"]);
   res.setHeader("cache-control", "max-age=0, private, must-revalidate");
-  res.setHeader("x-request-id", "m9f8ad5j7a1eh9cibs2uslbg2dc1jvr9");
+  res.setHeader("x-request-id", "vpbqfds0ht954dget58v2i1ggjih5250");
   res.setHeader("access-control-allow-origin", "*");
   res.setHeader("access-control-expose-headers", "");
   res.setHeader("access-control-allow-credentials", "true");
@@ -31,7 +31,7 @@ module.exports = function (req, res) {
 
   res.setHeader("x-yakbak-tape", path.basename(__filename, ".js"));
 
-  res.write(new Buffer("eyJkYXRhIjp7InRvdXJWaXN1YWxpemVkIjp7ImlkIjoiODYiLCJfX3R5cGVuYW1lIjoiTGlzdGluZyJ9fX0=", "base64"));
+  res.write(new Buffer("eyJkYXRhIjp7InRvdXJWaXN1YWxpemVkIjp7ImlkIjoiNDMiLCJfX3R5cGVuYW1lIjoiTGlzdGluZyJ9fX0=", "base64"));
   res.end();
 
   return __filename;

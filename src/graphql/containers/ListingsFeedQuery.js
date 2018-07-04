@@ -22,7 +22,7 @@ function ListingsFeedQuery({filters, pageSize, children, fetchPolicy}) {
               variables: {
                 filters,
                 pageSize,
-                exclude: getIDs(data.listings.listings)
+                exclude: data.listings ? getIDs(data.listings.listings) : []
               },
               updateQuery: (prev, {fetchMoreResult}) => ({
                 listings: {

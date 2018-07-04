@@ -66,7 +66,6 @@ export default class ListingsFeedScreen extends PureComponent {
 
   render() {
     const {loading, data, componentId} = this.props
-    console.log(this.props)
     return (
       <Shell testID="@listings.Feed">
         <Header>

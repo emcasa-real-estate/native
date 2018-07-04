@@ -43,7 +43,6 @@ export default class CameraRollPicker extends PureComponent {
       first: 15,
       after: this.state.endCursor
     })
-    console.log(edges)
     this.setState(({images}) => ({
       images: images.concat(edges.map(getImage)),
       hasNextPage: page_info.has_next_page,

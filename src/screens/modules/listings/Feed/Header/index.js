@@ -3,7 +3,7 @@ import {PureComponent} from 'react'
 import {View, Image, TouchableOpacity} from 'react-native'
 import {connect} from 'react-redux'
 
-import {getOptions} from '@/redux/modules/listings/feed/selectors'
+import {getSearchFilters} from '@/screens/modules/listings/Search/module/selectors'
 import {abbrevPrice} from '@/assets/format'
 import Text from '@/components/shared/Text'
 import styles from './styles'
@@ -53,7 +53,7 @@ const Icon = () => (
 )
 
 @connect((state) => ({
-  options: getOptions(state, {type: 'search'})
+  options: getSearchFilters(state)
 }))
 export default class ListingsFeedHeader extends PureComponent {
   render() {

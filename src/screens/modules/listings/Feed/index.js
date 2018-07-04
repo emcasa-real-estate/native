@@ -1,10 +1,8 @@
-import _ from 'lodash'
 import {PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
-import {connect} from 'react-redux'
 
-import {loadMore} from '@/redux/modules/listings/feed'
-import {getListings, isLoading} from '@/redux/modules/listings/feed/selectors'
+import composeWithRef from '@/lib/composeWithRef'
+import {withListingsFeed} from '@/graphql/containers'
 import {Shell, Body, Header, Footer} from '@/components/layout'
 import MapButton from '@/components/listings/Map/Button'
 import ListingFeed from '@/components/listings/Feed/Listing'
@@ -19,16 +17,7 @@ import styles from './styles'
 import MapScreen from '@/screens/modules/listings/Map'
 import SearchScreen from '@/screens/modules/listings/Search'
 
-@connect(
-  (state) => ({
-    data: getListings(state, {type: 'search'}),
-    loading: isLoading(state, {type: 'search'})
-  }),
-  {loadMore: loadMore('search')},
-  null,
-  {withRef: true}
-)
-export default class ListingsFeedScreen extends PureComponent {
+class ListingsFeedScreen extends PureComponent {
   static screenName = 'listings.Feed'
 
   static options = {
@@ -41,9 +30,9 @@ export default class ListingsFeedScreen extends PureComponent {
     }
   }
 
-  componentDidAppear() {
-    const {data, loading, loadMore} = this.props
-    if (_.isEmpty(data) && !loading) loadMore(15)
+  onLoadMore = () => {
+    const {listingsFeed: {loading, fetchMore}} = this.props
+    if (!loading) fetchMore()
   }
 
   onOpenMap = () => {
@@ -65,17 +54,23 @@ export default class ListingsFeedScreen extends PureComponent {
   }
 
   render() {
-    const {loading, data, componentId} = this.props
+    const {
+      listingsFeed: {loading, data, remainingCount},
+      componentId
+    } = this.props
     return (
       <Shell testID="@listings.Feed">
         <Header>
           <SearchHeader onPress={this.onOpenSearch} />
         </Header>
-        <Body loading={loading !== false} style={styles.container}>
+        <Body loading={loading} style={styles.container}>
           <Feed
             as={ListingFeed}
             target={componentId}
             Card={Card}
+            data={data}
+            remainingCount={remainingCount}
+            onLoadMore={this.onLoadMore}
             ListHeaderComponent={ListHeader}
             ListEmptyComponent={
               loading === false && !data.length ? ListEmpty : undefined
@@ -90,3 +85,7 @@ export default class ListingsFeedScreen extends PureComponent {
     )
   }
 }
+
+export default composeWithRef(
+  withListingsFeed({pageSize: 15, fetchPolicy: 'network-only'})
+)(ListingsFeedScreen)

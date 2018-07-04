@@ -4,6 +4,7 @@ import Text from '@/components/shared/Text'
 import Icon from '@/components/shared/Icon'
 import Image from '@/components/listings/Image'
 import touchable from '../touchable'
+import SlideView from './SlideView'
 import styles, {iconColor, linkColor} from './styles'
 
 function Button({title, icon, onPress}) {
@@ -45,25 +46,21 @@ function UserListingCard({
     <View style={[styles.container, style]} {...props}>
       <View testID={`listing_card(${testUniqueID})`}>
         <View style={styles.thumbnail}>
-          {active && (
-            <View style={styles.topBar}>
-              <TouchableOpacity style={styles.link} onPress={onViewListing}>
-                <Text style={styles.linkText}>Visualizar</Text>
-                <Icon name="share" size={16} color={linkColor} />
-              </TouchableOpacity>
-            </View>
-          )}
+          <SlideView style={styles.topBar} from="top" in={active}>
+            <TouchableOpacity style={styles.link} onPress={onViewListing}>
+              <Text style={styles.linkText}>Visualizar</Text>
+              <Icon name="share" size={16} color={linkColor} />
+            </TouchableOpacity>
+          </SlideView>
           <Image thumbnail style={styles.image} {...image} {...imageSize} />
-          {active && (
-            <View style={styles.bottomBar}>
-              <Button
-                title="Estatísticas"
-                icon="chart-line"
-                onPress={onViewStats}
-              />
-              <Button title="Editar" icon="cogs" onPress={onEdit} />
-            </View>
-          )}
+          <SlideView style={styles.bottomBar} from="bottom" in={active}>
+            <Button
+              title="Estatísticas"
+              icon="chart-line"
+              onPress={onViewStats}
+            />
+            <Button title="Editar" icon="cogs" onPress={onEdit} />
+          </SlideView>
         </View>
         <View style={styles.body}>
           <View style={styles.row}>

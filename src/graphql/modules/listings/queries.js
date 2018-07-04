@@ -1,5 +1,16 @@
 import gql from 'graphql-tag'
 
+import * as frag from '@/graphql/fragments'
+
+export const GET_LISTING = gql`
+  query listing($id: ID!) {
+    listing(id: $id) {
+      id
+    }
+  }
+  ${frag.Listing}
+`
+
 export const GET_LISTINGS_FEED = gql`
   query listingsFeed(
     $exclude: [ID!]
@@ -12,23 +23,9 @@ export const GET_LISTINGS_FEED = gql`
     ) {
       remainingCount
       listings {
-        id
-        price
-        isActive
-        description
-        images {
-          filename
-        }
-        address {
-          city
-          lat
-          lng
-          neighborhood
-          postalCode
-          state
-          street
-        }
+        ...Listing
       }
     }
   }
+  ${frag.Listing}
 `

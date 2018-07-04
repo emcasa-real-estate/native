@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import {put, all, select, takeEvery} from 'redux-saga/effects'
 
 import * as auth from '@/redux/modules/auth'

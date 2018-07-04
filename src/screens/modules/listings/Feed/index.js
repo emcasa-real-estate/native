@@ -1,8 +1,10 @@
 import {PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
+import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
 import {withListingsFeed} from '@/graphql/containers'
+import {getSearchFiltersQuery} from '@/screens/modules/listings/Search/module/selectors'
 import {Shell, Body, Header, Footer} from '@/components/layout'
 import MapButton from '@/components/listings/Map/Button'
 import ListingFeed from '@/components/listings/Feed/Listing'
@@ -87,5 +89,6 @@ class ListingsFeedScreen extends PureComponent {
 }
 
 export default composeWithRef(
+  connect((state) => ({filters: getSearchFiltersQuery(state)})),
   withListingsFeed({pageSize: 15, fetchPolicy: 'network-only'})
 )(ListingsFeedScreen)

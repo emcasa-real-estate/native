@@ -1,6 +1,6 @@
 import _ from 'lodash'
-import React, {Component} from 'react'
-import {View, TouchableOpacity, Dimensions} from 'react-native'
+import {Component} from 'react'
+import {View, TouchableOpacity} from 'react-native'
 
 import Text from '@/components/shared/Text'
 import {field} from '@/components/shared/Form/Field'

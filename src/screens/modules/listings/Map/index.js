@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
 import {withListingsFeed} from '@/graphql/containers'
+import {getSearchFiltersQuery} from '@/screens/modules/listings/Search/module/selectors'
 import {
   watchPosition,
   unwatchPosition,
@@ -123,5 +124,6 @@ export default composeWithRef(
     }),
     {watchPosition, unwatchPosition, requestPosition, setActiveListing}
   ),
+  connect((state) => ({filters: getSearchFiltersQuery(state)})),
   withListingsFeed({pageSize: 1000, fetchPolicy: 'cache-then-network'})
 )(MapScreen)

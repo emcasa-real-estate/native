@@ -8,6 +8,7 @@ const getIDs = _.map(_.get('id'))
 function ListingsFeedQuery({filters, pageSize, children, fetchPolicy}) {
   return (
     <Query
+      key={JSON.stringify(filters)}
       query={GET_LISTINGS_FEED}
       fetchPolicy={fetchPolicy}
       variables={{filters, pageSize}}
@@ -45,7 +46,7 @@ ListingsFeedQuery.defaultProps = {
 }
 
 export const withListingsFeed = (options = {}) => (Target) => (props) => (
-  <ListingsFeedQuery {...options}>
+  <ListingsFeedQuery {...props} {...options}>
     {({data: {listings}, ...response}) => (
       <Target
         {...props}

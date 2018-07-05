@@ -6,16 +6,12 @@ import * as actions from './index'
 
 const messaging = Firebase.messaging()
 
-const getToken = () => messaging.getToken()
-
-const hasPermission = () => messaging.hasPermission()
-
 const tokenRefreshChannel = () =>
   eventChannel((emit) => messaging.onTokenRefresh((token) => emit({token})))
 
 function* requestPermission() {
   try {
-    yield call(messaging.requestPermission)
+    yield call(() => messaging.requestPermission())
     yield put(actions.updatePermission(true))
   } catch (err) {
     yield put(actions.updatePermission(false))
@@ -23,14 +19,14 @@ function* requestPermission() {
 }
 
 function* initializeToken() {
-  let token = yield call(getToken)
+  let token = yield call(() => messaging.getToken())
   const channel = tokenRefreshChannel()
   if (token) yield put(actions.updateToken(token))
   while ((token = yield take(channel))) yield put(actions.updateToken(token))
 }
 
 function* initializePermission() {
-  const enabled = yield call(hasPermission)
+  const enabled = yield call(() => messaging.hasPermission())
   yield put(actions.updatePermission(enabled))
 }
 

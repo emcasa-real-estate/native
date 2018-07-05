@@ -15,7 +15,7 @@ export default function relatedListings(state = {}, action) {
     case SUCCESS:
       return {
         ...state,
-        [action.id]: _.map(action.data, 'id')
+        [action.id]: action.data
       }
     default:
       return state

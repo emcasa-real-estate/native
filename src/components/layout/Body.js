@@ -85,12 +85,16 @@ export default class Body extends PureComponent {
   }
 
   render() {
-    const {style, scroll, loading} = this.props
+    const {style, scroll, loading, testID} = this.props
     const {children} = this.state
     const ViewComponent = scroll ? ScrollView : View
 
     return (
-      <ViewComponent style={[styles.container, style]} onLayout={this.onLayout}>
+      <ViewComponent
+        testID={testID}
+        style={[styles.container, style]}
+        onLayout={this.onLayout}
+      >
         {loading && this.renderOverlay()}
         <View style={styles.body}>{children}</View>
       </ViewComponent>

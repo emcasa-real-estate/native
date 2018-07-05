@@ -22,22 +22,23 @@ export async function insertAddress(text) {
   await element(select.autoCompleteInput()).replaceText(text)
 }
 
-export async function submitProperties({type, floor, area, phone}) {
+export async function submitProperties({type, area, phone}) {
   if (type) {
     await element(shared.dropDown('Tipo de imóvel')).tap()
     await element(by.text(type)).tap()
   }
   for (const [value, label] of [
-    [floor, 'Andar'],
     [area, 'Área (m²)'],
     [phone, 'Telefone (obrigatório)']
   ]) {
-    await element(shared.input(label)).tap()
-    if (value) await element(shared.input(label)).typeText(value)
-    await element(by.label('done').and(by.type('UIButtonLabel'))).tap()
-    await waitFor(element(by.type('UIRemoteKeyboardWindow')))
-      .toBeNotVisible()
-      .withTimeout(1000)
+    if (value) {
+      await element(shared.input(label)).tap()
+      await element(shared.input(label)).replaceText(value)
+      await blurInputs(select.propertiesScreen())
+      await waitFor(element(by.type('UIRemoteKeyboardWindow')))
+        .toBeNotVisible()
+        .withTimeout(500)
+    }
   }
   await element(by.text('Enviar').withAncestor(select.propertiesScreen()))
     .atIndex(0)

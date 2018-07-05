@@ -1,6 +1,6 @@
 import {call, put, all, select, takeLatest} from 'redux-saga/effects'
 
-import {getToken} from '../../auth/selectors'
+import {getToken} from '../auth/selectors'
 import * as api from '@/lib/services/listings'
 import * as actions from './index'
 

@@ -29,7 +29,7 @@ export default class ListingGalleryScreen extends PureComponent {
       <Modal testID="@listing.Gallery">
         <Body>
           <Modal.Header iconColor="white" onDismiss={onDismiss} />
-          <Gallery>{data.images}</Gallery>
+          <Gallery scalable>{data.images}</Gallery>
         </Body>
       </Modal>
     )

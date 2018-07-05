@@ -5,7 +5,6 @@ import {elevation} from '@/assets/styles'
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'stretch',

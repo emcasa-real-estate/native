@@ -10,11 +10,8 @@ export default StyleSheet({
     borderColor: colors.gray.light,
     height: 50,
     margin: 0,
-    ':value': {
-      borderColor: colors.blue.pastel
-    },
     ':active': {
-      borderColor: colors.blue.pastel,
+      borderColor: colors.blue.medium,
       borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0
     }
@@ -28,7 +25,7 @@ export default StyleSheet({
     marginLeft: -1,
     overflow: 'hidden',
     ':active': {
-      borderColor: colors.blue.pastel
+      borderColor: colors.blue.medium
     }
   },
   option: {

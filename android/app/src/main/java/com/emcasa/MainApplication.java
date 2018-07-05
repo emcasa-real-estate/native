@@ -5,6 +5,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
 import com.facebook.react.ReactApplication;
+import cl.json.RNSharePackage;
+import cl.json.ShareApplication;
 import com.imagepicker.ImagePickerPackage;
 import com.horcrux.svg.SvgPackage;
 import com.reactnative.photoview.PhotoViewPackage;
@@ -26,7 +28,7 @@ import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainApplication extends NavigationApplication {
+public class MainApplication extends NavigationApplication implements ShareApplication {
   @Override
   protected ReactNativeHost createReactNativeHost() {
     return new NavigationReactNativeHost(this) {
@@ -50,11 +52,17 @@ public class MainApplication extends NavigationApplication {
       new RNFirebaseAnalyticsPackage(),
       new RNFirebaseMessagingPackage(),
       new RNFirebaseCrashlyticsPackage(),
+      new RNSharePackage(),
       new ImagePickerPackage(),
       new SvgPackage(),
       new PhotoViewPackage(),
       new MapsPackage()
     );
+  }
+
+  @Override
+  public String getFileProviderAuthority() {
+    return "com.emcasa.provider";
   }
 
   @Override

@@ -71,6 +71,11 @@
     <string>$(PRODUCT_NAME) permisa de permissão para adicionar fotos a sua galeria</string>
     <key>NSMicrophoneUsageDescription</key>
     <string>$(PRODUCT_NAME) precisa usar o seu microfone para gravar vídeos</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>whatsapp</string>
+      <string>mailto</string>
+    </array>
     <key>UIAppFonts</key>
     <array>
       <string>OpenSans-Bold.ttf</string>

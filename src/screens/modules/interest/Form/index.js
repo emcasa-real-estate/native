@@ -26,7 +26,7 @@ class InterestFormScreen extends PureComponent {
     }
   }
 
-  state = {value: {}, interestType: undefined}
+  state = {value: undefined, interestType: undefined}
 
   openCalendly = () => {
     const {componentId} = this.props
@@ -57,6 +57,16 @@ class InterestFormScreen extends PureComponent {
     })
   }
 
+  get defaultValue() {
+    const {user} = this.props
+    if (user)
+      return {
+        name: user.name,
+        email: user.email,
+        phone: user.phone
+      }
+  }
+
   componentDidUpdate(prev) {
     const {loading, error} = this.props
     const {interestType} = this.state
@@ -82,7 +92,7 @@ class InterestFormScreen extends PureComponent {
   }
 
   render() {
-    const {user, types, loading, error} = this.props
+    const {types, loading, error} = this.props
     const {value} = this.state
 
     return (
@@ -90,9 +100,9 @@ class InterestFormScreen extends PureComponent {
         <Body scroll>
           <Form
             types={types}
-            user={user}
             error={error}
             value={value}
+            defaultValue={this.defaultValue}
             onChange={this.onChange}
             onSubmit={this.onSubmit}
           />

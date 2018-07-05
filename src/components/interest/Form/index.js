@@ -14,22 +14,12 @@ export default class InterestForm extends Component {
 
   onChangeType = (id) => this.setState({activeType: id})
 
-  get defaultValue() {
-    const {user} = this.props
-    if (!user) return {}
-    return {
-      name: user.name,
-      phone: user.phone,
-      email: user.email
-    }
-  }
-
   render() {
     const {types, ...props} = this.props
     const {activeType} = this.state
 
     return (
-      <Form defaultValue={this.defaultValue} {...props}>
+      <Form {...props}>
         <View style={styles.container}>
           <Text style={styles.text}>
             Escolha a melhor forma para agendar sua visita

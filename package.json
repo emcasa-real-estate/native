@@ -1,6 +1,6 @@
 {
   "name": "EmCasa",
-  "version": "1.1.6",
+  "version": "1.2.0",
   "private": true,
   "rnpm": {
     "assets": [
@@ -81,6 +81,7 @@
     "react-native-offline": "^3.11.0",
     "react-native-permissions": "^1.1.1",
     "react-native-photo-view": "^1.5.2",
+    "react-native-share": "^1.0.27",
     "react-native-snap-carousel": "^3.7.2",
     "react-native-sortable-list": "^0.0.22",
     "react-native-svg": "^6.3.1",

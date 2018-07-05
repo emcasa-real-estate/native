@@ -1,5 +1,5 @@
 import {PureComponent} from 'react'
-import {View, Platform} from 'react-native'
+import {View, Platform, Dimensions, StatusBar} from 'react-native'
 
 import {withPermission} from '@/containers/Permission'
 import Camera from './Camera'
@@ -14,6 +14,13 @@ import styles from './styles'
   })
 )
 export default class ImagePickerOptions extends PureComponent {
+  state = {
+    layout: {
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height + (StatusBar.currentHeight || 0)
+    }
+  }
+
   onPickImage = (images) =>
     requestAnimationFrame(() => {
       this.props.onDismiss()
@@ -27,7 +34,7 @@ export default class ImagePickerOptions extends PureComponent {
   render() {
     const {onDismiss, permission} = this.props
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, this.state.layout]}>
         <View style={styles.body}>
           <Camera onPickImage={this.onPickImage} />
           {permission == 'authorized' && (

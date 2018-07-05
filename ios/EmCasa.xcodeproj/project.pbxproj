@@ -41,7 +41,10 @@
 		771841EFF177410ABD7A8777 /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27AF0EE749DB426EB358DFCF /* libRNFirebase.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
-		B19C244ACB3D472EB10421F2 /* libSMXCrashlytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 225DE1D715094D96B64BE883 /* libSMXCrashlytics.a */; };
+		C314BCDE20EBFDEB00235F22 /* libRNShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C314BCDD20EBFDE100235F22 /* libRNShare.a */; };
+		C314BCDF20EBFDF500235F22 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3E6B01A20E759AC0069302D /* libRCTCameraRoll.a */; };
+		C33831E920EB0D5E0061F81C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C33831B720EB0D5D0061F81C /* Social.framework */; };
+		C33831EB20EB0D6B0061F81C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C33831EA20EB0D6B0061F81C /* MessageUI.framework */; };
 		C347F62B20E5835400C76519 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C347F5FB20E5835400C76519 /* GoogleService-Info.plist */; };
 		C350457520B37A4000C05F9A /* libReactNativeKeyboardManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C350456F20B379FC00C05F9A /* libReactNativeKeyboardManager.a */; };
 		C350457720B37A8600C05F9A /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C350457620B37A8600C05F9A /* IQKeyboardManager.bundle */; };
@@ -52,7 +55,6 @@
 		C3D3B5C0205C4AB20004FBF1 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D3B598205C4AAA0004FBF1 /* libAirMaps.a */; };
 		C3D6CCF5209774AA00E1D8D1 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D6CCF02097749200E1D8D1 /* libRNSVG.a */; };
 		C3E6462A2093CD2000CABB50 /* libRNPhotoView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C33522C22063422100AF766A /* libRNPhotoView.a */; };
-		C3E6B04320E759B50069302D /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3E6B01A20E759AC0069302D /* libRCTCameraRoll.a */; };
 		DD38508A522671808AAB45C4 /* Pods_EmCasa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9B0A2BDB982F6C676D60BC /* Pods_EmCasa.framework */; };
 		E58E3BD668E147E88B11A36E /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1628E5320CD54949AD213729 /* OpenSans-Bold.ttf */; };
 		E85C9CB2634347619F34FCDA /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E58918718EB94278B0A51F78 /* OpenSans-Regular.ttf */; };
@@ -276,6 +278,13 @@
 			remoteGlobalIDString = 358F4ED71D1E81A9004DF814;
 			remoteInfo = RCTBlob;
 		};
+		C314BCDC20EBFDE100235F22 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C314BCD820EBFDE000235F22 /* RNShare.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNShare;
+		};
 		C325D5CC2092A65E00380225 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -442,7 +451,6 @@
 		1628E5320CD54949AD213729 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-Bold.ttf"; path = "../src/assets/fonts/OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		1A78C75678D844D4A6D6FF76 /* OpenSans-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-Light.ttf"; path = "../src/assets/fonts/OpenSans-Light.ttf"; sourceTree = "<group>"; };
 		1DC0995126FE247C998EF169 /* Pods-EmCasa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmCasa.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmCasa/Pods-EmCasa.release.xcconfig"; sourceTree = "<group>"; };
-		225DE1D715094D96B64BE883 /* libSMXCrashlytics.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSMXCrashlytics.a; sourceTree = "<group>"; };
 		27AF0EE749DB426EB358DFCF /* libRNFirebase.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFirebase.a; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* EmCasa-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EmCasa-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* EmCasa-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "EmCasa-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -459,6 +467,9 @@
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		AE377F8F509E44F996FA4476 /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
 		C300924A20E150130004339A /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
+		C314BCD820EBFDE000235F22 /* RNShare.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNShare.xcodeproj; path = "../node_modules/react-native-share/ios/RNShare.xcodeproj"; sourceTree = "<group>"; };
+		C33831B720EB0D5D0061F81C /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		C33831EA20EB0D6B0061F81C /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		C347F5FB20E5835400C76519 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "EmCasa/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C350454420B379FC00C05F9A /* ReactNativeKeyboardManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeKeyboardManager.xcodeproj; path = "../node_modules/react-native-keyboard-manager/ios/ReactNativeKeyboardManager.xcodeproj"; sourceTree = "<group>"; };
 		C350457620B37A8600C05F9A /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = IQKeyboardManager.bundle; path = "../node_modules/react-native-keyboard-manager/ios/IQKeyboardManager/Resources/IQKeyboardManager.bundle"; sourceTree = "<group>"; };
@@ -487,7 +498,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3E6B04320E759B50069302D /* libRCTCameraRoll.a in Frameworks */,
+				C314BCDF20EBFDF500235F22 /* libRCTCameraRoll.a in Frameworks */,
+				C314BCDE20EBFDEB00235F22 /* libRNShare.a in Frameworks */,
 				C3BF0AA620D021A800A80405 /* libReactNativeNavigation.a in Frameworks */,
 				C3ABC49A20C747D10009230C /* libRNImagePicker.a in Frameworks */,
 				C3AA0DBE20B86FE9008A4D1A /* libReactNativePermissions.a in Frameworks */,
@@ -507,8 +519,9 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				C3E6462A2093CD2000CABB50 /* libRNPhotoView.a in Frameworks */,
+				C33831E920EB0D5E0061F81C /* Social.framework in Frameworks */,
+				C33831EB20EB0D6B0061F81C /* MessageUI.framework in Frameworks */,
 				DD38508A522671808AAB45C4 /* Pods_EmCasa.framework in Frameworks */,
-				B19C244ACB3D472EB10421F2 /* libSMXCrashlytics.a in Frameworks */,
 				53FA17B8F54C4A6B907D089C /* libRNPhotoView.a in Frameworks */,
 				771841EFF177410ABD7A8777 /* libRNFirebase.a in Frameworks */,
 			);
@@ -658,6 +671,8 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C33831EA20EB0D6B0061F81C /* MessageUI.framework */,
+				C33831B720EB0D5D0061F81C /* Social.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
 				DA9B0A2BDB982F6C676D60BC /* Pods_EmCasa.framework */,
 				42227073AA224B0DAA8A1A43 /* Pods_EmCasaTests.framework */,
@@ -699,6 +714,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				C314BCD820EBFDE000235F22 /* RNShare.xcodeproj */,
 				C300924A20E150130004339A /* RCTCameraRoll.xcodeproj */,
 				C3BF0A6F20D0219E00A80405 /* ReactNativeNavigation.xcodeproj */,
 				C3ABC46720C747AB0009230C /* RNImagePicker.xcodeproj */,
@@ -794,11 +810,18 @@
 		C3113654204DC8A2003BDB80 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				225DE1D715094D96B64BE883 /* libSMXCrashlytics.a */,
 				0325E4F318A6456E85013DC4 /* libRNPhotoView.a */,
 				27AF0EE749DB426EB358DFCF /* libRNFirebase.a */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		C314BCD920EBFDE000235F22 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C314BCDD20EBFDE100235F22 /* libRNShare.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		C33522982063422100AF766A /* Products */ = {
@@ -899,7 +922,6 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				E45F80C427AFF34207272398 /* [CP] Embed Pods Frameworks */,
-				46D99C53E9DE81B4ED70108A /* [CP] Copy Pods Resources */,
 				C3113622204DC391003BDB80 /* Fabric */,
 			);
 			buildRules = (
@@ -1067,6 +1089,10 @@
 				{
 					ProductGroup = C33522982063422100AF766A /* Products */;
 					ProjectRef = 75507F174CF7438483601C83 /* RNPhotoView.xcodeproj */;
+				},
+				{
+					ProductGroup = C314BCD920EBFDE000235F22 /* Products */;
+					ProjectRef = C314BCD820EBFDE000235F22 /* RNShare.xcodeproj */;
 				},
 				{
 					ProductGroup = C3D6CCC32097749200E1D8D1 /* Products */;
@@ -1287,6 +1313,13 @@
 			remoteRef = ADBDB9261DFEBF0700ED6528 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		C314BCDD20EBFDE100235F22 /* libRNShare.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNShare.a;
+			remoteRef = C314BCDC20EBFDE100235F22 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		C33522C22063422100AF766A /* libRNPhotoView.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1490,24 +1523,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
-		};
-		46D99C53E9DE81B4ED70108A /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-EmCasa/Pods-EmCasa-resources.sh",
-				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EmCasa/Pods-EmCasa-resources.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		7BE46A8B9B9ECA0DCB6E127B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

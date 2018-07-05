@@ -5,10 +5,10 @@ import * as frag from '@/graphql/fragments'
 export const GET_LISTING = gql`
   query listing($id: ID!) {
     listing(id: $id) {
-      ...Listing
+      ...FullListing
     }
   }
-  ${frag.Listing}
+  ${frag.FullListing}
 `
 
 export const GET_LISTINGS_FEED = gql`

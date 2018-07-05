@@ -5,7 +5,11 @@ import {connect} from 'react-redux'
 import composeWithRef from '@/lib/composeWithRef'
 import {getUser} from '@/redux/modules/auth/selectors'
 import {setValue, submit} from '@/screens/modules/listingForm/reducer'
-import {getValue, getListing, isLoading} from '@/screens/modules/listingForm/selectors'
+import {
+  getValue,
+  getListing,
+  isLoading
+} from '@/screens/modules/listingForm/selectors'
 import {setStack} from '@/screens/modules/navigation'
 import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
@@ -95,7 +99,8 @@ class EditPropertiesScreen extends PureComponent {
 
   componentDidUpdate(prev) {
     const {listing, loading, params: {id}} = this.props
-    if (this.state.active && !id && !prev.listing && listing && !loading) this.openSuccessModal()
+    if (this.state.active && !id && !prev.listing && listing && !loading)
+      this.openSuccessModal()
   }
 
   onChange = (value) => this.props.setValue(value)
@@ -117,7 +122,7 @@ class EditPropertiesScreen extends PureComponent {
     return (
       <Shell testID="@listingForm.Properties">
         <Progress progress={2 / 3} />
-        <Body scroll>
+        <Body scroll testID="scroll_view">
           <PropertiesForm
             formRef={this.form}
             value={value}

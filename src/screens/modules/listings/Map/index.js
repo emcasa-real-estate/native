@@ -36,17 +36,24 @@ class MapScreen extends Component {
       title: {
         text: 'Buscar imóveis',
         alignment: 'center'
-      },
-      rightButtons: [
-        {
-          id: 'mapLocationButton',
-          component: {name: HeaderButton.screenName}
-        }
-      ]
+      }
     }
   }
 
   state = {active: false}
+
+  componentDidMount() {
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        rightButtons: [
+          {
+            id: 'mapLocationButton',
+            component: {name: HeaderButton.screenName}
+          }
+        ]
+      }
+    })
+  }
 
   componentWillUnmount() {
     Navigation.mergeOptions(this.props.componentId, {

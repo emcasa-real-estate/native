@@ -3,8 +3,8 @@ import {PureComponent} from 'react'
 import {View} from 'react-native'
 import SwipeableView from 'react-swipeable-views-native/lib/SwipeableViews.scroll'
 
-import Icon from '@/components/shared/Icon'
 import Image from '../Image'
+import Pagination from './Pagination'
 import styles from './styles'
 
 export default class ListingGallery extends PureComponent {
@@ -106,6 +106,8 @@ export default class ListingGallery extends PureComponent {
   }
 
   render() {
+    const {inline} = this.props
+    const {position} = this.state
     return (
       <View style={[styles.container, this.layout]} onLayout={this.onLayout}>
         <SwipeableView
@@ -118,7 +120,11 @@ export default class ListingGallery extends PureComponent {
           {this.items.map(this.renderImage)}
         </SwipeableView>
         <View style={styles.pagination}>
-          {this.items.map(this.renderPagination)}
+          <Pagination
+            displayText={!inline}
+            currentPosition={position}
+            totalPages={this.items.length}
+          />
         </View>
       </View>
     )

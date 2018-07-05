@@ -21,18 +21,7 @@ export default StyleSheet.create({
   },
   pagination: {
     position: 'absolute',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
     bottom: 10,
     width: '100%'
-  },
-  pageIcon: {
-    width: 20,
-    height: 20,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
   }
 })

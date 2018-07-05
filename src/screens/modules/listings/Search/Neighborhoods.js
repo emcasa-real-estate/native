@@ -3,7 +3,7 @@ import {ScrollView} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
-import {getOptions} from '@/redux/modules/listings/feed/selectors'
+import {getSearchFilters} from '@/screens/modules/listings/Search/module/selectors'
 import {getNeighborhoods} from '@/redux/modules/neighborhoods/selectors'
 import {MultiSelectOptions} from '@/components/listings/Search/Field'
 import HeaderButton from '@/screens/modules/shared/Header/TextButton'
@@ -11,7 +11,7 @@ import HeaderButton from '@/screens/modules/shared/Header/TextButton'
 @connect(
   (state) => ({
     neighborhoods: getNeighborhoods(state),
-    options: getOptions(state, {type: 'search'})
+    options: getSearchFilters(state)
   }),
   null,
   null,

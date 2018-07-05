@@ -23,7 +23,10 @@ const createWatchChannel = () =>
     const watchId = navigator.geolocation.watchPosition(
       (position) => emit(position),
       () => emit(END),
-      {timeout: process.env.NODE_ENV === 'production' ? 300 : 1000}
+      {
+        maximumAge: 1000,
+        distanceFilter: 10
+      }
     )
     return () => navigator.geolocation.clearWatch(watchId)
   })

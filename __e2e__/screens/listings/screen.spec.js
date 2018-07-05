@@ -24,7 +24,7 @@ describe('listings/results', () => {
       waitFor(element(select.nthCard(n)))
         .toBeVisible()
         .whileElement(select.feed())
-        .scroll(250, direction)
+        .scroll(310, direction)
 
     it('saves client-side favorited listings', async () => {
       for (let i = 1; i <= 3; ++i) {

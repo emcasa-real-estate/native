@@ -34,7 +34,6 @@ function LikeButton({favorite, ...props}) {
       accessibilityLabel={
         favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'
       }
-      testID="favorite_button"
     >
       <LikeIcon active={favorite} size={19} />
     </Button>
@@ -71,7 +70,11 @@ export default function ListingCard({
           <View style={[styles.row, styles.buttonsRow]}>
             <View>
               {isActive && (
-                <LikeButton favorite={favorite} onPress={onFavorite} />
+                <LikeButton
+                  testID="favorite_button"
+                  favorite={favorite}
+                  onPress={onFavorite}
+                />
               )}
             </View>
             <View>
@@ -79,6 +82,7 @@ export default function ListingCard({
                 hitSlop={30}
                 label="Visualizar"
                 icon="share"
+                testID="view_button"
                 onPress={onPress}
               />
             </View>

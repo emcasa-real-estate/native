@@ -1,30 +1,18 @@
 import gql from 'graphql-tag'
 
+import * as frag from '@/graphql/fragments'
+
 export const GET_USER_LISTINGS = gql`
-  {
+  query userListings {
     userListings {
-      id
-      price
-      isActive
-      description
-      images {
-        filename
-      }
-      address {
-        city
-        lat
-        lng
-        neighborhood
-        postalCode
-        state
-        street
-      }
+      ...ListingFeed
     }
   }
+  ${frag.ListingFeed}
 `
 
 export const GET_FAVORITE_LISTINGS_IDS = ({cache}) => gql`
-  {
+  query favoritedListingsIds {
     favoritedListings ${cache === true ? '@client' : ''} {
       id
     }
@@ -32,33 +20,10 @@ export const GET_FAVORITE_LISTINGS_IDS = ({cache}) => gql`
 `
 
 export const GET_FAVORITE_LISTINGS = ({cache}) => gql`
-  {
+  query favoritedListings {
     favoritedListings ${cache === true ? '@client' : ''} {
-      id
-      price
-      matterportCode
-      area
-      isActive
-      bathrooms
-      garageSpots
-      hasElevator
-      propertyTax
-      maintenanceFee
-      description
-      floor
-      rooms
-      images {
-        filename
-      }
-      address {
-        city
-        lat
-        lng
-        neighborhood
-        postalCode
-        state
-        street
-      }
+      ...ListingFeed
     }
   }
+  ${frag.ListingFeed}
 `

@@ -1,19 +1,6 @@
 import {reportError} from '@/redux/modules/firebase/crashlytics'
-import {getData} from '@/redux/modules/listings/data/selectors'
+import * as frag from '@/graphql/fragments'
 import {GET_FAVORITE_LISTINGS} from '@/graphql/modules/user/queries'
-
-const parseListing = (data) => ({
-  ...data,
-  __typename: 'Listing',
-  address: {
-    ...data.address,
-    __typename: 'Address'
-  },
-  images: data.images.map((image) => ({
-    ...image,
-    __typename: 'Image'
-  }))
-})
 
 const logSchemaError = (error, redux) => {
   // eslint-disable-next-line no-console
@@ -22,9 +9,12 @@ const logSchemaError = (error, redux) => {
 }
 
 export async function favoriteListing(_, {id}, {cache, redux}) {
-  const listingData = getData(redux.state, {id})
-  if (!listingData) return null
-  const listing = parseListing(listingData)
+  const listing = await cache.readFragment({
+    fragment: frag.ListingFeed,
+    fragmentName: 'ListingFeed',
+    id: `Listing:${id}`
+  })
+  if (!listing) return
   try {
     const query = GET_FAVORITE_LISTINGS({cache: true})
     const {favoritedListings} = cache.readQuery({query})

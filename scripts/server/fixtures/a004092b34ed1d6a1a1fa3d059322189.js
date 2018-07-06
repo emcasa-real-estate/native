@@ -19,19 +19,19 @@ module.exports = function (req, res) {
   res.statusCode = 201;
 
   res.setHeader("server", "Cowboy");
-  res.setHeader("date", "Wed, 27 Jun 2018 00:46:04 GMT");
+  res.setHeader("date", "Wed, 04 Jul 2018 19:45:24 GMT");
   res.setHeader("content-length", "22");
   res.setHeader("set-cookie", ["_re_key=SFMyNTY.g3QAAAABbQAAABJfdGltYmVyX3Nlc3Npb25faWRtAAAAIGNmYTM0NGYwYTMxMzkwYTBmNDNkYWE2NjkyNWM3NWRm.xL6JRs7yM2j-pmPdCPx8blEVs2cLAUJq_ApcrpweysM; path=/; HttpOnly"]);
   res.setHeader("content-type", "application/json; charset=utf-8");
   res.setHeader("cache-control", "max-age=0, private, must-revalidate");
-  res.setHeader("x-request-id", "ner43mb71i0ma4t0j8h5kde4ggufbqiv");
+  res.setHeader("x-request-id", "ohfm0qe13lhkppml0m1inhnc9oc7dqtp");
   res.setHeader("access-control-allow-origin", "*");
   res.setHeader("access-control-expose-headers", "");
   res.setHeader("access-control-allow-credentials", "true");
 
   res.setHeader("x-yakbak-tape", path.basename(__filename, ".js"));
 
-  res.write(new Buffer("eyJsaXN0aW5nIjp7ImlkIjo0MDV9fQ==", "base64"));
+  res.write(new Buffer("eyJsaXN0aW5nIjp7ImlkIjo0MDZ9fQ==", "base64"));
   res.end();
 
   return __filename;

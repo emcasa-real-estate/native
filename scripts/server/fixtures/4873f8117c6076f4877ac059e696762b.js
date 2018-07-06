@@ -11,7 +11,7 @@ var path = require("path");
  * cookie: _re_key=SFMyNTY.g3QAAAABbQAAABJfdGltYmVyX3Nlc3Npb25faWRtAAAAIGFjNzE4ZTRjYzFhZGExODI5MWIzYjA1NjU3N2IwMWY3.5Ao8hz5vG8DELGkyGx5FenaDqVGXhxa20nHd8W1PT2o
  * accept-language: en-us
  * authorization: undefined
- * content-length: 166
+ * content-length: 165
  * accept-encoding: gzip, deflate
  */
 
@@ -19,11 +19,11 @@ module.exports = function (req, res) {
   res.statusCode = 200;
 
   res.setHeader("server", "Cowboy");
-  res.setHeader("date", "Fri, 08 Jun 2018 19:11:13 GMT");
-  res.setHeader("content-length", "63");
+  res.setHeader("date", "Wed, 04 Jul 2018 22:12:50 GMT");
+  res.setHeader("content-length", "62");
   res.setHeader("set-cookie", ["_re_key=SFMyNTY.g3QAAAABbQAAABJfdGltYmVyX3Nlc3Npb25faWRtAAAAIGFjNzE4ZTRjYzFhZGExODI5MWIzYjA1NjU3N2IwMWY3.5Ao8hz5vG8DELGkyGx5FenaDqVGXhxa20nHd8W1PT2o; path=/; HttpOnly"]);
   res.setHeader("cache-control", "max-age=0, private, must-revalidate");
-  res.setHeader("x-request-id", "nc4kn2e7m0p2mbj0j23tslf5om5tgu6t");
+  res.setHeader("x-request-id", "5lu08c28eajp5prrok4viang051ea1te");
   res.setHeader("access-control-allow-origin", "*");
   res.setHeader("access-control-expose-headers", "");
   res.setHeader("access-control-allow-credentials", "true");
@@ -31,7 +31,7 @@ module.exports = function (req, res) {
 
   res.setHeader("x-yakbak-tape", path.basename(__filename, ".js"));
 
-  res.write(new Buffer("eyJkYXRhIjp7InRvdXJWaXN1YWxpemVkIjp7ImlkIjoiMjM4IiwiX190eXBlbmFtZSI6Ikxpc3RpbmcifX19", "base64"));
+  res.write(new Buffer("eyJkYXRhIjp7InRvdXJWaXN1YWxpemVkIjp7ImlkIjoiNzkiLCJfX3R5cGVuYW1lIjoiTGlzdGluZyJ9fX0=", "base64"));
   res.end();
 
   return __filename;

@@ -4,8 +4,8 @@ import {ScrollView} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
-import {updateOptions} from '@/redux/modules/listings/feed'
-import {getOptions} from '@/redux/modules/listings/feed/selectors'
+import {updateFilters} from './module'
+import {getSearchFilters} from './module/selectors'
 import Form from '@/components/listings/Search/Form'
 import HeaderButton from '@/screens/modules/shared/Header/TextButton'
 import Neighborhoods from './Neighborhoods'
@@ -28,9 +28,9 @@ const compareDefaults = (value, defaultValue) => {
 
 @connect(
   (state) => ({
-    options: getOptions(state, {type: 'search'})
+    options: getSearchFilters(state)
   }),
-  {updateOptions: updateOptions('search')},
+  {updateFilters},
   null,
   {withRef: true}
 )
@@ -79,11 +79,11 @@ export default class ListingSearchScreen extends PureComponent {
   }
 
   componentDidDisappear() {
-    const {updateOptions} = this.props
+    const {updateFilters} = this.props
     const options = _.pickBy(this.state.options, (value, key) =>
       compareDefaults(value, defaultValue[key])
     )
-    if (!_.isEqual(options, this.props.options)) updateOptions(options)
+    if (!_.isEqual(options, this.props.options)) updateFilters(options)
   }
 
   onChange = (params) => this.setState({options: params})

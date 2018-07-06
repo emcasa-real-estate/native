@@ -19,11 +19,11 @@ module.exports = function (req, res) {
   res.statusCode = 200;
 
   res.setHeader("server", "Cowboy");
-  res.setHeader("date", "Wed, 27 Jun 2018 00:46:02 GMT");
+  res.setHeader("date", "Wed, 04 Jul 2018 19:45:24 GMT");
   res.setHeader("content-length", "94");
   res.setHeader("set-cookie", ["_re_key=SFMyNTY.g3QAAAABbQAAABJfdGltYmVyX3Nlc3Npb25faWRtAAAAIGNmYTM0NGYwYTMxMzkwYTBmNDNkYWE2NjkyNWM3NWRm.xL6JRs7yM2j-pmPdCPx8blEVs2cLAUJq_ApcrpweysM; path=/; HttpOnly"]);
   res.setHeader("cache-control", "max-age=0, private, must-revalidate");
-  res.setHeader("x-request-id", "l4vh9qc0kckqg63l08h5cur4165r1nb7");
+  res.setHeader("x-request-id", "0i49p7pmkn6bo4p5lqr7ijid250ssv4j");
   res.setHeader("access-control-allow-origin", "*");
   res.setHeader("access-control-expose-headers", "");
   res.setHeader("access-control-allow-credentials", "true");

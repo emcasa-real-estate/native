@@ -6,15 +6,15 @@ import {ApolloLink} from 'apollo-link'
 
 import createLinks, {sync} from './links'
 
-export default function createApolloClient(client) {
+export default async function createApolloClient(client) {
   const cache = new InMemoryCache()
 
-  persistCache({
+  const links = createLinks({cache, client})
+
+  await persistCache({
     cache,
     storage: AsyncStorage
   })
-
-  const links = createLinks({cache, client})
 
   const apolloClient = new ApolloClient({
     link: ApolloLink.from(Array.from(links.values())),

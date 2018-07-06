@@ -92,6 +92,7 @@ export default class ListingGallery extends PureComponent {
     return (
       <Image
         style={[styles.image]}
+        resolution={scalable ? 4.5 : 1}
         layout={scalable ? 'scalable' : undefined}
         key={image.id}
         {...this.imageLayout}

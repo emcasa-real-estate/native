@@ -17,7 +17,7 @@ export default StyleSheet.create({
   },
   slide: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'flex-start'
   },
   pagination: {
     position: 'absolute',

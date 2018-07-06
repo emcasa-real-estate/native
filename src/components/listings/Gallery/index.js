@@ -30,12 +30,7 @@ export default class ListingGallery extends PureComponent {
   get imageLayout() {
     const {inline} = this.props
     const layout = this.layout
-    const padding = 15
-    if (!inline) {
-      layout.marginHorizontal = padding
-      layout.width -= padding * 2
-      layout.height = layout.width * 0.6
-    }
+    if (!inline) layout.height = layout.width * 0.6
     return layout
   }
 

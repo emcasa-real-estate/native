@@ -38,7 +38,6 @@ export default class GalleryPagination extends PureComponent {
   updateLayout(animate = true) {
     this.calculateLayout().forEach((scale, index) => {
       const value = this.state.scale[index]
-      if (value._value === scale) return
       value.stopAnimation()
       if (!animate) value.setValue(scale)
       else

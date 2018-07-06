@@ -2,6 +2,7 @@ import _ from 'lodash'
 import {PureComponent} from 'react'
 import {View, Animated} from 'react-native'
 
+import Text from '@/components/shared/Text'
 import Icon from '@/components/shared/Icon'
 import styles from './styles'
 
@@ -80,9 +81,19 @@ export default class GalleryPagination extends PureComponent {
   }
 
   render() {
+    const {displayText, currentPosition, totalPages} = this.props
     const {length} = this.state
     return (
-      <View style={styles.container}>{_.times(length, this.renderIcon)}</View>
+      <View style={styles.container}>
+        {displayText && (
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>
+              {currentPosition} / {totalPages}
+            </Text>
+          </View>
+        )}
+        {_.times(length, this.renderIcon)}
+      </View>
     )
   }
 }

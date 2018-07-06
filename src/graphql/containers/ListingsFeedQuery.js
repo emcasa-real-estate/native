@@ -17,7 +17,7 @@ function ListingsFeedQuery({filters, pageSize, children, fetchPolicy}) {
         children({
           ...response,
           data,
-          fetchMore: () =>
+          fetchMore: _.once(() =>
             fetchMore({
               variables: {
                 filters,
@@ -35,6 +35,7 @@ function ListingsFeedQuery({filters, pageSize, children, fetchPolicy}) {
                 }
               })
             })
+          )
         })
       }
     </Query>

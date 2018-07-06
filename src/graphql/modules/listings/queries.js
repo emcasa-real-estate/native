@@ -5,7 +5,7 @@ import * as frag from '@/graphql/fragments'
 export const GET_LISTING = gql`
   query listing($id: ID!) {
     listing(id: $id) {
-      id
+      ...Listing
     }
   }
   ${frag.Listing}
@@ -23,9 +23,9 @@ export const GET_LISTINGS_FEED = gql`
     ) {
       remainingCount
       listings {
-        ...Listing
+        ...ListingFeed
       }
     }
   }
-  ${frag.Listing}
+  ${frag.ListingFeed}
 `

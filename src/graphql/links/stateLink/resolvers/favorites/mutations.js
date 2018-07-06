@@ -10,8 +10,8 @@ const logSchemaError = (error, redux) => {
 
 export async function favoriteListing(_, {id}, {cache, redux}) {
   const listing = await cache.readFragment({
-    fragment: frag.Listing,
-    fragmentName: 'Listing',
+    fragment: frag.ListingFeed,
+    fragmentName: 'ListingFeed',
     id: `Listing:${id}`
   })
   if (!listing) return

@@ -16,8 +16,8 @@ export const Address = gql`
   }
 `
 
-export const FullListing = gql`
-  fragment FullListing on Listing {
+export const Listing = gql`
+  fragment Listing on Listing {
     id
     type
     price
@@ -56,13 +56,16 @@ export const FullListing = gql`
   ${Address}
 `
 
-export const Listing = gql`
-  fragment Listing on Listing {
+export const ListingFeed = gql`
+  fragment ListingFeed on Listing {
     id
     price
+    isExclusive
+    isRelease
     isActive
     description
     images(isActive: true) {
+      position
       filename
     }
     address {

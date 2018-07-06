@@ -76,7 +76,13 @@ export default function ListingPropertiesForm({requirePhone, ...props}) {
       <NumberPicker label="Quartos" name="rooms" />
       <NumberPicker label="Banheiros" name="bathrooms" />
       <NumberPicker label="Vagas de garagem" name="garage_spots" />
-      <TextInput multiline name="description" placeholder="Descrição" />
+      <TextInput
+        // workaround for nested scroll views matching the same testID
+        // https://github.com/wix/detox/issues/164
+        multiline={process.env.NODE_ENV !== 'e2e'}
+        name="description"
+        placeholder="Descrição"
+      />
     </Form>
   )
 }

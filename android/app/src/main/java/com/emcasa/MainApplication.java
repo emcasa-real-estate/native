@@ -22,6 +22,7 @@ import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
+import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import io.invertase.firebase.fabric.crashlytics.RNFirebaseCrashlyticsPackage;
 import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
 
@@ -52,6 +53,7 @@ public class MainApplication extends NavigationApplication implements ShareAppli
       new RNFirebaseAnalyticsPackage(),
       new RNFirebaseMessagingPackage(),
       new RNFirebaseCrashlyticsPackage(),
+      new RNFirebaseNotificationsPackage(),
       new RNSharePackage(),
       new ImagePickerPackage(),
       new SvgPackage(),

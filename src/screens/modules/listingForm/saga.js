@@ -5,6 +5,7 @@ import {
   call,
   race,
   select,
+  fork,
   take,
   takeLatest,
   getContext
@@ -13,6 +14,7 @@ import {
 import * as api from '@/lib/services/listings'
 import {EDIT_PROFILE} from '@/graphql/modules/user/mutations'
 import {GET_USER_LISTINGS} from '@/graphql/modules/user/queries'
+import {patch as patchUserData} from '@/redux/modules/auth'
 import {getUser, getToken} from '@/redux/modules/auth/selectors'
 import {getData as getListingData} from '@/redux/modules/listings/data/selectors'
 import * as listingData from '@/redux/modules/listings/data'
@@ -77,18 +79,23 @@ function* fetchListing({listing: {id}}) {
   yield put(actions.setValue(formValue(listing)))
 }
 
+function* updatePhone({phone}) {
+  const {id, name} = yield select(getUser)
+  const graphql = yield getContext('graphql')
+  yield call(graphql.mutate, {
+    mutation: EDIT_PROFILE,
+    variables: {id, name, phone}
+  })
+  yield put(patchUserData({phone}))
+}
+
 function* createListing() {
   const {address, phone, ...listing} = yield select(getValue)
-  const {id, name} = yield select(getUser)
   const jwt = yield select(getToken)
   const graphql = yield getContext('graphql')
   yield put(actions.request())
   try {
-    if (phone)
-      yield call(graphql.mutate, {
-        mutation: EDIT_PROFILE,
-        variables: {id, name, phone}
-      })
+    if (phone) yield fork(updatePhone, {phone})
     const response = yield call(
       api.create,
       {listing: {price: 0, ...listing}, address: address.details},

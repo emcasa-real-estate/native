@@ -19,11 +19,12 @@ import {
   isWithinBounds
 } from './module/selectors'
 import ListButton from '@/components/listings/Feed/Button'
-import MapFeed from '@/components/listings/Feed/Map'
-import Feed from '@/screens/modules/listings/shared/Feed'
+import Feed from '@/components/listings/Feed/Map'
 import HeaderButton from './HeaderButton'
 import Map from './Map'
 import styles from './styles'
+
+import ListingScreen from '@/screens/modules/listing/Listing'
 
 class MapScreen extends Component {
   static screenName = 'listings.Map'
@@ -107,14 +108,7 @@ class MapScreen extends Component {
           <ListButton style={styles.button} onPress={this.onReturn} />
         </View>
         <View style={styles.listings}>
-          <Feed
-            as={MapFeed}
-            target={componentId}
-            active={activeListing}
-            data={data}
-            remainingCount={remainingCount}
-            onLoadMore={() => null}
-          />
+          <Feed active={activeListing} data={data} onSelect={this.onSelect} />
         </View>
       </View>
     )

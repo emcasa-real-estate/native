@@ -52,5 +52,11 @@ export default $StyleSheet({
     fontWeight: '300',
     fontSize: 16,
     color: colors.gray.darker
+  },
+  iconButton: {
+    position: 'absolute',
+    zIndex: 1,
+    top: 15,
+    right: 15
   }
 })

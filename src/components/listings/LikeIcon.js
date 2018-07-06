@@ -20,5 +20,5 @@ export default function LikeIcon({active, contrast, size, ...props}) {
 }
 
 LikeIcon.defaultProps = {
-  size: 25
+  size: 20
 }

@@ -87,7 +87,7 @@ export default class ListingGallery extends PureComponent {
     const {scalable} = this.props
     const {position} = this.state
     // Placeholder
-    if (Math.abs(index - position) > 1)
+    if (Math.abs(index - position) > 2)
       return <View key={image.id} style={this.imageLayout} />
     return (
       <Image

@@ -16,6 +16,25 @@ export const Address = gql`
   }
 `
 
+Address.parse = (address) => ({
+  ...address,
+  __typename: 'Address'
+})
+
+export const Image = gql`
+  fragment Image on Image {
+    position
+    filename
+    description
+    isActive
+  }
+`
+
+Image.parse = (image) => ({
+  ...image,
+  __typename: 'Image'
+})
+
 export const Listing = gql`
   fragment Listing on Listing {
     id
@@ -44,17 +63,22 @@ export const Listing = gql`
     description
     complement
     images {
-      position
-      filename
-      description
-      isActive
+      ...Image
     }
     address {
       ...Address
     }
   }
+  ${Image}
   ${Address}
 `
+
+Listing.parse = ({address, images, ...listing}) => ({
+  ...listing,
+  __typename: 'Listing',
+  address: Address.parse(address),
+  images: images.map(Image.parse)
+})
 
 export const ListingFeed = gql`
   fragment ListingFeed on Listing {

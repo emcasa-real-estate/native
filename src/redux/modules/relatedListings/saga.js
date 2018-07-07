@@ -1,7 +1,17 @@
-import {call, put, all, select, takeLatest} from 'redux-saga/effects'
+import {
+  call,
+  put,
+  all,
+  select,
+  fork,
+  takeEvery,
+  takeLatest,
+  getContext
+} from 'redux-saga/effects'
 
-import {getToken} from '../auth/selectors'
+import * as frag from '@/graphql/fragments'
 import * as api from '@/lib/services/listings'
+import {getToken} from '../auth/selectors'
 import * as actions from './index'
 
 function* request({id}) {
@@ -15,6 +25,23 @@ function* request({id}) {
   }
 }
 
+function* patchListing({listing}) {
+  const graphql = yield getContext('graphql')
+  yield call([graphql, graphql.writeFragment], {
+    id: `Listing:${listing.id}`,
+    fragment: frag.ListingFeed,
+    fragmentName: 'ListingFeed',
+    data: frag.Listing.parse(listing)
+  })
+}
+
+function* patchGraphqlStore({data}) {
+  yield all(data.map((listing) => fork(patchListing, {listing})))
+}
+
 export default function* listingsDataSaga() {
-  yield all([takeLatest(actions.LOAD, request)])
+  yield all([
+    takeLatest(actions.LOAD, request),
+    takeEvery(actions.SUCCESS, patchGraphqlStore)
+  ])
 }

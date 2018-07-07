@@ -112,6 +112,7 @@
     "jest": "^22.4.3",
     "jest-plugin-context": "^2.9.0",
     "jest-react-native": "^18.0.0",
+    "node-cleanup": "^2.1.2",
     "patch-package": "^5.1.1",
     "postinstall-prepare": "^1.0.1",
     "prettier": "^1.10.2",

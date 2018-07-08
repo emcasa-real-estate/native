@@ -80,7 +80,7 @@ class ListingScreen extends PureComponent {
       component: {
         ...component,
         passProps: {
-          params: {...params, parent: componentId}
+          params: {...params, parentId: componentId}
         }
       }
     })

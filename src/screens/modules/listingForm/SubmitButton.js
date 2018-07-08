@@ -1,24 +1,70 @@
+import _ from 'lodash'
 import {PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
 
 import * as colors from '@/assets/colors'
+import * as frag from '@/graphql/fragments'
 import composeWithRef from '@/lib/composeWithRef'
 import withContext from '@/screens/modules/context/withContext'
-import {withListingMutation} from '@/graphql/containers'
+import {
+  withListingMutation,
+  withProfileMutation,
+  withListing
+} from '@/graphql/containers'
 import Button from '@/screens/modules/shared/Header/TextButton'
+
+const compare = (value, source) =>
+  _.reduce(
+    value,
+    (result, val, key) =>
+      result && (source[key] == val || (!source[key] && !val)),
+    true
+  )
+
+const compareListings = ({address, ...value}, listing) => {
+  return (
+    compare(value, listing) &&
+    compare(_.omit(address.details, ['lng', 'lat']), listing.address)
+  )
+}
 
 class ListingFormSubmitButton extends PureComponent {
   static screenName = 'listingForm.SubmitButton'
 
   get hasChanges() {
-    return true
+    const {listing, value} = this.props
+    return !listing.loading && value && !compareListings(value, listing.data)
+  }
+
+  onSubmit = async () => {
+    const {
+      value: {phone, address, ...listing},
+      setContext,
+      editUserProfile,
+      submitListing
+    } = this.props
+    setContext({loading: true})
+    try {
+      if (phone) await editUserProfile({variables: {phone}})
+      await submitListing({
+        variables: {
+          listing: frag.ListingInput.parseInput({
+            ...listing,
+            address: address.details
+          })
+        }
+      })
+      setContext({error: undefined, loading: false})
+      return true
+    } catch (error) {
+      setContext({error, loading: false})
+      return false
+    }
   }
 
   onPress = async () => {
-    const {loading, submitListing, params} = this.props
-    if (!loading && this.hasChanges) {
-      // ...
-    }
+    const {params, loading} = this.props
+    if (!loading && this.hasChanges && !await this.onSubmit()) return
     Navigation.popTo(params.parentId)
   }
 
@@ -38,5 +84,7 @@ class ListingFormSubmitButton extends PureComponent {
 
 export default composeWithRef(
   withContext.byProp('params.contextId'),
+  withProfileMutation,
+  withListing(({params: {id}}) => ({id})),
   withListingMutation(({params: {id}}) => ({id}))
 )(ListingFormSubmitButton)

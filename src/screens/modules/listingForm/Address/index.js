@@ -77,6 +77,11 @@ class EditAddressScreen extends PureComponent {
     this.props.clearContext()
   }
 
+  componentDidUpdate(prev) {
+    if (!prev.error && this.props.error && this.form.current)
+      this.form.current.onValidate()
+  }
+
   componentDidAppear() {
     const {componentId, params} = this.props
     if (!params.id) return

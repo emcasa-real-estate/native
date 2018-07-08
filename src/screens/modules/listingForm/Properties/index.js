@@ -91,10 +91,15 @@ class EditPropertiesScreen extends PureComponent {
         }
       })
       this.openSuccessModal(insertListing)
-      setContext({loading: false})
+      setContext({error: undefined, loading: false})
     } catch (error) {
       setContext({error, loading: false})
     }
+  }
+
+  componentDidUpdate(prev) {
+    if (!prev.error && this.props.error && this.form.current)
+      this.form.current.onValidate()
   }
 
   componentDidAppear() {

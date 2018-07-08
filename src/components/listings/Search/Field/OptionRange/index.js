@@ -32,8 +32,12 @@ export default class OptionRangeField extends Component {
 
   parseValue = (value) => Number(value)
 
-  static getDerivedStateFromProps({value}, state) {
-    if (!state.sliding) return {value}
+  static getDerivedStateFromProps({value, options}, state) {
+    const defaultValue = {
+      min: _.first(options).value,
+      max: _.last(options).value
+    }
+    if (!state.sliding) return {value: _.defaults(value, defaultValue)}
     return null
   }
 

@@ -31,7 +31,7 @@ const addressValue = (address) => ({
 })
 
 const listingValue = ({address, ...listing}) => ({
-  ..._.mapValues(listing, (val) => val && String(val)),
+  ..._.mapValues(listing, (val) => (val ? String(val) : undefined)),
   address: addressValue(address)
 })
 
@@ -68,6 +68,10 @@ class EditAddressScreen extends PureComponent {
     }
   }
 
+  validateForm = () => {
+    return this.props.validListing !== false && this.form.current.onValidate()
+  }
+
   componentDidMount() {
     const {params: {id}} = this.props
     if (id) this.setDefaultValue()
@@ -77,25 +81,22 @@ class EditAddressScreen extends PureComponent {
     this.props.clearContext()
   }
 
-  componentDidUpdate(prev) {
-    if (!prev.error && this.props.error && this.form.current)
-      this.form.current.onValidate()
-  }
-
   componentDidAppear() {
     const {componentId, params} = this.props
     if (!params.id) return
-    const passProps = {...params, contextId: componentId}
+    this.validateForm()
+    const passProps = {
+      params,
+      contextId: componentId,
+      onValidate: this.validateForm
+    }
     Navigation.mergeOptions(componentId, {
       topBar: {
         rightButtons: [
           {
             id: `${componentId}_submit`,
             passProps,
-            component: {
-              name: SubmitButtonScreen.screenName,
-              passProps
-            }
+            component: {name: SubmitButtonScreen.screenName, passProps}
           }
         ]
       }
@@ -104,9 +105,11 @@ class EditAddressScreen extends PureComponent {
 
   onChange = (value) => this.props.setContext({value})
 
+  onValidate = (valid) => this.props.setContext({validAddress: valid})
+
   onSubmit = () => {
     const {componentId, params} = this.props
-    if (this.form.current.onValidate())
+    if (this.validateForm())
       Navigation.push(componentId, {
         component: {
           name: EditPropertiesScreen.screenName,
@@ -124,6 +127,7 @@ class EditAddressScreen extends PureComponent {
           <AddressForm
             formRef={this.form}
             value={value}
+            onValidate={this.onValidate}
             onChange={this.onChange}
             onSubmit={this.onSubmit}
           />

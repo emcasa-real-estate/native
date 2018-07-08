@@ -97,6 +97,10 @@ class EditPropertiesScreen extends PureComponent {
     }
   }
 
+  validateForm = () => {
+    return this.props.validAddress !== false && this.form.current.onValidate()
+  }
+
   componentDidUpdate(prev) {
     if (!prev.error && this.props.error && this.form.current)
       this.form.current.onValidate()
@@ -104,25 +108,25 @@ class EditPropertiesScreen extends PureComponent {
 
   componentDidAppear() {
     const {componentId, params} = this.props
-    if (params.id) {
-      Navigation.mergeOptions(componentId, {
-        topBar: {
-          rightButtons: [
-            {
-              id: `${componentId}_submit`,
-              passProps: {params},
-              component: {
-                name: SubmitButtonScreen.screenName,
-                passProps: {params}
-              }
-            }
-          ]
-        }
-      })
-    }
+    if (!params.id) return
+    this.validateForm()
+    const passProps = {params, onValidate: this.validateForm}
+    Navigation.mergeOptions(componentId, {
+      topBar: {
+        rightButtons: [
+          {
+            id: `${componentId}_submit`,
+            passProps,
+            component: {name: SubmitButtonScreen.screenName, passProps}
+          }
+        ]
+      }
+    })
   }
 
   onChange = (value) => this.props.setContext({value})
+
+  onValidate = (valid) => this.props.setContext({validListing: valid})
 
   onPressButton = () => {
     const {componentId, params} = this.props
@@ -133,7 +137,7 @@ class EditPropertiesScreen extends PureComponent {
           passProps: {params}
         }
       })
-    else if (this.form.current.onValidate()) this.createListing()
+    else if (this.validateForm()) this.createListing()
   }
 
   render() {
@@ -146,6 +150,7 @@ class EditPropertiesScreen extends PureComponent {
             formRef={this.form}
             value={value}
             requirePhone={!user.phone}
+            onValidate={this.onValidate}
             onChange={this.onChange}
             onSubmit={this.onPressButton}
           />

@@ -14,9 +14,7 @@ export default function ListingPropertiesForm({requirePhone, ...props}) {
         price: undefined,
         rooms: 0,
         bathrooms: 0,
-        garageSpots: 0,
-        maintenanceFee: 0,
-        propertyTax: 0
+        garageSpots: 0
       }}
       {...props}
     >

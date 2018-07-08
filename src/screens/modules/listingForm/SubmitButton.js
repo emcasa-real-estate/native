@@ -36,6 +36,13 @@ class ListingFormSubmitButton extends PureComponent {
     return !listing.loading && value && !compareListings(value, listing.data)
   }
 
+  validate() {
+    const {onValidate} = this.props
+    return onValidate
+      ? onValidate() !== false
+      : this.props.validAddress !== false && this.props.validListing !== false
+  }
+
   onSubmit = async () => {
     const {
       value: {phone, address, ...listing},
@@ -64,7 +71,12 @@ class ListingFormSubmitButton extends PureComponent {
 
   onPress = async () => {
     const {params, loading} = this.props
-    if (!loading && this.hasChanges && !await this.onSubmit()) return
+    if (
+      loading ||
+      !this.validate() ||
+      (this.hasChanges && !await this.onSubmit())
+    )
+      return
     Navigation.popTo(params.parentId)
   }
 

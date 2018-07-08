@@ -1,10 +1,10 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 
 import TextInput from '@/components/shared/TextInput'
 import {field} from './Field'
 
 @field()
-export default class TextInputField extends Component {
+export default class TextInputField extends PureComponent {
   static defaultProps = {
     value: ''
   }

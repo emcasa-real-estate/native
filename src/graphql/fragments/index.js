@@ -1,5 +1,7 @@
 import gql from 'graphql-tag'
 
+export {default as ListingInput} from './ListingInput'
+
 export const Address = gql`
   fragment Address on Address {
     lat

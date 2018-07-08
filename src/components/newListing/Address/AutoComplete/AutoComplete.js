@@ -14,8 +14,8 @@ const filterComponent = (place, property) => {
 
 const placeDetails = (place) => ({
   street: filterComponent(place, 'route'),
-  street_number: filterComponent(place, 'street_number'),
-  postal_code: filterComponent(place, 'postal_code'),
+  streetNumber: filterComponent(place, 'street_number'),
+  postalCode: filterComponent(place, 'postal_code'),
   neighborhood: filterComponent(place, 'sublocality_level_1'),
   state: filterComponent(place, 'administrative_area_level_1'),
   city: filterComponent(place, 'administrative_area_level_2'),

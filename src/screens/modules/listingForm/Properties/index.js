@@ -3,7 +3,8 @@ import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
-import {withListingMutation} from '@/graphql/containers'
+import * as frag from '@/graphql/fragments'
+import {withListingMutation, withProfileMutation} from '@/graphql/containers'
 import withContext from '@/screens/modules/context/withContext'
 import {getUser} from '@/redux/modules/auth/selectors'
 import {setStack} from '@/screens/modules/navigation'
@@ -30,10 +31,6 @@ class EditPropertiesScreen extends PureComponent {
     }
   }
 
-  state = {
-    active: false
-  }
-
   form = React.createRef()
 
   navigateToListing = ({id}) => {
@@ -56,8 +53,8 @@ class EditPropertiesScreen extends PureComponent {
     )
   }
 
-  openSuccessModal() {
-    const {componentId, listing, value: {address}} = this.props
+  openSuccessModal = (listing) => {
+    const {componentId, value: {address}} = this.props
     Navigation.showModal({
       component: {
         id: `${componentId}_success`,
@@ -74,12 +71,26 @@ class EditPropertiesScreen extends PureComponent {
   }
 
   createListing = async () => {
-    const {value, loading, setContext, submitListing} = this.props
+    const {
+      value: {address, phone, ...listing},
+      loading,
+      setContext,
+      submitListing,
+      editUserProfile
+    } = this.props
     if (loading) return
     setContext({loading: true})
     try {
-      const x = await submitListing({listing: value})
-      console.log(x)
+      if (phone) await editUserProfile({variables: {phone}})
+      const {data: {insertListing}} = await submitListing({
+        variables: {
+          listing: frag.ListingInput.parseInput({
+            ...listing,
+            address: address.details
+          })
+        }
+      })
+      this.openSuccessModal(insertListing)
       setContext({loading: false})
     } catch (error) {
       setContext({error, loading: false})
@@ -88,7 +99,6 @@ class EditPropertiesScreen extends PureComponent {
 
   componentDidAppear() {
     const {componentId, params} = this.props
-    this.setState({active: true})
     if (params.id) {
       Navigation.mergeOptions(componentId, {
         topBar: {
@@ -107,10 +117,6 @@ class EditPropertiesScreen extends PureComponent {
     }
   }
 
-  componentDidDisappear() {
-    this.setState({active: false})
-  }
-
   onChange = (value) => this.props.setContext({value})
 
   onPressButton = () => {
@@ -122,7 +128,7 @@ class EditPropertiesScreen extends PureComponent {
           passProps: {params}
         }
       })
-    else if (this.form.current.onValidate()) this.createNewListing()
+    else if (this.form.current.onValidate()) this.createListing()
   }
 
   render() {
@@ -151,6 +157,7 @@ class EditPropertiesScreen extends PureComponent {
 
 export default composeWithRef(
   withContext.byProp('params.contextId'),
+  withProfileMutation,
   withListingMutation(({params: {id}}) => ({id})),
   connect((state) => ({user: getUser(state)}), {setStack})
 )(EditPropertiesScreen)

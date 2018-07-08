@@ -23,17 +23,17 @@ const placeDetails = (place) => ({
 })
 
 const addressText = (place) => {
-  let [street, street_number] = place.structured_formatting.main_text.split(',')
+  let [street, streetNumber] = place.structured_formatting.main_text.split(',')
   const secondary_address = place.structured_formatting.secondary_text
-  street_number = (street_number || '').trim()
-  if (!street_number || !isFinite(street_number)) street_number = 'número'
+  streetNumber = (streetNumber || '').trim()
+  if (!streetNumber || !isFinite(streetNumber)) streetNumber = 'número'
   let value = street
-  if (street_number) value += ', ' + street_number
+  if (streetNumber) value += ', ' + streetNumber
   if (secondary_address) value += ' - ' + secondary_address
   return {
     value,
     street,
-    street_number
+    streetNumber
   }
 }
 
@@ -143,14 +143,14 @@ export default class AutoComplete extends PureComponent {
     this.setState({text: text.value})
     onChange({text, details}, onValidate)
     if (onChangeText) onChangeText(text.value)
-    if (isNaN(text.street_number)) {
+    if (isNaN(text.streetNumber)) {
       const start = text.street.length + 2
       requestAnimationFrame(() =>
         this.setState(
           {
             selection: {
               start,
-              end: start + text.street_number.length
+              end: start + text.streetNumber.length
             }
           },
           () => {

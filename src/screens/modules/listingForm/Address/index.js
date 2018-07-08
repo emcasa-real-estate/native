@@ -1,8 +1,11 @@
+import _ from 'lodash'
 import React, {PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
+import {withApollo} from 'react-apollo'
 
 import composeWithRef from '@/lib/composeWithRef'
 import withContext from '@/screens/modules/context/withContext'
+import {GET_LISTING} from '@/graphql/modules/listings/queries'
 import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import Progress from '@/components/shared/Progress'
@@ -10,6 +13,27 @@ import AddressForm from '@/components/newListing/Address'
 
 import EditPropertiesScreen from '@/screens/modules/listingForm/Properties'
 import SubmitButtonScreen from '@/screens/modules/listingForm/SubmitButton'
+
+const addressText = ({city, state, street, streetNumber, neighborhood}) => {
+  let text = `${street}, ${streetNumber} - `
+  if (neighborhood) text += `${neighborhood}, `
+  text += `${city} - ${state}`
+  return text
+}
+
+const addressValue = (address) => ({
+  details: address,
+  text: {
+    street: address.street,
+    streetNumber: String(address.streetNumber),
+    value: addressText(address)
+  }
+})
+
+const listingValue = ({address, ...listing}) => ({
+  ..._.mapValues(listing, (val) => val && String(val)),
+  address: addressValue(address)
+})
 
 class EditAddressScreen extends PureComponent {
   static defaultProps = {
@@ -26,12 +50,27 @@ class EditAddressScreen extends PureComponent {
 
   form = React.createRef()
 
-  get value() {
-    const {value} = this.props
-    return {
-      address: value.address.details,
-      complement: value.complement
+  async setDefaultValue() {
+    const {client, setContext, params: {id}} = this.props
+    setContext({loading: true})
+    try {
+      const {data: {listing}} = await client.query({
+        query: GET_LISTING,
+        variables: {id}
+      })
+      setContext({
+        value: listingValue(listing),
+        error: undefined,
+        loading: false
+      })
+    } catch (error) {
+      setContext({error, loading: false})
     }
+  }
+
+  componentDidMount() {
+    const {params: {id}} = this.props
+    if (id) this.setDefaultValue()
   }
 
   componentWillUnmount() {
@@ -72,15 +111,14 @@ class EditAddressScreen extends PureComponent {
   }
 
   render() {
-    const {params: {id}, value} = this.props
-    if (id && !value.address) return null
+    const {value, loading, params: {id}} = this.props
     return (
       <Shell testID="@listingForm.Address">
         <Progress progress={1 / 3} />
-        <Body>
+        <Body loading={loading || (id && !value)}>
           <AddressForm
             formRef={this.form}
-            value={this.props.value}
+            value={value}
             onChange={this.onChange}
             onSubmit={this.onSubmit}
           />
@@ -93,6 +131,6 @@ class EditAddressScreen extends PureComponent {
   }
 }
 
-export default composeWithRef(withContext.byProp('componentId'))(
+export default composeWithRef(withContext.byProp('componentId'), withApollo)(
   EditAddressScreen
 )

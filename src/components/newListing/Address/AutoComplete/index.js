@@ -12,7 +12,7 @@ export default field({
     },
     ({details, text} = {}) => {
       if (!details) return undefined
-      else if (isNaN(text.street_number)) return 'O número é obrigatório'
+      else if (isNaN(text.streetNumber)) return 'O número é obrigatório'
       else if (!details.postalCode)
         return 'Não encontramos um endereço válido com esse número'
     }

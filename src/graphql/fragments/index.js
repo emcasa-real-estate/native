@@ -15,6 +15,7 @@ export const Address = gql`
     stateSlug
     street
     streetSlug
+    streetNumber
   }
 `
 

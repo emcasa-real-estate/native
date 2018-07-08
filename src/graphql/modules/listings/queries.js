@@ -11,6 +11,15 @@ export const GET_LISTING = gql`
   ${frag.Listing}
 `
 
+export const GET_LISTING_INPUT = gql`
+  query listingInput($id: ID!) {
+    listing(id: $id) {
+      ...ListingInput
+    }
+  }
+  ${frag.ListingInput}
+`
+
 export const GET_LISTINGS_FEED = gql`
   query listingsFeed(
     $exclude: [ID!]

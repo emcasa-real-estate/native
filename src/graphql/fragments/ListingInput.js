@@ -1,6 +1,8 @@
 import _ from 'lodash'
 import gql from 'graphql-tag'
 
+import AddressInput from './AddressInput'
+
 export const intFields = [
   'area',
   'balconies',
@@ -20,7 +22,7 @@ export const floatFields = ['propertyTax', 'maintenanceFee']
 
 export function parseInput({address, ...listing}) {
   return _.assign(
-    {address},
+    {address: AddressInput.parseInput(address)},
     _.mapValues(_.pick(listing, intFields), parseInt),
     _.mapValues(_.pick(listing, boolFields), Boolean),
     _.mapValues(_.pick(listing, stringFields), String),
@@ -28,13 +30,12 @@ export function parseInput({address, ...listing}) {
   )
 }
 
-const getFields = () =>
-  [].concat(intFields, boolFields, stringFields, floatFields)
+const fields = [].concat(intFields, boolFields, stringFields, floatFields)
 
 export default _.assign(
   gql`
   fragment ListingInput on Listing {
-    ${getFields().join('\n')}
+    ${fields.join('\n')}
     address {
       ...AddressInput
     }

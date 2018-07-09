@@ -15,7 +15,6 @@ export const Address = gql`
     stateSlug
     street
     streetSlug
-    streetNumber
   }
 `
 
@@ -23,6 +22,14 @@ Address.parse = (address) => ({
   ...address,
   __typename: 'Address'
 })
+
+export const UserAddress = gql`
+  fragment UserAddress on Address {
+    ...Address
+    streetNumber
+  }
+  ${Address}
+`
 
 export const Image = gql`
   fragment Image on Image {
@@ -55,16 +62,10 @@ export const Listing = gql`
     isExclusive
     isRelease
     isActive
-    inPersonVisitCount
-    interestCount
-    listingFavoriteCount
-    listingVisualisationCount
-    tourVisualisationCount
     maintenanceFee
     propertyTax
     matterportCode
     description
-    complement
     images {
       ...Image
     }
@@ -100,4 +101,25 @@ export const ListingFeed = gql`
     }
   }
   ${Address}
+`
+
+export const UserListing = gql`
+  fragment UserListingFeed on Listing {
+    ...Listing
+    complement
+    inPersonVisitCount
+    interestCount
+    listingFavoriteCount
+    listingVisualisationCount
+    tourVisualisationCount
+    images {
+      position
+      filename
+    }
+    address {
+      ...UserAddress
+    }
+  }
+  ${Listing}
+  ${UserAddress}
 `

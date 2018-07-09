@@ -8,7 +8,7 @@ var path = require("path");
  * content-type: application/json
  * user-agent: EmCasa/1 CFNetwork/893.14 Darwin/16.7.0
  * connection: keep-alive
- * cookie: _re_key=SFMyNTY.g3QAAAABbQAAABJfdGltYmVyX3Nlc3Npb25faWRtAAAAIDM3NDY5YmU2NzAyOGFhNDg2OGNmMGU2YmVmNGIyNGZk.TuWZqkkQ_4EpHmUZbGmH1W2fva0owkdrkyAKNI_Jffs
+ * cookie: _re_key=SFMyNTY.g3QAAAABbQAAABJfdGltYmVyX3Nlc3Npb25faWRtAAAAIGNmYTM0NGYwYTMxMzkwYTBmNDNkYWE2NjkyNWM3NWRm.xL6JRs7yM2j-pmPdCPx8blEVs2cLAUJq_ApcrpweysM
  * accept-language: en-us
  * authorization: undefined
  * content-length: 65
@@ -19,12 +19,12 @@ module.exports = function (req, res) {
   res.statusCode = 401;
 
   res.setHeader("server", "Cowboy");
-  res.setHeader("date", "Mon, 09 Jul 2018 16:24:59 GMT");
+  res.setHeader("date", "Mon, 09 Jul 2018 22:54:36 GMT");
   res.setHeader("content-length", "39");
-  res.setHeader("set-cookie", ["_re_key=SFMyNTY.g3QAAAABbQAAABJfdGltYmVyX3Nlc3Npb25faWRtAAAAIDM3NDY5YmU2NzAyOGFhNDg2OGNmMGU2YmVmNGIyNGZk.TuWZqkkQ_4EpHmUZbGmH1W2fva0owkdrkyAKNI_Jffs; path=/; HttpOnly"]);
+  res.setHeader("set-cookie", ["_re_key=SFMyNTY.g3QAAAABbQAAABJfdGltYmVyX3Nlc3Npb25faWRtAAAAIGNmYTM0NGYwYTMxMzkwYTBmNDNkYWE2NjkyNWM3NWRm.xL6JRs7yM2j-pmPdCPx8blEVs2cLAUJq_ApcrpweysM; path=/; HttpOnly"]);
   res.setHeader("content-type", "application/json; charset=utf-8");
   res.setHeader("cache-control", "max-age=0, private, must-revalidate");
-  res.setHeader("x-request-id", "c2jvc88m641euo974i2grprmdttnpjub");
+  res.setHeader("x-request-id", "vr1a5kd57lfdao8a8mht0fqmfbe9kjt8");
   res.setHeader("access-control-allow-origin", "*");
   res.setHeader("access-control-expose-headers", "");
   res.setHeader("access-control-allow-credentials", "true");

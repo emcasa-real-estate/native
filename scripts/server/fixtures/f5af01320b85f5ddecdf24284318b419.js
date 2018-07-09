@@ -8,7 +8,7 @@ var path = require("path");
  * content-type: application/json
  * user-agent: EmCasa/1 CFNetwork/893.14 Darwin/16.7.0
  * connection: keep-alive
- * cookie: _re_key=SFMyNTY.g3QAAAABbQAAABJfdGltYmVyX3Nlc3Npb25faWRtAAAAIDM3NDY5YmU2NzAyOGFhNDg2OGNmMGU2YmVmNGIyNGZk.TuWZqkkQ_4EpHmUZbGmH1W2fva0owkdrkyAKNI_Jffs
+ * cookie: _re_key=SFMyNTY.g3QAAAABbQAAABJfdGltYmVyX3Nlc3Npb25faWRtAAAAIGNmYTM0NGYwYTMxMzkwYTBmNDNkYWE2NjkyNWM3NWRm.xL6JRs7yM2j-pmPdCPx8blEVs2cLAUJq_ApcrpweysM
  * accept-language: en-us
  * authorization: undefined
  * content-length: 57
@@ -19,19 +19,19 @@ module.exports = function (req, res) {
   res.statusCode = 201;
 
   res.setHeader("server", "Cowboy");
-  res.setHeader("date", "Mon, 09 Jul 2018 16:22:45 GMT");
+  res.setHeader("date", "Mon, 09 Jul 2018 22:54:42 GMT");
   res.setHeader("content-length", "507");
-  res.setHeader("set-cookie", ["_re_key=SFMyNTY.g3QAAAABbQAAABJfdGltYmVyX3Nlc3Npb25faWRtAAAAIDM3NDY5YmU2NzAyOGFhNDg2OGNmMGU2YmVmNGIyNGZk.TuWZqkkQ_4EpHmUZbGmH1W2fva0owkdrkyAKNI_Jffs; path=/; HttpOnly"]);
+  res.setHeader("set-cookie", ["_re_key=SFMyNTY.g3QAAAABbQAAABJfdGltYmVyX3Nlc3Npb25faWRtAAAAIGNmYTM0NGYwYTMxMzkwYTBmNDNkYWE2NjkyNWM3NWRm.xL6JRs7yM2j-pmPdCPx8blEVs2cLAUJq_ApcrpweysM; path=/; HttpOnly"]);
   res.setHeader("content-type", "application/json; charset=utf-8");
   res.setHeader("cache-control", "max-age=0, private, must-revalidate");
-  res.setHeader("x-request-id", "9ds2h36151omg6jagob8038eq8o7ou9n");
+  res.setHeader("x-request-id", "gcgqiabkqn824tq3fe1n08dq8ukp8rrv");
   res.setHeader("access-control-allow-origin", "*");
   res.setHeader("access-control-expose-headers", "");
   res.setHeader("access-control-allow-credentials", "true");
 
   res.setHeader("x-yakbak-tape", path.basename(__filename, ".js"));
 
-  res.write(new Buffer("eyJ1c2VyIjp7InRva2VuIjoiZXlKaGJHY2lPaUpGVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmhkV1FpT2lKU1pTSXNJbVY0Y0NJNk1UVXpNemMwTlRNMk5pd2lhV0YwSWpveE5UTXhNVFV6TXpZMkxDSnBjM01pT2lKU1pTSXNJbXAwYVNJNklqSXlNREprWmpCaUxXRXdPV0V0TkRrNE5TMDRZamN6TFRRNVpEVTRNbU0xWkRNeU15SXNJbTVpWmlJNk1UVXpNVEUxTXpNMk5Td2ljM1ZpSWpvaU1qRTFJaXdpZEhsd0lqb2lZV05qWlhOekluMC5BQ2ZremxDbHNINldRVkpiNElJdTk3Vl9QeHFUMy14bC1LaTEyXzB5dVcxMHFrRGZjVnY0NkxoSHZGMEZWdmRfMWFrX3FBbW14SUVyTmdBblZGYnJCVDhzQUdfRmMxYjFzaHhIUkgtMFF1a1J5dEhWSHg5aGd6UlRfTWNUTUFyMzE3YkVSRE83MDdNTElIN2dEZzZYNFNydWk1T250Tzlia0VNcS1YallzQjlydWZOOCIsInJvbGUiOiJ1c2VyIiwicGhvbmUiOm51bGwsIm5hbWUiOiJUZXN0IiwiaWQiOjIxNSwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIn19", "base64"));
+  res.write(new Buffer("eyJ1c2VyIjp7InRva2VuIjoiZXlKaGJHY2lPaUpGVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmhkV1FpT2lKU1pTSXNJbVY0Y0NJNk1UVXpNemMyT0RnNE1pd2lhV0YwSWpveE5UTXhNVGMyT0RneUxDSnBjM01pT2lKU1pTSXNJbXAwYVNJNklqRTJabUkzWWpKaExXTXdPVFV0TkRRNFlTMWhaVFE1TFdKbFlUazRaRGd3WlRKaE9TSXNJbTVpWmlJNk1UVXpNVEUzTmpnNE1Td2ljM1ZpSWpvaU1qRTFJaXdpZEhsd0lqb2lZV05qWlhOekluMC5BV2c3N2o0QV9vd3BTSkYtaGtjdHp0MUxxTjJ3aUZNTzBGLWtMVm5ic3Y5VlBGTkRxanhNSkRCeXpIYnNzUjh1WDJNY2dQNnV2Q1FKQUJTRlRFSFBRT0ROQUk2VnUxYVQ4Y3FSLU80UlZZdjVCQ2ZCWWVQZ19kb1gtOXZQVEhzajdYT1RTZjRobllRd01BdVA4NGw4YjExM0VwR0QzOUx1RjdoNWlDZFhTaVR0OGsxdSIsInJvbGUiOiJ1c2VyIiwicGhvbmUiOm51bGwsIm5hbWUiOiJUZXN0IiwiaWQiOjIxNSwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIn19", "base64"));
   res.end();
 
   return __filename;

@@ -74,8 +74,8 @@ class ListingsFeedScreen extends PureComponent {
         <Body loading={loading} style={styles.container}>
           <InfiniteScroll
             loading={loading}
-            remainingCount={remainingCount}
-            onLoadMore={this.onLoadMore}
+            hasNextPage={remainingCount > 0}
+            onLoad={this.onLoadMore}
           >
             <Feed
               data={data}

@@ -8,8 +8,8 @@ describe('listings/results', () => {
   it('loads more listings on scroll', async () => {
     await expect(element(select.nthCard(1))).toExist()
     await expect(element(select.nthCard(16))).toNotExist()
-    await element(select.feed()).swipe('up', 'fast', 0.6)
-    await element(select.feed()).swipe('up', 'fast', 0.6)
+    await element(select.feed()).swipe('up', 'fast', 0.8)
+    await element(select.feed()).swipe('up', 'fast', 0.8)
     await waitFor(element(select.nthCard(16)))
       .toExist()
       .withTimeout(5000)

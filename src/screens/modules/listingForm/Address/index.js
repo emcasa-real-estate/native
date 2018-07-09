@@ -69,7 +69,11 @@ class EditAddressScreen extends PureComponent {
   }
 
   validateForm = () => {
-    return this.props.validListing !== false && this.form.current.onValidate()
+    return (
+      this.props.validListing !== false &&
+      this.form.current &&
+      this.form.current.onValidate()
+    )
   }
 
   componentDidMount() {
@@ -84,7 +88,6 @@ class EditAddressScreen extends PureComponent {
   componentDidAppear() {
     const {componentId, params} = this.props
     if (!params.id) return
-    this.validateForm()
     const passProps = {
       params,
       contextId: componentId,

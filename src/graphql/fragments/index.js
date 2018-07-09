@@ -104,7 +104,7 @@ export const ListingFeed = gql`
 `
 
 export const UserListing = gql`
-  fragment UserListingFeed on Listing {
+  fragment UserListing on Listing {
     ...Listing
     complement
     inPersonVisitCount

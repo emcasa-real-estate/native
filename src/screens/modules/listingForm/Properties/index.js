@@ -45,7 +45,11 @@ class EditPropertiesScreen extends PureComponent {
         {name: 'account.Menu'},
         {name: 'account.Listings'},
         {name: 'listing.Listing', passProps: {params}, id: params.parentId},
-        {name: 'listingForm.EditAddress', passProps: {params}, id: params.contextId},
+        {
+          name: 'listingForm.EditAddress',
+          passProps: {params},
+          id: params.contextId
+        },
         {name: 'listingForm.EditProperties', passProps: {params}},
         {name: 'listingForm.EditGallery', passProps: {params}}
       ],
@@ -98,18 +102,21 @@ class EditPropertiesScreen extends PureComponent {
   }
 
   validateForm = () => {
-    return this.props.validAddress !== false && this.form.current.onValidate()
+    return (
+      this.props.validAddress !== false &&
+      this.form.current &&
+      this.form.current.onValidate()
+    )
   }
 
   componentDidUpdate(prev) {
     if (!prev.error && this.props.error && this.form.current)
-      this.form.current.onValidate()
+      this.validateForm()
   }
 
   componentDidAppear() {
     const {componentId, params} = this.props
     if (!params.id) return
-    this.validateForm()
     const passProps = {params, onValidate: this.validateForm}
     Navigation.mergeOptions(componentId, {
       topBar: {

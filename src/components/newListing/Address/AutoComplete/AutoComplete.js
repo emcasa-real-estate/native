@@ -19,16 +19,16 @@ const parsePlaceText = (place) => {
   return {street, streetNumber}
 }
 
-const placeDetails = (place) => ({
-  street: filterComponent(place, 'route'),
+const placeDetails = (place, details) => ({
+  street: filterComponent(details, 'route'),
   streetNumber:
-    filterComponent(place, 'street_number') ||
+    filterComponent(details, 'street_number') ||
     parsePlaceText(place).streetNumber,
-  postalCode: filterComponent(place, 'postal_code'),
-  neighborhood: filterComponent(place, 'sublocality_level_1'),
-  state: filterComponent(place, 'administrative_area_level_1'),
-  city: filterComponent(place, 'administrative_area_level_2'),
-  ...place.geometry.location
+  postalCode: filterComponent(details, 'postal_code'),
+  neighborhood: filterComponent(details, 'sublocality_level_1'),
+  state: filterComponent(details, 'administrative_area_level_1'),
+  city: filterComponent(details, 'administrative_area_level_2'),
+  ...details.geometry.location
 })
 
 const addressText = (place) => {
@@ -148,7 +148,7 @@ export default class AutoComplete extends PureComponent {
   onChange = (place, _details) => {
     const {onChange, onChangeText, onValidate, onChangeComplete} = this.props
     const text = addressText(place)
-    const details = placeDetails(_details)
+    const details = placeDetails(place, _details)
     this.setState({text: text.value})
     onChange({text, details}, onValidate)
     if (onChangeText) onChangeText(text.value)

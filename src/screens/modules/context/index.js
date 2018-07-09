@@ -3,15 +3,15 @@ import update from 'immutability-helper'
 export const SET_CONTEXT = 'screens/SET_CONTEXT'
 export const CLEAR_CONTEXT = 'screens/CLEAR_CONTEXT'
 
-export const setContext = (screen) => (data) => ({
+export const setContext = (key) => (data) => ({
   type: SET_CONTEXT,
-  screen,
+  key,
   data
 })
 
-export const clearContext = (screen) => () => ({
+export const clearContext = (key) => () => ({
   type: CLEAR_CONTEXT,
-  screen
+  key
 })
 
 export default function screenContextReducer(state = {}, action) {
@@ -19,8 +19,8 @@ export default function screenContextReducer(state = {}, action) {
     case SET_CONTEXT:
     case CLEAR_CONTEXT:
       return update(state, {
-        [action.screen]: {
-          $set: screenContextReducer.node(state[action.screen], action)
+        [action.key]: {
+          $set: screenContextReducer.node(state[action.key], action)
         }
       })
     default:
@@ -36,7 +36,7 @@ screenContextReducer.node = (state = {}, action) => {
         ...action.data
       }
     case CLEAR_CONTEXT:
-      return {}
+      return undefined
     default:
       return state
   }

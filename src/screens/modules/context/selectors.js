@@ -1,2 +1,1 @@
-export const getContext = (state, {screen}) =>
-  state.screens.context[screen] || {}
+export const getContext = (state, {key}) => state.screens.context[key] || {}

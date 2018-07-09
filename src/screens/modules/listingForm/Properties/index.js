@@ -3,13 +3,9 @@ import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
+import {withListingMutation} from '@/graphql/containers'
+import withContext from '@/screens/modules/context/withContext'
 import {getUser} from '@/redux/modules/auth/selectors'
-import {setValue, submit} from '@/screens/modules/listingForm/reducer'
-import {
-  getValue,
-  getListing,
-  isLoading
-} from '@/screens/modules/listingForm/selectors'
 import {setStack} from '@/screens/modules/navigation'
 import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
@@ -40,6 +36,26 @@ class EditPropertiesScreen extends PureComponent {
 
   form = React.createRef()
 
+  navigateToListing = ({id}) => {
+    const params = {
+      id,
+      editing: true,
+      parentId: `new_listing_${id}`,
+      contextId: `edit_listing_${id}`
+    }
+    this.props.setStack(
+      [
+        {name: 'account.Menu'},
+        {name: 'account.Listings'},
+        {name: 'listing.Listing', passProps: {params}, id: params.parent},
+        {name: 'listingForm.EditAddress', passProps: {params}},
+        {name: 'listingForm.EditProperties', passProps: {params}},
+        {name: 'listingForm.EditGallery', passProps: {params}}
+      ],
+      'account'
+    )
+  }
+
   openSuccessModal() {
     const {componentId, listing, value: {address}} = this.props
     Navigation.showModal({
@@ -57,19 +73,17 @@ class EditPropertiesScreen extends PureComponent {
     })
   }
 
-  navigateToListing = ({id}) => {
-    const params = {id, editing: true, parent: `new_listing_${id}`}
-    this.props.setStack(
-      [
-        {name: 'account.Menu'},
-        {name: 'account.Listings'},
-        {name: 'listing.Listing', passProps: {params}, id: params.parent},
-        {name: 'listingForm.EditAddress', passProps: {params}},
-        {name: 'listingForm.EditProperties', passProps: {params}},
-        {name: 'listingForm.EditGallery', passProps: {params}}
-      ],
-      'account'
-    )
+  createListing = async () => {
+    const {value, loading, setContext, submitListing} = this.props
+    if (loading) return
+    setContext({loading: true})
+    try {
+      const x = await submitListing({listing: value})
+      console.log(x)
+      setContext({loading: false})
+    } catch (error) {
+      setContext({error, loading: false})
+    }
   }
 
   componentDidAppear() {
@@ -97,16 +111,10 @@ class EditPropertiesScreen extends PureComponent {
     this.setState({active: false})
   }
 
-  componentDidUpdate(prev) {
-    const {listing, loading, params: {id}} = this.props
-    if (this.state.active && !id && !prev.listing && listing && !loading)
-      this.openSuccessModal()
-  }
+  onChange = (value) => this.props.setContext({value})
 
-  onChange = (value) => this.props.setValue(value)
-
-  onSubmit = () => {
-    const {componentId, params, submit} = this.props
+  onPressButton = () => {
+    const {componentId, params} = this.props
     if (params.id)
       Navigation.push(componentId, {
         component: {
@@ -114,7 +122,7 @@ class EditPropertiesScreen extends PureComponent {
           passProps: {params}
         }
       })
-    else if (this.form.current.onValidate()) submit()
+    else if (this.form.current.onValidate()) this.createNewListing()
   }
 
   render() {
@@ -128,11 +136,11 @@ class EditPropertiesScreen extends PureComponent {
             value={value}
             requirePhone={!user.phone}
             onChange={this.onChange}
-            onSubmit={this.onSubmit}
+            onSubmit={this.onPressButton}
           />
         </Body>
         <Footer style={{padding: 15}}>
-          <Button disabled={loading} onPress={this.onSubmit}>
+          <Button disabled={loading} onPress={this.onPressButton}>
             {params.id ? 'Próximo' : loading ? 'Enviando...' : 'Enviar'}
           </Button>
         </Footer>
@@ -142,13 +150,7 @@ class EditPropertiesScreen extends PureComponent {
 }
 
 export default composeWithRef(
-  connect(
-    (state) => ({
-      user: getUser(state),
-      value: getValue(state),
-      loading: isLoading(state),
-      listing: getListing(state)
-    }),
-    {setValue, submit, setStack}
-  )
+  withContext.byProp('params.contextId'),
+  withListingMutation(({params: {id}}) => ({id})),
+  connect((state) => ({user: getUser(state)}), {setStack})
 )(EditPropertiesScreen)

@@ -1,15 +1,8 @@
 import React, {PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
-import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
-import {
-  setValue,
-  setListing,
-  setRoot,
-  reset
-} from '@/screens/modules/listingForm/reducer'
-import {getValue} from '@/screens/modules/listingForm/selectors'
+import withContext from '@/screens/modules/context/withContext'
 import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import Progress from '@/components/shared/Progress'
@@ -41,37 +34,31 @@ class EditAddressScreen extends PureComponent {
     }
   }
 
-  componentDidMount() {
-    const {componentId, setListing, setRoot, params: {id}} = this.props
-    setRoot(componentId)
-    if (id) setListing({id})
-  }
-
   componentWillUnmount() {
-    const {componentId, reset} = this.props
-    reset(componentId)
+    this.props.clearContext()
   }
 
   componentDidAppear() {
     const {componentId, params} = this.props
-    if (params.id)
-      Navigation.mergeOptions(componentId, {
-        topBar: {
-          rightButtons: [
-            {
-              id: `${componentId}_submit`,
-              passProps: {params},
-              component: {
-                name: SubmitButtonScreen.screenName,
-                passProps: {params}
-              }
+    if (!params.id) return
+    const passProps = {...params, contextId: componentId}
+    Navigation.mergeOptions(componentId, {
+      topBar: {
+        rightButtons: [
+          {
+            id: `${componentId}_submit`,
+            passProps,
+            component: {
+              name: SubmitButtonScreen.screenName,
+              passProps
             }
-          ]
-        }
-      })
+          }
+        ]
+      }
+    })
   }
 
-  onChange = (value) => this.props.setValue(value)
+  onChange = (value) => this.props.setContext({value})
 
   onSubmit = () => {
     const {componentId, params} = this.props
@@ -79,7 +66,7 @@ class EditAddressScreen extends PureComponent {
       Navigation.push(componentId, {
         component: {
           name: EditPropertiesScreen.screenName,
-          passProps: {params}
+          passProps: {params: {...params, contextId: componentId}}
         }
       })
   }
@@ -106,11 +93,6 @@ class EditAddressScreen extends PureComponent {
   }
 }
 
-export default composeWithRef(
-  connect(
-    (state) => ({
-      value: getValue(state)
-    }),
-    {setValue, setListing, setRoot, reset}
-  )
-)(EditAddressScreen)
+export default composeWithRef(withContext.byProp('componentId'))(
+  EditAddressScreen
+)

@@ -126,10 +126,10 @@ export default class AutoComplete extends PureComponent {
   }
 
   onBlur = async () => {
-    this.setState({active: false})
     if (this.props.textInputProps && this.props.textInputProps.onBlur)
       this.props.textInputProps.onBlur()
     if (this.props.onBlur) this.props.onBlur()
+    this.setState({active: false})
     setTimeout(async () => {
       if (!this.autoComplete.current) return
       await this.awaitRequests()

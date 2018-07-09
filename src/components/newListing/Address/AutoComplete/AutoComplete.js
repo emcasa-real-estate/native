@@ -12,9 +12,18 @@ const filterComponent = (place, property) => {
   if (component) return component.short_name
 }
 
+const parsePlaceText = (place) => {
+  const [street, streetNumber] = place.structured_formatting.main_text.split(
+    ','
+  )
+  return {street, streetNumber}
+}
+
 const placeDetails = (place) => ({
   street: filterComponent(place, 'route'),
-  streetNumber: filterComponent(place, 'street_number'),
+  streetNumber:
+    filterComponent(place, 'street_number') ||
+    parsePlaceText(place).streetNumber,
   postalCode: filterComponent(place, 'postal_code'),
   neighborhood: filterComponent(place, 'sublocality_level_1'),
   state: filterComponent(place, 'administrative_area_level_1'),
@@ -23,7 +32,7 @@ const placeDetails = (place) => ({
 })
 
 const addressText = (place) => {
-  let [street, streetNumber] = place.structured_formatting.main_text.split(',')
+  let {street, streetNumber} = parsePlaceText(place)
   const secondary_address = place.structured_formatting.secondary_text
   streetNumber = (streetNumber || '').trim()
   if (!streetNumber || !isFinite(streetNumber)) streetNumber = 'número'

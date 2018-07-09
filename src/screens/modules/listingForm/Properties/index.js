@@ -44,8 +44,8 @@ class EditPropertiesScreen extends PureComponent {
       [
         {name: 'account.Menu'},
         {name: 'account.Listings'},
-        {name: 'listing.Listing', passProps: {params}, id: params.parent},
-        {name: 'listingForm.EditAddress', passProps: {params}},
+        {name: 'listing.Listing', passProps: {params}, id: params.parentId},
+        {name: 'listingForm.EditAddress', passProps: {params}, id: params.contextId},
         {name: 'listingForm.EditProperties', passProps: {params}},
         {name: 'listingForm.EditGallery', passProps: {params}}
       ],

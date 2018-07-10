@@ -41,7 +41,6 @@ class FavoritesScreen extends PureComponent {
             data={favorites.data}
             loading={favorites.loading}
             onSelect={this.onSelect}
-            Card={Card}
             ListEmptyComponent={favorites.loading ? undefined : ListEmpty}
           />
         </Body>

@@ -1,14 +1,47 @@
-import {View, TouchableOpacity} from 'react-native'
+import {View, TouchableOpacity, Dimensions} from 'react-native'
 
 import LikeIcon from '@/components/listings/LikeIcon'
 import Text from '@/components/shared/Text'
+import Icon from '@/components/shared/Icon'
 import Price from '@/components/shared/Price'
 import Image from '@/components/listings/Image'
-import touchable from '../touchable'
-import $styles from './styles'
+import Gallery from '@/components/listings/Gallery'
+import styles, {iconColor} from './styles'
 
-function ListingCard({
-  styles,
+function Button({children, icon, hitSlop, ...props}) {
+  return (
+    <TouchableOpacity
+      {...props}
+      accessible
+      style={styles.iconButton}
+      hitSlop={{
+        top: hitSlop,
+        bottom: hitSlop,
+        left: hitSlop,
+        right: hitSlop
+      }}
+    >
+      {children || <Icon name={icon} size={19} color={iconColor} />}
+    </TouchableOpacity>
+  )
+}
+
+Button.defaultProps = {hitSlop: 15}
+
+function LikeButton({favorite, ...props}) {
+  return (
+    <Button
+      {...props}
+      accessibilityLabel={
+        favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'
+      }
+    >
+      <LikeIcon active={favorite} size={19} />
+    </Button>
+  )
+}
+
+export default function ListingCard({
   style,
   address,
   images,
@@ -17,11 +50,10 @@ function ListingCard({
   isActive,
   favorite,
   onFavorite,
-  testID,
+  onPress,
   testUniqueID,
   ...props
 }) {
-  const image = images[0] || {}
   const padding = 15
   const imageSize = {
     width: width - padding * 2,
@@ -29,31 +61,38 @@ function ListingCard({
   }
 
   return (
-    <View style={styles.container.concat(style, {width})} {...props}>
+    <View style={[styles.container].concat(style, {width})} {...props}>
       <View testID={`listing_card(${testUniqueID})`}>
-        <View style={styles.thumbnail}>
-          {isActive && (
-            <TouchableOpacity
-              accessible
-              accessibilityLabel={
-                favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'
-              }
-              testID="favorite_button"
-              style={styles.iconButton}
-              onPress={onFavorite}
-              hitSlop={{
-                top: 15,
-                bottom: 15,
-                left: 15,
-                right: 15
-              }}
-            >
-              <LikeIcon contrast active={favorite} />
-            </TouchableOpacity>
+        <View style={[styles.thumbnail, imageSize]}>
+          {images.length ? (
+            <Gallery inline {...imageSize}>
+              {images.slice(0, 4)}
+            </Gallery>
+          ) : (
+            <Image thumbnail style={styles.image} {...imageSize} />
           )}
-          <Image thumbnail style={styles.image} {...image} {...imageSize} />
         </View>
         <View style={styles.body}>
+          <View style={[styles.row, styles.buttonsRow]}>
+            <View>
+              {isActive && (
+                <LikeButton
+                  testID="favorite_button"
+                  favorite={favorite}
+                  onPress={onFavorite}
+                />
+              )}
+            </View>
+            <View>
+              <Button
+                hitSlop={30}
+                label="Visualizar"
+                icon="share"
+                testID="view_button"
+                onPress={onPress}
+              />
+            </View>
+          </View>
           <View style={styles.row}>
             <Text style={styles.street} numberOfLines={1} ellipsizeMode="tail">
               {address.street}
@@ -72,7 +111,8 @@ function ListingCard({
 }
 
 ListingCard.defaultProps = {
-  testUniqueID: ''
+  testUniqueID: '',
+  get width() {
+    return Dimensions.get('window').width
+  }
 }
-
-export default touchable($styles.inject()(ListingCard))

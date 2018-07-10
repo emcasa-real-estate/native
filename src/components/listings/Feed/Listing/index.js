@@ -14,6 +14,7 @@ export default function ListingFeed({onSelect, pagination, Card, ...props}) {
       testID="listing_feed"
       pagination={pagination}
       keyExtractor={keyExtractor}
+      removeClippedSubviews={process.env.NODE_ENV === 'production'}
       renderItem={({item, index}) => (
         <Card
           testUniqueID={index + 1}

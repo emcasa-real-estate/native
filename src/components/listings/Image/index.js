@@ -1,5 +1,9 @@
+import {PixelRatio} from 'react-native'
+
 import * as image from '@/assets/image'
 import LAYOUTS from './layouts'
+
+const px = PixelRatio.getPixelSizeForLayoutSize
 
 export default function ListingImage({
   layout,
@@ -19,8 +23,8 @@ export default function ListingImage({
       source={{
         uri: ListingImage.url(filename, {
           thumbnail,
-          width: width * resolution,
-          height: height * resolution
+          width: px(width) * resolution,
+          height: px(height) * resolution
         })
       }}
       width={width}
@@ -32,7 +36,7 @@ export default function ListingImage({
 
 ListingImage.defaultProps = {
   layout: 'static',
-  resolution: 2
+  resolution: 1
 }
 
 ListingImage.url = (
@@ -41,7 +45,7 @@ ListingImage.url = (
 ) => {
   let options
   if (width && height) options = {width, height}
-  else if (thumbnail) options = {width: 400, height: 200}
-  else options = {width: 600, height: 400}
+  else if (thumbnail) options = {width: px(400), height: px(200)}
+  else options = {width: px(600), height: px(400)}
   return image.url(filename, options)
 }

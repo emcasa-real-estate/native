@@ -49,7 +49,7 @@ export default class Body extends PureComponent {
     children: undefined,
     layout: {
       width: Dimensions.get('window').width,
-      height: Dimensions.get('window').height
+      height: Dimensions.get('window').height - 50
     }
   }
 
@@ -64,12 +64,6 @@ export default class Body extends PureComponent {
 
   onLayout = ({nativeEvent: {layout}}) => {
     this.reloadKeyboardLayout()
-    this.setState({
-      layout: {
-        width: layout.width,
-        height: layout.height
-      }
-    })
   }
 
   renderOverlay() {

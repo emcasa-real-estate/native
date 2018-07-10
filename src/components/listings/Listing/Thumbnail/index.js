@@ -72,7 +72,7 @@ export default class ListingThumbnail extends Component {
                 }
                 onPress={onFavorite}
               >
-                <LikeIcon active={favorite} size={22} />
+                <LikeIcon active={favorite} size={20} />
               </ActionButton>
             )}
           </View>

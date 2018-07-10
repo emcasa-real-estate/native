@@ -1,18 +1,14 @@
 import {StyleSheet} from 'react-native'
 
-import $StyleSheet from '@/assets/StyleSheet'
 import * as colors from '@/assets/colors'
 
-export default $StyleSheet({
+export default StyleSheet.create({
   container: {
     padding: 15,
     paddingTop: 20,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: colors.gray.lighter,
-    borderRadius: 5,
-    ':active': {
-      backgroundColor: colors.gray.offWhite
-    }
+    borderRadius: 5
   },
   thumbnail: {
     position: 'relative',
@@ -36,6 +32,9 @@ export default $StyleSheet({
     alignItems: 'baseline',
     marginBottom: 5
   },
+  buttonsRow: {
+    marginBottom: 10
+  },
   street: {
     color: colors.gray.darker,
     flex: 1,
@@ -48,13 +47,9 @@ export default $StyleSheet({
     fontWeight: '600'
   },
   priceText: {
-    fontWeight: '300',
+    fontWeight: '400',
     color: colors.gray.darker
-  },
-  iconButton: {
-    position: 'absolute',
-    zIndex: 1,
-    top: 15,
-    right: 15
   }
 })
+
+export const iconColor = colors.gray.dark

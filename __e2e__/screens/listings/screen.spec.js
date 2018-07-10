@@ -20,31 +20,25 @@ describe('listings/results', () => {
     beforeAll(() => device.reloadReactNative())
     beforeEach(() => element(select.feed()).swipe('down', 'fast', 0.5))
 
-    const scrollToCard = (n, direction = 'down') =>
-      waitFor(element(select.nthCard(n)))
-        .toBeVisible()
-        .whileElement(select.feed())
-        .scroll(250, direction)
-
     it('saves client-side favorited listings', async () => {
       for (let i = 1; i <= 3; ++i) {
         const likeButton = element(select.nthLikeButton(i))
-        await scrollToCard(i)
         await expect(likeButton).toBeVisible()
         await expect(likeButton).toHaveLabel('Adicionar aos favoritos')
         await likeButton.tap()
         await expect(likeButton).toHaveLabel('Remover dos favoritos')
+        await element(select.feed()).scroll(310, 'down')
       }
     })
 
     it('removes client-side favorited listings', async () => {
       for (let i = 1; i <= 3; ++i) {
         const likeButton = element(select.nthLikeButton(i))
-        await scrollToCard(i)
         await expect(likeButton).toBeVisible()
         await expect(likeButton).toHaveLabel('Remover dos favoritos')
         await likeButton.tap()
         await expect(likeButton).toHaveLabel('Adicionar aos favoritos')
+        await element(select.feed()).scroll(310, 'down')
       }
     })
   })

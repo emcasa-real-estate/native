@@ -9,8 +9,12 @@ const server = require('./index.js')
 const time = Date.now()
 
 if (_.includes(process.argv, '--diff')) {
+  console.log(
+    'Using diff mode. Untouched endpoints will be removed on shutdown.'
+  )
   cleanup((code) => {
-    if (code !== 0) return
+    console.log(code)
+    if (code) return
     const fixtures = `${__dirname}/fixtures`
     const files = fs.readdirSync(fixtures)
     console.log('\nRemoving unused endpoints ...')

@@ -1,19 +1,11 @@
 import {PureComponent} from 'react'
-import {connect} from 'react-redux'
 
-import {getData} from '@/redux/modules/listings/data/selectors'
+import composeWithRef from '@/lib/composeWithRef'
+import {withListing} from '@/graphql/containers'
 import {Modal, Body} from '@/components/layout'
 import Gallery from '@/components/listings/Gallery'
 
-@connect(
-  (state, {params}) => ({
-    data: getData(state, params) || {}
-  }),
-  null,
-  null,
-  {withRef: true}
-)
-export default class ListingGalleryScreen extends PureComponent {
+class ListingGalleryScreen extends PureComponent {
   static screenName = 'listing.Gallery'
 
   static options = {
@@ -23,15 +15,19 @@ export default class ListingGalleryScreen extends PureComponent {
   }
 
   render() {
-    const {data, onDismiss} = this.props
+    const {listing: {data, loading}, onDismiss} = this.props
 
     return (
       <Modal testID="@listing.Gallery">
-        <Body>
+        <Body loading={loading}>
           <Modal.Header iconColor="white" onDismiss={onDismiss} />
-          <Gallery>{data.images}</Gallery>
+          {data && <Gallery>{data.images}</Gallery>}
         </Body>
       </Modal>
     )
   }
 }
+
+export default composeWithRef(withListing(({params: {id}}) => ({id})))(
+  ListingGalleryScreen
+)

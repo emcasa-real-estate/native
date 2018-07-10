@@ -20,4 +20,12 @@ export const API_URL =
   process.env.API_URL ||
   'https://em-casa-backend-staging.herokuapp.com'
 
+export const APOLLO_ENGINE_URL =
+  Platform.select({
+    ios: process.env.IOS_APOLLO_ENGINE_URL,
+    android: process.env.ANDROID_APOLLO_ENGINE_URL
+  }) ||
+  process.env.APOLLO_ENGINE_URL ||
+  `${API_URL}/graphql_api`
+
 export const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY

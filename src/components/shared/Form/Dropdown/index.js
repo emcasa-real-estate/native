@@ -63,7 +63,8 @@ export class ControlledDropdown extends PureComponent {
       this.dropdown.value.select(this.selectedId)
   }
 
-  onChange = (i) => this.props.onChange(this.props.options[i].value)
+  onChange = (i) =>
+    this.props.onChange(this.props.options[i].value, this.props.onValidate)
 
   onToggle = (active) => () => this.setState({active})
 

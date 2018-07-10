@@ -19,12 +19,12 @@ module.exports = function (req, res) {
   res.statusCode = 401;
 
   res.setHeader("server", "Cowboy");
-  res.setHeader("date", "Fri, 08 Jun 2018 18:34:23 GMT");
+  res.setHeader("date", "Mon, 09 Jul 2018 22:54:36 GMT");
   res.setHeader("content-length", "39");
   res.setHeader("set-cookie", ["_re_key=SFMyNTY.g3QAAAABbQAAABJfdGltYmVyX3Nlc3Npb25faWRtAAAAIGNmYTM0NGYwYTMxMzkwYTBmNDNkYWE2NjkyNWM3NWRm.xL6JRs7yM2j-pmPdCPx8blEVs2cLAUJq_ApcrpweysM; path=/; HttpOnly"]);
   res.setHeader("content-type", "application/json; charset=utf-8");
   res.setHeader("cache-control", "max-age=0, private, must-revalidate");
-  res.setHeader("x-request-id", "msla8ji8f1kntli2o72urdbed5g7v6g3");
+  res.setHeader("x-request-id", "vr1a5kd57lfdao8a8mht0fqmfbe9kjt8");
   res.setHeader("access-control-allow-origin", "*");
   res.setHeader("access-control-expose-headers", "");
   res.setHeader("access-control-allow-credentials", "true");

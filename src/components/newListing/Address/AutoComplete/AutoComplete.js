@@ -12,28 +12,37 @@ const filterComponent = (place, property) => {
   if (component) return component.short_name
 }
 
-const placeDetails = (place) => ({
-  street: filterComponent(place, 'route'),
-  street_number: filterComponent(place, 'street_number'),
-  postal_code: filterComponent(place, 'postal_code'),
-  neighborhood: filterComponent(place, 'sublocality_level_1'),
-  state: filterComponent(place, 'administrative_area_level_1'),
-  city: filterComponent(place, 'administrative_area_level_2'),
-  ...place.geometry.location
+const parsePlaceText = (place) => {
+  const [street, streetNumber] = place.structured_formatting.main_text.split(
+    ','
+  )
+  return {street, streetNumber}
+}
+
+const placeDetails = (place, details) => ({
+  street: filterComponent(details, 'route'),
+  streetNumber:
+    filterComponent(details, 'street_number') ||
+    parsePlaceText(place).streetNumber,
+  postalCode: filterComponent(details, 'postal_code'),
+  neighborhood: filterComponent(details, 'sublocality_level_1'),
+  state: filterComponent(details, 'administrative_area_level_1'),
+  city: filterComponent(details, 'administrative_area_level_2'),
+  ...details.geometry.location
 })
 
 const addressText = (place) => {
-  let [street, street_number] = place.structured_formatting.main_text.split(',')
+  let {street, streetNumber} = parsePlaceText(place)
   const secondary_address = place.structured_formatting.secondary_text
-  street_number = (street_number || '').trim()
-  if (!street_number || !isFinite(street_number)) street_number = 'número'
+  streetNumber = (streetNumber || '').trim()
+  if (!streetNumber || !isFinite(streetNumber)) streetNumber = 'número'
   let value = street
-  if (street_number) value += ', ' + street_number
+  if (streetNumber) value += ', ' + streetNumber
   if (secondary_address) value += ' - ' + secondary_address
   return {
     value,
     street,
-    street_number
+    streetNumber
   }
 }
 
@@ -117,10 +126,10 @@ export default class AutoComplete extends PureComponent {
   }
 
   onBlur = async () => {
-    this.setState({active: false})
     if (this.props.textInputProps && this.props.textInputProps.onBlur)
       this.props.textInputProps.onBlur()
     if (this.props.onBlur) this.props.onBlur()
+    this.setState({active: false})
     setTimeout(async () => {
       if (!this.autoComplete.current) return
       await this.awaitRequests()
@@ -139,18 +148,18 @@ export default class AutoComplete extends PureComponent {
   onChange = (place, _details) => {
     const {onChange, onChangeText, onValidate, onChangeComplete} = this.props
     const text = addressText(place)
-    const details = placeDetails(_details)
+    const details = placeDetails(place, _details)
     this.setState({text: text.value})
     onChange({text, details}, onValidate)
     if (onChangeText) onChangeText(text.value)
-    if (isNaN(text.street_number)) {
+    if (isNaN(text.streetNumber)) {
       const start = text.street.length + 2
       requestAnimationFrame(() =>
         this.setState(
           {
             selection: {
               start,
-              end: start + text.street_number.length
+              end: start + text.streetNumber.length
             }
           },
           () => {

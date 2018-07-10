@@ -1,5 +1,7 @@
 import gql from 'graphql-tag'
 
+import * as frag from '@/graphql/fragments'
+
 export const VISUALIZE_TOUR = gql`
   mutation tourVisualized($id: ID!) {
     tourVisualized(id: $id) {
@@ -26,4 +28,22 @@ export const UNFAVORITE = ({cache}) => gql`
       }
     }
   }
+`
+
+export const INSERT_LISTING = gql`
+  mutation insertListing($listing: ListingInput!) {
+    insertListing(input: $listing) {
+      ...Listing
+    }
+  }
+  ${frag.Listing}
+`
+
+export const UPDATE_LISTING = gql`
+  mutation updateListing($id: ID!, $listing: ListingInput!) {
+    updateListing(id: $id, input: $listing) {
+      ...Listing
+    }
+  }
+  ${frag.Listing}
 `

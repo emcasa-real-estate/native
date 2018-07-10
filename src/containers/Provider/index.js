@@ -8,8 +8,16 @@ import client from '@/lib/client'
 import ApolloProvider from './ApolloProvider'
 
 export default class AppProvider extends PureComponent {
+  state = {ready: false}
+
+  async componentDidMount() {
+    await client.ready
+    this.setState({ready: true})
+  }
+
   render() {
     const {children} = this.props
+    if (!this.state.ready) return null
     return (
       <Provider store={client.store}>
         <PersistGate persistor={client.store.persistor}>

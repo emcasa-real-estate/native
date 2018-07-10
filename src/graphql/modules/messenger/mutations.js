@@ -4,7 +4,7 @@ import * as frag from '@/graphql/fragments'
 
 export const SEND_MESSAGE = gql`
   mutation sendMessage($listingId: ID!, $receiverId: ID!, $message: String) {
-    listingUserMessages(
+    sendMessage(
       listingId: $listingId
       receiverId: $receiverId
       message: $message

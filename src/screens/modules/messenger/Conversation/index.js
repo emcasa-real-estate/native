@@ -1,9 +1,7 @@
 import {PureComponent} from 'react'
-import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
 import {withMessages, withSendMessageMutation} from '@/graphql/containers'
-import {getUser} from '@/redux/modules/auth/selectors'
 import {Shell, Body, Footer} from '@/components/layout'
 import MessageForm from '@/components/messenger/Form'
 
@@ -13,7 +11,7 @@ class ConversationScreen extends PureComponent {
   onSubmit = (message) => this.props.sendMessage({variables: {message}})
 
   render() {
-    console.log(this.props)
+    // console.log(this.props)
     return (
       <Shell disableKeyboardSpacer>
         <Body scroll />
@@ -26,12 +24,6 @@ class ConversationScreen extends PureComponent {
 }
 
 export default composeWithRef(
-  connect((state) => ({user: getUser(state)})),
-  withMessages(({user, params}) => ({
-    senderId: user.id,
-    listingId: params.listingId
-  })),
-  withSendMessageMutation(({params}) => ({
-    listingId: params.listingId
-  }))
+  withMessages(({params: {listingId}}) => ({listingId})),
+  withSendMessageMutation(({params: {listingId}}) => ({listingId}))
 )(ConversationScreen)

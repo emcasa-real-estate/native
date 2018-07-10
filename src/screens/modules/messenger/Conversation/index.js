@@ -4,7 +4,8 @@ import {connect} from 'react-redux'
 import composeWithRef from '@/lib/composeWithRef'
 import {withMessages, withSendMessageMutation} from '@/graphql/containers'
 import {getUser} from '@/redux/modules/auth/selectors'
-import {Shell, Body} from '@/components/layout'
+import {Shell, Body, Footer} from '@/components/layout'
+import MessageForm from '@/components/messenger/Form'
 
 class ConversationScreen extends PureComponent {
   static screenName = 'messenger.Conversation'
@@ -12,8 +13,11 @@ class ConversationScreen extends PureComponent {
   render() {
     console.log(this.props)
     return (
-      <Shell>
-        <Body />
+      <Shell disableKeyboardSpacer>
+        <Body scroll />
+        <Footer>
+          <MessageForm onSubmit={this.onSubmit} />
+        </Footer>
       </Shell>
     )
   }

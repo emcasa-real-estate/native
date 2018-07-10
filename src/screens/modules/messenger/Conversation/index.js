@@ -10,6 +10,8 @@ import MessageForm from '@/components/messenger/Form'
 class ConversationScreen extends PureComponent {
   static screenName = 'messenger.Conversation'
 
+  onSubmit = (message) => this.props.sendMessage({variables: {message}})
+
   render() {
     console.log(this.props)
     return (

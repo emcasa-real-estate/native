@@ -10,7 +10,10 @@ export default class MessengerForm extends PureComponent {
 
   onChange = (value) => this.setState({value})
 
-  onSubmit = () => this.props.onSubmit(this.state.value)
+  onSubmit = () => {
+    const {value} = this.state
+    this.setState({value: ''}, () => this.props.onSubmit(value))
+  }
 
   render() {
     const {value} = this.state

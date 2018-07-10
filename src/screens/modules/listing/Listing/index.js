@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import {PureComponent} from 'react'
+import {View} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import Share from 'react-native-share'
 import {connect} from 'react-redux'
@@ -19,7 +20,7 @@ import Listing from './Listing'
 import GalleryScreen from '@/screens/modules/listing/Gallery'
 import TourScreen from '@/screens/modules/listing/Tour'
 import InterestFormScreen from '@/screens/modules/interest/Form'
-import EditAddressScreen from '@/screens/modules/listingForm/Address'
+import MessengerScreen from '@/screens/modules/messenger/Conversation'
 
 class ListingScreen extends PureComponent {
   static screenName = 'listing.Listing'
@@ -74,8 +75,8 @@ class ListingScreen extends PureComponent {
     if (data && !_.isEqual(data, prev.listing.data)) this.updateNavigation()
   }
 
-  navigateTo = (component) => () => {
-    const {componentId, params} = this.props
+  navigateTo = (component, params = this.props.params) => () => {
+    const {componentId} = this.props
     Navigation.push(componentId, {
       component: {
         ...component,
@@ -135,19 +136,30 @@ class ListingScreen extends PureComponent {
   }
 
   renderFooter() {
-    const {listing: {loading}, params} = this.props
-    if (loading) return null
+    const {params: {id}} = this.props
     return (
-      <Button
-        color="green"
-        onPress={this.navigateTo({
-          name: params.editing
-            ? EditAddressScreen.screenName
-            : InterestFormScreen.screenName
-        })}
-      >
-        {params.editing ? 'Editar' : 'Marcar visita'}
-      </Button>
+      <View style={{flexDirection: 'row'}}>
+        <Button
+          color="lightgreen"
+          styles={{
+            container: {flex: 0.5, marginRight: 5},
+            text: {fontSize: 14}
+          }}
+          onPress={this.navigateTo({name: InterestFormScreen.screenName})}
+        >
+          Marcar visita
+        </Button>
+        <Button
+          color="green"
+          styles={{container: {flex: 0.5, marginLeft: 5}, text: {fontSize: 14}}}
+          onPress={this.navigateTo(
+            {name: MessengerScreen.screenName},
+            {listingId: id}
+          )}
+        >
+          Entre em contato
+        </Button>
+      </View>
     )
   }
 
@@ -172,7 +184,7 @@ class ListingScreen extends PureComponent {
               </Section>
             )}
         </Body>
-        {!this.isLoading && (
+        {!loading && (
           <Footer style={{padding: 15}}>{this.renderFooter()}</Footer>
         )}
       </Shell>

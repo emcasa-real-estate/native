@@ -4,7 +4,7 @@ import {SEND_MESSAGE} from '@/graphql/modules/messenger/mutations'
 
 function SendMessageMutation({children, listingId, senderId, ...options}) {
   return (
-    <Mutation query={SEND_MESSAGE} {...options}>
+    <Mutation mutation={SEND_MESSAGE} {...options}>
       {(mutate, ctx) =>
         children(
           ({variables}) =>

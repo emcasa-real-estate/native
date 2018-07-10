@@ -19,6 +19,7 @@
         "include": [
           "NODE_ENV",
           "GOOGLE_PLACES_API_KEY",
+          "MESSENGER_RECEIVER_ID",
           "API_URL",
           "IOS_API_URL",
           "ANDROID_API_URL",

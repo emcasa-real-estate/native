@@ -1,7 +1,6 @@
 import {PureComponent} from 'react'
 import {connect} from 'react-redux'
 
-import {MESSENGER_RECEIVER_ID} from '@/lib/config'
 import composeWithRef from '@/lib/composeWithRef'
 import {withMessages, withSendMessageMutation} from '@/graphql/containers'
 import {getUser} from '@/redux/modules/auth/selectors'
@@ -27,7 +26,6 @@ export default composeWithRef(
     listingId: params.listingId
   })),
   withSendMessageMutation(({params}) => ({
-    receiverId: params.receiverId || MESSENGER_RECEIVER_ID,
     listingId: params.listingId
   }))
 )(ConversationScreen)

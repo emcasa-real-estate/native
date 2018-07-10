@@ -27,7 +27,10 @@
           "ANDROID_CDN_URL",
           "APOLLO_ENGINE_URL",
           "IOS_APOLLO_ENGINE_URL",
-          "ANDROID_APOLLO_ENGINE_URL"
+          "ANDROID_APOLLO_ENGINE_URL",
+          "WEB_SOCKET_URL",
+          "IOS_WEB_SOCKET_URL",
+          "ANDROID_WEB_SOCKET_URL"
         ]
       }
     ]

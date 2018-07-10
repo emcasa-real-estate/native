@@ -75,18 +75,26 @@ class MapScreen extends Component {
 
   onRequestPosition = () => this.props.requestPosition()
 
+  onOpenListing = (id) => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: ListingScreen.screenName,
+        passProps: {params: {id}}
+      }
+    })
+  }
+
   onSelect = (id) => this.props.setActiveListing(id)
 
   onReturn = () => Navigation.pop(this.props.componentId)
 
   render() {
     const {
-      listingsFeed: {data, remainingCount},
+      listingsFeed: {data},
       activeListing,
       watchingPosition,
       isWithinBounds,
-      userPosition,
-      componentId
+      userPosition
     } = this.props
 
     return (
@@ -108,7 +116,11 @@ class MapScreen extends Component {
           <ListButton style={styles.button} onPress={this.onReturn} />
         </View>
         <View style={styles.listings}>
-          <Feed active={activeListing} data={data} onSelect={this.onSelect} />
+          <Feed
+            active={activeListing}
+            data={data}
+            onSelect={this.onOpenListing}
+          />
         </View>
       </View>
     )

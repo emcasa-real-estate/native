@@ -1,3 +1,5 @@
+import 'moment/locale/pt-br'
+import moment from 'moment'
 import {YellowBox, Platform} from 'react-native'
 import KeyboardManager from 'react-native-keyboard-manager'
 
@@ -14,6 +16,8 @@ YellowBox.ignoreWarnings([
 ])
 
 initNavigation()
+
+moment.locale('pt-br')
 
 if (Platform.OS === 'ios') {
   KeyboardManager.setEnable(true)

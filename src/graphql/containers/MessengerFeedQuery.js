@@ -1,10 +1,10 @@
 import {Query} from 'react-apollo'
 import {compose, mapProps} from 'recompose'
 
-import {GET_MESSAGE_CHANNELS} from '@/graphql/modules/messenger/queries'
+import {GET_CHANNEL_FEED} from '@/graphql/modules/messenger/queries'
 
 export const withMessengerFeed = (Target) => (props) => (
-  <Query query={GET_MESSAGE_CHANNELS}>
+  <Query query={GET_CHANNEL_FEED}>
     {({data, ...response}) => (
       <Target
         {...props}

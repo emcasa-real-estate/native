@@ -17,25 +17,11 @@ export const GET_MESSAGES = gql`
   ${frag.Message}
 `
 
-export const GET_MESSAGE_CHANNELS = gql`
+export const GET_CHANNEL_FEED = gql`
   query userChannels {
     userChannels {
-      id
-      unreadCount
-      listing {
-        id
-      }
-      lastMessage {
-        ...Message
-      }
-      participant1 {
-        ...User
-      }
-      participant2 {
-        ...User
-      }
+      ...Channel
     }
   }
-  ${frag.User}
-  ${frag.Message}
+  ${frag.Channel}
 `

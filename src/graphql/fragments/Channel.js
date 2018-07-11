@@ -2,6 +2,8 @@ import gql from 'graphql-tag'
 
 import User from './User'
 import Message from './Message'
+import Image from './Image'
+import Address from './Address'
 
 export default gql`
   fragment Channel on Channel {
@@ -9,6 +11,14 @@ export default gql`
     unreadCount
     listing {
       id
+      type
+      price
+      images(isActive: true, limit: 1) {
+        ...Image
+      }
+      address {
+        ...Address
+      }
     }
     participant1 {
       ...User
@@ -22,4 +32,6 @@ export default gql`
   }
   ${User}
   ${Message}
+  ${Address}
+  ${Image}
 `

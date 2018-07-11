@@ -24,6 +24,6 @@ function FavoritesMutation({children, id, favorite, jwt, logEvent}) {
   )
 }
 
-const props = (state) => ({jwt: getToken(state)}, {logEvent})
+const props = (state) => ({jwt: getToken(state)})
 
-export default connect(props)(FavoritesMutation)
+export default connect(props, {logEvent})(FavoritesMutation)

@@ -83,7 +83,9 @@ export default class MessageBody extends PureComponent {
             {marginLeft: align === 'right' ? 0 : 20}
           ]}
         >
-          <Text style={styles.text}>{children}</Text>
+          <Text selectable style={styles.text}>
+            {children}
+          </Text>
         </View>
         {layout && <View style={styles.background}>{this.renderBox()}</View>}
       </View>

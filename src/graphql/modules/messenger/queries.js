@@ -18,9 +18,10 @@ export const GET_MESSAGES = gql`
 `
 
 export const GET_MESSAGE_CHANNELS = gql`
-  query userMessageChannels {
+  query userChannels {
     userChannels {
       id
+      unreadCount
       listing {
         id
       }

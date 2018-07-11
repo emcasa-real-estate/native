@@ -12,18 +12,18 @@ export default StyleSheet.create({
     flex: 1
   },
   button: {
-    height: 40,
-    width: 40,
+    height: 35,
+    width: 35,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 20,
+    borderRadius: 17.5,
     marginLeft: 10,
-    marginTop: 7.5,
+    marginTop: 2.5,
     borderWidth: 1,
-    borderColor: colors.blue.border,
+    borderColor: colors.blue.medium,
     backgroundColor: colors.blue.light
   }
 })
 
-export const buttonIconColor = colors.blue.border
+export const buttonIconColor = colors.blue.medium
 export const buttonUnderlayColor = colors.blue.pastel

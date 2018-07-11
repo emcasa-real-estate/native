@@ -2,19 +2,16 @@ import {Platform} from 'react-native'
 
 import StyleSheet from '@/assets/StyleSheet'
 import * as colors from '@/assets/colors'
-import {padding} from '@/assets/styles'
 
 export default StyleSheet({
   container: {
     borderWidth: 1,
     borderRadius: 4,
     borderColor: colors.gray.light,
-    ...padding(Platform.OS === 'ios' ? 14 : 3, 14),
+    paddingHorizontal: Platform.OS === 'ios' ? 14 : 3,
+    paddingVertical: 14,
     ':invalid': {
       borderColor: colors.red.medium
-    },
-    ':multiline': {
-      paddingTop: Platform.OS === 'ios' ? 10 : 5
     }
   },
   input: {

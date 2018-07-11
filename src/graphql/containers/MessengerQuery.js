@@ -29,7 +29,7 @@ export const withMessages = (getOptions) => (Target) => (props) => (
         {...props}
         messages={{
           loading: response.loading,
-          data: data ? data.messages : undefined,
+          data: data ? data.listingUserMessages : undefined,
           refetch: response.refetch
         }}
       />

@@ -14,7 +14,7 @@ export const abbrevPrice = (num, length = 2) =>
     .replace('.', ',')
 
 export const timeElapsed = (a, b = Date.now()) => {
-  const then = moment(a)
+  const then = moment.utc(a)
   const now = moment(b)
   const hours = moment.duration(now.diff(then)).asHours()
   if (hours <= 12) return then.from(now)

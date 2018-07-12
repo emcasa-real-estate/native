@@ -1,4 +1,3 @@
-import _, {__} from 'lodash/fp'
 import {PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'

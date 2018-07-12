@@ -2,7 +2,10 @@ import {Mutation} from 'react-apollo'
 import {connect} from 'react-redux'
 
 import {MESSENGER_RECEIVER_ID} from '@/lib/config'
-import {GET_MESSAGES} from '@/graphql/modules/messenger/queries'
+import {
+  GET_MESSAGES,
+  GET_CHANNEL_FEED
+} from '@/graphql/modules/messenger/queries'
 import {SEND_MESSAGE} from '@/graphql/modules/messenger/mutations'
 import {getUser} from '@/redux/modules/auth/selectors'
 
@@ -19,6 +22,7 @@ const SendMessageMutation = connect((state) => ({
     <Mutation
       mutation={SEND_MESSAGE}
       refetchQueries={[
+        {query: GET_CHANNEL_FEED},
         {
           query: GET_MESSAGES,
           variables: {listingId: listing.id, senderId: sender.id}

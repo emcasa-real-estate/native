@@ -48,3 +48,5 @@ export default StyleSheet.create({
     color: colors.gray.mediumDark
   }
 })
+
+export const underlayColor = colors.gray.offWhite

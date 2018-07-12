@@ -45,7 +45,7 @@ function Channel({
             numberOfLines={1}
             ellipsizeMode="tail"
           >
-            {message}
+            {message.replace('\n', ' ')}
           </Text>
         </View>
         <View style={{alignSelf: 'flex-start'}}>

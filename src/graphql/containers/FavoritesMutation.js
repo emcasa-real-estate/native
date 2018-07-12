@@ -5,8 +5,11 @@ import {FAVORITE, UNFAVORITE} from '@/graphql/modules/listings/mutations'
 import {GET_FAVORITE_LISTINGS_IDS} from '@/graphql/modules/user/queries'
 import {logEvent} from '@/redux/modules/firebase/analytics'
 import {getToken} from '@/redux/modules/auth/selectors'
+import {withFavoriteListingByID} from './FavoritesQuery'
 
-function FavoritesMutation({children, id, favorite, jwt, logEvent}) {
+const FavoriteMutation = connect(
+  (state) => ({jwt: getToken(state)}, {logEvent})
+)(function _FavoritesMutation({children, id, favorite, jwt, logEvent}) {
   const query = {cache: !jwt}
   return (
     <Mutation
@@ -22,8 +25,13 @@ function FavoritesMutation({children, id, favorite, jwt, logEvent}) {
       {children}
     </Mutation>
   )
-}
+})
 
-const props = (state) => ({jwt: getToken(state)})
+export default FavoriteMutation
 
-export default connect(props, {logEvent})(FavoritesMutation)
+export const withFavoriteMutation = (Target) =>
+  withFavoriteListingByID((props) => (
+    <FavoriteMutation {...props}>
+      {(onFavorite) => <Target {...props} onFavorite={() => onFavorite()} />}
+    </FavoriteMutation>
+  ))

@@ -1,0 +1,35 @@
+import _ from 'lodash'
+import {createSelector} from 'reselect'
+
+const compare = (value, source) =>
+  _.reduce(
+    value,
+    (result, val, key) => result && source[_.camelCase(key)] == val,
+    true
+  )
+
+const compareListings = ({address, price, ...value}, listing) => {
+  return (
+    ((!price && !listing.price) || price == listing.price) &&
+    compare(value, listing) &&
+    compare(_.omit(address.details, ['lng', 'lat']), listing.address)
+  )
+}
+
+export const listingFormScreen = (state) => state.screens.listingForm
+
+export const getListing = (state) => listingFormScreen(state).listing
+
+export const getValue = (state) => listingFormScreen(state).value
+
+export const getSavedValue = (state) => listingFormScreen(state).savedValue
+
+export const getError = (state) => listingFormScreen(state).error
+
+export const isLoading = (state) => listingFormScreen(state).loading
+
+export const hasUnsavedChanges = createSelector(
+  getValue,
+  getSavedValue,
+  (value, savedValue) => savedValue && !compareListings(value, savedValue)
+)

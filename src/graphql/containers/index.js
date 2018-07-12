@@ -3,6 +3,7 @@ export {
   withFavoriteListingIDs,
   withFavoriteListingByID
 } from './FavoritesQuery'
+export {withFavoriteMutation} from './FavoritesMutation'
 export {withViewTourMutation} from './ViewTourMutation'
 export {withEmailMutation} from './EmailMutation'
 export {withListingMutation} from './ListingMutation'

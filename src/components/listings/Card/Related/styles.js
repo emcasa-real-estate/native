@@ -41,5 +41,11 @@ export default $StyleSheet({
   priceText: {
     fontWeight: '300',
     color: colors.gray.darker
+  },
+  iconButton: {
+    position: 'absolute',
+    zIndex: 1,
+    top: 15,
+    right: 15
   }
 })

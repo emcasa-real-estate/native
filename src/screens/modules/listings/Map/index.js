@@ -19,11 +19,12 @@ import {
   isWithinBounds
 } from './module/selectors'
 import ListButton from '@/components/listings/Feed/Button'
-import MapFeed from '@/components/listings/Feed/Map'
-import Feed from '@/screens/modules/listings/shared/Feed'
+import Feed from '@/components/listings/Feed/Map'
 import HeaderButton from './HeaderButton'
 import Map from './Map'
 import styles from './styles'
+
+import ListingScreen from '@/screens/modules/listing/Listing'
 
 class MapScreen extends Component {
   static screenName = 'listings.Map'
@@ -74,18 +75,26 @@ class MapScreen extends Component {
 
   onRequestPosition = () => this.props.requestPosition()
 
+  onOpenListing = (id) => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: ListingScreen.screenName,
+        passProps: {params: {id}}
+      }
+    })
+  }
+
   onSelect = (id) => this.props.setActiveListing(id)
 
   onReturn = () => Navigation.pop(this.props.componentId)
 
   render() {
     const {
-      listingsFeed: {data, remainingCount},
+      listingsFeed: {data},
       activeListing,
       watchingPosition,
       isWithinBounds,
-      userPosition,
-      componentId
+      userPosition
     } = this.props
 
     return (
@@ -108,12 +117,9 @@ class MapScreen extends Component {
         </View>
         <View style={styles.listings}>
           <Feed
-            as={MapFeed}
-            target={componentId}
             active={activeListing}
             data={data}
-            remainingCount={remainingCount}
-            onLoadMore={() => null}
+            onSelect={this.onOpenListing}
           />
         </View>
       </View>

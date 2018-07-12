@@ -6,11 +6,10 @@ import composeWithRef from '@/lib/composeWithRef'
 import {withListingsFeed} from '@/graphql/containers'
 import {getSearchFiltersQuery} from '@/screens/modules/listings/Search/module/selectors'
 import {Shell, Body, Header, Footer} from '@/components/layout'
+import InfiniteScroll from '@/containers/InfiniteScroll'
 import MapButton from '@/components/listings/Map/Button'
-import ListingFeed from '@/components/listings/Feed/Listing'
 import BottomTabs from '@/screens/modules/navigation/BottomTabs'
-import Feed from '@/screens/modules/listings/shared/Feed'
-import Card from '@/screens/modules/listings/shared/Card'
+import Feed from '@/components/listings/Feed/Listing'
 import SearchHeader from './Header'
 import ListEmpty from './ListEmpty'
 import ListHeader from './ListHeader'
@@ -18,6 +17,7 @@ import styles from './styles'
 
 import MapScreen from '@/screens/modules/listings/Map'
 import SearchScreen from '@/screens/modules/listings/Search'
+import ListingScreen from '@/screens/modules/listing/Listing'
 
 class ListingsFeedScreen extends PureComponent {
   static screenName = 'listings.Feed'
@@ -55,29 +55,37 @@ class ListingsFeedScreen extends PureComponent {
     })
   }
 
+  onSelect = (id) => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: ListingScreen.screenName,
+        passProps: {params: {id}}
+      }
+    })
+  }
+
   render() {
-    const {
-      listingsFeed: {loading, data, remainingCount},
-      componentId
-    } = this.props
+    const {listingsFeed: {loading, data, remainingCount}} = this.props
     return (
       <Shell testID="@listings.Feed">
         <Header>
           <SearchHeader onPress={this.onOpenSearch} />
         </Header>
         <Body loading={loading} style={styles.container}>
-          <Feed
-            as={ListingFeed}
-            target={componentId}
-            Card={Card}
-            data={data}
-            remainingCount={remainingCount}
-            onLoadMore={this.onLoadMore}
-            ListHeaderComponent={ListHeader}
-            ListEmptyComponent={
-              loading === false && !data.length ? ListEmpty : undefined
-            }
-          />
+          <InfiniteScroll
+            loading={loading}
+            hasNextPage={remainingCount > 0}
+            onLoad={this.onLoadMore}
+          >
+            <Feed
+              data={data}
+              onSelect={this.onSelect}
+              ListHeaderComponent={ListHeader}
+              ListEmptyComponent={
+                loading === false && !data.length ? ListEmpty : undefined
+              }
+            />
+          </InfiniteScroll>
           <MapButton style={styles.mapButton} onPress={this.onOpenMap} />
         </Body>
         <Footer>

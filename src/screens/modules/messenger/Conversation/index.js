@@ -11,6 +11,14 @@ import Conversation from '@/components/messenger/Conversation'
 class ConversationScreen extends PureComponent {
   static screenName = 'messenger.Conversation'
 
+  componentDidMount() {
+    this.unsubscribe = this.props.messages.subscribe()
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe()
+  }
+
   onSubmit = (message) => this.props.sendMessage({variables: {message}})
 
   render() {

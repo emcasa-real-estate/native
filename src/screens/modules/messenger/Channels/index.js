@@ -31,6 +31,10 @@ class MessengerChannelsScreen extends PureComponent {
     }
   }
 
+  componentDidMount() {
+    this.props.channels.subscribe()
+  }
+
   onSelect = (id) => {
     Navigation.push(this.props.componentId, {
       component: {

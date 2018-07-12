@@ -36,6 +36,6 @@ export const WEB_SOCKET_URL =
   process.env.WEB_SOCKET_URL ||
   `${API_URL.replace(/^http/, 'ws')}/socket`
 
-export const MESSENGER_RECEIVER_ID = process.env.MESSENGER_RECEIVER_ID || '0'
+export const MESSENGER_RECEIVER_ID = process.env.MESSENGER_RECEIVER_ID
 
 export const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY

@@ -25,9 +25,10 @@ class MessengerChannelsScreen extends PureComponent {
   }
 
   getChannelParams(id) {
-    const {listing} = this.getChannel(id)
+    const {listing, participant1: p1, participant2: p2} = this.getChannel(id)
     return {
-      listingId: listing.id
+      listing: {id: listing.id},
+      receiver: [p1, p2].find((p) => p.id != this.props.user.id)
     }
   }
 

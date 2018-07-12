@@ -60,7 +60,7 @@ const createHandler = (fun, ...args) => fun && (() => fun(...args))
 
 export default function MessengerChannels({channels, sender, onSelect}) {
   const receiver = ({participant1, participant2}) =>
-    [participant1, participant2].find(({id}) => id != sender.id)
+    [participant1, participant2].find(({id}) => id != sender.id) || sender
   return (
     <View style={styles.container}>
       {channels.map((channel) => (

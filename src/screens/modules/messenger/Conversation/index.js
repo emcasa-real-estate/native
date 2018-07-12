@@ -44,6 +44,9 @@ class ConversationScreen extends PureComponent {
 
 export default composeWithRef(
   connect((state) => ({user: getUser(state)})),
-  withMessages(({params: {listingId}}) => ({listingId})),
-  withSendMessageMutation(({params: {listingId}}) => ({listingId}))
+  withMessages(({params: {listing}}) => ({listing})),
+  withSendMessageMutation(({params: {listing, receiver}}) => ({
+    listing,
+    receiver
+  }))
 )(ConversationScreen)

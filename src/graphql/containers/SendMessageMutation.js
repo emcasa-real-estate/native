@@ -6,36 +6,45 @@ import {GET_MESSAGES} from '@/graphql/modules/messenger/queries'
 import {SEND_MESSAGE} from '@/graphql/modules/messenger/mutations'
 import {getUser} from '@/redux/modules/auth/selectors'
 
-const SendMessageMutation = connect((state) => ({sender: getUser(state)}))(
-  function _SendMessageMutation({
-    children,
-    listingId,
-    receiverId,
-    sender,
-    ...options
-  }) {
-    return (
-      <Mutation
-        mutation={SEND_MESSAGE}
-        refetchQueries={[
-          {query: GET_MESSAGES, variables: {listingId, senderId: sender.id}}
-        ]}
-        {...options}
-      >
-        {(mutate, ctx) =>
-          children(
-            ({variables}) =>
-              mutate({variables: {listingId, receiverId, ...variables}}),
-            ctx
-          )
+const SendMessageMutation = connect((state) => ({
+  sender: getUser(state)
+}))(function _SendMessageMutation({
+  children,
+  listing,
+  receiver,
+  sender,
+  ...options
+}) {
+  return (
+    <Mutation
+      mutation={SEND_MESSAGE}
+      refetchQueries={[
+        {
+          query: GET_MESSAGES,
+          variables: {listingId: listing.id, senderId: sender.id}
         }
-      </Mutation>
-    )
-  }
-)
+      ]}
+      {...options}
+    >
+      {(mutate, ctx) =>
+        children(
+          ({variables}) =>
+            mutate({
+              variables: {
+                listingId: listing.id,
+                receiverId: receiver.id,
+                ...variables
+              }
+            }),
+          ctx
+        )
+      }
+    </Mutation>
+  )
+})
 
 SendMessageMutation.defaultProps = {
-  receiverId: MESSENGER_RECEIVER_ID
+  receiver: {id: MESSENGER_RECEIVER_ID}
 }
 
 export const withSendMessageMutation = (getOptions) => (Target) => (props) => (

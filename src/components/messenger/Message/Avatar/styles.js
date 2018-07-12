@@ -4,24 +4,17 @@ import * as colors from '@/assets/colors'
 
 export default StyleSheet.create({
   container: {
-    position: 'relative',
-    backgroundColor: colors.gray.darker,
-    flex: 1
-  },
-  image: {
-    backgroundColor: colors.gray.darker
-  },
-  gallery: {
-    flex: 1,
-    width: '100%'
-  },
-  slide: {
+    width: 46,
+    height: 46,
+    borderRadius: 23,
+    backgroundColor: colors.blue.light,
+    borderColor: colors.blue.medium,
+    borderWidth: 1,
     justifyContent: 'center',
-    alignItems: 'flex-start'
+    alignItems: 'center'
   },
-  pagination: {
-    position: 'absolute',
-    bottom: 10,
-    width: '100%'
+  logo: {
+    width: 32,
+    height: 32
   }
 })

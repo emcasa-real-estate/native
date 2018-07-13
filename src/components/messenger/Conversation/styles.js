@@ -4,6 +4,6 @@ import {elevation} from '@/assets/styles'
 
 export default StyleSheet({
   container: {
-    marginVertical: 15
+    paddingVertical: 15
   }
 })

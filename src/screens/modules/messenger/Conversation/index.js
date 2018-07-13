@@ -63,7 +63,7 @@ class ConversationScreen extends PureComponent {
     const {messages, loading, user} = this.props
     return (
       <Shell disableKeyboardSpacer>
-        <Body scroll loading={messages.loading || loading}>
+        <Body loading={messages.loading || loading}>
           {messages.data && (
             <Conversation
               messages={messages.data.messages}

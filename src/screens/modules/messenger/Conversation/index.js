@@ -17,14 +17,15 @@ import Conversation from '@/components/messenger/Conversation'
 
 class ConversationScreen extends PureComponent {
   static screenName = 'messenger.Conversation'
-  flattenDeep
+
   updateTitle() {
     const listing = this.props.listing.data
     const messages = this.props.messages.data
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
         title: {
-          text: messages ? messages.user.name : 'Entre em contato',
+          text:
+            messages && messages.user ? messages.user.name : 'Entre em contato',
           fontSize: 16
         },
         subtitle: {

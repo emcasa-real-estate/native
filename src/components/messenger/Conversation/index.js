@@ -10,10 +10,12 @@ export default function Conversation({messages, sender}) {
       {messages.map((message) => {
         const showAvatar =
           !previousMessage || previousMessage.sender.id !== message.sender.id
+        const marginTop = showAvatar && previousMessage ? 10 : 0
         previousMessage = message
         return (
           <Message
             key={message.id}
+            style={{marginTop}}
             isSender={sender.id == message.sender.id}
             showAvatar={showAvatar}
             {...message}

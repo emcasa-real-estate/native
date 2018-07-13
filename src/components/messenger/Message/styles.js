@@ -14,5 +14,19 @@ export default StyleSheet.create({
   },
   avatarContainer: {
     width: 46
+  },
+  text: {
+    color: colors.gray.dark,
+    fontSize: 14,
+    lineHeight: 22
+  },
+  footer: {
+    flex: 1,
+    alignItems: 'center',
+    marginTop: 5
+  },
+  footerText: {
+    color: colors.gray.mediumDark,
+    fontSize: 12
   }
 })

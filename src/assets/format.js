@@ -20,5 +20,5 @@ export const timeElapsed = (a, b = Date.now()) => {
   if (hours <= 12) return then.from(now)
   else if (hours < 24) return then.format('HH:mm')
   else if (hours < 48) return 'ontem'
-  else return then.format('MM D')
+  else return then.format('MM/D')
 }

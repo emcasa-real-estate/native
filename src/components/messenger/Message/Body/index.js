@@ -2,7 +2,6 @@ import {PureComponent} from 'react'
 import {View} from 'react-native'
 import {Svg, Rect, Polygon, G, Defs, Use} from 'react-native-svg'
 
-import Text from '@/components/shared/Text'
 import styles, {pathStyle} from './styles'
 
 export default class MessageBody extends PureComponent {
@@ -75,9 +74,7 @@ export default class MessageBody extends PureComponent {
             {[align == 'right' ? 'marginRight' : 'marginLeft']: 20}
           ]}
         >
-          <Text selectable style={[styles.text, {textAlign: align}]}>
-            {children}
-          </Text>
+          {children}
         </View>
         {layout && <View style={styles.background}>{this.renderBox()}</View>}
       </View>

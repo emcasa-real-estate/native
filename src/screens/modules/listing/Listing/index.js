@@ -154,7 +154,7 @@ class ListingScreen extends PureComponent {
           styles={{container: {flex: 0.5, marginLeft: 5}, text: {fontSize: 14}}}
           onPress={this.navigateTo(
             {name: MessengerScreen.screenName},
-            {listingId: id}
+            {listing: {id}}
           )}
         >
           Entre em contato

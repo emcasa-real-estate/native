@@ -15,20 +15,6 @@ export default StyleSheet.create({
     marginLeft: 15,
     marginRight: 5
   },
-  avatar: {
-    height: 46,
-    width: 46,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 23,
-    backgroundColor: colors.blue.light,
-    borderWidth: 1,
-    borderColor: colors.blue.medium
-  },
-  avatarText: {
-    fontWeight: '600',
-    color: colors.blue.medium
-  },
   time: {
     fontSize: 12,
     color: colors.gray.dark

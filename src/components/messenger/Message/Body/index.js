@@ -3,7 +3,7 @@ import {View} from 'react-native'
 import {Svg, Rect, Polygon, G, Defs, Use} from 'react-native-svg'
 
 import Text from '@/components/shared/Text'
-import styles from './styles'
+import styles, {pathStyle} from './styles'
 
 export default class MessageBody extends PureComponent {
   static defaultProps = {
@@ -22,23 +22,14 @@ export default class MessageBody extends PureComponent {
       }
     })
 
-  get style() {
-    return {
-      strokeLinecap: 'round',
-      strokeWidth: 1.5,
-      stroke: 'black',
-      fill: 'white'
-    }
-  }
-
   renderTip() {
     const {align, y} = this.props
     const {layout: {width}} = this.state
-    const tipSize = 12
+    const tipSize = 8
     const tipPoints = `${tipSize}, ${tipSize} ${tipSize},0 0, ${tipSize / 2}`
     return (
       <Polygon
-        x={align === 'right' ? width - tipSize : 10}
+        x={align === 'right' ? width - tipSize - 2.5 : 10}
         y={y - tipSize / 2}
         points={tipPoints}
         scaleX={align === 'right' ? -1 : 1}
@@ -47,19 +38,20 @@ export default class MessageBody extends PureComponent {
   }
 
   renderBox() {
-    const {align, y, showTip} = this.props
+    const {align, showTip} = this.props
     const {layout: {width, height}} = this.state
-    const style = this.style
+    const style = pathStyle(this.props)
+    const margin = 17
     return (
       <Svg width={width} height={height}>
         <Defs>
           <G id="outline">
             <Rect
-              x={align === 'right' ? style.strokeWidth : 20}
+              x={align === 'right' ? style.strokeWidth : margin}
               y={style.strokeWidth}
-              rx="5"
-              ry="5"
-              width={width - 20 - style.strokeWidth}
+              rx="2"
+              ry="2"
+              width={width - margin - style.strokeWidth}
               height={height - style.strokeWidth * 2}
             />
             {showTip && this.renderTip()}
@@ -80,10 +72,10 @@ export default class MessageBody extends PureComponent {
         <View
           style={[
             styles.textContainer,
-            {marginLeft: align === 'right' ? 0 : 20}
+            {[align == 'right' ? 'marginRight' : 'marginLeft']: 20}
           ]}
         >
-          <Text selectable style={styles.text}>
+          <Text selectable style={[styles.text, {textAlign: align}]}>
             {children}
           </Text>
         </View>

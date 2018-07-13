@@ -4,21 +4,8 @@ import {View, TouchableHighlight} from 'react-native'
 
 import * as format from '@/assets/format'
 import Text from '@/components/shared/Text'
+import Avatar from '@/components/messenger/UserAvatar'
 import styles, {underlayColor} from './styles'
-
-const initials = (name) => {
-  const nameParts = name.split(' ', 2)
-  if (nameParts.length === 1) return name.slice(0, 2).toUpperCase()
-  else return (name[0][0] + name[1][0]).toUpperCase()
-}
-
-function Avatar({name}) {
-  return (
-    <View style={styles.avatar}>
-      <Text style={styles.avatarText}>{initials(name)}</Text>
-    </View>
-  )
-}
 
 function Channel({
   receiver,

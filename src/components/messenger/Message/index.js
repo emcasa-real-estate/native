@@ -5,7 +5,7 @@ import Body from './Body'
 import styles from './styles'
 
 export default function Message({message, sender: user, isSender, showAvatar}) {
-  const align = !isSender ? 'right' : 'left'
+  const align = !isSender ? 'left' : 'right'
   return (
     <View
       style={[
@@ -19,7 +19,7 @@ export default function Message({message, sender: user, isSender, showAvatar}) {
         </Body>
       </View>
       <View style={styles.avatarContainer}>
-        {showAvatar && <Avatar {...user} />}
+        {showAvatar && <Avatar {...user} isSender={isSender} />}
       </View>
     </View>
   )

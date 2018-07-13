@@ -5,6 +5,7 @@ import * as colors from '@/assets/colors'
 export default StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'row',
     alignItems: 'flex-start'
   },
   textContainer: {
@@ -21,4 +22,11 @@ export default StyleSheet.create({
     top: 0,
     left: 0
   }
+})
+
+export const pathStyle = ({isSender}) => ({
+  strokeLinecap: 'round',
+  strokeWidth: 1.5,
+  stroke: isSender ? colors.gray.light : colors.blue.medium,
+  fill: isSender ? colors.gray.offWhite : colors.blue.light
 })

@@ -5,6 +5,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
 import com.facebook.react.ReactApplication;
+import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import cl.json.RNSharePackage;
 import cl.json.ShareApplication;
 import com.imagepicker.ImagePickerPackage;
@@ -49,6 +50,7 @@ public class MainApplication extends NavigationApplication implements ShareAppli
   public List<ReactPackage> createAdditionalReactPackages() {
     return Arrays.<ReactPackage>asList(
       new MainReactPackage(),
+      new FBSDKPackage(),
       new RNFirebasePackage(),
       new RNFirebaseAnalyticsPackage(),
       new RNFirebaseMessagingPackage(),

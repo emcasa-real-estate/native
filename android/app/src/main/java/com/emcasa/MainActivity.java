@@ -31,9 +31,15 @@ public class MainActivity extends NavigationActivity implements PermissionAwareA
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-      super.onConfigurationChanged(newConfig);
-      Intent intent = new Intent("onConfigurationChanged");
-      intent.putExtra("newConfig", newConfig);
-      this.sendBroadcast(intent);
+        super.onConfigurationChanged(newConfig);
+        Intent intent = new Intent("onConfigurationChanged");
+        intent.putExtra("newConfig", newConfig);
+        this.sendBroadcast(intent);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        MainApplication.getCallbackManager().onActivityResult(requestCode, resultCode, data);
     }
 }

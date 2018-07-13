@@ -51,6 +51,19 @@
         </dict>
       </dict>
     </dict>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>fb2093551407535609</string>
+        </array>
+      </dict>
+    </array>
+    <key>FacebookAppID</key>
+    <string>2093551407535609</string>
+    <key>FacebookDisplayName</key>
+    <string>EmCasa</string>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>$(PRODUCT_NAME) usa a sua localização para melhorar a sua experiência com o mapa</string>
     <key>NSCalendarsUsageDescription</key>

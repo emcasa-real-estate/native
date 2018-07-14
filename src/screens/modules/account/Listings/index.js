@@ -33,12 +33,7 @@ class UserListingsScreen extends PureComponent {
     return (
       <Shell>
         <Body>
-          <Feed
-            data={data}
-            loading={loading}
-            onSelect={this.onSelect}
-            Card={Card}
-          />
+          <Feed data={data} loading={loading} onSelect={this.onSelect} />
         </Body>
         <Footer>
           <BottomTabs />

@@ -1,3 +1,4 @@
+import _ from 'lodash/fp'
 import update from 'immutability-helper'
 import React, {PureComponent} from 'react'
 import {View, FlatList} from 'react-native'
@@ -5,10 +6,13 @@ import {View, FlatList} from 'react-native'
 import Message from '@/components/messenger/Message'
 import styles from './styles'
 
+const isUnread = (sender) => (msg) => !msg.read && msg.sender.id != sender.id
+
 export default class Conversation extends PureComponent {
   list = React.createRef()
 
   state = {
+    unreadIndex: null,
     messages: []
   }
 
@@ -16,22 +20,29 @@ export default class Conversation extends PureComponent {
     viewAreaCoveragePercentThreshold: 100
   }
 
-  static getDerivedStateFromProps({messages}, state) {
-    if (messages.length === state.messages.length) return null
-    const nextMessages = new Array(messages.length).fill({
-      layout: {height: 70},
-      separator: {height: 10}
-    })
-    nextMessages.splice(0, state.messages.length, ...state.messages)
-    return {messages: nextMessages}
+  static getDerivedStateFromProps({messages, sender}, state) {
+    const nextState = {}
+    const index = messages.findIndex(isUnread(sender))
+    nextState.unreadIndex = Math.max(
+      state.unreadIndex,
+      index < 0 ? messages.length : index
+    )
+    if (messages.length !== state.messages.length) {
+      nextState.messages = new Array(messages.length).fill({
+        layout: {height: 70},
+        separator: {height: 10}
+      })
+      nextState.messages.splice(0, state.messages.length, ...state.messages)
+    }
+    return nextState
   }
 
   componentDidMount() {
-    const {messages} = this.props
-    //const initialItem = this.props.messages.find(({ read }) => !read)
-    const initialItem = messages[messages.length - 1]
-    if (initialItem) {
-      this.list.current.scrollToItem({item: initialItem, animated: true})
+    const message = this.props.messages[this.state.unreadIndex]
+    if (message) {
+      this.list.current.scrollToItem({item: message})
+    } else {
+      this.list.current.scrollToEnd()
     }
   }
 
@@ -54,9 +65,17 @@ export default class Conversation extends PureComponent {
     )
 
   onChangeView = ({viewableItems}) => {
-    viewableItems.forEach(({id, read}) => {
-      // if (!read) this.props.markAsRead(id)
-    })
+    const {messages, sender, onMarkAsRead} = this.props
+    const {unreadIndex} = this.state
+    const visibleIndex = Math.max(...viewableItems.map(_.get('index'))) + 1
+    if (visibleIndex > unreadIndex) {
+      this.setState({unreadIndex: visibleIndex}, () => {
+        messages
+          .slice(unreadIndex, visibleIndex)
+          .filter(isUnread(sender))
+          .forEach(({id}) => onMarkAsRead(id))
+      })
+    }
   }
 
   keyExtractor = ({id}) => String(id)

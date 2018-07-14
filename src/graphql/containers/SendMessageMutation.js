@@ -32,7 +32,7 @@ const SendMessageMutation = connect((state) => ({
     >
       {(mutate, ctx) =>
         children(
-          ({variables}) =>
+          (variables) =>
             mutate({
               variables: {
                 listingId: listing.id,

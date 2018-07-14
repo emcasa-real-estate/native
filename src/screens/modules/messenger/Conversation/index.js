@@ -8,6 +8,7 @@ import composeWithRef from '@/lib/composeWithRef'
 import {
   withListing,
   withMessages,
+  withMarkAsReadMutation,
   withSendMessageMutation
 } from '@/graphql/containers'
 import {getUser} from '@/redux/modules/auth/selectors'
@@ -57,7 +58,10 @@ class ConversationScreen extends PureComponent {
     )
       this.updateTitle()
   }
-  onSubmit = (message) => this.props.sendMessage({variables: {message}})
+
+  onSubmit = (message) => this.props.sendMessage({message})
+
+  onMarkAsRead = (id) => this.props.markAsRead(id)
 
   render() {
     const {messages, loading, user} = this.props
@@ -69,6 +73,7 @@ class ConversationScreen extends PureComponent {
               messages={messages.data.messages}
               receiver={messages.data.user}
               sender={user}
+              onMarkAsRead={this.onMarkAsRead}
             />
           )}
         </Body>
@@ -87,5 +92,6 @@ export default composeWithRef(
   withSendMessageMutation(({params: {listing, receiver}}) => ({
     listing,
     receiver
-  }))
+  })),
+  withMarkAsReadMutation()
 )(ConversationScreen)

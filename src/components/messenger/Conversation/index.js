@@ -105,7 +105,7 @@ export default class Conversation extends PureComponent {
     const {messages, sender} = this.props
     const prevMessage = index > 0 && messages[index - 1]
     const showAvatar =
-      prevMessage && prevMessage.sender.id !== message.sender.id
+      !prevMessage || prevMessage.sender.id !== message.sender.id
     return (
       <View onLayout={this.onLayout(index)}>
         <Message

@@ -12,6 +12,7 @@ const MessengerQuery = connect((state) => ({
   const isThisChannel = (message) =>
     message.listing.id == listing.id &&
     (message.sender.id == sender.id || message.receiver.id == sender.id)
+  if (!sender) return children({})
   return (
     <Query
       notifyOnNetworkStatusChange

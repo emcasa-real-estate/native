@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 
 import * as colors from '@/assets/colors'
 import composeWithRef from '@/lib/composeWithRef'
+import {authRequired} from '@/containers/AuthRequired'
 import {
   withListing,
   withMessages,
@@ -18,6 +19,12 @@ import Conversation from '@/components/messenger/Conversation'
 
 class ConversationScreen extends PureComponent {
   static screenName = 'messenger.Conversation'
+
+  static options = {
+    topBar: {
+      title: {text: 'Entre em contato'}
+    }
+  }
 
   updateTitle() {
     const listing = this.props.listing.data
@@ -86,6 +93,9 @@ class ConversationScreen extends PureComponent {
 }
 
 export default composeWithRef(
+  authRequired(() => ({
+    notice: 'O login é necessário para enviar mensagens.'
+  })),
   connect((state) => ({user: getUser(state)})),
   withListing(({params: {listing: {id}}}) => ({id})),
   withMessages(({params: {listing}}) => ({listing})),

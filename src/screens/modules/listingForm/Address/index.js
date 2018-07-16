@@ -146,7 +146,7 @@ class EditAddressScreen extends PureComponent {
 
 export default composeWithRef(
   authRequired(() => ({
-    notice: 'Você precisa estar logado para anunciar um imóvel.'
+    notice: 'O login é necessário para anunciar um imóvel.'
   })),
   withContext.byProp('componentId'),
   withApollo

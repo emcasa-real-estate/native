@@ -11,34 +11,46 @@ import LoginScreen from '@/screens/modules/auth/Login'
 export default class AuthRequired extends PureComponent {
   state = {loginRequested: false}
 
-  requestLogin() {}
+  requestLogin() {
+    const {componentId, notice} = this.props
+    this.setState({loginRequested: true})
+    Navigation.push(componentId, {
+      component: {
+        id: `${componentId}_login`,
+        name: LoginScreen.screenName,
+        passProps: {params: {parentId: componentId, notice}}
+      }
+    })
+  }
 
-  componentDidMount() {
+  async componentDidMount() {
     const {jwt, componentId} = this.props
-    if (!jwt)
-      this.subscription = Navigation.events().registerComponentDidAppearListener(
-        (screen) => {
-          if (screen === componentId) this.componentDidAppear()
-        }
+    const registerThisComponentAppearedListener = (fun) =>
+      Navigation.events().registerComponentDidAppearListener(
+        (_componentId) => _componentId === componentId && fun()
       )
+    if (!jwt) {
+      await new Promise((resolve) => {
+        const subscription = registerThisComponentAppearedListener(() => {
+          subscription.remove()
+          resolve()
+        })
+      })
+      this.requestLogin()
+      this.subscription = registerThisComponentAppearedListener(
+        this.componentDidAppear
+      )
+    }
   }
 
   componentWillUnmount() {
     if (this.subscription) this.subscription.remove()
   }
 
-  componentDidAppear() {
-    const {componentId, jwt, notice} = this.props
-    if (!this.state.loginRequested) {
-      this.setState({loginRequested: true})
-      Navigation.push(componentId, {
-        component: {
-          id: `${componentId}_login`,
-          name: LoginScreen.screenName,
-          passProps: {params: {parentId: componentId, notice}}
-        }
-      })
-    } else if (!jwt) Navigation.pop(componentId)
+  componentDidAppear = () => {
+    const {componentId, jwt} = this.props
+    const {loginRequested} = this.state
+    if (!jwt && loginRequested) Navigation.pop(componentId)
   }
 
   render() {

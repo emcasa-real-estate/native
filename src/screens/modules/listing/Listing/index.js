@@ -53,6 +53,7 @@ class ListingScreen extends PureComponent {
 
   updateNavigation() {
     const {listing: {data}, componentId} = this.props
+    if (!data) return
     Navigation.mergeOptions(componentId, {
       topBar: {
         title: {

@@ -59,6 +59,7 @@ export default class SearchForm extends Component {
         <Field title="Quartos" onReset={this.onReset('rooms')}>
           <OptionRange
             name="rooms"
+            onChange={this.onChangeRange(1, 4)}
             options={[
               {value: 1, label: '1'},
               {value: 2, label: '2'},
@@ -70,6 +71,7 @@ export default class SearchForm extends Component {
         <Field title="Vagas de garagem" onReset={this.onReset('garage_spots')}>
           <OptionRange
             name="garage_spots"
+            onChange={this.onChangeRange(1, 4)}
             options={[
               {value: 1, label: '1'},
               {value: 2, label: '2'},

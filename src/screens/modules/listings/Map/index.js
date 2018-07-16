@@ -4,12 +4,8 @@ import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
-import {loadMore} from '@/redux/modules/listings/feed'
-import {
-  getListings,
-  getOptions,
-  getPagination
-} from '@/redux/modules/listings/feed/selectors'
+import {withListingsFeed} from '@/graphql/containers'
+import {getSearchFiltersQuery} from '@/screens/modules/listings/Search/module/selectors'
 import {
   watchPosition,
   unwatchPosition,
@@ -23,11 +19,12 @@ import {
   isWithinBounds
 } from './module/selectors'
 import ListButton from '@/components/listings/Feed/Button'
-import MapFeed from '@/components/listings/Feed/Map'
-import Feed from '@/screens/modules/listings/shared/Feed'
+import Feed from '@/components/listings/Feed/Map'
 import HeaderButton from './HeaderButton'
 import Map from './Map'
 import styles from './styles'
+
+import ListingScreen from '@/screens/modules/listing/Listing'
 
 class MapScreen extends Component {
   static screenName = 'listings.Map'
@@ -40,26 +37,23 @@ class MapScreen extends Component {
       title: {
         text: 'Buscar imóveis',
         alignment: 'center'
-      },
-      rightButtons: [
-        {
-          id: 'mapLocationButton',
-          component: {name: HeaderButton.screenName}
-        }
-      ]
+      }
     }
   }
 
   state = {active: false}
 
-  loadAllMarkers() {
-    const {loadMore, pagination} = this.props
-    if (!pagination.remainingCount) return
-    loadMore(pagination.remainingCount)
-  }
-
   componentDidMount() {
-    this.loadAllMarkers()
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        rightButtons: [
+          {
+            id: 'mapLocationButton',
+            component: {name: HeaderButton.screenName}
+          }
+        ]
+      }
+    })
   }
 
   componentWillUnmount() {
@@ -67,6 +61,7 @@ class MapScreen extends Component {
       topBar: {rightButtons: []}
     })
   }
+
   componentDidAppear() {
     this.setState({active: true})
   }
@@ -80,18 +75,26 @@ class MapScreen extends Component {
 
   onRequestPosition = () => this.props.requestPosition()
 
+  onOpenListing = (id) => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: ListingScreen.screenName,
+        passProps: {params: {id}}
+      }
+    })
+  }
+
   onSelect = (id) => this.props.setActiveListing(id)
 
   onReturn = () => Navigation.pop(this.props.componentId)
 
   render() {
     const {
-      data,
+      listingsFeed: {data},
       activeListing,
       watchingPosition,
       isWithinBounds,
-      userPosition,
-      componentId
+      userPosition
     } = this.props
 
     return (
@@ -113,7 +116,11 @@ class MapScreen extends Component {
           <ListButton style={styles.button} onPress={this.onReturn} />
         </View>
         <View style={styles.listings}>
-          <Feed as={MapFeed} target={componentId} active={activeListing} />
+          <Feed
+            active={activeListing}
+            data={data}
+            onSelect={this.onOpenListing}
+          />
         </View>
       </View>
     )
@@ -123,19 +130,13 @@ class MapScreen extends Component {
 export default composeWithRef(
   connect(
     (state) => ({
-      data: getListings(state, {type: 'search'}),
-      pagination: getPagination(state, {type: 'search'}),
-      options: getOptions(state, {type: 'search'})
-    }),
-    {loadMore: loadMore('search')}
-  ),
-  connect(
-    (state) => ({
       activeListing: getActiveListing(state),
       userPosition: getUserPosition(state),
       watchingPosition: isWatchingPosition(state),
       isWithinBounds: isWithinBounds(state)
     }),
     {watchPosition, unwatchPosition, requestPosition, setActiveListing}
-  )
+  ),
+  connect((state) => ({filters: getSearchFiltersQuery(state)})),
+  withListingsFeed({pageSize: 1000, fetchPolicy: 'cache-then-network'})
 )(MapScreen)

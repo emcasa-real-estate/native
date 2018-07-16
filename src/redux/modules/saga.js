@@ -3,7 +3,7 @@ import {networkEventsListenerSaga} from 'react-native-offline'
 import {fork, all} from 'redux-saga/effects'
 import firebase from './firebase/saga'
 import auth from './auth/saga'
-import listings from './listings/saga'
+import relatedListings from './relatedListings/saga'
 import gallery from './gallery/saga'
 import interest from './interest/saga'
 import neighborhoods from './neighborhoods/saga'
@@ -14,7 +14,7 @@ export default function* root() {
     fork(screens),
     fork(firebase),
     fork(auth),
-    fork(listings),
+    fork(relatedListings),
     fork(gallery),
     fork(interest),
     fork(neighborhoods),

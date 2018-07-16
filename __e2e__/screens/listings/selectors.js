@@ -7,3 +7,6 @@ export const nthCard = (n) =>
 
 export const nthLikeButton = (n) =>
   by.id('favorite_button').withAncestor(nthCard(n))
+
+export const nthViewButton = (n) =>
+  by.id('view_button').withAncestor(nthCard(n))

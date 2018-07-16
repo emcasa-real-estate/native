@@ -1,16 +1,15 @@
-import _ from 'lodash'
 import {PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
-import {loadMore} from '@/redux/modules/listings/feed'
-import {getListings, isLoading} from '@/redux/modules/listings/feed/selectors'
+import composeWithRef from '@/lib/composeWithRef'
+import {withListingsFeed} from '@/graphql/containers'
+import {getSearchFiltersQuery} from '@/screens/modules/listings/Search/module/selectors'
 import {Shell, Body, Header, Footer} from '@/components/layout'
+import InfiniteScroll from '@/containers/InfiniteScroll'
 import MapButton from '@/components/listings/Map/Button'
-import ListingFeed from '@/components/listings/Feed/Listing'
 import BottomTabs from '@/screens/modules/navigation/BottomTabs'
-import Feed from '@/screens/modules/listings/shared/Feed'
-import Card from '@/screens/modules/listings/shared/Card'
+import Feed from '@/components/listings/Feed/Listing'
 import SearchHeader from './Header'
 import ListEmpty from './ListEmpty'
 import ListHeader from './ListHeader'
@@ -18,17 +17,9 @@ import styles from './styles'
 
 import MapScreen from '@/screens/modules/listings/Map'
 import SearchScreen from '@/screens/modules/listings/Search'
+import ListingScreen from '@/screens/modules/listing/Listing'
 
-@connect(
-  (state) => ({
-    data: getListings(state, {type: 'search'}),
-    loading: isLoading(state, {type: 'search'})
-  }),
-  {loadMore: loadMore('search')},
-  null,
-  {withRef: true}
-)
-export default class ListingsFeedScreen extends PureComponent {
+class ListingsFeedScreen extends PureComponent {
   static screenName = 'listings.Feed'
 
   static options = {
@@ -41,9 +32,9 @@ export default class ListingsFeedScreen extends PureComponent {
     }
   }
 
-  componentDidAppear() {
-    const {data, loading, loadMore} = this.props
-    if (_.isEmpty(data) && !loading) loadMore(15)
+  onLoadMore = () => {
+    const {listingsFeed: {loading, fetchMore}} = this.props
+    if (!loading) fetchMore()
   }
 
   onOpenMap = () => {
@@ -64,23 +55,37 @@ export default class ListingsFeedScreen extends PureComponent {
     })
   }
 
+  onSelect = (id) => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: ListingScreen.screenName,
+        passProps: {params: {id}}
+      }
+    })
+  }
+
   render() {
-    const {loading, data, componentId} = this.props
+    const {listingsFeed: {loading, data, remainingCount}} = this.props
     return (
       <Shell testID="@listings.Feed">
         <Header>
           <SearchHeader onPress={this.onOpenSearch} />
         </Header>
-        <Body loading={loading !== false} style={styles.container}>
-          <Feed
-            as={ListingFeed}
-            target={componentId}
-            Card={Card}
-            ListHeaderComponent={ListHeader}
-            ListEmptyComponent={
-              loading === false && !data.length ? ListEmpty : undefined
-            }
-          />
+        <Body loading={loading} style={styles.container}>
+          <InfiniteScroll
+            loading={loading}
+            hasNextPage={remainingCount > 0}
+            onLoad={this.onLoadMore}
+          >
+            <Feed
+              data={data}
+              onSelect={this.onSelect}
+              ListHeaderComponent={ListHeader}
+              ListEmptyComponent={
+                loading === false && !data.length ? ListEmpty : undefined
+              }
+            />
+          </InfiniteScroll>
           <MapButton style={styles.mapButton} onPress={this.onOpenMap} />
         </Body>
         <Footer>
@@ -90,3 +95,8 @@ export default class ListingsFeedScreen extends PureComponent {
     )
   }
 }
+
+export default composeWithRef(
+  connect((state) => ({filters: getSearchFiltersQuery(state)})),
+  withListingsFeed({pageSize: 15, fetchPolicy: 'network-only'})
+)(ListingsFeedScreen)

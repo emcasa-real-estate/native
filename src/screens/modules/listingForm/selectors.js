@@ -1,8 +1,6 @@
 import _ from 'lodash'
 import {createSelector} from 'reselect'
 
-import {getData} from '@/redux/modules/listings/data/selectors'
-
 const compare = (value, source) =>
   _.reduce(
     value,
@@ -24,15 +22,14 @@ export const getListing = (state) => listingFormScreen(state).listing
 
 export const getValue = (state) => listingFormScreen(state).value
 
+export const getSavedValue = (state) => listingFormScreen(state).savedValue
+
 export const getError = (state) => listingFormScreen(state).error
 
 export const isLoading = (state) => listingFormScreen(state).loading
 
 export const hasUnsavedChanges = createSelector(
   getValue,
-  (state) => {
-    const listing = getListing(state)
-    return listing ? getData(state, listing) : undefined
-  },
-  (value, listing) => listing && !compareListings(value, listing)
+  getSavedValue,
+  (value, savedValue) => savedValue && !compareListings(value, savedValue)
 )

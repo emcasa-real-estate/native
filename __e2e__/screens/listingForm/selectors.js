@@ -8,6 +8,8 @@ export const successScreen = () => by.id('@listingForm.Created')
 
 export const galleryScreen = () => by.id('@listingForm.Gallery')
 
+export const scrollView = () => by.id('scroll_view')
+
 export const autoComplete = () => by.id('address_auto_complete')
 
 export const autoCompleteOptions = () =>

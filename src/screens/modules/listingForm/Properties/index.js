@@ -3,9 +3,10 @@ import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
+import * as frag from '@/graphql/fragments'
+import {withListingMutation, withProfileMutation} from '@/graphql/containers'
+import withContext from '@/screens/modules/context/withContext'
 import {getUser} from '@/redux/modules/auth/selectors'
-import {setValue, submit} from '@/screens/modules/listingForm/reducer'
-import {getValue, getListing, isLoading} from '@/screens/modules/listingForm/selectors'
 import {setStack} from '@/screens/modules/navigation'
 import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
@@ -30,14 +31,34 @@ class EditPropertiesScreen extends PureComponent {
     }
   }
 
-  state = {
-    active: false
-  }
-
   form = React.createRef()
 
-  openSuccessModal() {
-    const {componentId, listing, value: {address}} = this.props
+  navigateToListing = ({id}) => {
+    const params = {
+      id,
+      editing: true,
+      parentId: `new_listing_${id}`,
+      contextId: `edit_listing_${id}`
+    }
+    this.props.setStack(
+      [
+        {name: 'account.Menu'},
+        {name: 'account.Listings'},
+        {name: 'listing.Listing', passProps: {params}, id: params.parentId},
+        {
+          name: 'listingForm.EditAddress',
+          passProps: {params},
+          id: params.contextId
+        },
+        {name: 'listingForm.EditProperties', passProps: {params}},
+        {name: 'listingForm.EditGallery', passProps: {params}}
+      ],
+      'account'
+    )
+  }
+
+  openSuccessModal = (listing) => {
+    const {componentId, value: {address}} = this.props
     Navigation.showModal({
       component: {
         id: `${componentId}_success`,
@@ -53,55 +74,69 @@ class EditPropertiesScreen extends PureComponent {
     })
   }
 
-  navigateToListing = ({id}) => {
-    const params = {id, editing: true, parent: `new_listing_${id}`}
-    this.props.setStack(
-      [
-        {name: 'account.Menu'},
-        {name: 'account.Listings'},
-        {name: 'listing.Listing', passProps: {params}, id: params.parent},
-        {name: 'listingForm.EditAddress', passProps: {params}},
-        {name: 'listingForm.EditProperties', passProps: {params}},
-        {name: 'listingForm.EditGallery', passProps: {params}}
-      ],
-      'account'
+  createListing = async () => {
+    const {
+      value: {address, phone, ...listing},
+      loading,
+      setContext,
+      submitListing,
+      editUserProfile
+    } = this.props
+    if (loading) return
+    setContext({loading: true})
+    try {
+      if (phone) await editUserProfile({variables: {phone}})
+      const {data: {insertListing}} = await submitListing({
+        variables: {
+          listing: frag.ListingInput.parseInput({
+            ...listing,
+            address: address.details
+          })
+        }
+      })
+      this.openSuccessModal(insertListing)
+      setContext({error: undefined, loading: false})
+    } catch (error) {
+      setContext({error, loading: false})
+    }
+  }
+
+  validateForm = () => {
+    return (
+      this.props.validAddress !== false &&
+      this.form.current &&
+      this.form.current.onValidate()
     )
+  }
+
+  componentDidUpdate(prev) {
+    if (!prev.error && this.props.error && this.form.current)
+      this.validateForm()
   }
 
   componentDidAppear() {
     const {componentId, params} = this.props
-    this.setState({active: true})
-    if (params.id) {
-      Navigation.mergeOptions(componentId, {
-        topBar: {
-          rightButtons: [
-            {
-              id: `${componentId}_submit`,
-              passProps: {params},
-              component: {
-                name: SubmitButtonScreen.screenName,
-                passProps: {params}
-              }
-            }
-          ]
-        }
-      })
-    }
+    if (!params.id) return
+    const passProps = {params, onValidate: this.validateForm}
+    Navigation.mergeOptions(componentId, {
+      topBar: {
+        rightButtons: [
+          {
+            id: `${componentId}_submit`,
+            passProps,
+            component: {name: SubmitButtonScreen.screenName, passProps}
+          }
+        ]
+      }
+    })
   }
 
-  componentDidDisappear() {
-    this.setState({active: false})
-  }
+  onChange = (value) => this.props.setContext({value})
 
-  componentDidUpdate(prev) {
-    const {listing, loading, params: {id}} = this.props
-    if (this.state.active && !id && !prev.listing && listing && !loading) this.openSuccessModal()
-  }
+  onValidate = (valid) => this.props.setContext({validListing: valid})
 
-  onChange = (value) => this.props.setValue(value)
-
-  onSubmit = () => {
-    const {componentId, params, submit} = this.props
+  onPressButton = () => {
+    const {componentId, params} = this.props
     if (params.id)
       Navigation.push(componentId, {
         component: {
@@ -109,7 +144,7 @@ class EditPropertiesScreen extends PureComponent {
           passProps: {params}
         }
       })
-    else if (this.form.current.onValidate()) submit()
+    else if (this.validateForm()) this.createListing()
   }
 
   render() {
@@ -117,17 +152,18 @@ class EditPropertiesScreen extends PureComponent {
     return (
       <Shell testID="@listingForm.Properties">
         <Progress progress={2 / 3} />
-        <Body scroll>
+        <Body scroll testID="scroll_view">
           <PropertiesForm
             formRef={this.form}
             value={value}
             requirePhone={!user.phone}
+            onValidate={this.onValidate}
             onChange={this.onChange}
-            onSubmit={this.onSubmit}
+            onSubmit={this.onPressButton}
           />
         </Body>
         <Footer style={{padding: 15}}>
-          <Button disabled={loading} onPress={this.onSubmit}>
+          <Button disabled={loading} onPress={this.onPressButton}>
             {params.id ? 'Próximo' : loading ? 'Enviando...' : 'Enviar'}
           </Button>
         </Footer>
@@ -137,13 +173,8 @@ class EditPropertiesScreen extends PureComponent {
 }
 
 export default composeWithRef(
-  connect(
-    (state) => ({
-      user: getUser(state),
-      value: getValue(state),
-      loading: isLoading(state),
-      listing: getListing(state)
-    }),
-    {setValue, submit, setStack}
-  )
+  withContext.byProp('params.contextId'),
+  withProfileMutation,
+  withListingMutation(({params: {id}}) => ({id})),
+  connect((state) => ({user: getUser(state)}), {setStack})
 )(EditPropertiesScreen)

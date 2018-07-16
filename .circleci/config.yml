@@ -64,7 +64,7 @@ aliases:
     name: Setup release configuration
     environment:
       BETA_TESTERS: product,dev
-      ALPHA_TESTERS: dev
+      ALPHA_TESTERS: product,dev
     command: |-
       echo "export BUILD_NUMBER=$((CIRCLE_BUILD_NUM+100))" >> $BASH_ENV
       echo "export VERSION_NAME=$(.circleci/version.sh ${VERSION_TAG:-})" >> $BASH_ENV
@@ -194,6 +194,7 @@ jobs:
     <<: *macos
     environment:
       API_URL: https://em-casa-backend-staging.herokuapp.com
+      APOLLO_ENGINE_URL: https://em-casa-apollo-engine-staging.herokuapp.com/graphql_api
       NODE_ENV: production
       CODESIGN_PROFILE: ad-hoc
       BUNDLE_IDENTIFIER_SUFFIX: -beta
@@ -222,6 +223,7 @@ jobs:
     <<: *android
     environment:
       API_URL: https://em-casa-backend-staging.herokuapp.com
+      APOLLO_ENGINE_URL: https://em-casa-apollo-engine-staging.herokuapp.com/graphql_api
       NODE_ENV: production
     steps:
     - attach_workspace:

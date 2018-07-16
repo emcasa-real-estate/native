@@ -3,7 +3,10 @@
   <application android:name=".MainApplication" android:allowBackup="true" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:theme="@style/AppTheme">
     <meta-data android:name="io.fabric.ApiKey" android:value="${fabricApiKey}" />
     <meta-data android:name="com.google.android.geo.API_KEY" android:value="${googleMapsApiKey}" />
-    <activity android:name=".MainActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:windowSoftInputMode="stateUnchanged|adjustResize" android:exported="true">
+    <meta-data android:name="com.google.firebase.messaging.default_notification_color" android:resource="@color/colorAccent" />
+    <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@mipmap/ic_launcher" />
+    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+    <activity android:name=".MainActivity" android:launchMode="singleTop" android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:windowSoftInputMode="stateUnchanged|adjustResize" android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
@@ -21,7 +24,7 @@
       </intent-filter>
     </service>
     <service android:name="io.invertase.firebase.messaging.RNFirebaseBackgroundMessagingService" />
-    <provider android:name="android.support.v4.content.FileProvider" android:authorities="com.emcasa.provider" android:grantUriPermissions="true" android:exported="false">
+    <provider android:name="android.support.v4.content.FileProvider" android:authorities="${applicationId}.provider" android:grantUriPermissions="true" android:exported="false">
       <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/filepaths" />
     </provider>
   </application>
@@ -32,5 +35,7 @@
   <uses-permission android:name="android.permission.CAMERA" />
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+  <uses-permission android:name="android.permission.VIBRATE" />
   <uses-permission android:name="android.hardware.camera.autofocus" />
 </manifest>

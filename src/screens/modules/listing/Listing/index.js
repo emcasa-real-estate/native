@@ -7,11 +7,10 @@ import {connect} from 'react-redux'
 import {FRONTEND_URL} from '@/lib/config'
 import composeWithRef from '@/lib/composeWithRef'
 import * as format from '@/assets/format'
+import {withListing} from '@/graphql/containers'
 import {logEvent} from '@/redux/modules/firebase/analytics'
-import {load as loadListing} from '@/redux/modules/listings/data'
-import {getData, isLoading} from '@/redux/modules/listings/data/selectors'
-import {load as loadRelatedListings} from '@/redux/modules/listings/relations'
-import {getRelatedListings} from '@/redux/modules/listings/relations/selectors'
+import {load as loadRelatedListings} from '@/redux/modules/relatedListings'
+import {getRelatedListings} from '@/redux/modules/relatedListings/selectors'
 import {Shell, Body, Footer, Section} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import Feed from '@/components/listings/Feed/Related'
@@ -44,7 +43,7 @@ class ListingScreen extends PureComponent {
         citySlug,
         stateSlug
       }
-    } = this.props.data
+    } = this.props.listing.data
     return {
       url: `${FRONTEND_URL}/imoveis/${stateSlug}/${citySlug}/${neighborhoodSlug}/${streetSlug}/id-${id}`,
       message: `${type} na ${street}, ${neighborhood}, ${city}`
@@ -52,7 +51,7 @@ class ListingScreen extends PureComponent {
   }
 
   updateNavigation() {
-    const {data, componentId} = this.props
+    const {listing: {data}, componentId} = this.props
     Navigation.mergeOptions(componentId, {
       topBar: {
         title: {
@@ -66,20 +65,18 @@ class ListingScreen extends PureComponent {
 
   componentDidMount() {
     const {
-      data,
-      loadListing,
+      listing: {data},
       relatedListings,
       loadRelatedListings,
       params: {id}
     } = this.props
     if (_.isEmpty(relatedListings)) loadRelatedListings(id)
-    if (_.isEmpty(data)) loadListing(id)
-    else this.updateNavigation()
+    if (data) this.updateNavigation()
   }
 
   componentDidUpdate(prev) {
-    const {data} = this.props
-    if (data && !_.isEqual(data, prev.data)) this.updateNavigation()
+    const {listing: {data}} = this.props
+    if (data && !_.isEqual(data, prev.listing.data)) this.updateNavigation()
   }
 
   navigateTo = (component) => () => {
@@ -88,7 +85,7 @@ class ListingScreen extends PureComponent {
       component: {
         ...component,
         passProps: {
-          params: {...params, parent: componentId}
+          params: {...params, parentId: componentId}
         }
       }
     })
@@ -137,17 +134,13 @@ class ListingScreen extends PureComponent {
       }
     })
 
-  get isLoading() {
-    return !this.props.data || this.props.loading
-  }
-
   renderRelatedListings() {
     const {relatedListings} = this.props
     return <Feed data={relatedListings} onSelect={this.onSelectListing} />
   }
 
   renderFooter() {
-    const {loading, params} = this.props
+    const {listing: {loading}, params} = this.props
     if (loading) return null
     return (
       <Button
@@ -164,17 +157,19 @@ class ListingScreen extends PureComponent {
   }
 
   render() {
-    const {data} = this.props
+    const {listing: {data, loading}} = this.props
 
     return (
       <Shell>
-        <Body scroll loading={this.isLoading}>
-          <Listing
-            {...data || {}}
-            onOpenGallery={this.onOpenGallery}
-            onOpenTour={this.onOpenTour}
-            onShare={this.onShare}
-          />
+        <Body scroll loading={loading}>
+          {data && (
+            <Listing
+              {...data}
+              onOpenGallery={this.onOpenGallery}
+              onOpenTour={this.onOpenTour}
+              onShare={this.onShare}
+            />
+          )}
           {data &&
             data.isActive && (
               <Section title="Veja Também">
@@ -193,10 +188,9 @@ class ListingScreen extends PureComponent {
 export default composeWithRef(
   connect(
     (state, {params}) => ({
-      data: getData(state, params),
-      loading: isLoading(state, params),
       relatedListings: getRelatedListings(state, params)
     }),
-    {loadListing, loadRelatedListings, logEvent}
-  )
+    {loadRelatedListings, logEvent}
+  ),
+  withListing(({params: {id}}) => ({id}))
 )(ListingScreen)

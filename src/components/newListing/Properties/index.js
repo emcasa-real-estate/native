@@ -14,9 +14,7 @@ export default function ListingPropertiesForm({requirePhone, ...props}) {
         price: undefined,
         rooms: 0,
         bathrooms: 0,
-        garage_spots: 0,
-        maintenance_fee: 0,
-        property_tax: 0
+        garageSpots: 0
       }}
       {...props}
     >
@@ -53,14 +51,14 @@ export default function ListingPropertiesForm({requirePhone, ...props}) {
         validations={[required('A área é obrigatória')]}
       />
       <TextInput
-        name="maintenance_fee"
+        name="maintenanceFee"
         placeholder="Condomínio (R$)"
         keyboardType="numeric"
         returnKeyType="next"
         nextField="iptu"
       />
       <TextInput
-        name="property_tax"
+        name="propertyTax"
         placeholder="IPTU (R$)"
         keyboardType="numeric"
         returnKeyType="next"
@@ -75,8 +73,14 @@ export default function ListingPropertiesForm({requirePhone, ...props}) {
       )}
       <NumberPicker label="Quartos" name="rooms" />
       <NumberPicker label="Banheiros" name="bathrooms" />
-      <NumberPicker label="Vagas de garagem" name="garage_spots" />
-      <TextInput multiline name="description" placeholder="Descrição" />
+      <NumberPicker label="Vagas de garagem" name="garageSpots" />
+      <TextInput
+        // workaround for nested scroll views matching the same testID
+        // https://github.com/wix/detox/issues/164
+        multiline={process.env.NODE_ENV !== 'e2e'}
+        name="description"
+        placeholder="Descrição"
+      />
     </Form>
   )
 }

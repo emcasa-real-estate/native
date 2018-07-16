@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import {PureComponent} from 'react'
 import {
   View,
@@ -42,13 +43,14 @@ export default class HeaderTextButton extends PureComponent {
 
   state = {}
 
-  onLayout = ({nativeEvent: {layout}}) =>
+  onLayout = _.once(({nativeEvent: {layout}}) =>
     this.setState({
       layout: {
         width: layout.width,
         height: layout.height
       }
     })
+  )
 
   renderButton() {
     const {label, style, loading} = this.props

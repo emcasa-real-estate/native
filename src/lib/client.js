@@ -2,6 +2,8 @@ import createStore from '@/redux'
 import createApolloClient from '@/graphql/client'
 
 export default new class Client {
-  store = createStore(this)
-  graphql = createApolloClient(this)
+  ready = (async () => {
+    this.store = createStore(this)
+    this.graphql = await createApolloClient(this)
+  })()
 }()

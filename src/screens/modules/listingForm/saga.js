@@ -5,6 +5,7 @@ import {
   call,
   race,
   select,
+  fork,
   take,
   takeLatest,
   getContext
@@ -12,10 +13,10 @@ import {
 
 import * as api from '@/lib/services/listings'
 import {EDIT_PROFILE} from '@/graphql/modules/user/mutations'
+import {GET_LISTING} from '@/graphql/modules/listings/queries'
 import {GET_USER_LISTINGS} from '@/graphql/modules/user/queries'
+import {patch as patchUserData} from '@/redux/modules/auth'
 import {getUser, getToken} from '@/redux/modules/auth/selectors'
-import {getData as getListingData} from '@/redux/modules/listings/data/selectors'
-import * as listingData from '@/redux/modules/listings/data'
 import * as actions from './reducer'
 import {getValue, getListing} from './selectors'
 
@@ -64,31 +65,32 @@ const formValue = (listing) => ({
 })
 
 function* fetchListing({listing: {id}}) {
-  let listing = yield select(getListingData, {id})
-  if (_.isEmpty(listing)) {
-    yield put(listingData.load(id))
-    const {success} = yield race({
-      success: take(listingData.SUCCESS),
-      failure: take(listingData.FAILURE)
-    })
-    if (!success) return
-    listing = success.data
-  }
+  const graphql = getContext('graphql')
+  const {listing} = yield call(graphql.query, {
+    query: GET_LISTING,
+    variables: {id}
+  })
+  console.log(listing)
   yield put(actions.setValue(formValue(listing)))
+}
+
+function* updatePhone({phone}) {
+  const {id, name} = yield select(getUser)
+  const graphql = yield getContext('graphql')
+  yield call(graphql.mutate, {
+    mutation: EDIT_PROFILE,
+    variables: {id, name, phone}
+  })
+  yield put(patchUserData({phone}))
 }
 
 function* createListing() {
   const {address, phone, ...listing} = yield select(getValue)
-  const {id, name} = yield select(getUser)
   const jwt = yield select(getToken)
   const graphql = yield getContext('graphql')
   yield put(actions.request())
   try {
-    if (phone)
-      yield call(graphql.mutate, {
-        mutation: EDIT_PROFILE,
-        variables: {id, name, phone}
-      })
+    if (phone) yield fork(updatePhone, {phone})
     const response = yield call(
       api.create,
       {listing: {price: 0, ...listing}, address: address.details},
@@ -110,13 +112,13 @@ function* updateListing() {
   const {id} = yield select(getListing)
   const jwt = yield select(getToken)
   try {
-    const response = yield call(
-      api.update,
-      id,
-      {listing, address: address.details},
-      {jwt}
-    )
-    yield put(listingData.patch(id, response.listing))
+    // TODO - use graphql mutation
+    // const response = yield call(
+    //   api.update,
+    //   id,
+    //   {listing, address: address.details},
+    //   {jwt}
+    // )
     yield put(actions.success({id}))
   } catch (error) {
     yield put(actions.failure(error))

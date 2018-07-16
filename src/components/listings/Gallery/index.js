@@ -1,12 +1,13 @@
-import {Component} from 'react'
+import _ from 'lodash'
+import {PureComponent} from 'react'
 import {View} from 'react-native'
 import SwipeableView from 'react-swipeable-views-native/lib/SwipeableViews.scroll'
 
-import Icon from '@/components/shared/Icon'
 import Image from '../Image'
+import Pagination from './Pagination'
 import styles from './styles'
 
-export default class ListingGallery extends Component {
+export default class ListingGallery extends PureComponent {
   static defaultProps = {
     paginationDelta: 2
   }
@@ -14,6 +15,27 @@ export default class ListingGallery extends Component {
   state = {
     position: 0,
     dimensions: {}
+  }
+
+  get items() {
+    return this.props.children
+  }
+
+  get layout() {
+    const {width, height} = this.props
+    const {dimensions} = this.state
+    return _.defaults({width, height}, dimensions)
+  }
+
+  get imageLayout() {
+    const {inline} = this.props
+    const layout = this.layout
+    if (!inline) layout.height = layout.width * 0.6
+    return layout
+  }
+
+  galleryRef = (node) => {
+    this.gallery = node
   }
 
   onChange = (position) => this.setState({position: Math.floor(position)})
@@ -34,14 +56,6 @@ export default class ListingGallery extends Component {
     })
   }
 
-  get items() {
-    return this.props.children
-  }
-
-  galleryRef = (node) => {
-    this.gallery = node
-  }
-
   renderPagination = (image, index) => {
     let {position} = this.state
     const {paginationDelta} = this.props
@@ -59,7 +73,7 @@ export default class ListingGallery extends Component {
     const opacity = 0.6 / (distanceFromActivePage + 1) + 0.4
     return (
       <Icon
-        key={image.id}
+        key={image.filename}
         type="solid"
         name="circle"
         color="white"
@@ -70,36 +84,43 @@ export default class ListingGallery extends Component {
   }
 
   renderImage = (image, index) => {
-    const {dimensions, position} = this.state
+    const {scalable} = this.props
+    const {position} = this.state
     // Placeholder
     if (Math.abs(index - position) > 2)
-      return <View key={image.id} style={dimensions} />
+      return <View key={image.filename} style={this.imageLayout} />
     return (
       <Image
-        style={styles.image}
-        layout="scalable"
-        key={image.id}
-        width={800}
-        height={650}
+        style={[styles.image]}
+        resolution={scalable ? 4.5 : 1}
+        layout={scalable ? 'scalable' : undefined}
+        key={image.filename}
+        {...this.imageLayout}
         {...image}
       />
     )
   }
 
   render() {
-    const {dimensions} = this.state
+    const {inline} = this.props
+    const {position} = this.state
     return (
-      <View style={[styles.container, dimensions]} onLayout={this.onLayout}>
+      <View style={[styles.container, this.layout]} onLayout={this.onLayout}>
         <SwipeableView
           ref={this.galleryRef}
           onLayout={this.onLayout}
           style={styles.gallery}
+          slideStyle={styles.slide}
           onChangeIndex={this.onChange}
         >
           {this.items.map(this.renderImage)}
         </SwipeableView>
         <View style={styles.pagination}>
-          {this.items.map(this.renderPagination)}
+          <Pagination
+            displayText={!inline}
+            currentPosition={position}
+            totalPages={this.items.length}
+          />
         </View>
       </View>
     )

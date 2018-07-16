@@ -1,10 +1,11 @@
 import _ from 'lodash/fp'
 import update from 'immutability-helper'
 import React, {PureComponent} from 'react'
-import {View, FlatList} from 'react-native'
+import {View, FlatList, TouchableHighlight} from 'react-native'
 
+import Icon from '@/components/shared/Icon'
 import Message from '@/components/messenger/Message'
-import styles from './styles'
+import styles, {buttonIconColor, buttonUnderlayColor} from './styles'
 
 const isUnread = (sender) => (msg) => !msg.read && msg.sender.id != sender.id
 
@@ -78,6 +79,8 @@ export default class Conversation extends PureComponent {
     }
   }
 
+  onViewUnreadMessages = () => this.list.current.scrollToEnd()
+
   keyExtractor = ({id}) => String(id)
 
   getItemLayout = (__, index) => {
@@ -119,18 +122,32 @@ export default class Conversation extends PureComponent {
 
   render() {
     const {messages} = this.props
+    const {unreadIndex} = this.state
     return (
-      <FlatList
-        ref={this.list}
-        contentContainerStyle={styles.container}
-        data={messages}
-        keyExtractor={this.keyExtractor}
-        renderItem={this.renderMessage}
-        getItemLayout={this.getItemLayout}
-        ItemSeparatorComponent={this.renderSeparator}
-        onViewableItemsChanged={this.onChangeView}
-        viewabilityConfig={this.viewabilityConfig}
-      />
+      <View style={styles.container}>
+        {unreadIndex < messages.length && (
+          <TouchableHighlight
+            style={styles.button}
+            underlayColor={buttonUnderlayColor}
+            onPress={this.onViewUnreadMessages}
+          >
+            <Icon name="arrow-down" color={buttonIconColor} size={17} />
+          </TouchableHighlight>
+        )}
+        <View style={styles.listContainer}>
+          <FlatList
+            ref={this.list}
+            contentContainerStyle={styles.list}
+            data={messages}
+            keyExtractor={this.keyExtractor}
+            renderItem={this.renderMessage}
+            getItemLayout={this.getItemLayout}
+            ItemSeparatorComponent={this.renderSeparator}
+            onViewableItemsChanged={this.onChangeView}
+            viewabilityConfig={this.viewabilityConfig}
+          />
+        </View>
+      </View>
     )
   }
 }

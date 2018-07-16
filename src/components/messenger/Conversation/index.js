@@ -85,6 +85,7 @@ export default class Conversation extends PureComponent {
 
   getItemLayout = (__, index) => {
     const {messages} = this.state
+    if (index < messages.length) return {length: 0, offset: 0, index}
     const length = messages[index].layout.height + 10
     const offset = messages
       .slice(0, index)

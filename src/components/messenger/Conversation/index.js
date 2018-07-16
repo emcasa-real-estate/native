@@ -139,6 +139,7 @@ export default class Conversation extends PureComponent {
             ref={this.list}
             contentContainerStyle={styles.list}
             data={messages}
+            extraData={this.state}
             keyExtractor={this.keyExtractor}
             renderItem={this.renderMessage}
             getItemLayout={this.getItemLayout}

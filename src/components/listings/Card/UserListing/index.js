@@ -55,10 +55,11 @@ export default function UserListingCard({
   onViewListing
 }) {
   const image = images[0] || {}
-  const padding = 15
+  const padding = 30
+  const cellSpacing = 10
   const imageSize = {
-    width: width / 2 - padding * 2,
-    height: width / 2 * 0.6 - padding * 2
+    width: (width - padding * 2) / 3 - cellSpacing,
+    height: ((width - padding * 2) / 3 - cellSpacing) * 0.64
   }
 
   return (
@@ -84,9 +85,9 @@ export default function UserListingCard({
             icon="eye"
             color="orange"
           />
-          <View style={{margin: 5}} />
+          <View style={{margin: cellSpacing / 2}} />
           <Button onPress={onEdit} title="Editar" icon="edit" color="red" />
-          <View style={{margin: 5}} />
+          <View style={{margin: cellSpacing / 2}} />
           <Button
             onPress={onViewStats}
             title="Estatísticas"

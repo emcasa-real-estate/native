@@ -54,10 +54,9 @@ class UserListingsScreen extends PureComponent {
     const {userListings: {data, loading}} = this.props
     return (
       <Shell>
-        <Body>
+        <Body loading={loading}>
           <Feed
             data={data}
-            loading={loading}
             onEdit={this.onEditListing}
             onViewStats={this.onViewListingStats}
             onViewListing={this.onViewListing}

@@ -1,4 +1,4 @@
-import {View, Dimensions, } from 'react-native'
+import {View, Dimensions} from 'react-native'
 
 import * as colors from '@/assets/colors'
 import Text from '@/components/shared/Text'
@@ -11,26 +11,34 @@ function Button({title, icon, onPress, color: colorKey}) {
   return (
     <View style={styles.buttonContainer}>
       <Touchable onPress={onPress}>
-        {({active}) => {
-          const color = active ? colors[colorKey].medium : colors.gray.light
-          return (
-            <View
+        {({active}) => (
+          <View
+            style={[
+              styles.button,
+              {
+                borderColor: active
+                  ? colors[colorKey].medium
+                  : colors.gray.lighter
+              },
+              active && [styles.buttonActive]
+            ]}
+          >
+            <Icon
+              style={styles.buttonIcon}
+              color={colors[colorKey].medium}
+              name={icon}
+              size={22}
+            />
+            <Text
               style={[
-                styles.button,
-                {borderColor: color},
-                active && [styles.buttonActive]
+                styles.buttonText,
+                {color: active ? colors[colorKey].medium : colors.gray.medium}
               ]}
             >
-              <Icon
-                style={styles.buttonIcon}
-                color={colors[colorKey].medium}
-                name={icon}
-                size={22}
-              />
-              <Text style={[styles.buttonText, {color}]}>{title}</Text>
-            </View>
-          )
-        }}
+              {title}
+            </Text>
+          </View>
+        )}
       </Touchable>
     </View>
   )

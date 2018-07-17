@@ -5,7 +5,8 @@ import {connect} from 'react-redux'
 import composeWithRef from '@/lib/composeWithRef'
 import {withMessengerFeed} from '@/graphql/containers'
 import {getUser} from '@/redux/modules/auth/selectors'
-import {Shell, Body} from '@/components/layout'
+import {Shell, Body, Footer} from '@/components/layout'
+import BottomTabs from '@/screens/modules/navigation/BottomTabs'
 import Channels from '@/components/messenger/Channels'
 
 import ConversationScreen from '@/screens/modules/messenger/Conversation'
@@ -57,6 +58,9 @@ class MessengerChannelsScreen extends PureComponent {
             />
           )}
         </Body>
+        <Footer>
+          <BottomTabs />
+        </Footer>
       </Shell>
     )
   }

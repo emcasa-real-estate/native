@@ -1,11 +1,11 @@
-import {View, Dimensions, TouchableHighlight} from 'react-native'
+import {View, Dimensions, } from 'react-native'
 
 import * as colors from '@/assets/colors'
 import Text from '@/components/shared/Text'
 import Icon from '@/components/shared/Icon'
 import Image from '@/components/listings/Image'
 import Touchable from '@/components/shared/Touchable'
-import styles, {iconColor} from './styles'
+import styles from './styles'
 
 function Button({title, icon, onPress, color: colorKey}) {
   return (

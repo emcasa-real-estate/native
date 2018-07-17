@@ -19,7 +19,8 @@ export default StyleSheet.create({
   },
   propTitle: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   propTitleText: {
     fontSize: 16,
@@ -62,6 +63,15 @@ export default StyleSheet.create({
   },
   image: {
     borderRadius: 5
+  },
+  statusIcon: {
+    width: 15,
+    height: 15,
+    borderRadius: 7.5,
+    backgroundColor: colors.gray.light
+  },
+  statusIconActive: {
+    backgroundColor: colors.green.medium
   }
 })
 

@@ -8,6 +8,7 @@ import {getUser} from '@/redux/modules/auth/selectors'
 import {Shell, Body, Footer} from '@/components/layout'
 import BottomTabs from '@/screens/modules/navigation/BottomTabs'
 import Channels from '@/components/messenger/Channels'
+import ListEmpty from './ListEmpty'
 
 import ConversationScreen from '@/screens/modules/messenger/Conversation'
 
@@ -55,6 +56,7 @@ class MessengerChannelsScreen extends PureComponent {
               channels={channels.data}
               sender={user}
               onSelect={this.onSelect}
+              ListEmptyComponent={channels.loading ? undefined : ListEmpty}
             />
           )}
         </Body>

@@ -42,7 +42,13 @@ function Channel({receiver, messages, listing: {address}, onPress}) {
 
 const createHandler = (fun, ...args) => fun && (() => fun(...args))
 
-export default function MessengerChannels({channels, sender, onSelect}) {
+export default function MessengerChannels({
+  channels,
+  sender,
+  onSelect,
+  ListEmptyComponent
+}) {
+  if (!channels.length && ListEmptyComponent) return <ListEmptyComponent />
   const receiver = ({participant1, participant2}) =>
     [participant1, participant2].find(({id}) => id != sender.id) || sender
   return (

@@ -25,6 +25,6 @@ class ListingDashboardScreen extends PureComponent {
   }
 }
 
-export default composeWithRef(withListing(({params}) => params))(
+export default composeWithRef(withListing(({params: {id}}) => ({id})))(
   ListingDashboardScreen
 )

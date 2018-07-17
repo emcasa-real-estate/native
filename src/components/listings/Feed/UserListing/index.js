@@ -11,20 +11,6 @@ export default class UserListingFeed extends PureComponent {
     Card
   }
 
-  state = {active: undefined}
-
-  onSelect = (id) => () =>
-    this.setState((state) => ({
-      active: id == state.active ? undefined : id,
-      onScroll: _.after(this.onDeselect)(10)
-    }))
-
-  onDeselect = () =>
-    this.setState({
-      active: undefined,
-      onScroll: undefined
-    })
-
   onEdit = (id) => () => this.props.onEdit(id)
 
   onViewStats = (id) => () => this.props.onViewStats(id)
@@ -32,12 +18,9 @@ export default class UserListingFeed extends PureComponent {
   onViewListing = (id) => () => this.props.onViewListing(id)
 
   renderCard = ({item, index}) => {
-    const isActive = this.state.active == item.id
     return (
       <Card
         testUniqueID={index + 1}
-        active={isActive}
-        onPress={this.onSelect(item.id)}
         onEdit={this.onEdit(item.id)}
         onViewStats={this.onViewStats(item.id)}
         onViewListing={this.onViewListing(item.id)}
@@ -50,10 +33,8 @@ export default class UserListingFeed extends PureComponent {
     return (
       <FlatList
         {...this.props}
-        onScroll={this.state.onScroll}
-        scrollEventThrottle={100}
-        activeListingId={this.state.active} // Update children when active id changes
-        testID="listing_feed"
+        testID="user_listing_feed"
+        contentContainerStyle={{paddingVertical: 15}}
         keyExtractor={keyExtractor}
         renderItem={this.renderCard}
       />

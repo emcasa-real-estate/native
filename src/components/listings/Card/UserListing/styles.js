@@ -1,79 +1,73 @@
 import {StyleSheet} from 'react-native'
 
 import * as colors from '@/assets/colors'
+import {elevation} from '@/assets/styles'
 
 export const iconColor = colors.gray.darker
 
-export const linkColor = colors.blue.medium
-
-const thumbnailOverlay = {
-  zIndex: 1,
-  left: 0,
-  width: '100%',
-  position: 'absolute',
-  justifyContent: 'center',
-  alignItems: 'center',
-  backgroundColor: '#ffffff90'
-}
+export const buttonUnderlayColor = colors.gray.offWhite
 
 export default StyleSheet.create({
   container: {
+    marginHorizontal: 15,
+    marginBottom: 15,
     padding: 15,
-    paddingTop: 20,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.gray.lighter,
-    borderRadius: 5
-  },
-  thumbnail: {
-    position: 'relative',
-    display: 'flex',
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: colors.gray.lighter,
+    backgroundColor: 'white',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'stretch',
+    ...elevation(2)
+  },
+  info: {
+    flex: 1
+  },
+  imageContainer: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  image: {
+    borderRadius: 5,
     overflow: 'hidden',
-    borderRadius: 5
+    borderWidth: 1,
+    borderColor: colors.gray.lighter
   },
-  image: {zIndex: 0},
-  topBar: {
-    ...thumbnailOverlay,
-    top: 0,
-    height: 30,
-    alignItems: 'flex-end'
+  buttonContainer: {
+    flex: 1
   },
-  link: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 15
-  },
-  linkText: {
-    color: linkColor
-  },
-  bottomBar: {
-    ...thumbnailOverlay,
-    bottom: 0,
-    height: 55,
-    flexDirection: 'row'
-  },
-  buttonContainer: {flex: 0.5},
   button: {
+    paddingVertical: 15,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: colors.gray.lighter,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center'
   },
+  buttonActive: {
+    backgroundColor: colors.gray.offWhite + '50'
+  },
   buttonIcon: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 10
   },
   buttonText: {
     textAlign: 'center',
-    fontSize: 12,
+    fontSize: 10,
     color: colors.gray.dark
   },
-  body: {
-    marginTop: 10,
-    marginBottom: 10
+  header: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    marginBottom: 15,
+    paddingBottom: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.gray.lighter
   },
   row: {
     display: 'flex',
@@ -84,14 +78,14 @@ export default StyleSheet.create({
   },
   street: {
     color: colors.gray.darker,
-    flex: 1,
     fontSize: 16,
     marginRight: 15
   },
   neighborhood: {
-    color: colors.gray.mediumDark,
-    fontSize: 12,
-    fontWeight: '600'
+    color: colors.gray.darker,
+    fontSize: 10,
+    fontWeight: '600',
+    marginBottom: 5
   },
   priceText: {
     fontWeight: '300',

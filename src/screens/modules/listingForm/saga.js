@@ -3,10 +3,8 @@ import {
   put,
   all,
   call,
-  race,
   select,
   fork,
-  take,
   takeLatest,
   getContext
 } from 'redux-saga/effects'
@@ -70,7 +68,6 @@ function* fetchListing({listing: {id}}) {
     query: GET_LISTING,
     variables: {id}
   })
-  console.log(listing)
   yield put(actions.setValue(formValue(listing)))
 }
 

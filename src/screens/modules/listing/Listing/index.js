@@ -66,9 +66,14 @@ class ListingScreen extends PureComponent {
   }
 
   componentDidMount() {
-    const {relatedListings, loadRelatedListings, params: {id}} = this.props
+    const {
+      listing: {data},
+      relatedListings,
+      loadRelatedListings,
+      params: {id}
+    } = this.props
     if (_.isEmpty(relatedListings)) loadRelatedListings(id)
-    else this.updateNavigation()
+    if (data) this.updateNavigation()
   }
 
   componentDidUpdate(prev) {

@@ -1,5 +1,6 @@
 import {View, TouchableOpacity, Dimensions} from 'react-native'
 
+import {withFavoriteMutation} from '@/graphql/containers'
 import LikeIcon from '@/components/listings/LikeIcon'
 import Text from '@/components/shared/Text'
 import Icon from '@/components/shared/Icon'
@@ -41,7 +42,7 @@ function LikeButton({favorite, ...props}) {
   )
 }
 
-export default function ListingCard({
+function ListingCard({
   style,
   address,
   images,
@@ -116,3 +117,5 @@ ListingCard.defaultProps = {
     return Dimensions.get('window').width
   }
 }
+
+export default withFavoriteMutation(ListingCard)

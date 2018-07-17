@@ -6,7 +6,6 @@ import {withFavoriteListings} from '@/graphql/containers'
 import {Shell, Body, Footer} from '@/components/layout'
 import Feed from '@/components/listings/Feed/Listing'
 import BottomTabs from '@/screens/modules/navigation/BottomTabs'
-import Card from '@/screens/modules/listings/shared/Card'
 import ListEmpty from './ListEmpty'
 
 import ListingScreen from '@/screens/modules/listing/Listing'
@@ -42,7 +41,6 @@ class FavoritesScreen extends PureComponent {
             data={favorites.data}
             loading={favorites.loading}
             onSelect={this.onSelect}
-            Card={Card}
             ListEmptyComponent={favorites.loading ? undefined : ListEmpty}
           />
         </Body>

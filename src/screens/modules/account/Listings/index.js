@@ -4,9 +4,8 @@ import {Navigation} from 'react-native-navigation'
 import composeWithRef from '@/lib/composeWithRef'
 import {withUserListings} from '@/graphql/containers'
 import {Shell, Body, Footer} from '@/components/layout'
-import BottomTabs from '@/screens/modules/navigation/BottomTabs'
-import Card from '@/screens/modules/listings/shared/Card'
 import Feed from '@/components/listings/Feed/Listing'
+import BottomTabs from '@/screens/modules/navigation/BottomTabs'
 
 import ListingScreen from '@/screens/modules/listing/Listing'
 
@@ -34,12 +33,7 @@ class UserListingsScreen extends PureComponent {
     return (
       <Shell>
         <Body>
-          <Feed
-            data={data}
-            loading={loading}
-            onSelect={this.onSelect}
-            Card={Card}
-          />
+          <Feed data={data} loading={loading} onSelect={this.onSelect} />
         </Body>
         <Footer>
           <BottomTabs />

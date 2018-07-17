@@ -5,7 +5,7 @@ import {compose, mapProps} from 'recompose'
 import {GET_CHANNEL_FEED} from '@/graphql/modules/messenger/queries'
 import {MESSAGE_SENT} from '@/graphql/modules/messenger/subscriptions'
 
-function MessengerFeedQuery({children}) {
+function MessengerFeedQuery({children, ...props}) {
   const hasParticipant = (chn, user) =>
     [chn.participant1, chn.participant2].findIndex(({id}) => id == user.id) !==
     -1
@@ -17,7 +17,7 @@ function MessengerFeedQuery({children}) {
         hasParticipant(chn, message.receiver)
     )
   return (
-    <Query query={GET_CHANNEL_FEED}>
+    <Query query={GET_CHANNEL_FEED} {...props}>
       {({subscribeToMore, ...response}) =>
         children({
           ...response,

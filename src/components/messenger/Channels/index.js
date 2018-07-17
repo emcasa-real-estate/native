@@ -7,12 +7,8 @@ import Text from '@/components/shared/Text'
 import Avatar from '@/components/messenger/UserAvatar'
 import styles, {underlayColor} from './styles'
 
-function Channel({
-  receiver,
-  listing: {address},
-  lastMessage: {insertedAt, message},
-  onPress
-}) {
+function Channel({receiver, messages, listing: {address}, onPress}) {
+  const {insertedAt, message} = messages[0]
   return (
     <TouchableHighlight
       style={styles.channel}
@@ -51,16 +47,16 @@ export default function MessengerChannels({channels, sender, onSelect}) {
     [participant1, participant2].find(({id}) => id != sender.id) || sender
   return (
     <View style={styles.container}>
-      {_.orderBy(channels, ['lastMessage.insertedAt'], ['desc']).map(
-        (channel) => (
-          <Channel
-            key={channel.id}
-            receiver={receiver(channel)}
-            onPress={createHandler(onSelect, channel.id)}
-            {...channel}
-          />
-        )
-      )}
+      {_.orderBy(channels, ({messages: [{insertedAt}]}) => insertedAt, [
+        'desc'
+      ]).map((channel) => (
+        <Channel
+          key={channel.id}
+          receiver={receiver(channel)}
+          onPress={createHandler(onSelect, channel.id)}
+          {...channel}
+        />
+      ))}
     </View>
   )
 }

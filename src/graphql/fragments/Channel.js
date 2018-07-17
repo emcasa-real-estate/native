@@ -26,7 +26,7 @@ export default gql`
     participant2 {
       ...User
     }
-    lastMessage {
+    messages {
       ...Message
     }
   }

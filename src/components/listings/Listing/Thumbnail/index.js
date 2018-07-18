@@ -1,10 +1,9 @@
-import _ from 'lodash'
 import {Component} from 'react'
 import {View, TouchableOpacity, Dimensions} from 'react-native'
 
 import BaseIcon from '@/components/shared/Icon'
 import LikeIcon from '@/components/listings/LikeIcon'
-import Image from '@/components/listings/Gallery'
+import Image from '@/components/listings/Image'
 import Gallery from '@/components/listings/Gallery'
 import styles, {iconColor} from './styles'
 
@@ -43,11 +42,10 @@ export default class ListingThumbnail extends Component {
     } = this.props
     let {width, height} = Dimensions.get('window')
     height = width * 0.64
-
     return (
       <View style={styles.container} testID={testID}>
         <View>
-          {images.length ? (
+          {images && images.length ? (
             <Gallery inline width={width} height={height}>
               {images.slice(0, 4)}
             </Gallery>

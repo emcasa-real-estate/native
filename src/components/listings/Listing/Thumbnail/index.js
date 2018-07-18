@@ -4,8 +4,8 @@ import {View, TouchableOpacity, Dimensions} from 'react-native'
 
 import BaseIcon from '@/components/shared/Icon'
 import LikeIcon from '@/components/listings/LikeIcon'
-import Matterport from '@/components/listings/Matterport'
-import Image from '../../Image'
+import Image from '@/components/listings/Gallery'
+import Gallery from '@/components/listings/Gallery'
 import styles, {iconColor} from './styles'
 
 const ActionButton = ({children, title, onPress}) => (
@@ -31,12 +31,9 @@ export default class ListingThumbnail extends Component {
     this.props.onViewTour()
   }
 
-  onViewTour = _.after(50, _.once(this.props.onViewTour))
-
   render() {
     const {
       testID,
-      active,
       images,
       favorite,
       matterportCode,
@@ -44,23 +41,18 @@ export default class ListingThumbnail extends Component {
       onFavorite,
       onShare
     } = this.props
-    const image = images[0] || {}
     let {width, height} = Dimensions.get('window')
     height = width * 0.64
 
     return (
       <View style={styles.container} testID={testID}>
-        <View
-          onMoveShouldSetResponder={() => true}
-          onStartShouldSetResponder={() => true}
-          onResponderMove={this.onViewTour}
-        >
-          {active ? (
-            <Matterport code={matterportCode} width={width} height={height}>
-              <Image thumbnail {...image} width={width} height={height} />
-            </Matterport>
+        <View>
+          {images.length ? (
+            <Gallery inline width={width} height={height}>
+              {images.slice(0, 4)}
+            </Gallery>
           ) : (
-            <View style={{width, height}} />
+            <Image width={width} height={height} />
           )}
         </View>
         <View style={styles.actionRow}>
@@ -84,7 +76,7 @@ export default class ListingThumbnail extends Component {
             )}
             {matterportCode && (
               <ActionButton title="Ver em tela cheia" onPress={this.onOpenTour}>
-                <Icon name="expand" />
+                <Icon name="cube" />
               </ActionButton>
             )}
             {isActive && (

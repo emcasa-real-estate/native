@@ -6,7 +6,7 @@ import Text from '@/components/shared/Text'
 import Price from '@/components/shared/Price'
 import Image from '@/components/listings/Image'
 import LikeIcon from '@/components/listings/LikeIcon'
-import touchable from '../touchable'
+import {touchable} from '@/components/shared/Touchable'
 import $styles from './styles'
 
 function RelatedListingCard({

@@ -107,6 +107,7 @@ export const UserListing = gql`
   fragment UserListing on Listing {
     ...Listing
     complement
+    insertedAt
     inPersonVisitCount
     interestCount
     listingFavoriteCount

@@ -4,7 +4,14 @@ import * as image from '@/assets/image'
 
 export default function StaticImage({style, width, height, ...props}) {
   return (
-    <Image style={[StaticImage.ratio({width, height}), style]} {...props} />
+    <Image
+      style={[
+        {justifyContent: 'center', alignItems: 'center'},
+        StaticImage.ratio({width, height}),
+        style
+      ]}
+      {...props}
+    />
   )
 }
 

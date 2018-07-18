@@ -8,10 +8,7 @@ export default StyleSheet.create({
     flex: 0
   },
   textInputContainer: {
-    paddingTop: 3,
-    paddingBottom: 3,
-    paddingLeft: 14,
-    paddingRight: 14,
+    paddingHorizontal: 14,
     borderWidth: 1,
     borderRadius: 4,
     borderColor: colors.gray.light,
@@ -21,7 +18,8 @@ export default StyleSheet.create({
   textInput: {
     fontFamily: 'OpenSans',
     fontSize: 17,
-    lineHeight: 18,
+    height: 50,
+    maxHeight: 50,
     color: colors.gray.dark
   },
   placeholder: {

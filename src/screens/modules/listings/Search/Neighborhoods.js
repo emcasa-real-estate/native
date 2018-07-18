@@ -8,16 +8,7 @@ import {getNeighborhoods} from '@/redux/modules/neighborhoods/selectors'
 import {MultiSelectOptions} from '@/components/listings/Search/Field'
 import HeaderButton from '@/screens/modules/shared/Header/TextButton'
 
-@connect(
-  (state) => ({
-    neighborhoods: getNeighborhoods(state),
-    options: getSearchFilters(state)
-  }),
-  null,
-  null,
-  {withRef: true}
-)
-export default class NeighborhoodsScreen extends PureComponent {
+class NeighborhoodsScreen extends PureComponent {
   static screenName = 'listings.Search.Neighborhoods'
 
   static options = {
@@ -86,3 +77,13 @@ export default class NeighborhoodsScreen extends PureComponent {
     )
   }
 }
+
+export default connect(
+  (state) => ({
+    neighborhoods: getNeighborhoods(state),
+    options: getSearchFilters(state)
+  }),
+  null,
+  null,
+  {withRef: true}
+)(NeighborhoodsScreen)

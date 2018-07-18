@@ -5,8 +5,7 @@ import {connect} from 'react-redux'
 
 import {switchTab} from '@/screens/modules/navigation'
 
-@connect(null, {switchTab}, null, {withRef: true})
-export default class RedirectScreen extends PureComponent {
+class RedirectScreen extends PureComponent {
   static screenName = 'shared.Redirect'
 
   static createStack(component, options, passProps = {}) {
@@ -45,3 +44,5 @@ export default class RedirectScreen extends PureComponent {
     return null
   }
 }
+
+export default connect(null, {switchTab}, null, {withRef: true})(RedirectScreen)

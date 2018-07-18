@@ -6,8 +6,7 @@ import {field} from '@/components/shared/Form/Field'
 import Text from '@/components/shared/Text'
 import styles from './styles'
 
-@field()
-export default class ListingTypeField extends PureComponent {
+class ListingTypeField extends PureComponent {
   static defaultProps = {
     value: ['Casa', 'Apartamento', 'Cobertura'],
     options: ['Casa', 'Apartamento', 'Cobertura']
@@ -43,3 +42,5 @@ export default class ListingTypeField extends PureComponent {
     )
   }
 }
+
+export default field()(ListingTypeField)

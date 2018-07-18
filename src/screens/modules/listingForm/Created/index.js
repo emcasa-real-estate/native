@@ -10,10 +10,7 @@ import Text from '@/components/shared/Text'
 import Icon from '@/components/shared/Icon'
 import styles, {validTextColor, invalidTextColor} from './styles'
 
-@connect((state) => ({neighborhoods: getNeighborhoods(state)}), null, null, {
-  withRef: true
-})
-export default class ListingCreatedScreen extends Component {
+class ListingCreatedScreen extends Component {
   static defaultProps = {
     params: {}
   }
@@ -91,3 +88,10 @@ export default class ListingCreatedScreen extends Component {
     )
   }
 }
+
+export default connect(
+  (state) => ({neighborhoods: getNeighborhoods(state)}),
+  null,
+  null,
+  {withRef: true}
+)(ListingCreatedScreen)

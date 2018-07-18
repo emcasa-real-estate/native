@@ -10,17 +10,7 @@ import LoginForm from '@/components/auth/Login'
 import SignUpScreen from '@/screens/modules/auth/SignUp'
 import ResetPasswordScreen from '@/screens/modules/auth/ResetPassword'
 
-@connect(
-  (state) => ({
-    user: getUser(state),
-    error: getError(state),
-    loading: isLoading(state)
-  }),
-  {signIn, reset},
-  null,
-  {withRef: true}
-)
-export default class LoginScreen extends PureComponent {
+class LoginScreen extends PureComponent {
   static screenName = 'auth.Login'
 
   static options = {
@@ -104,3 +94,14 @@ export default class LoginScreen extends PureComponent {
     )
   }
 }
+
+export default connect(
+  (state) => ({
+    user: getUser(state),
+    error: getError(state),
+    loading: isLoading(state)
+  }),
+  {signIn, reset},
+  null,
+  {withRef: true}
+)(LoginScreen)

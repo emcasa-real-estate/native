@@ -3,8 +3,7 @@ import React, {PureComponent} from 'react'
 import TextInput from '@/components/shared/TextInput'
 import {field} from './Field'
 
-@field()
-export default class TextInputField extends PureComponent {
+class TextInputField extends PureComponent {
   static defaultProps = {
     value: ''
   }
@@ -44,3 +43,5 @@ export default class TextInputField extends PureComponent {
     )
   }
 }
+
+export default field()(TextInputField)

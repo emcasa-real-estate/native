@@ -10,17 +10,7 @@ import Button from '@/components/shared/Button'
 import SignUpForm from '@/components/auth/SignUp'
 import SuccessScreen from '@/screens/modules/shared/Success'
 
-@connect(
-  (state) => ({
-    user: getUser(state),
-    error: getError(state),
-    loading: isLoading(state)
-  }),
-  {signUp, reset},
-  null,
-  {withRef: true}
-)
-export default class SignUpScreen extends PureComponent {
+class SignUpScreen extends PureComponent {
   static screenName = 'auth.SignUp'
 
   static options = {
@@ -102,3 +92,14 @@ export default class SignUpScreen extends PureComponent {
     )
   }
 }
+
+export default connect(
+  (state) => ({
+    user: getUser(state),
+    error: getError(state),
+    loading: isLoading(state)
+  }),
+  {signUp, reset},
+  null,
+  {withRef: true}
+)(SuccessScreen)

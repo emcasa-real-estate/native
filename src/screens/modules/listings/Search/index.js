@@ -26,15 +26,7 @@ const compareDefaults = (value, defaultValue) => {
   else return false
 }
 
-@connect(
-  (state) => ({
-    options: getSearchFilters(state)
-  }),
-  {updateFilters},
-  null,
-  {withRef: true}
-)
-export default class ListingSearchScreen extends PureComponent {
+class ListingSearchScreen extends PureComponent {
   static screenName = 'listings.Search'
 
   static options = {
@@ -124,3 +116,12 @@ export default class ListingSearchScreen extends PureComponent {
     )
   }
 }
+
+export default connect(
+  (state) => ({
+    options: getSearchFilters(state)
+  }),
+  {updateFilters},
+  null,
+  {withRef: true}
+)(ListingSearchScreen)

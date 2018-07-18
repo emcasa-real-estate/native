@@ -6,14 +6,7 @@ import {getCurrentTab} from '@/screens/modules/navigation/selectors'
 import {getToken} from '@/redux/modules/auth/selectors'
 import BottomTabs from '@/components/layout/BottomTabs'
 
-@connect(
-  (state) => ({
-    currentTab: getCurrentTab(state),
-    jwt: getToken(state)
-  }),
-  {switchTab}
-)
-export default class BottomTabsApp extends PureComponent {
+class BottomTabsApp extends PureComponent {
   render() {
     const {jwt, currentTab, switchTab} = this.props
     return (
@@ -32,3 +25,11 @@ export default class BottomTabsApp extends PureComponent {
     )
   }
 }
+
+export default connect(
+  (state) => ({
+    currentTab: getCurrentTab(state),
+    jwt: getToken(state)
+  }),
+  {switchTab}
+)(BottomTabsApp)

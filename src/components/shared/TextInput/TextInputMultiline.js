@@ -8,7 +8,17 @@ export default class TextInputAndroid extends PureComponent {
   }
 
   state = {
-    layout: {height: 'auto'}
+    layout: {height: 0}
+  }
+
+  static getDerivedStateFromProps({minHeight}, {layout}) {
+    if (minHeight <= layout.height) return null
+    return {
+      layout: {
+        ...layout,
+        height: Math.max(minHeight, layout.height)
+      }
+    }
   }
 
   onContentSizeChange = ({nativeEvent: {contentSize}}) => {

@@ -9,7 +9,7 @@ export default function FormButton({onPress, icon, label, children}) {
     <TouchableHighlight underlayColor={underlayColor} onPress={onPress}>
       <View style={styles.container}>
         <Text style={styles.text}>{children}</Text>
-        {label && <View style={styles.label}>{label}</View>}
+        {Boolean(label) && <View style={styles.label}>{label}</View>}
         <Icon
           name={icon}
           size={16}

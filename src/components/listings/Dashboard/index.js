@@ -54,7 +54,7 @@ export default function ListingDashboard({
         icon="eye"
         value={`${listingVisualisationCount} visualizações`}
       />
-      {matterportCode && (
+      {Boolean(matterportCode) && (
         <Property
           title="Tour 3D"
           icon="home-heart"

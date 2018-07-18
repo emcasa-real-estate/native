@@ -1,6 +1,5 @@
-import _ from 'lodash'
 import {PureComponent} from 'react'
-import {View, TextInput, StyleSheet} from 'react-native'
+import {View, TextInput, Platform} from 'react-native'
 
 export default class TextInputAndroid extends PureComponent {
   static defaultProps = {
@@ -9,15 +8,19 @@ export default class TextInputAndroid extends PureComponent {
   }
 
   state = {
-    layout: {height: 0}
+    layout: {height: 'auto'}
   }
 
   onContentSizeChange = ({nativeEvent: {contentSize}}) => {
     const {maxHeight, minHeight} = this.props
+    const {max, min} = Math
+    const height = min(maxHeight, max(minHeight, contentSize.height))
+    const paddingTop = Platform.select({
+      ios: max(0, (height - contentSize.height - 10) / 2),
+      android: 0
+    })
     this.setState({
-      layout: {
-        height: Math.min(maxHeight, Math.max(minHeight, contentSize.height))
-      }
+      layout: {height, paddingTop}
     })
   }
 

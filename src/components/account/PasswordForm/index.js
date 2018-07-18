@@ -19,7 +19,7 @@ export default class PasswordForm extends PureComponent {
     return (
       <View style={styles.container}>
         <Form style={styles.form} {...props}>
-          {message && (
+          {Boolean(message) && (
             <Text style={[styles.message, styles[`${message.type}Message`]]}>
               {message.text}
             </Text>

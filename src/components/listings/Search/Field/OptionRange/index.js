@@ -149,4 +149,4 @@ class OptionRangeField extends Component {
   }
 }
 
-export default field(OptionRangeField)
+export default field()(OptionRangeField)

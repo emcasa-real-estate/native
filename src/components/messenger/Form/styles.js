@@ -6,7 +6,8 @@ export default StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    margin: 10
+    margin: 10,
+    maxHeight: 160
   },
   inputContainer: {
     flex: 1

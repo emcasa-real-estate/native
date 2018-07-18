@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import {PureComponent} from 'react'
+import {Platform} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
@@ -73,8 +74,8 @@ class ConversationScreen extends PureComponent {
   render() {
     const {messages, loading, user} = this.props
     return (
-      <Shell disableKeyboardSpacer>
-        <Body loading={messages.loading || loading}>
+      <Shell disableKeyboardSpacer={Platform.OS === 'ios'}>
+        <Body loading={messages.loading || loading} keyboardDismissMode="none">
           {messages.data && (
             <Conversation
               messages={messages.data.messages}

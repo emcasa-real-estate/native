@@ -8,16 +8,19 @@ export default StyleSheet({
     borderWidth: 1,
     borderRadius: 4,
     borderColor: colors.gray.light,
-    paddingHorizontal: Platform.OS === 'ios' ? 14 : 3,
-    paddingVertical: 14,
+    paddingHorizontal: 14,
+    paddingVertical: 0,
+    height: 50,
     ':invalid': {
       borderColor: colors.red.medium
     }
   },
   input: {
+    flex: 1,
     fontFamily: Platform.OS === 'ios' ? 'Open Sans' : 'OpenSans',
     fontSize: 17,
-    lineHeight: Platform.OS === 'ios' ? null : 18,
-    color: colors.gray.dark
+    color: colors.gray.dark,
+    textAlignVertical: 'center',
+    paddingVertical: Platform.OS === 'ios' ? 5 : 0
   }
 })

@@ -22,10 +22,9 @@ export default class MessengerForm extends PureComponent {
         <View style={styles.inputContainer}>
           <TextInput
             multiline
-            styles={{
-              container: {maxHeight: 160, paddingVertical: 6},
-              input: {fontSize: 14}
-            }}
+            maxHeight={160}
+            minHeight={40}
+            styles={{input: {fontSize: 14}}}
             value={value}
             onChangeText={this.onChange}
           />

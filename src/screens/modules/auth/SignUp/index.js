@@ -102,4 +102,4 @@ export default connect(
   {signUp, reset},
   null,
   {withRef: true}
-)(SuccessScreen)
+)(SignUpScreen)

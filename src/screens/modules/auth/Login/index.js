@@ -7,6 +7,7 @@ import {signIn, reset} from '@/redux/modules/auth'
 import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import LoginForm from '@/components/auth/Login'
+
 import SignUpScreen from '@/screens/modules/auth/SignUp'
 import ResetPasswordScreen from '@/screens/modules/auth/ResetPassword'
 
@@ -51,19 +52,13 @@ class LoginScreen extends PureComponent {
 
   onSignUp = () => {
     Navigation.push(this.props.componentId, {
-      component: {
-        id: 'sign_up',
-        name: SignUpScreen.screenName
-      }
+      component: {name: SignUpScreen.screenName}
     })
   }
 
   onPasswordRecovery = () => {
     Navigation.push(this.props.componentId, {
-      component: {
-        id: 'reset_password',
-        name: ResetPasswordScreen.screenName
-      }
+      component: {name: ResetPasswordScreen.screenName}
     })
   }
 

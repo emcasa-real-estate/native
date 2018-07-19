@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React, {PureComponent} from 'react'
 
 import TextInput from '@/components/shared/TextInput'
@@ -9,7 +10,16 @@ export default class TextInputField extends PureComponent {
     value: ''
   }
 
+  state = {
+    defaultValue: undefined
+  }
+
   input = React.createRef()
+
+  static getDerivedStateFromProps(props, {defaultValue}) {
+    if (typeof defaultValue === 'undefined') return {defaultValue: props.value}
+    else return null
+  }
 
   componentDidUpdate(prev) {
     const {focus} = this.props
@@ -31,11 +41,14 @@ export default class TextInputField extends PureComponent {
 
   render() {
     const {onChange, valid, ...props} = this.props
+    const {defaultValue} = this.state
+    delete props.value
     return (
       <TextInput
         {...props}
         accessible
         accessibilityLabel={props.placeholder}
+        defaultValue={defaultValue}
         invalid={!valid}
         inputRef={this.input}
         onChangeText={onChange}

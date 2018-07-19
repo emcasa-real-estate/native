@@ -209,7 +209,8 @@ export default class AutoComplete extends PureComponent {
           onBlur: this.onBlur,
           onFocus: this.onFocus,
           selection: this.state.selection,
-          placeholderTextColor: gray.light + '90'
+          placeholderTextColor: gray.light + '90',
+          textContentType: 'fullStreetAddress'
         }}
       />
     )

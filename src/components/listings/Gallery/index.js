@@ -102,10 +102,14 @@ export default class ListingGallery extends PureComponent {
   }
 
   render() {
-    const {inline} = this.props
+    const {inline, testID} = this.props
     const {position} = this.state
     return (
-      <View style={[styles.container, this.layout]} onLayout={this.onLayout}>
+      <View
+        style={[styles.container, this.layout]}
+        onLayout={this.onLayout}
+        testID={testID}
+      >
         <SwipeableView
           ref={this.galleryRef}
           onLayout={this.onLayout}

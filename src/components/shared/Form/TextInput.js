@@ -10,15 +10,13 @@ export default class TextInputField extends PureComponent {
     value: ''
   }
 
-  state = {
-    defaultValue: undefined
-  }
+  state = {}
 
   input = React.createRef()
 
-  static getDerivedStateFromProps(props, {defaultValue}) {
-    if (typeof defaultValue === 'undefined') return {defaultValue: props.value}
-    else return null
+  constructor(props) {
+    super(props)
+    this.state.defaultValue = props.value
   }
 
   componentDidUpdate(prev) {

@@ -16,7 +16,7 @@ export default class ListingAddressForm extends Component {
           </View>
           <TextInput
             name="complement"
-            keyboardType="numeric"
+            keyboardType="default"
             placeholder="Complemento"
           />
         </Form>

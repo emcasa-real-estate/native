@@ -1,5 +1,3 @@
-import _ from 'lodash'
-
 import abbrev from 'number-abbreviate'
 
 export const number = (num) =>
@@ -10,10 +8,3 @@ export const abbrevPrice = (num, length = 2) =>
     .toString()
     .toUpperCase()
     .replace('.', ',')
-
-export const date = (_date) =>
-  [
-    _.padStart(_date.getDate(), 2, '0'),
-    _.padStart(_date.getMonth() + 1, 2, '0'),
-    _date.getFullYear()
-  ].join('/')

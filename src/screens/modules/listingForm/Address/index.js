@@ -6,7 +6,7 @@ import {withApollo} from 'react-apollo'
 import composeWithRef from '@/lib/composeWithRef'
 import {authRequired} from '@/containers/AuthRequired'
 import withContext from '@/screens/modules/context/withContext'
-import {GET_USER_LISTING} from '@/graphql/modules/listings/queries'
+import {GET_LISTING} from '@/graphql/modules/listings/queries'
 import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import Progress from '@/components/shared/Progress'
@@ -56,7 +56,7 @@ class EditAddressScreen extends PureComponent {
     setContext({loading: true})
     try {
       const {data: {listing}} = await client.query({
-        query: GET_USER_LISTING,
+        query: GET_LISTING,
         variables: {id}
       })
       setContext({

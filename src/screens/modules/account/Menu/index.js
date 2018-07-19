@@ -52,11 +52,9 @@ class AccountMenuScreen extends PureComponent {
             unreadMessages={unreadCount}
             onSignOut={this.onSignOut}
             onEditProfile={this.navigateTo({
-              id: 'edit_profile',
               name: EditProfileScreen.screenName
             })}
             onViewListings={this.navigateTo({
-              id: 'user_listings',
               name: UserListingsScreen.screenName
             })}
             onViewMessenger={this.navigateTo({

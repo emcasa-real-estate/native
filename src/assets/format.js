@@ -1,5 +1,7 @@
 import 'moment/locale/pt-br'
 import moment from 'moment'
+import _ from 'lodash'
+
 import abbrev from 'number-abbreviate'
 
 moment.locale('pt-br')
@@ -22,3 +24,10 @@ export const timeElapsed = (a, b = Date.now()) => {
   else if (hours < 48) return 'ontem'
   else return then.format('MM/D')
 }
+
+export const date = (_date) =>
+  [
+    _.padStart(_date.getDate(), 2, '0'),
+    _.padStart(_date.getMonth() + 1, 2, '0'),
+    _date.getFullYear()
+  ].join('/')

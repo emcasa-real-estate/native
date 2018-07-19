@@ -156,6 +156,7 @@ class EditPropertiesScreen extends PureComponent {
           <PropertiesForm
             formRef={this.form}
             value={value}
+            isAdmin={user.role === 'admin'}
             requirePhone={!user.phone}
             onValidate={this.onValidate}
             onChange={this.onChange}

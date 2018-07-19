@@ -6,7 +6,11 @@ import Phone from '@/components/shared/Form/Phone'
 import NumberPicker from './NumberPicker'
 import styles from './styles'
 
-export default function ListingPropertiesForm({requirePhone, ...props}) {
+export default function ListingPropertiesForm({
+  requirePhone,
+  isAdmin,
+  ...props
+}) {
   return (
     <Form
       style={styles.container}
@@ -28,13 +32,15 @@ export default function ListingPropertiesForm({requirePhone, ...props}) {
         ]}
         validations={[required('O tipo de imóvel é obrigatório')]}
       />
-      <TextInput
-        name="price"
-        placeholder="Preço"
-        keyboardType="numeric"
-        returnKeyType="next"
-        nextField="area"
-      />
+      {isAdmin && (
+        <TextInput
+          name="price"
+          placeholder="Preço"
+          keyboardType="numeric"
+          returnKeyType="next"
+          nextField="area"
+        />
+      )}
       <TextInput
         name="floor"
         placeholder="Andar"

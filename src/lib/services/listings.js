@@ -17,8 +17,8 @@ export async function featured() {
   return $get('/featured_listings')
 }
 
-export async function related(id) {
-  return $get(`/listings/${id}/related`)
+export async function related(id, params) {
+  return $get(`/listings/${id}/related`, params)
 }
 
 export async function search(params) {

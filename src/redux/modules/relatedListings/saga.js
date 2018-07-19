@@ -2,7 +2,6 @@ import {
   call,
   put,
   all,
-  select,
   fork,
   takeEvery,
   takeLatest,
@@ -11,14 +10,12 @@ import {
 
 import * as frag from '@/graphql/fragments'
 import * as api from '@/lib/services/listings'
-import {getToken} from '../auth/selectors'
 import * as actions from './index'
 
-function* request({id}) {
+function* request({id, limit}) {
   yield put(actions.request(id))
   try {
-    const jwt = select(getToken)
-    const response = yield call(api.related, id, {jwt})
+    const response = yield call(api.related, id, {page_size: limit})
     yield put(actions.success(id, response.listings))
   } catch (err) {
     yield put(actions.failure(id, err))

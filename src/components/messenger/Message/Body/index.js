@@ -4,6 +4,38 @@ import {Svg, Rect, Polygon, G, Defs, Use} from 'react-native-svg'
 
 import styles, {pathStyle} from './styles'
 
+function MessageBox({align, y, showTip, width, height, ...props}) {
+  const margin = 17
+  const tipSize = 8
+  const tipPoints = `${tipSize}, ${tipSize} ${tipSize},0 0, ${tipSize / 2}`
+  return (
+    <G>
+      <Rect
+        x={align === 'right' ? props.strokeWidth : margin}
+        y={props.strokeWidth}
+        rx="2"
+        ry="2"
+        width={width - margin - props.strokeWidth}
+        height={height - props.strokeWidth * 2}
+        {...props}
+      />
+      {showTip && (
+        <Polygon
+          x={align === 'right' ? width - tipSize - 2.5 : 10}
+          y={y - tipSize / 2}
+          points={tipPoints}
+          scaleX={align === 'right' ? -1 : 1}
+          {...props}
+        />
+      )}
+    </G>
+  )
+}
+
+MessageBox.defaultProps = {
+  strokeWidth: 0
+}
+
 export default class MessageBody extends PureComponent {
   static defaultProps = {
     y: 46 / 2
@@ -21,43 +53,27 @@ export default class MessageBody extends PureComponent {
       }
     })
 
-  renderTip() {
-    const {align, y} = this.props
-    const {layout: {width}} = this.state
-    const tipSize = 8
-    const tipPoints = `${tipSize}, ${tipSize} ${tipSize},0 0, ${tipSize / 2}`
-    return (
-      <Polygon
-        x={align === 'right' ? width - tipSize - 2.5 : 10}
-        y={y - tipSize / 2}
-        points={tipPoints}
-        scaleX={align === 'right' ? -1 : 1}
-      />
-    )
-  }
-
   renderBox() {
-    const {align, showTip} = this.props
-    const {layout: {width, height}} = this.state
+    const {align, y, showTip} = this.props
+    const {layout} = this.state
     const style = pathStyle(this.props)
-    const margin = 17
     return (
-      <Svg width={width} height={height}>
-        <Defs>
-          <G id="outline">
-            <Rect
-              x={align === 'right' ? style.strokeWidth : margin}
-              y={style.strokeWidth}
-              rx="2"
-              ry="2"
-              width={width - margin - style.strokeWidth}
-              height={height - style.strokeWidth * 2}
-            />
-            {showTip && this.renderTip()}
-          </G>
-        </Defs>
-        <Use href="#outline" {...style} />
-        <Use href="#outline" fill={style.fill} />
+      <Svg {...layout}>
+        <MessageBox
+          {...style}
+          {...layout}
+          y={y}
+          align={align}
+          showTip={showTip}
+        />
+        <MessageBox
+          {...style}
+          {...layout}
+          y={y}
+          align={align}
+          showTip={showTip}
+          stroke="rgba(0,0,0,0)"
+        />
       </Svg>
     )
   }

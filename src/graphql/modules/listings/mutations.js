@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import gql from 'graphql-tag'
 
 import * as frag from '@/graphql/fragments'
@@ -10,7 +11,8 @@ export const VISUALIZE_TOUR = gql`
   }
 `
 
-export const FAVORITE = ({cache}) => gql`
+export const FAVORITE = _.memoize(
+  ({cache}) => gql`
   mutation favoriteListing($id: ID!) {
     favoriteListing(id: $id) ${cache ? '@client' : ''} {
       listing {
@@ -19,8 +21,10 @@ export const FAVORITE = ({cache}) => gql`
     }
   }
 `
+)
 
-export const UNFAVORITE = ({cache}) => gql`
+export const UNFAVORITE = _.memoize(
+  ({cache}) => gql`
   mutation unfavoriteListing($id: ID!) {
     unfavoriteListing(id: $id) ${cache ? '@client' : ''} {
       listing {
@@ -29,6 +33,31 @@ export const UNFAVORITE = ({cache}) => gql`
     }
   }
 `
+)
+
+export const BLACKLIST = _.memoize(
+  ({cache}) => gql`
+  mutation blacklistListing($id: ID!) {
+    blacklistListing(id: $id) ${cache ? '@client' : ''} {
+      listing {
+        id
+      }
+    }
+  }
+`
+)
+
+export const WHITELIST = _.memoize(
+  ({cache}) => gql`
+  mutation whilelistListing($id: ID!) {
+    whitelistListing(id: $id) ${cache ? '@client' : ''} {
+      listing {
+        id
+      }
+    }
+  }
+`
+)
 
 export const INSERT_LISTING = gql`
   mutation insertListing($listing: ListingInput!) {

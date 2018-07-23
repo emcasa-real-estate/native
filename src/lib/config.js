@@ -28,4 +28,14 @@ export const APOLLO_ENGINE_URL =
   process.env.APOLLO_ENGINE_URL ||
   `${API_URL}/graphql_api`
 
+export const WEB_SOCKET_URL =
+  Platform.select({
+    ios: process.env.IOS_WEB_SOCKET_URL,
+    android: process.env.ANDROID_WEB_SOCKET_URL
+  }) ||
+  process.env.WEB_SOCKET_URL ||
+  `${API_URL.replace(/^http/, 'ws')}/socket`
+
+export const MESSENGER_RECEIVER_ID = process.env.MESSENGER_RECEIVER_ID
+
 export const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY

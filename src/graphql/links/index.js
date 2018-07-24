@@ -2,6 +2,7 @@ import contextLink from './contextLink'
 import stateLink from './stateLink'
 import errorLink from './errorLink'
 import httpLink from './httpLink'
+import queryResolverLink from './queryResolverLink'
 
 export default (options) => {
   const links = new Map()
@@ -9,6 +10,7 @@ export default (options) => {
   links.set('error', errorLink(options))
   links.set('context', contextLink(options))
   links.set('state', stateLink(options))
+  links.set('queryResolver', queryResolverLink(options))
   links.set('http', httpLink(options))
   return links
 }

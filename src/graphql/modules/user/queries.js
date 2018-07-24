@@ -33,6 +33,17 @@ export const GET_FAVORITE_LISTINGS = _.memoize(
 `
 )
 
+export const GET_BLACKLISTED_LISTINGS_IDS = _.memoize(
+  ({cache}) => gql`
+  query blacklistedListingsIds {
+    blacklistedListings ${cache === true ? '@client' : ''} {
+      id
+    }
+  }
+  ${frag.ListingFeed}
+`
+)
+
 export const GET_BLACKLISTED_LISTINGS = _.memoize(
   ({cache}) => gql`
   query blacklistedListings {

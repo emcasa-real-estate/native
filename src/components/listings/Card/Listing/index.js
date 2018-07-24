@@ -1,7 +1,10 @@
+import {Fragment} from 'react'
 import {View, TouchableOpacity, Dimensions} from 'react-native'
+import {compose} from 'recompose'
 
-import {withFavoriteMutation} from '@/graphql/containers'
+import {withFavoriteMutation, withBlacklistMutation} from '@/graphql/containers'
 import LikeIcon from '@/components/listings/LikeIcon'
+import BlacklistIcon from '@/components/listings/BlacklistIcon'
 import Text from '@/components/shared/Text'
 import Icon from '@/components/shared/Icon'
 import Price from '@/components/shared/Price'
@@ -29,19 +32,6 @@ function Button({children, icon, hitSlop, ...props}) {
 
 Button.defaultProps = {hitSlop: 15}
 
-function LikeButton({favorite, ...props}) {
-  return (
-    <Button
-      {...props}
-      accessibilityLabel={
-        favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'
-      }
-    >
-      <LikeIcon active={favorite} size={19} />
-    </Button>
-  )
-}
-
 function ListingCard({
   style,
   address,
@@ -50,7 +40,9 @@ function ListingCard({
   price,
   isActive,
   favorite,
+  blacklisted,
   onFavorite,
+  onBlacklist,
   onPress,
   testUniqueID,
   ...props
@@ -75,16 +67,31 @@ function ListingCard({
         </View>
         <View style={styles.body}>
           <View style={[styles.row, styles.buttonsRow]}>
-            <View>
+            <View style={styles.row}>
               {isActive && (
-                <LikeButton
-                  testID="favorite_button"
-                  favorite={favorite}
-                  onPress={onFavorite}
-                />
+                <Fragment>
+                  <Button
+                    testID="favorite_button"
+                    onPress={onFavorite}
+                    accessibilityLabel={
+                      favorite
+                        ? 'Remover dos favoritos'
+                        : 'Adicionar aos favoritos'
+                    }
+                  >
+                    <LikeIcon active={favorite} size={19} />
+                  </Button>
+                  <Button
+                    testID="blacklist_button"
+                    onPress={onBlacklist}
+                    accessibilityLabel={blacklisted ? 'Exibir' : 'Ocultar'}
+                  >
+                    <BlacklistIcon active={blacklisted} size={19} />
+                  </Button>
+                </Fragment>
               )}
             </View>
-            <View>
+            <View style={styles.row}>
               <Button
                 hitSlop={30}
                 label="Visualizar"
@@ -118,4 +125,4 @@ ListingCard.defaultProps = {
   }
 }
 
-export default withFavoriteMutation(ListingCard)
+export default compose(withFavoriteMutation, withBlacklistMutation)(ListingCard)

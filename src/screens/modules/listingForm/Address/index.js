@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import React, {PureComponent} from 'react'
+import {withUserListings} from '@/graphql/containers'
 import {Navigation} from 'react-native-navigation'
 import {withApollo} from 'react-apollo'
 
@@ -86,9 +87,10 @@ class EditAddressScreen extends PureComponent {
   }
 
   componentDidMount() {
-    const {params: {id}} = this.props
+    const {userListings, params: {id}} = this.props
     if (id) this.setDefaultValue()
-    else this.showLearnMoreScreen()
+    else if (!(userListings.data && userListings.data.length >= 1))
+      this.showLearnMoreScreen()
   }
 
   componentWillUnmount() {
@@ -176,5 +178,6 @@ export default composeWithRef(
     notice: 'O login é necessário para anunciar um imóvel.'
   })),
   withContext.byProp('componentId'),
+  withUserListings,
   withApollo
 )(EditAddressScreen)

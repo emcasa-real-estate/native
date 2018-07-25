@@ -10,6 +10,7 @@ import {
 
 import * as colors from '@/assets/colors'
 import Text from '@/components/shared/Text'
+import Icon from '@/components/shared/Icon'
 
 const styles = StyleSheet.create({
   container: {
@@ -28,6 +29,11 @@ const styles = StyleSheet.create({
     marginLeft: -15,
     zIndex: 1
   },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   text: {
     zIndex: 0,
     color: colors.blue.medium,
@@ -35,6 +41,9 @@ const styles = StyleSheet.create({
   },
   textLoading: {
     color: colors.gray.medium
+  },
+  icon: {
+    marginLeft: 5
   }
 })
 
@@ -53,7 +62,7 @@ export default class HeaderTextButton extends PureComponent {
   )
 
   renderButton() {
-    const {label, style, loading} = this.props
+    const {label, icon, style, loading} = this.props
 
     return (
       <View>
@@ -66,9 +75,21 @@ export default class HeaderTextButton extends PureComponent {
               <ActivityIndicator />
             </View>
           )}
-          <Text style={[styles.text, loading && styles.textLoading, style]}>
-            {label}
-          </Text>
+          <View style={styles.row}>
+            {label && (
+              <Text style={[styles.text, loading && styles.textLoading, style]}>
+                {label}
+              </Text>
+            )}
+            {icon && (
+              <Icon
+                style={styles.icon}
+                name={icon}
+                size={17}
+                color={colors.blue.medium}
+              />
+            )}
+          </View>
         </View>
       </View>
     )

@@ -15,15 +15,13 @@ export default class LearnMoreScreen extends Component {
   render() {
     return (
       <Modal testID="@listingForm.Created">
-        <Modal.Header inline onDismiss={this.onClose}>
-          Venda o seu imóvel com a EmCasa
-        </Modal.Header>
-        <Body style={{padding: 15}}>
+        <Modal.Header onDismiss={this.onClose} />
+        <Body>
           <LearnMore />
         </Body>
         <Footer style={{padding: 15}}>
           <Button color="blue" onPress={this.onClose}>
-            Continuar
+            Anuncie agora
           </Button>
         </Footer>
       </Modal>

@@ -208,14 +208,6 @@ export default class LearnMore extends PureComponent {
     else return null
   }
 
-  renderFooter = () => {
-    return (
-      <View>
-        <Text>eyy lmao</Text>
-      </View>
-    )
-  }
-
   render() {
     return (
       <FlatList

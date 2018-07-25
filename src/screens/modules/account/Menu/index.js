@@ -48,7 +48,11 @@ class AccountMenuScreen extends PureComponent {
         </Header>
         <Body>
           <Menu
-            listingsCount={!userListings.loading && userListings.data.length}
+            listingsCount={
+              !userListings.loading &&
+              userListings.data &&
+              userListings.data.length
+            }
             unreadMessages={unreadCount}
             onSignOut={this.onSignOut}
             onEditProfile={this.navigateTo({

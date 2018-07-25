@@ -14,7 +14,7 @@ export default class LearnMoreScreen extends Component {
 
   render() {
     return (
-      <Modal testID="@listingForm.Created">
+      <Modal testID="@listingForm.LearnMore">
         <Modal.Header onDismiss={this.onClose} />
         <Body>
           <LearnMore />

@@ -21,6 +21,6 @@ export default StyleSheet({
     fontSize: 17,
     color: colors.gray.dark,
     textAlignVertical: 'center',
-    paddingVertical: Platform.OS === 'ios' ? 5 : 0
+    paddingVertical: Platform.OS === 'ios' ? 7.5 : 0
   }
 })

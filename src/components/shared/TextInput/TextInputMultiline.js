@@ -1,7 +1,7 @@
 import {PureComponent} from 'react'
 import {View, TextInput, Platform} from 'react-native'
 
-export default class TextInputAndroid extends PureComponent {
+export default class MultilineTextInput extends PureComponent {
   static defaultProps = {
     maxHeight: 50 * 4,
     minHeight: 50
@@ -22,13 +22,12 @@ export default class TextInputAndroid extends PureComponent {
   }
 
   onContentSizeChange = ({nativeEvent: {contentSize}}) => {
-    const {maxHeight, minHeight} = this.props
+    const {maxHeight, minHeight, center} = this.props
     const {max, min} = Math
     const height = min(maxHeight, max(minHeight, contentSize.height))
-    const paddingTop = Platform.select({
-      ios: max(0, (height - contentSize.height - 10) / 2),
-      android: 0
-    })
+    let paddingTop = 0
+    if (center && Platform.OS === 'ios')
+      paddingTop = max(0, (height - contentSize.height - 15) / 2)
     this.setState({
       layout: {height, paddingTop}
     })

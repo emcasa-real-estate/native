@@ -52,5 +52,20 @@ export default StyleSheet.create({
   },
   stepDescription: {
     marginTop: 25
+  },
+  footer: {
+    padding: 15
+  }
+})
+
+export const buttonStyles = StyleSheet.create({
+  container: {
+    marginBottom: 15
+  },
+  button: {
+    paddingVertical: 10
+  },
+  text: {
+    fontSize: 18
   }
 })

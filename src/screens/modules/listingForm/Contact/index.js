@@ -14,10 +14,6 @@ import SuccessScreen from '@/screens/modules/shared/Success'
 class ContactScreen extends PureComponent {
   static screenName = 'listingForm.Contact'
 
-  static defaultProps = {
-    user: {}
-  }
-
   state = {
     value: {}
   }
@@ -63,8 +59,7 @@ class ContactScreen extends PureComponent {
   onChange = (value) => this.setState({value})
 
   onSubmit = () => {
-    const {requestContact, loading} = this.props
-    const {value} = this.state
+    const {loading} = this.props
     if (!loading && this.form.current.onValidate()) this.requestContact()
   }
 
@@ -99,6 +94,6 @@ class ContactScreen extends PureComponent {
 }
 
 export default composeWithRef(
-  connect((state) => ({user: getUser(state)})),
+  connect((state) => ({user: getUser(state) || {}})),
   withRequestContactMutation()
 )(ContactScreen)

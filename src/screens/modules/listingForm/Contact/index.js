@@ -3,6 +3,7 @@ import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
+import {withRequestContactMutation} from '@/graphql/containers'
 import {getUser} from '@/redux/modules/auth/selectors'
 import {Modal, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
@@ -23,14 +24,26 @@ class ContactScreen extends PureComponent {
 
   form = React.createRef()
 
-  openSuccessModal = (listing) => {
-    const {componentId, value: {address}} = this.props
+  async requestContact() {
+    const {requestContact} = this.props
+    const {value} = this.state
+    try {
+      await requestContact(value)
+      this.openSuccessModal()
+    } catch (err) {
+      this.validateForm()
+    }
+  }
+
+  openSuccessModal = () => {
+    const {componentId} = this.props
     Navigation.showModal({
       component: {
         id: `${componentId}_success`,
         name: SuccessScreen.screenName,
         passProps: {
-          params: {listing, address: address.details},
+          title: 'Agente EmCasa notificado',
+          children: 'Entraremos em contato o mais rápido possível!',
           onDismiss: () => Navigation.dismissAllModals()
         }
       }
@@ -46,12 +59,13 @@ class ContactScreen extends PureComponent {
   }
 
   onClose = () => Navigation.dismissModal(this.props.componentId)
+
   onChange = (value) => this.setState({value})
 
   onSubmit = () => {
     const {requestContact, loading} = this.props
     const {value} = this.state
-    if (!loading && this.form.current.onValidate()) requestContact(value)
+    if (!loading && this.form.current.onValidate()) this.requestContact()
   }
 
   render() {
@@ -84,6 +98,7 @@ class ContactScreen extends PureComponent {
   }
 }
 
-export default composeWithRef(connect((state) => ({user: getUser(state)})))(
-  ContactScreen
-)
+export default composeWithRef(
+  connect((state) => ({user: getUser(state)})),
+  withRequestContactMutation()
+)(ContactScreen)

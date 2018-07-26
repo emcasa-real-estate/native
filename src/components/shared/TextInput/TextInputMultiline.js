@@ -8,7 +8,8 @@ export default class MultilineTextInput extends PureComponent {
   }
 
   state = {
-    layout: {height: 0}
+    layout: {height: 0},
+    inputLayout: {}
   }
 
   static getDerivedStateFromProps({minHeight}, {layout}) {
@@ -25,23 +26,24 @@ export default class MultilineTextInput extends PureComponent {
     const {maxHeight, minHeight, center} = this.props
     const {max, min} = Math
     const height = min(maxHeight, max(minHeight, contentSize.height))
-    let paddingTop = 0
+    const layout = {height}
+    const inputLayout = {maxHeight: height}
     if (center && Platform.OS === 'ios')
-      paddingTop = max(0, (height - contentSize.height - 15) / 2)
-    this.setState({
-      layout: {height, paddingTop}
-    })
+      layout.paddingTop = max(0, (height - contentSize.height - 15) / 2)
+    else if (Platform.OS == 'android')
+      inputLayout.textAlignVertical = center ? 'center' : 'top'
+    this.setState({layout, inputLayout})
   }
 
   render() {
     const {styles, style, inputRef, ...props} = this.props
-    const {layout} = this.state
+    const {layout, inputLayout} = this.state
 
     return (
       <View style={styles.container.concat(style, layout)}>
         <TextInput
           ref={inputRef}
-          style={styles.input.concat({maxHeight: layout.height})}
+          style={styles.input.concat(inputLayout)}
           underlineColorAndroid="rgba(0,0,0,0)"
           onContentSizeChange={this.onContentSizeChange}
           {...props}

@@ -9,7 +9,7 @@ export default function FormButton({onPress, icon, label, children}) {
     <TouchableHighlight underlayColor={underlayColor} onPress={onPress}>
       <View style={styles.container}>
         <Text style={styles.text}>{children}</Text>
-        {label && <View style={styles.label}>{label}</View>}
+        {label ? <View style={styles.label}>{label}</View> : undefined}
         <Icon
           name={icon}
           size={16}
@@ -22,9 +22,9 @@ export default function FormButton({onPress, icon, label, children}) {
   )
 }
 
-export function ButtonLabel({loading, children}) {
+export function ButtonLabel({style, loading, children}) {
   return (
-    <View style={styles.labelContainer}>
+    <View style={[styles.labelContainer, style]}>
       {loading ? (
         <ActivityIndicator size="small" />
       ) : (

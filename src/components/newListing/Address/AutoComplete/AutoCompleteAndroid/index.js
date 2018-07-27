@@ -78,7 +78,7 @@ export default class AutoCompleteAndroid extends Component {
       marginLeft: pageX,
       marginRight: pageX,
       top:
-        PixelRatio.roundToNearestPixel(windowLayout.height - offsetBottom) - 7,
+        PixelRatio.roundToNearestPixel(windowLayout.height - offsetBottom) - 2,
       flex: 1
     }
   }

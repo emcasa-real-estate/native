@@ -5,11 +5,8 @@ import * as actions from './interactions'
 describe('listing', () => {
   beforeAll(actions.navigate)
 
-  it('displays a webview in the thumbnail', async () => {
-    await expect(element(select.thumbnail())).toBeVisible()
-    await expect(
-      element(by.type('RCTWebView').withAncestor(select.thumbnail()))
-    ).toBeVisible()
+  it('displays a gallery in the thumbnail', async () => {
+    await expect(element(select.thumbnailGallery())).toBeVisible()
   })
 
   it('opens the 3d tour modal', async () => {

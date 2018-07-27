@@ -35,6 +35,12 @@ export default class SignUpScreen extends PureComponent {
 
   form = React.createRef()
 
+  returnToParentScreen() {
+    const {componentId, params: {parentId}} = this.props
+    if (parentId) Navigation.popTo(parentId)
+    else Navigation.popToRoot(componentId)
+  }
+
   componentDidDisappear() {
     this.setState({value: undefined})
   }
@@ -74,7 +80,7 @@ export default class SignUpScreen extends PureComponent {
 
   onDismiss = () => {
     Navigation.dismissModal(`${this.props.componentId}_success`)
-    Navigation.popToRoot(this.props.componentId)
+    this.returnToParentScreen()
   }
 
   render() {

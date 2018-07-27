@@ -1,8 +1,12 @@
+import {ApolloLink} from 'apollo-link'
+import {hasSubscription} from '@jumpn/utils-graphql'
+
 import contextLink from './contextLink'
 import stateLink from './stateLink'
 import errorLink from './errorLink'
 import httpLink from './httpLink'
 import queryResolverLink from './queryResolverLink'
+import wsLink from './wsLink'
 
 export default (options) => {
   const links = new Map()
@@ -11,7 +15,14 @@ export default (options) => {
   links.set('context', contextLink(options))
   links.set('state', stateLink(options))
   links.set('queryResolver', queryResolverLink(options))
-  links.set('http', httpLink(options))
+  links.set(
+    'server',
+    new ApolloLink.split(
+      ({query}) => hasSubscription(query),
+      wsLink(options),
+      httpLink(options)
+    )
+  )
   return links
 }
 

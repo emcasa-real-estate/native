@@ -15,4 +15,4 @@ export default (options) => {
   return links
 }
 
-export {default as sync} from './stateLink/resolvers/favorites/sync'
+export {default as sync} from './stateLink/sync'

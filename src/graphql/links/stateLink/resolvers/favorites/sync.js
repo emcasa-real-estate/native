@@ -7,7 +7,7 @@ const refetchQueries = [{query: GET_FAVORITE_LISTINGS_IDS({cache: false})}]
 
 export default async function sync(proxy) {
   const {data} = await proxy.query({query: _GET_FAVORITE_LISTINGS_IDS})
-  data.favoritedListings.map((fav) =>
+  data.userProfile.favorites.map((fav) =>
     proxy.mutate({
       mutation: _FAVORITE,
       variables: {id: fav.id},

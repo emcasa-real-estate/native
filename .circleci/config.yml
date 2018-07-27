@@ -157,7 +157,7 @@ jobs:
           brew tap wix/brew
           brew upgrade python
           brew install --HEAD applesimutils
-          brew install watchman postgresql
+          brew install elixir watchman postgresql
           brew services start postgresql
           npm install --global detox-cli
           detox clean-framework-cache

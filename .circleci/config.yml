@@ -167,14 +167,7 @@ jobs:
     - run: xcrun instruments -w "iPhone 6 (11.2)" || true
     - run:
         name: Start test server
-        command: |-
-          git submodule update
-          cp __e2e__/server/config/* backend/config
-          psql -c 'create database re_test;'
-          psql re_test < __e2e__/server/re_test.dump
-          cd backend
-          mix deps.get && mix ecto.create && mix ecto.migrate
-          mix phx.server
+        command: yarn test_server
         background: true
     - run:
         name: Start bundler

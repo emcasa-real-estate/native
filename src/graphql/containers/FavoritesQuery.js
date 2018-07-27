@@ -34,7 +34,7 @@ export const withFavoriteListings = createFavoritesContainer(
   GET_FAVORITE_LISTINGS,
   (response) => ({
     favorites: {
-      data: response.data ? response.data.favoritedListings : [],
+      data: response.data ? response.data.userProfile.favorites : [],
       loading: response.loading
     }
   })
@@ -44,7 +44,7 @@ export const withFavoriteListingIDs = createFavoritesContainer(
   GET_FAVORITE_LISTINGS_IDS,
   (response) => ({
     favorites: {
-      data: response.data.favoritedListings,
+      data: response.data ? response.data.userProfile.favorites : [],
       loading: response.loading
     }
   })

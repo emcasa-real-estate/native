@@ -1,3 +1,4 @@
+import update from 'immutability-helper'
 import {reportError} from '@/redux/modules/firebase/crashlytics'
 import * as frag from '@/graphql/fragments'
 import {GET_BLACKLISTED_LISTINGS} from '@/graphql/modules/user/queries'
@@ -8,7 +9,7 @@ const logSchemaError = (error, redux) => {
   else redux.dispatch(reportError(error))
 }
 
-export async function blacklistListing(_, {id}, {cache, redux}) {
+export async function listingBlacklist(_, {id}, {cache, redux}) {
   const listing = await cache.readFragment({
     fragment: frag.ListingFeed,
     fragmentName: 'ListingFeed',
@@ -17,12 +18,12 @@ export async function blacklistListing(_, {id}, {cache, redux}) {
   if (!listing) return
   try {
     const query = GET_BLACKLISTED_LISTINGS({cache: true})
-    const {blacklistedListings} = cache.readQuery({query})
+    const data = cache.readQuery({query})
     cache.writeQuery({
       query,
-      data: {
-        blacklistedListings: blacklistedListings.concat(listing)
-      }
+      data: update(data, {
+        userProfile: {blacklists: {$push: [listing]}}
+      })
     })
   } catch (error) {
     logSchemaError(error, redux)
@@ -35,17 +36,20 @@ export async function blacklistListing(_, {id}, {cache, redux}) {
   }
 }
 
-export async function whitelistListing(_, {id}, {cache, redux}) {
+export async function listingUnblacklist(_, {id}, {cache, redux}) {
   try {
     const query = GET_BLACKLISTED_LISTINGS({cache: true})
-    const {blacklistedListings} = cache.readQuery({query})
+    const data = cache.readQuery({query})
     cache.writeQuery({
       query,
-      data: {
-        blacklistedListings: blacklistedListings.filter(
-          (data) => String(data.id) !== String(id)
-        )
-      }
+      data: update(data, {
+        userProfile: {
+          blacklists: {
+            $apply: (listings) =>
+              listings.filter((data) => String(data.id) !== String(id))
+          }
+        }
+      })
     })
   } catch (error) {
     logSchemaError(error, redux)

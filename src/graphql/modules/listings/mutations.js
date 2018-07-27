@@ -38,7 +38,7 @@ export const UNFAVORITE = _.memoize(
 export const BLACKLIST = _.memoize(
   ({cache}) => gql`
   mutation blacklistListing($id: ID!) {
-    blacklistListing(id: $id) ${cache ? '@client' : ''} {
+    listingBlacklist(id: $id) ${cache ? '@client' : ''} {
       listing {
         id
       }
@@ -50,7 +50,7 @@ export const BLACKLIST = _.memoize(
 export const WHITELIST = _.memoize(
   ({cache}) => gql`
   mutation whilelistListing($id: ID!) {
-    whitelistListing(id: $id) ${cache ? '@client' : ''} {
+    listingUnblacklist(id: $id) ${cache ? '@client' : ''} {
       listing {
         id
       }

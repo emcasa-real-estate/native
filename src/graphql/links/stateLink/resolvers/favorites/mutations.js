@@ -1,3 +1,4 @@
+import update from 'immutability-helper'
 import {reportError} from '@/redux/modules/firebase/crashlytics'
 import * as frag from '@/graphql/fragments'
 import {GET_FAVORITE_LISTINGS} from '@/graphql/modules/user/queries'
@@ -17,12 +18,14 @@ export async function favoriteListing(_, {id}, {cache, redux}) {
   if (!listing) return
   try {
     const query = GET_FAVORITE_LISTINGS({cache: true})
-    const {favoritedListings} = cache.readQuery({query})
+    const data = cache.readQuery({query})
     cache.writeQuery({
       query,
-      data: {
-        favoritedListings: favoritedListings.concat(listing)
-      }
+      data: update(data, {
+        userProfile: {
+          favorites: {$push: [listing]}
+        }
+      })
     })
   } catch (error) {
     logSchemaError(error, redux)
@@ -38,14 +41,17 @@ export async function favoriteListing(_, {id}, {cache, redux}) {
 export async function unfavoriteListing(_, {id}, {cache, redux}) {
   try {
     const query = GET_FAVORITE_LISTINGS({cache: true})
-    const {favoritedListings} = cache.readQuery({query})
+    const data = cache.readQuery({query})
     cache.writeQuery({
       query,
-      data: {
-        favoritedListings: favoritedListings.filter(
-          (data) => String(data.id) !== String(id)
-        )
-      }
+      data: update(data, {
+        userProfile: {
+          favorites: {
+            $apply: (listings) =>
+              listings.filter((data) => String(data.id) !== String(id))
+          }
+        }
+      })
     })
   } catch (error) {
     logSchemaError(error, redux)

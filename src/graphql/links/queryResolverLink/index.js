@@ -6,11 +6,11 @@ import {GET_BLACKLISTED_LISTINGS_IDS} from '@/graphql/modules/user/queries'
 export default ({cache}) =>
   withQueryResolver({
     listingsFeed(data) {
-      const {blacklistedListings} = cache.readQuery({
+      const {userProfile: {blacklists}} = cache.readQuery({
         query: GET_BLACKLISTED_LISTINGS_IDS({cache: true})
       })
-      if (!blacklistedListings.length) return data
-      const blacklistedIds = blacklistedListings.map(({id}) => id)
+      if (!blacklists.length) return data
+      const blacklistedIds = blacklists.map(({id}) => id)
       const next = update(data, {
         listings: {
           listings: {

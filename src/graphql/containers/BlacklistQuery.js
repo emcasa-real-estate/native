@@ -34,7 +34,7 @@ export const withBlacklistedListings = createBlacklistContainer(
   GET_BLACKLISTED_LISTINGS,
   (response) => ({
     blacklist: {
-      data: response.data ? response.data.blacklistedListings : [],
+      data: response.data ? response.data.userProfile.blacklists : [],
       loading: response.loading
     }
   })

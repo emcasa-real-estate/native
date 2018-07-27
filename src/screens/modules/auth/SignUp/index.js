@@ -1,5 +1,4 @@
 import React, {PureComponent} from 'react'
-import {View, ScrollView} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
@@ -35,10 +34,9 @@ export default class SignUpScreen extends PureComponent {
 
   form = React.createRef()
 
-  returnToParentScreen() {
-    const {componentId, params: {parentId}} = this.props
-    if (parentId) Navigation.popTo(parentId)
-    else Navigation.popToRoot(componentId)
+  async returnToParentScreen() {
+    const {params: {parentId}} = this.props
+    if (parentId) return Navigation.popTo(parentId)
   }
 
   componentDidDisappear() {
@@ -78,9 +76,9 @@ export default class SignUpScreen extends PureComponent {
     })
   }
 
-  onDismiss = () => {
-    Navigation.dismissModal(`${this.props.componentId}_success`)
-    this.returnToParentScreen()
+  onDismiss = async () => {
+    await this.returnToParentScreen()
+    await Navigation.dismissAllModals()
   }
 
   render() {

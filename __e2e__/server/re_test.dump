@@ -3326,7 +3326,7 @@ COPY public.tour_visualizations (id, listing_id, user_id, details, inserted_at, 
 --
 
 COPY public.users (id, name, email, phone, inserted_at, updated_at, password_hash, role, confirmation_token, confirmed, reset_token, notification_preferences) FROM stdin;
-1	Some Person	foo@example.com	222222222	2018-07-27 21:57:49.760383	2018-07-27 21:57:49.760394	$2b$04$OxjxmOX9b/4966eStxnEFuE.FJ.DkxAYMHCFUi4k/n1zugH0/fTEi	user	39cad245-1a10-4fc3-89f3-f6ca94734c47	f	\N	{"id": "0e045a4f-176f-4b57-9e82-609c931fc8c7", "app": true, "email": true}
+1	Some Person	foo@example.com	\N	2018-07-27 21:57:49.760383	2018-07-27 21:57:49.760394	$2b$04$OxjxmOX9b/4966eStxnEFuE.FJ.DkxAYMHCFUi4k/n1zugH0/fTEi	user	39cad245-1a10-4fc3-89f3-f6ca94734c47	f	\N	{"id": "0e045a4f-176f-4b57-9e82-609c931fc8c7", "app": true, "email": true}
 2	Test One	test1@example.com	\N	2018-07-27 21:58:09.032277	2018-07-27 21:58:09.032287	$2b$04$FnPbSDd41y6VViiAPdsJsO0OzeZ.7SPed0MicVhKPsOR/XHe3X7ni	user	a550c76d-87ed-4afe-829d-5db8ba28aa14	f	\N	{"id": "1a25c9d4-3d74-4f5a-bace-393bd4b61a5c", "app": true, "email": true}
 3	Test Two	test2@example.com	\N	2018-07-27 21:58:25.856349	2018-07-27 21:58:25.856356	$2b$04$yyMi6qcPAKKindU1YSXK4ObdptuXpNvZ6eX3lSPW/EGJW4BajBhi6	user	646e2716-31fe-4da9-a75a-a9eec5d2f1ba	f	\N	{"id": "35ef03be-d07c-4cf0-bd2d-81babc12233c", "app": true, "email": true}
 4	Test Three	test3@example.com	\N	2018-07-27 21:58:50.46388	2018-07-27 21:58:50.463889	$2b$04$zlPLnJYRQUaBfOEYvvTk1ebnZxGVgGNfpsb0.iPAJ9yfEiRK6djYi	user	50110191-62e2-4b16-87f3-805f69978a03	f	\N	{"id": "f0d3e6a9-c88e-4712-8e13-09a5d4fc09bc", "app": true, "email": true}

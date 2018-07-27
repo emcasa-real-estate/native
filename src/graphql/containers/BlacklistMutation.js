@@ -2,10 +2,7 @@ import {Mutation} from 'react-apollo'
 import {connect} from 'react-redux'
 
 import {BLACKLIST, WHITELIST} from '@/graphql/modules/listings/mutations'
-import {
-  GET_BLACKLISTED_LISTINGS_IDS,
-  GET_BLACKLISTED_LISTINGS
-} from '@/graphql/modules/user/queries'
+import {GET_BLACKLISTED_LISTINGS_IDS} from '@/graphql/modules/user/queries'
 import {logEvent} from '@/redux/modules/firebase/analytics'
 import {getToken} from '@/redux/modules/auth/selectors'
 import {withBlacklistedListingByID} from './BlacklistQuery'
@@ -18,10 +15,9 @@ const BlacklistMutation = connect(
     <Mutation
       mutation={blacklisted ? WHITELIST(query) : BLACKLIST(query)}
       variables={{id}}
-      refetchQueries={[
-        {query: GET_BLACKLISTED_LISTINGS_IDS(query)},
-        {query: GET_BLACKLISTED_LISTINGS(query)}
-      ]}
+      refetchQueries={
+        jwt ? [{query: GET_BLACKLISTED_LISTINGS_IDS(query)}] : undefined
+      }
       update={() =>
         logEvent(blacklisted ? 'whitelisted_listing' : 'blacklisted_listing', {
           id

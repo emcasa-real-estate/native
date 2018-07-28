@@ -9,6 +9,7 @@ import pkg from '../package.json'
 const exec = promisify(child_process.exec)
 
 const DEVICE_NAME = process.env.DEVICE_NAME || 'booted'
+const DB_USER = process.env.CLEANUP_DB_USER || 'postgres'
 const DB_NAME = process.env.CLEANUP_DB_NAME
 const SCREENSHOT_PATH =
   process.env.SCREENSHOT_PATH || path.join(__dirname, '../tmp/screenshots')
@@ -37,7 +38,7 @@ async function resetDatabase() {
   if (!DB_NAME) return
   const dumpFile = `${__dirname}/server/re_test.dump`
   try {
-    await exec(`psql ${DB_NAME} < ${dumpFile}`)
+    await exec(`psql ${DB_NAME} ${DB_USER} < ${dumpFile}`)
     console.log(`Database ${DB_NAME} has been reset.`)
   } catch (error) {
     console.error(error.message)

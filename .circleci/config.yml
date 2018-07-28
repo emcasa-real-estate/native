@@ -146,6 +146,7 @@ jobs:
       NODE_ENV: e2e
       MIX_ENV: e2e
       CLEANUP_DB_NAME: re_test
+      PGPASSWORD: postgres
     steps:
     - attach_workspace:
         at: ~/emcasa
@@ -159,6 +160,7 @@ jobs:
           brew install --HEAD applesimutils
           brew install elixir watchman postgresql
           brew services start postgresql
+          psql -c "create role postgres with login password 'postgres';"
           mix local.hex --force
           mix local.rebar --force
           npm install --global detox-cli

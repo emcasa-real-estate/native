@@ -160,6 +160,7 @@ jobs:
           brew install elixir watchman postgresql
           brew services start postgresql
           mix local.hex --force
+          mix local.rebar --force
           npm install --global detox-cli
           detox clean-framework-cache
           detox build-framework-cache

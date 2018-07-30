@@ -35,9 +35,7 @@ aliases:
   - &restore-homebrew
     keys:
     - v1-brew-{{ arch }}-{{ .Branch }}
-    paths:
-    -  /usr/local/Homebrew
-  # save caches
+    # save caches
   - &cache-node-modules
     paths:
     - node_modules
@@ -55,15 +53,15 @@ aliases:
     - ~/.cocoapods
     key: v1-cocoapods-{{ checksum "ios/Podfile" }}
   - &cache-mix
-      paths:
-      - backend/deps
-      - backend/_build
+    paths:
+    - backend/deps
+    - backend/_build
     key: v1-mix-{{ checksum "backend/mix.lock" }}
   - &cache-homebrew
     paths:
     - /usr/local/Homebrew
     key: v1-brew-{{ arch }}-{{ .Branch }}
-  # install dependencies
+    # install dependencies
   - &install-sdkmanager
     command: |-
       sdkmanager --install "extras;android;m2repository" "extras;google;m2repository"

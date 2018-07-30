@@ -5,8 +5,7 @@ export default {
     userProfile: {
       __typename: 'User',
       blacklists: []
-    },
-    blacklistedListings: []
+    }
   },
   resolvers: {Mutation}
 }

@@ -80,8 +80,10 @@ aliases:
   - &install-backend-osx
     command: |-
       brew install elixir postgresql
-      initdb /usr/local/var/postgres/data -E utf8
-      createuser -d -s postgres
+      brew services start postgresql
+      sleep 30
+      createdb `whoami` -U `whoami`
+      psql -U `whoami` -c "create role postgres with superuser createdb login password 'postgres';"
       mix local.hex --force
       mix local.rebar --force
   - &install-backend-linux

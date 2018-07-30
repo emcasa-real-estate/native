@@ -16,8 +16,7 @@
     "log-ios": "react-native log-ios",
     "test": "jest --config __test__/jest.config.js",
     "build_e2e": "NODE_ENV=e2e scripts/env detox build -c ios.debug",
-    "pretest_server": "scripts/setup_server.sh",
-    "test_server": "(cd backend && MIX_ENV=e2e mix phx.server)",
+    "test_server": "__e2e__/server/run",
     "e2e": "detox test -c ios.debug --platform ios"
   },
   "detox": {

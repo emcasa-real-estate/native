@@ -1,0 +1,14 @@
+#!/bin/bash
+
+export MIX_ENV=e2e
+
+if [ ! -f "$PWD/backend/mix.lock" ];
+then git submodule update --init; fi
+
+cp __e2e__/server/config/* backend/config
+pushd backend
+  mix deps.get
+  mix ecto.create
+  mix ecto.migrate
+  mix phx.server
+popd

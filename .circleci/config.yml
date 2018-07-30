@@ -72,14 +72,24 @@ aliases:
     command: bundle check || bundle install --path vendor/bundle
   - &install-cocoapods
     command: cd ios && pod install
-  - &install-server
+  - &install-mix
+    command: cd backend && mix deps.get
+  - &install-backend-osx
     command: |-
       brew install elixir postgresql
-      initdb /usr/local/var/postgres -E utf8
+      initdb /usr/local/var/postgres/data -E utf8
       createuser -d -s postgres
       mix local.hex --force
       mix local.rebar --force
-  - &install-detox
+  - &install-backend-linux
+    command: |-
+      wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
+      sudo dpkg -i erlang-solutions_1.0_all.deb
+      sudo apt-get update
+      sudo apt-get -y -qq install elixir
+      mix local.hex --force
+      mix local.rebar --force
+  - &install-detox-osx
     command: |-
       brew tap wix/brew
       brew install --HEAD applesimutils
@@ -149,13 +159,18 @@ jobs:
     <<: *nodejs
     steps:
     - checkout
+    - run: git submodule update --init
     - run: sudo apt-get -y -qq install awscli
+    - run: *install-backend-linux
+    - restore_cache: *restore-mix
     - restore_cache: *restore-node-modules
     - restore_cache: *restore-gems
     - run: *install-node-modules
     - run: *install-gems
+    - run: *install-mix
     - run: mkdir -p tmp/logs tmp/screenshots tmp/.secrets
     - run: aws s3 sync $AWS_SECRETS_BUCKET ~/emcasa/tmp/.secrets
+    - save_cache: *cache-mix
     - save_cache: *cache-node-modules
     - save_cache: *cache-gems
     - persist_to_workspace:
@@ -181,7 +196,6 @@ jobs:
     steps:
     - attach_workspace:
         at: ~/emcasa
-    - restore_cache: *restore-mix
     - restore_cache: *restore-cocoapods
     - restore_cache: *restore-homebrew
     - run:
@@ -189,10 +203,9 @@ jobs:
         command: |-
           brew update
           brew upgrade python
-    - run: *install-server
-    - run: *install-detox
+    - run: *install-backend-osx
+    - run: *install-detox-osx
     - run: *install-cocoapods
-    - save_cache: *cache-mix
     - save_cache: *cache-cocoapods
     - save_cache: *cache-homebrew
     - run: xcrun instruments -w "iPhone 6 (11.2)" || true

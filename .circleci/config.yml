@@ -73,7 +73,10 @@ aliases:
   - &install-cocoapods
     command: cd ios && pod install
   - &install-mix
-    command: cd backend && mix deps.get
+    command: |-
+      cp __e2e__/server/config/* backend/config
+      cp __e2e__/server/config/e2e.secret.exs backend/config/dev.secret.exs
+      cd backend && mix deps.get
   - &install-backend-osx
     command: |-
       brew install elixir postgresql

@@ -29,6 +29,11 @@ aliases:
   - &restore-cocoapods
     keys:
     - v1-cocoapods-{{ checksum "ios/Podfile" }}
+  - &restore-homebrew
+    keys:
+    - v1-brew-{{ arch }}-{{ .Branch }}
+    paths:
+    -  /usr/local/Homebrew
   # save caches
   - &cache-node-modules
     paths:
@@ -46,6 +51,10 @@ aliases:
     paths:
     - ~/.cocoapods
     key: v1-cocoapods-{{ checksum "ios/Podfile" }}
+  - &cache-homebrew
+    paths:
+    - /usr/local/Homebrew
+    key: v1-brew-{{ arch }}-{{ .Branch }}
   # install dependencies
   - &install-sdkmanager
     command: |-
@@ -57,6 +66,21 @@ aliases:
     command: bundle check || bundle install --path vendor/bundle
   - &install-cocoapods
     command: cd ios && pod install
+  - &install-server
+    command: |-
+      brew install elixir postgresql
+      initdb /usr/local/var/postgres -E utf8
+      createuser -d -s postgres
+      mix local.hex --force
+      mix local.rebar --force
+  - &install-detox
+    command: |-
+      brew tap wix/brew
+      brew install --HEAD applesimutils
+      brew install watchman
+      npm install --global detox-cli
+      detox clean-framework-cache
+      detox build-framework-cache
   # build configurations
   - &configure-version-staging
     command: echo "export VERSION_TAG=$([ $CIRCLE_BRANCH != \"master\" ] && echo $CIRCLE_BRANCH)" >> $BASH_ENV
@@ -152,25 +176,17 @@ jobs:
     - attach_workspace:
         at: ~/emcasa
     - restore_cache: *restore-cocoapods
+    - restore_cache: *restore-homebrew
     - run:
-        name: Install detox dependencies
+        name: Brew update
         command: |-
           brew update
-          brew tap wix/brew
           brew upgrade python
-          brew install --HEAD applesimutils
-          brew install elixir watchman postgresql
-          brew services start postgresql
-          createdb
-          createuser postgres
-          createdb -Opostgres -Eutf8 postgres
-          mix local.hex --force
-          mix local.rebar --force
-          npm install --global detox-cli
-          detox clean-framework-cache
-          detox build-framework-cache
+    - run: *install-server
+    - run: *install-detox
     - run: *install-cocoapods
     - save_cache: *cache-cocoapods
+    - save_cache: *cache-homebrew
     - run: xcrun instruments -w "iPhone 6 (11.2)" || true
     - run:
         name: Start test server

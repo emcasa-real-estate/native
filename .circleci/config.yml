@@ -29,6 +29,9 @@ aliases:
   - &restore-cocoapods
     keys:
     - v1-cocoapods-{{ checksum "ios/Podfile" }}
+  - &restore-mix
+    keys:
+    - v1-mix-{{ checksum "backend/mix.lock" }}
   - &restore-homebrew
     keys:
     - v1-brew-{{ arch }}-{{ .Branch }}
@@ -51,6 +54,11 @@ aliases:
     paths:
     - ~/.cocoapods
     key: v1-cocoapods-{{ checksum "ios/Podfile" }}
+  - &cache-mix
+      paths:
+      - backend/deps
+      - backend/_build
+    key: v1-mix-{{ checksum "backend/mix.lock" }}
   - &cache-homebrew
     paths:
     - /usr/local/Homebrew
@@ -175,6 +183,7 @@ jobs:
     steps:
     - attach_workspace:
         at: ~/emcasa
+    - restore_cache: *restore-mix
     - restore_cache: *restore-cocoapods
     - restore_cache: *restore-homebrew
     - run:
@@ -185,6 +194,7 @@ jobs:
     - run: *install-server
     - run: *install-detox
     - run: *install-cocoapods
+    - save_cache: *cache-mix
     - save_cache: *cache-cocoapods
     - save_cache: *cache-homebrew
     - run: xcrun instruments -w "iPhone 6 (11.2)" || true

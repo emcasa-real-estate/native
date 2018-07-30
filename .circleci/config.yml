@@ -250,6 +250,7 @@ jobs:
     <<: *macos
     environment:
       API_URL: https://em-casa-backend.herokuapp.com
+      APOLLO_ENGINE_URL: https://em-casa-apollo-engine.herokuapp.com/graphql_api
       FRONTEND_URL: https://www.emcasa.com
       NODE_ENV: production
       CODESIGN_PROFILE: app-store
@@ -279,6 +280,7 @@ jobs:
     <<: *android
     environment:
       API_URL: https://em-casa-backend.herokuapp.com
+      APOLLO_ENGINE_URL: https://em-casa-apollo-engine.herokuapp.com/graphql_api
       FRONTEND_URL: https://www.emcasa.com
       NODE_ENV: production
     steps:

@@ -12,25 +12,23 @@ import Image from '@/components/listings/Image'
 import Gallery from '@/components/listings/Gallery'
 import styles, {iconColor} from './styles'
 
-function Button({children, icon, hitSlop, ...props}) {
+function Button({children, icon, ...props}) {
   return (
     <TouchableOpacity
       {...props}
       accessible
       style={styles.iconButton}
       hitSlop={{
-        top: hitSlop,
-        bottom: hitSlop,
-        left: hitSlop,
-        right: hitSlop
+        top: 15,
+        bottom: 15,
+        left: 5,
+        right: 5
       }}
     >
       {children || <Icon name={icon} size={19} color={iconColor} />}
     </TouchableOpacity>
   )
 }
-
-Button.defaultProps = {hitSlop: 15}
 
 function ListingCard({
   style,
@@ -72,7 +70,7 @@ function ListingCard({
                 <Fragment>
                   <Button
                     testID="favorite_button"
-                    onPress={onFavorite}
+                    onPress={blacklisted ? undefined : onFavorite}
                     accessibilityLabel={
                       favorite
                         ? 'Remover dos favoritos'
@@ -83,7 +81,7 @@ function ListingCard({
                   </Button>
                   <Button
                     testID="blacklist_button"
-                    onPress={onBlacklist}
+                    onPress={favorite ? undefined : onBlacklist}
                     accessibilityLabel={blacklisted ? 'Exibir' : 'Ocultar'}
                   >
                     <BlacklistIcon active={blacklisted} size={19} />

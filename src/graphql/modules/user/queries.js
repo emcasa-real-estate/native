@@ -35,7 +35,7 @@ export const GET_FAVORITE_LISTINGS_IDS = _.memoize(
 export const GET_FAVORITE_LISTINGS = _.memoize(
   ({cache}) => gql`
     query favoritedListings(
-      $excludedListingIds: []
+      $excludedListingIds: [ID] = []
       $filters: ListingFilter = {}
       $pageSize: Int = 1000
     ) {
@@ -70,7 +70,7 @@ export const GET_BLACKLISTED_LISTINGS_IDS = _.memoize(
 export const GET_BLACKLISTED_LISTINGS = _.memoize(
   ({cache}) => gql`
     query blacklistedListings(
-      $excludedListingIds: []
+      $excludedListingIds: [ID] = []
       $filters: ListingFilter = {}
       $pageSize: Int = 1000
     ) {

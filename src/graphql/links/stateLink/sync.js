@@ -22,7 +22,7 @@ async function syncFavorites(proxy) {
   const {data} = await proxy.query({
     query: GET_FAVORITE_LISTINGS_IDS({cache: true})
   })
-  const ops = data.userProfile.blacklists.map((listing) =>
+  const ops = data.userProfile.favorites.map((listing) =>
     proxy.mutate({
       mutation: FAVORITE({cache: false}),
       variables: {id: listing.id},

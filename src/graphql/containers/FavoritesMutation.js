@@ -15,9 +15,7 @@ const FavoriteMutation = connect(
     <Mutation
       mutation={favorite ? UNFAVORITE(query) : FAVORITE(query)}
       variables={{id}}
-      refetchQueries={
-        jwt ? [{query: GET_FAVORITE_LISTINGS_IDS(query)}] : undefined
-      }
+      refetchQueries={[{query: GET_FAVORITE_LISTINGS_IDS(query)}]}
       update={() =>
         logEvent(favorite ? 'unfavorite_listing' : 'favorite_listing', {id})
       }

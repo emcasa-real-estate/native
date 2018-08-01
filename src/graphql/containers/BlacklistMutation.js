@@ -15,9 +15,7 @@ const BlacklistMutation = connect(
     <Mutation
       mutation={blacklisted ? WHITELIST(query) : BLACKLIST(query)}
       variables={{id}}
-      refetchQueries={
-        jwt ? [{query: GET_BLACKLISTED_LISTINGS_IDS(query)}] : undefined
-      }
+      refetchQueries={[{query: GET_BLACKLISTED_LISTINGS_IDS(query)}]}
       update={() =>
         logEvent(blacklisted ? 'whitelisted_listing' : 'blacklisted_listing', {
           id

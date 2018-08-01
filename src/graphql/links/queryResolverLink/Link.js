@@ -8,7 +8,10 @@ export const withQueryResolver = (transforms) => {
     return new Observable((observer) => {
       const sub = forward(operation).subscribe({
         next: (result) => {
-          result.data = transforms[operation.operationName](result.data)
+          result.data = transforms[operation.operationName](
+            result.data,
+            operation
+          )
           observer.next(result)
         },
         error: observer.error.bind(observer),

@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import {Query} from 'react-apollo'
 import {connect} from 'react-redux'
 import {compose, mapProps} from 'recompose'
@@ -13,10 +14,7 @@ const props = (state) => ({jwt: getToken(state)})
 const FavoritesQuery = connect(props)(({children, jwt, query}) => {
   const options = {cache: !jwt}
   return (
-    <Query
-      query={query(options)}
-      fetchPolicy={jwt ? 'cache-and-network' : 'cache-first'}
-    >
+    <Query fetchPolicy="cache-and-network" query={query(options)}>
       {children}
     </Query>
   )
@@ -34,7 +32,9 @@ export const withFavoriteListings = createFavoritesContainer(
   GET_FAVORITE_LISTINGS,
   (response) => ({
     favorites: {
-      data: response.data ? response.data.userProfile.favorites : [],
+      data: !_.isEmpty(response.data)
+        ? response.data.userProfile.favorites
+        : [],
       loading: response.loading
     }
   })
@@ -44,7 +44,9 @@ export const withFavoriteListingIDs = createFavoritesContainer(
   GET_FAVORITE_LISTINGS_IDS,
   (response) => ({
     favorites: {
-      data: response.data ? response.data.userProfile.favorites : [],
+      data: !_.isEmpty(response.data)
+        ? response.data.userProfile.favorites
+        : [],
       loading: response.loading
     }
   })

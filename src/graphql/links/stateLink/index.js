@@ -1,11 +1,13 @@
-import _ from 'lodash'
 import {withClientState} from 'apollo-link-state'
 
-import favorites from './resolvers/favorites'
-import blacklist from './resolvers/blacklist'
+import Mutation from './resolvers/mutations'
+import Query from './resolvers/queries'
 
 export default ({cache}) =>
   withClientState({
-    ..._.merge(favorites, blacklist),
-    cache
+    cache,
+    resolvers: {
+      Mutation,
+      Query
+    }
   })

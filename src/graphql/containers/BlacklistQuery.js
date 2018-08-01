@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import {Query} from 'react-apollo'
 import {connect} from 'react-redux'
 import {compose, mapProps} from 'recompose'
@@ -15,7 +16,7 @@ const BlacklistQuery = connect(props)(({children, jwt, query}) => {
   return (
     <Query
       query={query(options)}
-      fetchPolicy={jwt ? 'cache-and-network' : 'cache-first'}
+      // fetchPolicy={jwt ? 'cache-and-network' : 'cache-first'}
     >
       {children}
     </Query>
@@ -34,7 +35,9 @@ export const withBlacklistedListings = createBlacklistContainer(
   GET_BLACKLISTED_LISTINGS,
   (response) => ({
     blacklist: {
-      data: response.data ? response.data.userProfile.blacklists : [],
+      data: !_.isEmpty(response.data)
+        ? response.data.userProfile.blacklists
+        : [],
       loading: response.loading
     }
   })
@@ -44,7 +47,9 @@ export const withBlacklistedListingIDs = createBlacklistContainer(
   GET_BLACKLISTED_LISTINGS_IDS,
   (response) => ({
     blacklist: {
-      data: response.data ? response.data.userProfile.blacklists : [],
+      data: !_.isEmpty(response.data)
+        ? response.data.userProfile.blacklists
+        : [],
       loading: response.loading
     }
   })

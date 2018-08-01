@@ -70,7 +70,7 @@ function ListingCard({
                 <Fragment>
                   <Button
                     testID="favorite_button"
-                    onPress={blacklisted ? undefined : onFavorite}
+                    onPress={onFavorite}
                     accessibilityLabel={
                       favorite
                         ? 'Remover dos favoritos'
@@ -81,7 +81,7 @@ function ListingCard({
                   </Button>
                   <Button
                     testID="blacklist_button"
-                    onPress={favorite ? undefined : onBlacklist}
+                    onPress={onBlacklist}
                     accessibilityLabel={blacklisted ? 'Exibir' : 'Ocultar'}
                   >
                     <BlacklistIcon active={blacklisted} size={19} />

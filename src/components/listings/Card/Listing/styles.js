@@ -10,6 +10,9 @@ export default StyleSheet.create({
     borderBottomColor: colors.gray.lighter,
     borderRadius: 5
   },
+  containerBlacklisted: {
+    backgroundColor: colors.gray.offWhite
+  },
   thumbnail: {
     position: 'relative',
     display: 'flex',

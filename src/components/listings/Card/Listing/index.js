@@ -50,17 +50,26 @@ function ListingCard({
     width: width - padding * 2,
     height: width * 0.64 - padding * 2
   }
+  const imageStyle = {opacity: blacklisted ? 0.5 : 1}
 
   return (
-    <View style={[styles.container].concat(style, {width})} {...props}>
+    <View
+      style={[
+        styles.container,
+        blacklisted && styles.containerBlacklisted,
+        style,
+        {width}
+      ]}
+      {...props}
+    >
       <View testID={`listing_card(${testUniqueID})`}>
         <View style={[styles.thumbnail, imageSize]}>
           {images.length ? (
-            <Gallery inline {...imageSize}>
+            <Gallery style={imageStyle} inline {...imageSize}>
               {images.slice(0, 4)}
             </Gallery>
           ) : (
-            <Image thumbnail style={styles.image} {...imageSize} />
+            <Image thumbnail style={[styles.image, imageStyle]} {...imageSize} />
           )}
         </View>
         <View style={styles.body}>

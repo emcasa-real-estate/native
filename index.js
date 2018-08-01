@@ -17,7 +17,7 @@ initNavigation()
 
 if (Platform.OS === 'ios') {
   KeyboardManager.setEnable(true)
-  KeyboardManager.setKeyboardDistanceFromTextField(100)
+  KeyboardManager.setKeyboardDistanceFromTextField(0)
   KeyboardManager.setPreventShowingBottomBlankSpace(true)
   KeyboardManager.setEnableAutoToolbar(process.env.NODE_ENV === 'e2e')
   KeyboardManager.setToolbarDoneBarButtonItemText('done')

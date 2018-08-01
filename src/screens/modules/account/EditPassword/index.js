@@ -77,7 +77,7 @@ class EditPasswordScreen extends PureComponent {
 
     return (
       <Shell>
-        <Body>
+        <Body scroll>
           <PasswordForm
             formRef={this.form}
             message={message}

@@ -57,15 +57,6 @@ export default class Body extends PureComponent {
     if (!loading) return {children}
     return null
   }
-
-  reloadKeyboardLayout = Platform.OS === 'ios'
-    ? () => KeyboardManager.reloadLayoutIfNeeded()
-    : () => null
-
-  onLayout = () => {
-    this.reloadKeyboardLayout()
-  }
-
   renderOverlay() {
     const {children, layout} = this.state
     return (

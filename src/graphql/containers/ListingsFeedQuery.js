@@ -1,11 +1,19 @@
 import _ from 'lodash/fp'
+import update from 'immutability-helper'
 import {Query} from 'react-apollo'
 
 import {GET_LISTINGS_FEED} from '@/graphql/modules/listings/queries'
+import {withBlacklistedListingIDs} from './BlacklistQuery'
 
 const getIDs = _.map(_.get('id'))
 
-function ListingsFeedQuery({filters, pageSize, children, fetchPolicy}) {
+const ListingsFeedQuery = withBlacklistedListingIDs(function ListingsFeedQuery({
+  blacklist,
+  filters,
+  pageSize,
+  children,
+  fetchPolicy
+}) {
   return (
     <Query
       key={JSON.stringify(filters)}
@@ -13,7 +21,7 @@ function ListingsFeedQuery({filters, pageSize, children, fetchPolicy}) {
       fetchPolicy={fetchPolicy}
       variables={{filters, pageSize}}
     >
-      {({fetchMore, data = {}, ...response}) =>
+      {({fetchMore, updateQuery, data = {}, ...response}) =>
         children({
           ...response,
           data,
@@ -24,22 +32,35 @@ function ListingsFeedQuery({filters, pageSize, children, fetchPolicy}) {
                 pageSize,
                 exclude: data.listings ? getIDs(data.listings.listings) : []
               },
-              updateQuery: (prev, {fetchMoreResult}) => ({
-                listings: {
-                  __typename: prev.listings.__typename,
-                  listings: [
-                    ...prev.listings.listings,
-                    ...fetchMoreResult.listings.listings
-                  ],
-                  remainingCount: fetchMoreResult.listings.remainingCount
-                }
-              })
+              updateQuery: updateListings()
             })
-          )
+          ),
+          updateBlacklists: () => updateQuery(updateBlacklists({blacklist}))
         })
       }
     </Query>
   )
+})
+
+const updateListings = () => (prev, {fetchMoreResult}) =>
+  update(prev, {
+    listings: {
+      listings: {$push: fetchMoreResult.listings.listings},
+      remainingCount: {$set: fetchMoreResult.listings.remainingCount}
+    }
+  })
+
+const updateBlacklists = ({blacklist}) => (prev) => {
+  const blacklistIds = _.map(_.get('id'))(blacklist.data)
+  if (_.isEmpty(prev) || _.isEmpty(blacklistIds)) return prev
+  return update(prev, {
+    listings: {
+      listings: {
+        $apply: (listings) =>
+          listings.filter(({id}) => !blacklistIds.includes(String(id)))
+      }
+    }
+  })
 }
 
 ListingsFeedQuery.defaultProps = {
@@ -56,7 +77,8 @@ export const withListingsFeed = (options = {}) => (Target) => (props) => (
           data: listings ? listings.listings : [],
           remainingCount: listings ? listings.remainingCount : undefined,
           refetch: response.refetch,
-          fetchMore: response.fetchMore
+          fetchMore: response.fetchMore,
+          updateBlacklists: response.updateBlacklists
         }}
       />
     )}

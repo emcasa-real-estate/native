@@ -69,7 +69,11 @@ function ListingCard({
               {images.slice(0, 4)}
             </Gallery>
           ) : (
-            <Image thumbnail style={[styles.image, imageStyle]} {...imageSize} />
+            <Image
+              thumbnail
+              style={[styles.image, imageStyle]}
+              {...imageSize}
+            />
           )}
         </View>
         <View style={styles.body}>

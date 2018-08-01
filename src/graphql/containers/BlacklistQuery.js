@@ -11,13 +11,10 @@ import {getToken} from '@/redux/modules/auth/selectors'
 
 const props = (state) => ({jwt: getToken(state)})
 
-const BlacklistQuery = connect(props)(({children, jwt, query}) => {
+const BlacklistQuery = connect(props)(({children, jwt, query, ...props}) => {
   const options = {cache: !jwt}
   return (
-    <Query
-      query={query(options)}
-      // fetchPolicy={jwt ? 'cache-and-network' : 'cache-first'}
-    >
+    <Query query={query(options)} {...props}>
       {children}
     </Query>
   )

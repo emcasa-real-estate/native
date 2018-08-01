@@ -2,7 +2,7 @@ import {PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
 
 import composeWithRef from '@/lib/composeWithRef'
-import {withFavoriteListings} from '@/graphql/containers'
+import {withBlacklistedListings} from '@/graphql/containers'
 import {Shell, Body, Footer} from '@/components/layout'
 import Feed from '@/components/listings/Feed/Listing'
 import BottomTabs from '@/screens/modules/navigation/BottomTabs'
@@ -10,17 +10,17 @@ import ListEmpty from './ListEmpty'
 
 import ListingScreen from '@/screens/modules/listing/Listing'
 
-class FavoritesScreen extends PureComponent {
+class BlacklistScreen extends PureComponent {
   static defaultProps = {
-    favorites: {}
+    blacklist: {}
   }
 
-  static screenName = 'account.Favorites'
+  static screenName = 'account.Blacklist'
 
   static options = {
     topBar: {
-      title: {text: 'Meus imóveis favoritos'},
-      backButtonTitle: 'Favoritos'
+      title: {text: 'Meus imóveis ocultados'},
+      backButtonTitle: 'Blacklist'
     }
   }
 
@@ -30,7 +30,7 @@ class FavoritesScreen extends PureComponent {
     else
       Navigation.push(componentId, {
         component: {
-          component: 'account.Blacklist',
+          component: 'account.Favorites',
           passProps: {params: {switchViewId: componentId}}
         }
       })
@@ -45,14 +45,14 @@ class FavoritesScreen extends PureComponent {
     })
 
   render() {
-    const {favorites} = this.props
+    const {blacklist} = this.props
     return (
       <Shell>
-        <Body loading={favorites.loading}>
+        <Body loading={blacklist.loading}>
           <Feed
-            data={favorites.data}
+            data={blacklist.data}
             onSelect={this.onSelect}
-            ListEmptyComponent={favorites.loading ? undefined : ListEmpty}
+            ListEmptyComponent={blacklist.loading ? undefined : ListEmpty}
           />
         </Body>
         <Footer>
@@ -63,4 +63,4 @@ class FavoritesScreen extends PureComponent {
   }
 }
 
-export default composeWithRef(withFavoriteListings)(FavoritesScreen)
+export default composeWithRef(withBlacklistedListings)(BlacklistScreen)

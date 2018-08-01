@@ -14,11 +14,11 @@ export default {
   },
   favorites: {
     name: account.Favorites.screenName,
-    isActive: ({name}) => /^account\.Favorites/.test(name)
+    isActive: ({name}) => /^account\.(Favorites|Blacklist)/.test(name)
   },
   account: {
     name: account.Menu.screenName,
-    isActive: ({name}) => /^account\.(?!Favorites)/.test(name)
+    isActive: ({name}) => /^account\.(?!Favorites|Blacklist)/.test(name)
   },
   auth: {
     name: auth.Login.screenName,

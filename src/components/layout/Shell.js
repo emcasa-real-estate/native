@@ -2,6 +2,10 @@ import {PureComponent} from 'react'
 import {View, KeyboardAvoidingView, Dimensions} from 'react-native'
 
 export default class Shell extends PureComponent {
+  static defaultProps = {
+    avoidKeyboard: true
+  }
+
   state = {}
 
   onLayout = ({nativeEvent: {layout}}) =>
@@ -10,17 +14,18 @@ export default class Shell extends PureComponent {
     })
 
   render() {
-    const {style, children, testID} = this.props
+    const {style, children, testID, avoidKeyboard} = this.props
     const {offset} = this.state
+    const ViewComponent = avoidKeyboard ? KeyboardAvoidingView : View
     return (
       <View testID={testID} style={{flex: 1}} onLayout={this.onLayout}>
-        <KeyboardAvoidingView
-          style={[{flex: 1, display: 'flex'}, style]}
+        <ViewComponent
+          style={[{flex: 1}, style]}
           keyboardVerticalOffset={offset}
           behavior="padding"
         >
-          {children}
-        </KeyboardAvoidingView>
+          <View style={{flex: 1, display: 'flex'}}>{children}</View>
+        </ViewComponent>
       </View>
     )
   }

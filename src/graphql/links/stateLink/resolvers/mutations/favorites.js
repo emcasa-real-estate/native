@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import {AsyncStorage} from 'react-native'
 import * as frag from '@/graphql/fragments'
 
@@ -10,7 +11,10 @@ export const getFavorites = async () => {
 }
 
 export const setFavorites = async (listings) => {
-  await AsyncStorage.setItem(FAVORITES_CACHE_KEY, JSON.stringify(listings))
+  await AsyncStorage.setItem(
+    FAVORITES_CACHE_KEY,
+    JSON.stringify(_.uniqBy(listings, 'id'))
+  )
 }
 
 export async function favoriteListing(_, {id}, {cache}) {

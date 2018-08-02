@@ -1,5 +1,9 @@
 import {ApolloLink, Observable} from 'apollo-link'
 
+/**
+ * Apollo link to map incoming query results
+ * @param {Object} transforms Object mapping operation names to resolvers
+ */
 export const withQueryResolver = (transforms) => {
   const watchedQueries = Object.keys(transforms)
   return new ApolloLink((operation, forward) => {

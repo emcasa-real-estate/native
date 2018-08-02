@@ -5,6 +5,7 @@ import {GET_BLACKLISTED_LISTINGS_IDS} from '@/graphql/modules/user/queries'
 
 export default ({cache}) =>
   withQueryResolver({
+    // Removes client-side blacklisted listings from feed
     listingsFeed(data, op) {
       if (op.getContext().authenticated) return data
       try {

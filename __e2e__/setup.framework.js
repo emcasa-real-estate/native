@@ -8,9 +8,12 @@ import pkg from '../package.json'
 
 const exec = promisify(child_process.exec)
 
+const toBool = (val) =>
+  ['true', 'yes', 'y'].findIndex(
+    (str) => val == str || val == str.toUpperCase()
+  ) !== -1
+
 const DEVICE_NAME = process.env.DEVICE_NAME || 'booted'
-const DB_USER = process.env.CLEANUP_DB_USER || 'postgres'
-const DB_NAME = process.env.CLEANUP_DB_NAME
 const SCREENSHOT_PATH =
   process.env.SCREENSHOT_PATH || path.join(__dirname, '../tmp/screenshots')
 
@@ -35,11 +38,18 @@ global.screenShot = async (fileName = timestamp()) => {
 }
 
 async function resetDatabase() {
-  if (!DB_NAME) return
-  const dumpFile = `${__dirname}/server/re_test.dump`
   try {
-    await exec(`psql ${DB_NAME} ${DB_USER} < ${dumpFile}`)
-    console.log(`Database ${DB_NAME} has been reset.`)
+    await exec(
+      [
+        'mix do ecto.drop, ecto.drop, ecto.create, ecto.migrate',
+        'mix run priv/repo/seeds.e2e.exs'
+      ].join('&&'),
+      {
+        cwd: path.resolve(__dirname, '../backend'),
+        env: {MIX_ENV: 'e2e'}
+      }
+    )
+    console.log('Database has been reset.')
   } catch (error) {
     console.error(error.message)
   }
@@ -49,8 +59,8 @@ jest.setTimeout(180000)
 
 beforeAll(() => detox.init(pkg.detox))
 
-beforeAll(() => resetDatabase())
+if (toBool(process.env.CLEANUP)) beforeAll(() => resetDatabase())
 
-afterEach(() => screenShot())
+if (toBool(process.env.SCREENSHOT)) afterEach(() => screenShot())
 
 afterAll(() => detox.cleanup())

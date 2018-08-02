@@ -195,7 +195,8 @@ jobs:
       API_URL: http://localhost:4000
       NODE_ENV: e2e
       MIX_ENV: e2e
-      CLEANUP_DB_NAME: re_test
+      CLEANUP: yes
+      SCREENSHOT: yes
       PGUSER: postgres
       PGPASSWORD: postgres
     steps:

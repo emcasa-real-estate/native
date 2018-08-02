@@ -7,8 +7,7 @@ export default StyleSheet.create({
     padding: 15,
     paddingTop: 20,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.gray.lighter,
-    borderRadius: 5
+    borderBottomColor: colors.gray.lighter
   },
   containerBlacklisted: {
     backgroundColor: colors.gray.offWhite

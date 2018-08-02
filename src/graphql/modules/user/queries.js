@@ -5,13 +5,8 @@ import * as frag from '@/graphql/fragments'
 
 export const GET_USER_LISTINGS = gql`
   query userListings {
-    userProfile {
-      listings(
-        filters: {}
-        pagination: {excludedListingIds: [], pageSize: 1000}
-      ) {
-        ...UserListing
-      }
+    userListings {
+      ...UserListing
     }
   }
   ${frag.UserListing}

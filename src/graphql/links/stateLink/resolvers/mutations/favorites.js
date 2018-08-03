@@ -17,6 +17,8 @@ export const setFavorites = async (listings) => {
   )
 }
 
+export const resetFavorites = () => AsyncStorage.removeItem(FAVORITES_CACHE_KEY)
+
 export async function favoriteListing(_, {id}, {cache}) {
   const listing = await cache.readFragment({
     fragment: frag.ListingFeed,

@@ -17,6 +17,8 @@ export const setBlacklist = async (listings) => {
   )
 }
 
+export const resetBlacklist = () => AsyncStorage.removeItem(BLACKLIST_CACHE_KEY)
+
 export async function listingBlacklist(_, {id}, {cache}) {
   const listing = await cache.readFragment({
     fragment: frag.ListingFeed,

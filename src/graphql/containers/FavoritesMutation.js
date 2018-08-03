@@ -7,9 +7,9 @@ import {logEvent} from '@/redux/modules/firebase/analytics'
 import {getToken} from '@/redux/modules/auth/selectors'
 import {withFavoriteListingByID} from './FavoritesQuery'
 
-const FavoriteMutation = connect(
-  (state) => ({jwt: getToken(state)}, {logEvent})
-)(function _FavoritesMutation({children, id, favorite, jwt, logEvent}) {
+const FavoriteMutation = connect((state) => ({jwt: getToken(state)}), {
+  logEvent
+})(function _FavoritesMutation({children, id, favorite, jwt, logEvent}) {
   const query = {cache: !jwt}
   return (
     <Mutation

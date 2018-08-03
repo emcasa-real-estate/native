@@ -7,9 +7,9 @@ import {logEvent} from '@/redux/modules/firebase/analytics'
 import {getToken} from '@/redux/modules/auth/selectors'
 import {withBlacklistedListingByID} from './BlacklistQuery'
 
-const BlacklistMutation = connect(
-  (state) => ({jwt: getToken(state)}, {logEvent})
-)(function _BlacklistMutation({children, id, blacklisted, jwt, logEvent}) {
+const BlacklistMutation = connect((state) => ({jwt: getToken(state)}), {
+  logEvent
+})(function _BlacklistMutation({children, id, blacklisted, jwt, logEvent}) {
   const query = {cache: !jwt}
   return (
     <Mutation

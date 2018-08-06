@@ -1,29 +1,32 @@
 import * as listingForm from './modules/listingForm/screens'
 import * as listings from './modules/listings/screens'
 import * as account from './modules/account/screens'
-import * as auth from './modules/auth/screens'
 
-export default {
+export const TABS = {
   listings: {
     name: listings.Feed.screenName,
-    isActive: ({name}) => /^listings/.test(name)
+    options: {
+      bottomTab: {text: 'Test1'}
+    }
   },
   newListing: {
     name: listingForm.Address.screenName,
-    isActive: ({name}) => /^listingForm/.test(name)
+    options: {
+      bottomTab: {text: 'Test1'}
+    }
   },
   favorites: {
     name: account.Favorites.screenName,
-    isActive: ({name}) => /^account\.Favorites/.test(name)
+    options: {
+      bottomTab: {text: 'Test1'}
+    }
   },
   account: {
-    name: account.Menu.screenName,
-    isActive: ({name}) => /^account\.(?!Favorites)/.test(name)
-  },
-  auth: {
-    name: auth.Login.screenName,
-    isActive: ({name}) => /^auth/.test(name)
+    name: 'account',
+    options: {
+      bottomTab: {text: 'Test'}
+    }
   }
 }
 
-export const STACK_ROOT = 'listings'
+export default [TABS.listings, TABS.favorites, TABS.newListing, TABS.account]

@@ -8,12 +8,14 @@ import * as listingsScreens from './listings/screens'
 import * as interestScreens from './interest/screens'
 import * as messengerScreens from './messenger/screens'
 import * as sharedScreens from './shared/screens'
+import AuthTab from './AuthTab'
 
 const screens = _.flow(
   _.map(_.values),
   ([...screens]) => [].concat(...screens),
   _.filter((screen) => screen.screenName)
 )([
+  {AuthTab},
   authScreens,
   accountScreens,
   listingScreens,

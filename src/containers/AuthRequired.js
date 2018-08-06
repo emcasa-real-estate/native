@@ -7,8 +7,7 @@ import {getToken} from '@/redux/modules/auth/selectors'
 
 import LoginScreen from '@/screens/modules/auth/Login'
 
-@connect((state) => ({jwt: getToken(state)}))
-export default class AuthRequired extends PureComponent {
+class BaseAuthRequired extends PureComponent {
   state = {loginRequested: false}
 
   requestLogin() {
@@ -63,6 +62,12 @@ export default class AuthRequired extends PureComponent {
     )
   }
 }
+
+const AuthRequired = connect((state) => ({jwt: getToken(state)}))(
+  BaseAuthRequired
+)
+
+export default AuthRequired
 
 export const authRequired = (getOptions) => (Target) => (props) => (
   <AuthRequired

@@ -19,8 +19,7 @@ function identifySession({data}) {
 }
 
 function logCurrentScreen({name}) {
-  console.log(name)
-  //analytics.setCurrentScreen(name, getScreenByName(name).displayName)
+  analytics.setCurrentScreen(name, getScreenByName(name).displayName)
 }
 
 function* initialize() {

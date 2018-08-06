@@ -6,8 +6,12 @@ export const UPDATE_STACK_ROOT = 'screens/UPDATE_STACK_ROOT'
 export const UPDATE_TAB = 'screens/UPDATE_TAB'
 export const SWITCH_TAB = 'screens/SWITCH_TAB'
 
-export const screenAppeared = (id, name) => ({type: SCREEN_APPEARED, id, name})
-export const screenDisappeared = (id, name) => ({
+export const screenAppeared = ({id, name}) => ({
+  type: SCREEN_APPEARED,
+  id,
+  name
+})
+export const screenDisappeared = ({id, name}) => ({
   type: SCREEN_DISAPPEARED,
   id,
   name

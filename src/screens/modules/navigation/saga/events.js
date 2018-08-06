@@ -12,13 +12,13 @@ const navigationEvent = (event) =>
 const createNavigationChannel = (event) =>
   eventChannel((emitter) => {
     const fun = navigationEvent(event)
-    const subscription = fun((...args) => emitter({args}))
+    const subscription = fun((args) => emitter(args || {}))
     return () => subscription.remove()
   })
 
 const createNavigationDispatcher = (action) =>
-  function* dispatchNavigationAction({args}) {
-    yield put(action(...args))
+  function* dispatchNavigationAction({componentId, componentName}) {
+    yield put(action({id: componentId, name: componentName}))
   }
 
 const createNavigationSaga = (fun, action) =>

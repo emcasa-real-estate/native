@@ -195,6 +195,7 @@ jobs:
     environment:
       API_URL: https://em-casa-backend-staging.herokuapp.com
       APOLLO_ENGINE_URL: https://em-casa-apollo-engine-staging.herokuapp.com/graphql_api
+      MESSENGER_RECEIVER_ID: 16
       NODE_ENV: production
       CODESIGN_PROFILE: ad-hoc
       BUNDLE_IDENTIFIER_SUFFIX: -beta
@@ -224,6 +225,7 @@ jobs:
     environment:
       API_URL: https://em-casa-backend-staging.herokuapp.com
       APOLLO_ENGINE_URL: https://em-casa-apollo-engine-staging.herokuapp.com/graphql_api
+      MESSENGER_RECEIVER_ID: 16
       NODE_ENV: production
     steps:
     - attach_workspace:
@@ -251,6 +253,7 @@ jobs:
     environment:
       API_URL: https://em-casa-backend.herokuapp.com
       FRONTEND_URL: https://www.emcasa.com
+      MESSENGER_RECEIVER_ID: 212
       NODE_ENV: production
       CODESIGN_PROFILE: app-store
     steps:
@@ -280,6 +283,7 @@ jobs:
     environment:
       API_URL: https://em-casa-backend.herokuapp.com
       FRONTEND_URL: https://www.emcasa.com
+      MESSENGER_RECEIVER_ID: 212
       NODE_ENV: production
     steps:
     - attach_workspace:

@@ -13,7 +13,7 @@ import {
 } from '@/graphql/containers'
 import Button from '@/screens/modules/shared/Header/TextButton'
 
-const compare = (value, source) =>
+const compare = (value, source = {}) =>
   _.reduce(
     value,
     (result, val, key) =>
@@ -23,7 +23,7 @@ const compare = (value, source) =>
 
 const compareListings = ({address, ...value}, listing) => {
   return (
-    compare(value, listing) &&
+    compare(_.omit(value, ['images']), listing) &&
     compare(_.omit(address.details, ['lng', 'lat']), listing.address)
   )
 }

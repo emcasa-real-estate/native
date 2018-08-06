@@ -5,8 +5,11 @@ import $styles from './styles'
 
 function Button({styles, style, children, disabled, onPress}) {
   return (
-    <TouchableOpacity style={style} onPress={disabled ? undefined : onPress}>
-      <View style={styles.container}>
+    <TouchableOpacity
+      style={styles.container.concat(style)}
+      onPress={disabled ? undefined : onPress}
+    >
+      <View style={styles.button}>
         <Text style={styles.text}>{children}</Text>
       </View>
     </TouchableOpacity>

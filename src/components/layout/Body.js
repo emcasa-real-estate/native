@@ -62,7 +62,7 @@ export default class Body extends PureComponent {
     ? () => KeyboardManager.reloadLayoutIfNeeded()
     : () => null
 
-  onLayout = ({nativeEvent: {layout}}) => {
+  onLayout = () => {
     this.reloadKeyboardLayout()
   }
 
@@ -79,7 +79,7 @@ export default class Body extends PureComponent {
   }
 
   render() {
-    const {style, scroll, loading, testID} = this.props
+    const {style, scroll, loading, testID, ...props} = this.props
     const {children} = this.state
     const ViewComponent = scroll ? ScrollView : View
 
@@ -88,6 +88,7 @@ export default class Body extends PureComponent {
         testID={testID}
         style={[styles.container, style]}
         onLayout={this.onLayout}
+        {...props}
       >
         {loading && this.renderOverlay()}
         <View style={styles.body}>{children}</View>

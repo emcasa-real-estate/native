@@ -13,9 +13,11 @@ export default StyleSheet.create({
   textInputContainer: {
     display: 'flex',
     backgroundColor: 'rgba(0,0,0,0)',
-    padding: 14,
+    paddingHorizontal: 14,
     borderWidth: 1,
     borderRadius: 4,
+    height: 50,
+    justifyContent: 'center',
     borderColor: colors.gray.light
   },
   textInput: {

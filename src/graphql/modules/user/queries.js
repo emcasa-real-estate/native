@@ -5,10 +5,10 @@ import * as frag from '@/graphql/fragments'
 export const GET_USER_LISTINGS = gql`
   query userListings {
     userListings {
-      ...ListingFeed
+      ...UserListing
     }
   }
-  ${frag.ListingFeed}
+  ${frag.UserListing}
 `
 
 export const GET_FAVORITE_LISTINGS_IDS = ({cache}) => gql`

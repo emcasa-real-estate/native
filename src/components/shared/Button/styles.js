@@ -3,7 +3,8 @@ import * as colors from '@/assets/colors'
 import {elevation} from '@/assets/styles'
 
 export default StyleSheet({
-  container: {
+  container: {},
+  button: {
     padding: 8,
     borderWidth: 1.2,
     borderRadius: 5,

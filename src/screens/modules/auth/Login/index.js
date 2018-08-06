@@ -1,15 +1,18 @@
 import React, {PureComponent} from 'react'
+import {View} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import {getUser, getError, isLoading} from '@/redux/modules/auth/selectors'
 import {signIn, reset} from '@/redux/modules/auth'
 import {Shell, Body, Footer} from '@/components/layout'
+import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
 import LoginForm from '@/components/auth/Login'
 
 import SignUpScreen from '@/screens/modules/auth/SignUp'
 import ResetPasswordScreen from '@/screens/modules/auth/ResetPassword'
+import styles from './styles'
 
 class LoginScreen extends PureComponent {
   static screenName = 'auth.Login'
@@ -29,6 +32,15 @@ class LoginScreen extends PureComponent {
 
   form = React.createRef()
 
+  returnToParentScreen() {
+    const {
+      componentId,
+      params: {parentId}
+    } = this.props
+    if (parentId) Navigation.popTo(parentId)
+    else Navigation.popToRoot(componentId)
+  }
+
   componentDidDisappear() {
     this.setState({value: undefined})
   }
@@ -38,8 +50,8 @@ class LoginScreen extends PureComponent {
   }
 
   componentDidUpdate(prev) {
-    const {user, componentId} = this.props
-    if (user && !prev.user) Navigation.popToRoot(componentId)
+    const {user} = this.props
+    if (user && !prev.user) this.returnToParentScreen()
   }
 
   onChange = (value) => this.setState({value})
@@ -51,24 +63,41 @@ class LoginScreen extends PureComponent {
   }
 
   onSignUp = () => {
-    Navigation.push(this.props.componentId, {
-      component: {name: SignUpScreen.screenName}
+    const {componentId, params} = this.props
+    Navigation.push(componentId, {
+      component: {
+        name: SignUpScreen.screenName,
+        passProps: {params}
+      }
     })
   }
 
   onPasswordRecovery = () => {
-    Navigation.push(this.props.componentId, {
-      component: {name: ResetPasswordScreen.screenName}
+    const {componentId, params} = this.props
+    Navigation.push(componentId, {
+      component: {
+        name: ResetPasswordScreen.screenName,
+        passProps: {params}
+      }
     })
   }
 
   render() {
-    const {loading, error} = this.props
+    const {
+      loading,
+      error,
+      params: {notice}
+    } = this.props
     const {value} = this.state
 
     return (
       <Shell testID="@auth.Login">
         <Body scroll>
+          {notice && (
+            <View style={styles.notice}>
+              <Text style={styles.noticeText}>{notice}</Text>
+            </View>
+          )}
           <LoginForm
             formRef={this.form}
             value={value}

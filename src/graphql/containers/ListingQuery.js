@@ -1,14 +1,10 @@
 import {Query} from 'react-apollo'
 
-import {GET_LISTING, GET_USER_LISTING} from '@/graphql/modules/listings/queries'
+import {GET_LISTING} from '@/graphql/modules/listings/queries'
 
-function ListingQuery({children, id, fetchPrivateInfo, ...options}) {
+function ListingQuery({children, id, ...options}) {
   return (
-    <Query
-      query={fetchPrivateInfo ? GET_USER_LISTING : GET_LISTING}
-      variables={{id}}
-      {...options}
-    >
+    <Query query={GET_LISTING} variables={{id}} {...options}>
       {children}
     </Query>
   )

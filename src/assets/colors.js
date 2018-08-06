@@ -1,5 +1,5 @@
 export const gray = {
-  offWhite: '#eee',
+  offWhite: '#eeeeee',
   lighter: '#dcdcdc',
   light: '#979797',
   medium: '#bababa',

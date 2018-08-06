@@ -7,7 +7,7 @@ import $styles from './styles'
 function FormMessage({children, title, styles, onClose, ...props}) {
   return (
     <View style={styles.container}>
-      {title && (
+      {Boolean(title) && (
         <Text style={$styles.all(styles.text, styles.title)}>{title}</Text>
       )}
       {typeof children === 'string' ? (

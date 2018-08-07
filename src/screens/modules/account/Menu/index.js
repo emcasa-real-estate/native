@@ -5,8 +5,7 @@ import {connect} from 'react-redux'
 import composeWithRef from '@/lib/composeWithRef'
 import {signOut} from '@/redux/modules/auth'
 import {withUserListings, withMessengerUnreadCount} from '@/graphql/containers'
-import {Shell, Body, Header, Footer} from '@/components/layout'
-import BottomTabs from '@/screens/modules/navigation/BottomTabs'
+import {Shell, Body, Header} from '@/components/layout'
 import Menu from '@/components/account/Menu'
 import AccountHeader from './Header'
 
@@ -67,16 +66,16 @@ class AccountMenuScreen extends PureComponent {
             })}
           />
         </Body>
-        <Footer>
-          <BottomTabs />
-        </Footer>
       </Shell>
     )
   }
 }
 
 export default composeWithRef(
-  connect(null, {signOut}),
+  connect(
+    null,
+    {signOut}
+  ),
   withUserListings,
   withMessengerUnreadCount
 )(AccountMenuScreen)

@@ -19,7 +19,6 @@ export const screenDisappeared = ({id, name}) => ({
 export const switchTab = (tab) => ({type: SWITCH_TAB, tab})
 
 const initialState = {
-  tab: undefined,
   screen: {id: undefined, name: undefined}
 }
 
@@ -29,16 +28,6 @@ export default function screenReducer(state = initialState, action) {
       return {
         ...state,
         screen: {id: action.id, name: action.name}
-      }
-    case UPDATE_TAB:
-      return {
-        ...state,
-        tab: action.tab
-      }
-    case UPDATE_STACK_ROOT:
-      return {
-        ...state,
-        stackRoot: {id: action.id, name: action.name}
       }
     default:
       return state

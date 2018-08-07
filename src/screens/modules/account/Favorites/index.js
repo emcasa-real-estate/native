@@ -3,9 +3,8 @@ import {Navigation} from 'react-native-navigation'
 
 import composeWithRef from '@/lib/composeWithRef'
 import {withFavoriteListings} from '@/graphql/containers'
-import {Shell, Body, Footer} from '@/components/layout'
+import {Shell, Body} from '@/components/layout'
 import Feed from '@/components/listings/Feed/Listing'
-import BottomTabs from '@/screens/modules/navigation/BottomTabs'
 import ListEmpty from './ListEmpty'
 
 import ListingScreen from '@/screens/modules/listing/Listing'
@@ -44,9 +43,6 @@ class FavoritesScreen extends PureComponent {
             ListEmptyComponent={favorites.loading ? undefined : ListEmpty}
           />
         </Body>
-        <Footer>
-          <BottomTabs />
-        </Footer>
       </Shell>
     )
   }

@@ -5,10 +5,9 @@ import {connect} from 'react-redux'
 import composeWithRef from '@/lib/composeWithRef'
 import {withListingsFeed} from '@/graphql/containers'
 import {getSearchFiltersQuery} from '@/screens/modules/listings/Search/module/selectors'
-import {Shell, Body, Header, Footer} from '@/components/layout'
+import {Shell, Body, Header} from '@/components/layout'
 import InfiniteScroll from '@/containers/InfiniteScroll'
 import MapButton from '@/components/listings/Map/Button'
-import BottomTabs from '@/screens/modules/navigation/BottomTabs'
 import Feed from '@/components/listings/Feed/Listing'
 import SearchHeader from './Header'
 import ListEmpty from './ListEmpty'
@@ -33,7 +32,9 @@ class ListingsFeedScreen extends PureComponent {
   }
 
   onLoadMore = () => {
-    const {listingsFeed: {loading, fetchMore}} = this.props
+    const {
+      listingsFeed: {loading, fetchMore}
+    } = this.props
     if (!loading) fetchMore()
   }
 
@@ -65,7 +66,9 @@ class ListingsFeedScreen extends PureComponent {
   }
 
   render() {
-    const {listingsFeed: {loading, data, remainingCount}} = this.props
+    const {
+      listingsFeed: {loading, data, remainingCount}
+    } = this.props
     return (
       <Shell testID="@listings.Feed">
         <Header>
@@ -88,9 +91,6 @@ class ListingsFeedScreen extends PureComponent {
           </InfiniteScroll>
           <MapButton style={styles.mapButton} onPress={this.onOpenMap} />
         </Body>
-        <Footer>
-          <BottomTabs />
-        </Footer>
       </Shell>
     )
   }

@@ -24,7 +24,10 @@ export const TABS = {
   account: {
     name: 'account',
     options: {
-      bottomTab: {text: 'Test'}
+      bottomTab: {
+        text: 'Test',
+        icon: require('@/assets/img/tabs/user.png')
+      }
     }
   }
 }

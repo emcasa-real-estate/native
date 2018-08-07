@@ -7,7 +7,15 @@ import Login from './auth/Login'
 import Account from './account/Menu'
 
 export default compose(
-  connect((state) => ({Screen: getToken(state) ? Account : Login}))
+  connect((state) => {
+    const loggedIn = getToken(state)
+    return {
+      Screen: loggedIn ? Account : Login,
+      options: {
+        bottomTab: {text: loggedIn ? 'Perfil' : 'Login'}
+      }
+    }
+  })
 )(
   class AuthTab extends ScreenRouter {
     static screenName = 'account'

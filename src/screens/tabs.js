@@ -6,26 +6,34 @@ export const TABS = {
   listings: {
     name: listings.Feed.screenName,
     options: {
-      bottomTab: {text: 'Test1'}
+      bottomTab: {
+        text: 'Imóveis',
+        icon: require('@/assets/img/tabs/home.png')
+      }
     }
   },
   newListing: {
     name: listingForm.Address.screenName,
     options: {
-      bottomTab: {text: 'Test1'}
+      bottomTab: {
+        text: 'Anuncie',
+        icon: require('@/assets/img/tabs/tag.png')
+      }
     }
   },
   favorites: {
     name: account.Favorites.screenName,
     options: {
-      bottomTab: {text: 'Test1'}
+      bottomTab: {
+        text: 'Favoritos',
+        icon: require('@/assets/img/tabs/heart.png')
+      }
     }
   },
   account: {
     name: 'account',
     options: {
       bottomTab: {
-        text: 'Test',
         icon: require('@/assets/img/tabs/user.png')
       }
     }

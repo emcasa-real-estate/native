@@ -2,6 +2,8 @@ import {Platform} from 'react-native'
 
 import * as colors from '@/assets/colors'
 
+const OpenSans = Platform.OS === 'ios' ? 'Open Sans' : 'OpenSans'
+
 export default {
   layout: {
     backgroundColor: 'white',
@@ -17,7 +19,15 @@ export default {
       fontSize: 18,
       fontWeight: '400',
       color: colors.gray.dark,
-      fontFamily: Platform.OS === 'ios' ? 'Open Sans' : 'OpenSans'
+      fontFamily: OpenSans
     }
+  },
+  bottomTab: {
+    badgeColor: colors.blue.medium,
+    iconColor: colors.gray.dark,
+    selectedIconColor: colors.blue.medium,
+    textColor: colors.gray.dark,
+    selectedTextColor: colors.blue.medium,
+    fontFamily: OpenSans
   }
 }

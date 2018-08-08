@@ -37,10 +37,6 @@ const listingValue = ({address, ...listing}) => ({
 })
 
 class EditAddressScreen extends PureComponent {
-  static defaultProps = {
-    params: {}
-  }
-
   static screenName = 'listingForm.EditAddress'
 
   static options = {
@@ -52,10 +48,16 @@ class EditAddressScreen extends PureComponent {
   form = React.createRef()
 
   async setDefaultValue() {
-    const {client, setContext, params: {id}} = this.props
+    const {
+      client,
+      setContext,
+      params: {id}
+    } = this.props
     setContext({loading: true})
     try {
-      const {data: {listing}} = await client.query({
+      const {
+        data: {listing}
+      } = await client.query({
         query: GET_LISTING,
         variables: {id}
       })
@@ -78,7 +80,9 @@ class EditAddressScreen extends PureComponent {
   }
 
   componentDidMount() {
-    const {params: {id}} = this.props
+    const {
+      params: {id}
+    } = this.props
     if (id) this.setDefaultValue()
   }
 
@@ -123,7 +127,11 @@ class EditAddressScreen extends PureComponent {
   }
 
   render() {
-    const {value, loading, params: {id}} = this.props
+    const {
+      value,
+      loading,
+      params: {id}
+    } = this.props
     return (
       <Shell testID="@listingForm.Address">
         <Progress progress={1 / 3} />
@@ -144,10 +152,6 @@ class EditAddressScreen extends PureComponent {
   }
 }
 
-export default composeWithRef(
-  authRequired(() => ({
-    notice: 'O login é necessário para anunciar um imóvel.'
-  })),
-  withContext.byProp('componentId'),
-  withApollo
-)(EditAddressScreen)
+export default composeWithRef(withContext.byProp('componentId'), withApollo)(
+  EditAddressScreen
+)

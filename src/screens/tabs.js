@@ -34,6 +34,7 @@ export const TABS = {
     name: 'account',
     options: {
       bottomTab: {
+        text: 'Perfil',
         icon: require('@/assets/img/tabs/user.png')
       }
     }

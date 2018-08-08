@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import {PureComponent} from 'react'
-import {View, Platform} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
@@ -24,6 +23,10 @@ class ConversationScreen extends PureComponent {
   static options = {
     topBar: {
       title: {text: 'Entre em contato'}
+    },
+    bottomTabs: {
+      visible: false,
+      animated: false
     }
   }
 
@@ -74,7 +77,7 @@ class ConversationScreen extends PureComponent {
   render() {
     const {messages, loading, user} = this.props
     return (
-      <Shell avoidKeyboard={Platform.OS !== 'ios'}>
+      <Shell>
         <Body loading={messages.loading || loading}>
           {messages.data && (
             <Conversation

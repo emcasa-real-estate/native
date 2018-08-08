@@ -1,18 +1,17 @@
 import {PureComponent} from 'react'
-import {View, KeyboardAvoidingView, Dimensions} from 'react-native'
+import {View, KeyboardAvoidingView} from 'react-native'
 
 export default class Shell extends PureComponent {
   static defaultProps = {
     behavior: 'padding'
   }
 
-  state = {}
+  state = {
+    offset: 63
+  }
 
   onLayout = ({nativeEvent: {layout}}) =>
-    this.setState({
-      offset: Math.max(0, Dimensions.get('window').height - layout.height),
-      layout: {height: layout.height}
-    })
+    this.setState({layout: {height: layout.height}})
 
   render() {
     const {style, children, testID, behavior} = this.props

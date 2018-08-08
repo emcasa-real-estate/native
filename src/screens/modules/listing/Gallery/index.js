@@ -11,11 +11,18 @@ class ListingGalleryScreen extends PureComponent {
   static options = {
     layout: {
       orientation: ['portrait', 'landscape']
+    },
+    bottomTabs: {
+      visible: false,
+      animated: false
     }
   }
 
   render() {
-    const {listing: {data, loading}, onDismiss} = this.props
+    const {
+      listing: {data, loading},
+      onDismiss
+    } = this.props
 
     return (
       <Modal testID="@listing.Gallery">

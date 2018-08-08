@@ -11,10 +11,10 @@ export default {
   },
   topBar: {
     buttonColor: colors.blue.medium,
-    backButtonTitle: '',
     height: 50,
     elevation: 1,
     borderColor: colors.gray.light,
+    backButton: {title: ''},
     title: {
       fontSize: 18,
       fontWeight: '400',

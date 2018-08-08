@@ -9,6 +9,10 @@ export default class CalendlyScreen extends PureComponent {
   static options = {
     topBar: {
       title: {text: 'Agendamento online'}
+    },
+    bottomTabs: {
+      visible: false,
+      animated: false
     }
   }
 

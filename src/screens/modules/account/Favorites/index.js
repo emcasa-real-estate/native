@@ -19,7 +19,7 @@ class FavoritesScreen extends PureComponent {
   static options = {
     topBar: {
       title: {text: 'Meus imóveis favoritos'},
-      backButtonTitle: 'Favoritos'
+      backButton: {title: 'Favoritos'}
     }
   }
 

@@ -27,7 +27,7 @@ class ListingsFeedScreen extends PureComponent {
       drawBehind: true,
       translucent: true,
       height: 0,
-      backButtonTitle: 'Imóveis'
+      backButton: {title: 'Imóveis'}
     }
   }
 

@@ -27,7 +27,7 @@ class EditPropertiesScreen extends PureComponent {
   static options = {
     topBar: {
       title: {text: 'Dados principais'},
-      backButtonTitle: ''
+      backButton: { title: '' }
     }
   }
 

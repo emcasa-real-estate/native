@@ -21,7 +21,7 @@ class AccountMenuScreen extends PureComponent {
       visible: false,
       drawBehind: true,
       height: 0,
-      backButtonTitle: 'Perfil'
+      backButton: {title: 'Perfil'}
     },
     bottomTab: {
       title: 'Perfil'

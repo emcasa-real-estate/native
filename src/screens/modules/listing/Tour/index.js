@@ -12,6 +12,10 @@ class ListingTourScreen extends PureComponent {
   static options = {
     layout: {
       orientation: ['portrait', 'landscape']
+    },
+    bottomTabs: {
+      visible: false,
+      animated: false
     }
   }
 
@@ -20,7 +24,10 @@ class ListingTourScreen extends PureComponent {
   onLayout = ({nativeEvent: {layout}}) => this.setState({layout})
 
   render() {
-    const {listing: {data, loading}, onDismiss} = this.props
+    const {
+      listing: {data, loading},
+      onDismiss
+    } = this.props
     const {layout} = this.state
 
     return (

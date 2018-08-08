@@ -7,7 +7,6 @@ import {
   StyleSheet,
   Dimensions
 } from 'react-native'
-import KeyboardManager from 'react-native-keyboard-manager'
 
 import * as colors from '@/assets/colors'
 
@@ -58,14 +57,6 @@ export default class Body extends PureComponent {
     return null
   }
 
-  reloadKeyboardLayout = Platform.OS === 'ios'
-    ? () => KeyboardManager.reloadLayoutIfNeeded()
-    : () => null
-
-  onLayout = () => {
-    this.reloadKeyboardLayout()
-  }
-
   renderOverlay() {
     const {children, layout} = this.state
     return (
@@ -87,7 +78,6 @@ export default class Body extends PureComponent {
       <ViewComponent
         testID={testID}
         style={[styles.container, style]}
-        onLayout={this.onLayout}
         {...props}
       >
         {loading && this.renderOverlay()}

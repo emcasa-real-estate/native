@@ -13,8 +13,6 @@ target 'EmCasa' do
   pod 'FBSDKLoginKit'
   pod 'FBSDKShareKit'
 
-  pod 'IQKeyboardManager'
-
   target 'EmCasaTests' do
     inherit! :search_paths
     # Pods for testing

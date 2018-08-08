@@ -78,7 +78,6 @@
     "react-native-fontawesome-pro": "^1.0.12",
     "react-native-google-places-autocomplete": "FaridSafi/react-native-google-places-autocomplete",
     "react-native-image-picker": "^0.26.10",
-    "react-native-keyboard-manager": "^4.0.13-9",
     "react-native-keyboard-spacer": "^0.4.1",
     "react-native-maps": "^0.20.1",
     "react-native-maps-super-cluster": "^1.4.1",

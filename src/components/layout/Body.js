@@ -3,7 +3,6 @@ import {
   View,
   ScrollView,
   ActivityIndicator,
-  Platform,
   StyleSheet,
   Dimensions
 } from 'react-native'

@@ -1,14 +1,11 @@
 import {Navigation} from 'react-native-navigation'
 
-import {withProvider} from '@/containers/Provider'
-import bottomTabs from './tabs'
 import defaultOptions from './options'
-import screens from './modules/screens'
+import bottomTabs from './modules/tabs'
+import {registerScreens} from './modules/screens'
 
-export default function registerScreens() {
-  screens.map((Screen) =>
-    Navigation.registerComponent(Screen.screenName, () => withProvider(Screen))
-  )
+export default function init() {
+  registerScreens()
   Navigation.events().registerAppLaunchedListener(() => {
     Navigation.setRoot({
       root: {

@@ -1,6 +1,6 @@
-import * as listingForm from './modules/listingForm/screens'
-import * as listings from './modules/listings/screens'
-import * as account from './modules/account/screens'
+import * as listings from '@/screens/modules/listings/screens'
+import * as account from '@/screens/modules/account/screens'
+import {AuthTab, NewListingTab} from './screens'
 
 export const TABS = {
   listings: {
@@ -13,7 +13,7 @@ export const TABS = {
     }
   },
   newListing: {
-    name: listingForm.Address.screenName,
+    name: NewListingTab.screenName,
     options: {
       bottomTab: {
         text: 'Anuncie',
@@ -31,7 +31,7 @@ export const TABS = {
     }
   },
   account: {
-    name: 'account',
+    name: AuthTab.screenName,
     options: {
       bottomTab: {
         text: 'Perfil',

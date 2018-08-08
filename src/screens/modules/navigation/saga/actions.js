@@ -1,7 +1,7 @@
 import {Navigation} from 'react-native-navigation'
 import {all, takeEvery} from 'redux-saga/effects'
 
-import {TABS} from '@/screens/tabs'
+import {TABS} from '@/screens/modules/tabs'
 import * as actions from '../index'
 
 function switchTab({tab: name}) {

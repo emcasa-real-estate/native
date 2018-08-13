@@ -1,10 +1,12 @@
 import faker from 'faker'
 import Image from './Image'
+import Address from './Address'
 import Listing from './Listing'
 import ListingIndex from './ListingIndex'
 
 export default {
   Image,
+  Address,
   Listing,
   ListingIndex,
   ID: () => String(faker.random.number()),

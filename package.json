@@ -3,9 +3,7 @@
   "version": "1.2.0",
   "private": true,
   "rnpm": {
-    "assets": [
-      "./src/assets/fonts"
-    ]
+    "assets": ["./src/assets/fonts"]
   },
   "scripts": {
     "prepare": "patch-package",
@@ -18,7 +16,7 @@
     "log-ios": "react-native log-ios",
     "test": "jest --config __test__/jest.config.js",
     "build_e2e": "NODE_ENV=e2e scripts/env detox build -c ios.debug",
-    "test_server": "__e2e__/server/run",
+    "test_server": "babel-node __e2e__/server/run.js",
     "e2e": "detox test -c ios.debug --platform ios"
   },
   "detox": {
@@ -27,7 +25,8 @@
     "runner-config": "./__e2e__/jest.config.js",
     "configurations": {
       "ios.debug": {
-        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app",
+        "binaryPath":
+          "ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app",
         "build": "scripts/ios/build.sh",
         "type": "ios.simulator",
         "name": "iPhone 6"
@@ -76,7 +75,8 @@
     "react-native-fbsdk": "^0.7.0",
     "react-native-firebase": "^4.2.0",
     "react-native-fontawesome-pro": "^1.0.12",
-    "react-native-google-places-autocomplete": "FaridSafi/react-native-google-places-autocomplete",
+    "react-native-google-places-autocomplete":
+      "FaridSafi/react-native-google-places-autocomplete",
     "react-native-image-picker": "^0.26.10",
     "react-native-keyboard-manager": "^4.0.13-7",
     "react-native-keyboard-spacer": "^0.4.1",

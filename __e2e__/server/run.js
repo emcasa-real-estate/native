@@ -1,4 +1,5 @@
 #!/usr/bin/env babel-node
+/* eslint-disable no-console */
 import {promisify} from 'util'
 import express from 'express'
 import {ApolloServer} from 'apollo-server-express'

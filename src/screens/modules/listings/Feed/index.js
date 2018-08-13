@@ -28,13 +28,14 @@ class ListingsFeedScreen extends PureComponent {
       translucent: true,
       height: 0,
       backButton: {title: 'Imóveis'}
+    },
+    bottomTabs: {
+      visible: true
     }
   }
 
   onLoadMore = () => {
-    const {
-      listingsFeed: {loading, fetchMore}
-    } = this.props
+    const {listingsFeed: {loading, fetchMore}} = this.props
     if (!loading) fetchMore()
   }
 
@@ -66,9 +67,7 @@ class ListingsFeedScreen extends PureComponent {
   }
 
   render() {
-    const {
-      listingsFeed: {loading, data, remainingCount}
-    } = this.props
+    const {listingsFeed: {loading, data, remainingCount}} = this.props
     return (
       <Shell testID="@listings.Feed">
         <Header>

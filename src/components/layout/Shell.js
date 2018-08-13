@@ -1,5 +1,5 @@
-import {PureComponent} from 'react'
-import {View, KeyboardAvoidingView} from 'react-native'
+import React, {PureComponent} from 'react'
+import {View, Keyboard, KeyboardAvoidingView} from 'react-native'
 
 export default class Shell extends PureComponent {
   static defaultProps = {
@@ -7,15 +7,33 @@ export default class Shell extends PureComponent {
   }
 
   state = {
+    keyboardVisible: false,
     offset: 63
+  }
+
+  keyboardAvoidingView = React.createRef()
+
+  componentDidMount() {
+    this.keyboardListener = Keyboard.addListener(
+      'keyboardDidHide',
+      this.onKeyboardHide
+    )
+  }
+
+  componentWillUnmount() {
+    this.keyboardListener.remove()
   }
 
   onLayout = ({nativeEvent: {layout}}) =>
     this.setState({layout: {height: layout.height}})
+  // Reset KeyboardAvoidingView padding when keyboard is hidden
+  onKeyboardHide = () => {
+    this.keyboardAvoidingView.current._onKeyboardChange()
+  }
 
   render() {
     const {style, children, testID, behavior} = this.props
-    const {offset, layout} = this.state
+    const {offset, layout, keyboardVisible} = this.state
     return (
       <View
         testID={testID}
@@ -23,7 +41,8 @@ export default class Shell extends PureComponent {
         onLayout={this.onLayout}
       >
         <KeyboardAvoidingView
-          style={[{flex: 1}, style]}
+          ref={this.keyboardAvoidingView}
+          style={[{flex: 1}, style, !keyboardVisible && layout]}
           keyboardVerticalOffset={offset}
           behavior={behavior !== 'none' ? behavior : undefined}
           enabled={behavior !== 'none'}

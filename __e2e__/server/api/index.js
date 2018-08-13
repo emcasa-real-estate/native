@@ -11,7 +11,8 @@ export default async function restMiddleware(req, res, next) {
     MOCKS_DIR,
     `${req.path}/${req.method.toLowerCase()}.json`
   )
-  if (!fs.existsSync(fileName)) next()
-  const data = await read(fileName)
-  res.status(200).json(JSON.parse(data))
+  if (fs.existsSync(fileName)) {
+    const data = await read(fileName)
+    res.status(200).json(JSON.parse(data))
+  } else next()
 }

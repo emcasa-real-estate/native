@@ -13,8 +13,16 @@ const app = express()
 const listen = promisify((port, fun) => app.listen(port, fun))
 
 async function start() {
-  app.use('/', apiMiddleware)
+  app.use((req, res, next) => {
+    console.log(`[${req.method}] ${req.path}`)
+    next()
+  })
   await applyApolloMiddleware(app)
+  app.use('/', apiMiddleware)
+  app.use((req) => {
+    console.log(`Couldn't respond to ${req.url}`)
+    if (req.body) console.log('Request body:', req.body)
+  })
   await listen(PORT)
   console.log(`Mock server is listening on port ${PORT}`)
 }

@@ -4,11 +4,11 @@ configurations:
   - &nodejs
     <<: *default
     docker:
-    - image: circleci/ruby:2.4-node
+      - image: circleci/ruby:2.4-node
   - &android
     <<: *default
     docker:
-    - image: circleci/android:api-26-node8-alpha
+      - image: circleci/android:api-26-node8-alpha
   - &macos
     <<: *default
     macos:
@@ -19,47 +19,39 @@ aliases:
   # restore caches
   - &restore-node-modules
     keys:
-    - v1-node-modules-{{ checksum "package.json" }}
+      - v1-node-modules-{{ checksum "package.json" }}
   - &restore-gems
     keys:
-    - v1-gems-{{ checksum "Gemfile.lock" }}
+      - v1-gems-{{ checksum "Gemfile.lock" }}
   - &restore-gradle
     keys:
-    - v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
+      - v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
   - &restore-cocoapods
     keys:
-    - v1-cocoapods-{{ checksum "ios/Podfile" }}
-  - &restore-mix
-    keys:
-    - v1-mix-{{ checksum "backend/mix.lock" }}
+      - v1-cocoapods-{{ checksum "ios/Podfile" }}
   - &restore-homebrew
     keys:
-    - v1-brew-{{ arch }}-{{ .Branch }}
-    # save caches
+      - v1-brew-{{ arch }}-{{ .Branch }}
+      # save caches
   - &cache-node-modules
     paths:
-    - node_modules
+      - node_modules
     key: v1-node-modules-{{ checksum "package.json" }}
   - &cache-gems
     paths:
-    - vendor/bundle
+      - vendor/bundle
     key: v1-gems-{{ checksum "Gemfile.lock" }}
   - &cache-gradle
     paths:
-    - ~/.gradle
+      - ~/.gradle
     key: v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
   - &cache-cocoapods
     paths:
-    - ~/.cocoapods
+      - ~/.cocoapods
     key: v1-cocoapods-{{ checksum "ios/Podfile" }}
-  - &cache-mix
-    paths:
-    - backend/deps
-    - backend/_build
-    key: v1-mix-{{ checksum "backend/mix.lock" }}
   - &cache-homebrew
     paths:
-    - /usr/local/Homebrew
+      - /usr/local/Homebrew
     key: v1-brew-{{ arch }}-{{ .Branch }}
     # install dependencies
   - &install-sdkmanager
@@ -72,28 +64,6 @@ aliases:
     command: bundle check || bundle install --path vendor/bundle
   - &install-cocoapods
     command: cd ios && pod install
-  - &install-mix
-    command: |-
-      cp __e2e__/server/config/* backend/config
-      cp __e2e__/server/config/e2e.secret.exs backend/config/dev.secret.exs
-      cd backend && mix deps.get
-  - &install-backend-osx
-    command: |-
-      brew install elixir postgresql
-      brew services start postgresql
-      sleep 30
-      createdb `whoami` -U `whoami`
-      psql -U `whoami` -c "create role postgres with superuser createdb login password 'postgres';"
-      mix local.hex --force
-      mix local.rebar --force
-  - &install-backend-linux
-    command: |-
-      wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
-      sudo dpkg -i erlang-solutions_1.0_all.deb
-      sudo apt-get update
-      sudo apt-get -y -qq install elixir
-      mix local.hex --force
-      mix local.rebar --force
   - &install-detox-osx
     command: |-
       brew tap wix/brew
@@ -163,83 +133,77 @@ jobs:
   checkout:
     <<: *nodejs
     steps:
-    - checkout
-    - run: git submodule update --init
-    - run: sudo apt-get -y -qq install awscli
-    - run: *install-backend-linux
-    - restore_cache: *restore-mix
-    - restore_cache: *restore-node-modules
-    - restore_cache: *restore-gems
-    - run: *install-node-modules
-    - run: *install-gems
-    - run: *install-mix
-    - run: mkdir -p tmp/logs tmp/screenshots tmp/.secrets
-    - run: aws s3 sync $AWS_SECRETS_BUCKET ~/emcasa/tmp/.secrets
-    - save_cache: *cache-mix
-    - save_cache: *cache-node-modules
-    - save_cache: *cache-gems
-    - persist_to_workspace:
-        root: .
-        paths: .
+      - checkout
+      - run: git submodule update --init
+      - run: sudo apt-get -y -qq install awscli
+      - restore_cache: *restore-node-modules
+      - restore_cache: *restore-gems
+      - run: *install-node-modules
+      - run: *install-gems
+      - run: mkdir -p tmp/logs tmp/screenshots tmp/.secrets
+      - run: aws s3 sync $AWS_SECRETS_BUCKET ~/emcasa/tmp/.secrets
+      - save_cache: *cache-node-modules
+      - save_cache: *cache-gems
+      - persist_to_workspace:
+          root: .
+          paths: .
   # unit tests
   test:
     <<: *nodejs
     steps:
-    - attach_workspace:
-        at: ~/emcasa
-    - run: yarn test
+      - attach_workspace:
+          at: ~/emcasa
+      - run: yarn test
   # e2e tests
   e2e_ios:
     <<: *macos
     environment:
       API_URL: http://localhost:4000
       NODE_ENV: e2e
-      MIX_ENV: e2e
       CLEANUP: yes
       SCREENSHOT: yes
       PGUSER: postgres
       PGPASSWORD: postgres
     steps:
-    - attach_workspace:
-        at: ~/emcasa
-    - restore_cache: *restore-cocoapods
-    - restore_cache: *restore-homebrew
-    - run:
-        name: Brew update
-        command: |-
-          brew update
-          brew upgrade python
-    - run: *install-backend-osx
-    - run: *install-detox-osx
-    - run: *install-cocoapods
-    - save_cache: *cache-cocoapods
-    - save_cache: *cache-homebrew
-    - run: xcrun instruments -w "iPhone 6 (11.2)" || true
-    - run:
-        name: Start test server
-        command: yarn test_server
-        background: true
-    - run:
-        name: Start bundler
-        command: yarn start
-        background: true
-    - run: yarn build_e2e
-    - run: |-
-        xcrun simctl install "iPhone 6" ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app
-        xcrun simctl launch "iPhone 6" com.EmCasa.native-debug && sleep 5
-    - run: yarn e2e --debug-synchronization 10000
-    - store_artifacts:
-        path: tmp/screenshots
-        destination: screenshots
+      - attach_workspace:
+          at: ~/emcasa
+      - restore_cache: *restore-cocoapods
+      - restore_cache: *restore-homebrew
+      - run:
+          name: Brew update
+          command: |-
+            brew update
+            brew upgrade python
+      - run: *install-detox-osx
+      - run: *install-cocoapods
+      - save_cache: *cache-cocoapods
+      - save_cache: *cache-homebrew
+      - run: xcrun instruments -w "iPhone 6 (11.2)" || true
+      - run:
+          name: Start test server
+          command: yarn test_server
+          background: true
+      - run:
+          name: Start bundler
+          command: yarn start
+          background: true
+      - run: yarn build_e2e
+      - run: |-
+          xcrun simctl install "iPhone 6" ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app
+          xcrun simctl launch "iPhone 6" com.EmCasa.native-debug && sleep 5
+      - run: yarn e2e --debug-synchronization 10000
+      - store_artifacts:
+          path: tmp/screenshots
+          destination: screenshots
   build_android:
     <<: *android
     steps:
-    - attach_workspace:
-        at: ~/emcasa
-    - restore_cache: *restore-gradle
-    - run: *install-sdkmanager
-    - run: export TERM=xterm && cd android && ./gradlew assembleDebug
-    - save_cache: *cache-gradle
+      - attach_workspace:
+          at: ~/emcasa
+      - restore_cache: *restore-gradle
+      - run: *install-sdkmanager
+      - run: export TERM=xterm && cd android && ./gradlew assembleDebug
+      - save_cache: *cache-gradle
   # staging deploy
   deploy_staging_ios:
     <<: *macos
@@ -251,26 +215,26 @@ jobs:
       CODESIGN_PROFILE: ad-hoc
       BUNDLE_IDENTIFIER_SUFFIX: -beta
     steps:
-    - attach_workspace:
-        at: ~/emcasa
-    - restore_cache: *restore-cocoapods
-    - run: *install-gems
-    - run: *install-cocoapods
-    - run: brew install pcre imagemagick
-    - run: *configure-version-staging
-    - run: *configure-release
-    - run: *configure-keychain
-    - run: *bump-ios
-    - run: cp ~/emcasa/tmp/.secrets/ios/GoogleService-Info.staging.plist ~/emcasa/ios/EmCasa/GoogleService-Info.plist
-    - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-ios-staging.png --platforms ios
-    - run: BUILD_CONFIGURATION=Beta .circleci/ios/build.sh
-    - run: .circleci/ios/sign.sh
-    - run: >-
-        bundle exec fastlane run crashlytics
-        ipa_path:"$PWD/ios/build/EmCasa-Beta.ipa"
-        api_token:"$FABRIC_API_KEY"
-        build_secret:"$FABRIC_BUILD_SECRET"
-        groups:"$TESTER_GROUPS"
+      - attach_workspace:
+          at: ~/emcasa
+      - restore_cache: *restore-cocoapods
+      - run: *install-gems
+      - run: *install-cocoapods
+      - run: brew install pcre imagemagick
+      - run: *configure-version-staging
+      - run: *configure-release
+      - run: *configure-keychain
+      - run: *bump-ios
+      - run: cp ~/emcasa/tmp/.secrets/ios/GoogleService-Info.staging.plist ~/emcasa/ios/EmCasa/GoogleService-Info.plist
+      - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-ios-staging.png --platforms ios
+      - run: BUILD_CONFIGURATION=Beta .circleci/ios/build.sh
+      - run: .circleci/ios/sign.sh
+      - run: >-
+          bundle exec fastlane run crashlytics
+          ipa_path:"$PWD/ios/build/EmCasa-Beta.ipa"
+          api_token:"$FABRIC_API_KEY"
+          build_secret:"$FABRIC_BUILD_SECRET"
+          groups:"$TESTER_GROUPS"
   deploy_staging_android:
     <<: *android
     environment:
@@ -279,25 +243,25 @@ jobs:
       MESSENGER_RECEIVER_ID: 16
       NODE_ENV: production
     steps:
-    - attach_workspace:
-        at: ~/emcasa
-    - restore_cache: *restore-gradle
-    - run: *install-gems
-    - run: *install-sdkmanager
-    - run: sudo apt-get install -y -qq imagemagick
-    - run: *configure-version-staging
-    - run: *configure-release
-    - run: *bump-android
-    - run: *bundle-android
-    - run: cp ~/emcasa/tmp/.secrets/android/google-services.staging.json ~/emcasa/android/app/google-services.json
-    - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-android-staging.png --platforms android
-    - run: export TERM=xterm && cd android && ./gradlew assembleStaging
-    - run: >-
-        bundle exec fastlane run crashlytics
-        apk_path:"$PWD/android/app/build/outputs/apk/staging/app-staging.apk"
-        api_token:"$FABRIC_API_KEY"
-        build_secret:"$FABRIC_BUILD_SECRET"
-        groups:"$TESTER_GROUPS"
+      - attach_workspace:
+          at: ~/emcasa
+      - restore_cache: *restore-gradle
+      - run: *install-gems
+      - run: *install-sdkmanager
+      - run: sudo apt-get install -y -qq imagemagick
+      - run: *configure-version-staging
+      - run: *configure-release
+      - run: *bump-android
+      - run: *bundle-android
+      - run: cp ~/emcasa/tmp/.secrets/android/google-services.staging.json ~/emcasa/android/app/google-services.json
+      - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-android-staging.png --platforms android
+      - run: export TERM=xterm && cd android && ./gradlew assembleStaging
+      - run: >-
+          bundle exec fastlane run crashlytics
+          apk_path:"$PWD/android/app/build/outputs/apk/staging/app-staging.apk"
+          api_token:"$FABRIC_API_KEY"
+          build_secret:"$FABRIC_BUILD_SECRET"
+          groups:"$TESTER_GROUPS"
   # production deploy
   deploy_production_ios:
     <<: *macos
@@ -308,27 +272,27 @@ jobs:
       NODE_ENV: production
       CODESIGN_PROFILE: app-store
     steps:
-    - attach_workspace:
-        at: ~/emcasa
-    - restore_cache: *restore-cocoapods
-    - run: *install-gems
-    - run: *install-cocoapods
-    - run: brew install pcre imagemagick
-    - run: *configure-release
-    - run: *configure-keychain
-    - run: *bump-ios
-    - run: cp ~/emcasa/tmp/.secrets/ios/GoogleService-Info.production.plist ~/emcasa/ios/EmCasa/GoogleService-Info.plist
-    - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-ios.png --platforms ios
-    - run: BUILD_CONFIGURATION=Release .circleci/ios/build.sh
-    - run: .circleci/ios/sign.sh
-    - run: >-
-        bundle exec fastlane deliver
-        --skip_metadata --skip_screenshots
-        --ipa "$PWD/ios/build/EmCasa.ipa"
-        --app $APPLE_APP_ID
-        --username $APPLE_ID
-        --app_version $VERSION_NAME
-        --app_identifier com.EmCasa.native
+      - attach_workspace:
+          at: ~/emcasa
+      - restore_cache: *restore-cocoapods
+      - run: *install-gems
+      - run: *install-cocoapods
+      - run: brew install pcre imagemagick
+      - run: *configure-release
+      - run: *configure-keychain
+      - run: *bump-ios
+      - run: cp ~/emcasa/tmp/.secrets/ios/GoogleService-Info.production.plist ~/emcasa/ios/EmCasa/GoogleService-Info.plist
+      - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-ios.png --platforms ios
+      - run: BUILD_CONFIGURATION=Release .circleci/ios/build.sh
+      - run: .circleci/ios/sign.sh
+      - run: >-
+          bundle exec fastlane deliver
+          --skip_metadata --skip_screenshots
+          --ipa "$PWD/ios/build/EmCasa.ipa"
+          --app $APPLE_APP_ID
+          --username $APPLE_ID
+          --app_version $VERSION_NAME
+          --app_identifier com.EmCasa.native
   deploy_production_android:
     <<: *android
     environment:
@@ -337,53 +301,53 @@ jobs:
       MESSENGER_RECEIVER_ID: 212
       NODE_ENV: production
     steps:
-    - attach_workspace:
-        at: ~/emcasa
-    - restore_cache: *restore-gradle
-    - run: *install-gems
-    - run: *install-sdkmanager
-    - run: sudo apt-get install -y -qq imagemagick
-    - run: *configure-release
-    - run: *bump-android
-    - run: *bundle-android
-    - run: cp ~/emcasa/tmp/.secrets/android/google-services.production.json ~/emcasa/android/app/google-services.json
-    - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-android.png --platforms android
-    - run: export TERM=xterm && cd android && ./gradlew assembleRelease
-    - run: export TERM=xterm && cd android && ./gradlew publishApkRelease
+      - attach_workspace:
+          at: ~/emcasa
+      - restore_cache: *restore-gradle
+      - run: *install-gems
+      - run: *install-sdkmanager
+      - run: sudo apt-get install -y -qq imagemagick
+      - run: *configure-release
+      - run: *bump-android
+      - run: *bundle-android
+      - run: cp ~/emcasa/tmp/.secrets/android/google-services.production.json ~/emcasa/android/app/google-services.json
+      - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-android.png --platforms android
+      - run: export TERM=xterm && cd android && ./gradlew assembleRelease
+      - run: export TERM=xterm && cd android && ./gradlew publishApkRelease
 
 workflows:
   version: 2
   commit:
     jobs:
-    - checkout
-    - test:
-        requires:
-        - checkout
-    - e2e_ios:
-        requires:
-        - checkout
-    - build_android:
-        requires:
-        - checkout
-    - deploy_staging:
-        type: approval
-        requires:
-        - e2e_ios
-        - build_android
-    - deploy_production:
-        type: approval
-        requires:
-        - e2e_ios
-        - build_android
-    - deploy_staging_ios:
-        requires:
-        - deploy_staging
-    - deploy_staging_android:
-        requires:
-        - deploy_staging
-    - deploy_production_ios:
-        requires:
-        - deploy_production
-    - deploy_production_android:
-        requires:
-        - deploy_production
+      - checkout
+      - test:
+          requires:
+            - checkout
+      - e2e_ios:
+          requires:
+            - checkout
+      - build_android:
+          requires:
+            - checkout
+      - deploy_staging:
+          type: approval
+          requires:
+            - e2e_ios
+            - build_android
+      - deploy_production:
+          type: approval
+          requires:
+            - e2e_ios
+            - build_android
+      - deploy_staging_ios:
+          requires:
+            - deploy_staging
+      - deploy_staging_android:
+          requires:
+            - deploy_staging
+      - deploy_production_ios:
+          requires:
+            - deploy_production
+      - deploy_production_android:
+          requires:
+            - deploy_production

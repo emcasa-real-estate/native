@@ -8,5 +8,5 @@ export default () => ({
   neighborhood: faker.address.state,
   postalCode: faker.address.zipCode,
   street: faker.address.streetName,
-  streetNumber: () => faker.random.number(100, 600).toString()
+  streetNumber: () => faker.random.number(1000).toString()
 })

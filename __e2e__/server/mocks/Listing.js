@@ -17,7 +17,7 @@ const matterportCode = [
 
 export default () => ({
   type: () => faker.random.arrayElement(['Casa', 'Apartamento', 'Cobertura']),
-  price: () => faker.random.number(500, 3000) * 1000,
+  price: () => faker.random.number({min: 500, max: 3000}) * 1000000,
   matterportCode: () => faker.random.arrayElement(matterportCode),
   images: () => new MockList([2, 12]),
   isActive: true

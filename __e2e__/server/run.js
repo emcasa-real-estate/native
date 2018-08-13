@@ -19,9 +19,10 @@ async function start() {
   })
   await applyApolloMiddleware(app)
   app.use('/', apiMiddleware)
-  app.use((req) => {
-    console.log(`Couldn't respond to ${req.url}`)
+  app.use((req, res) => {
+    console.log(`Can't respond to ${req.url}`)
     if (req.body) console.log('Request body:', req.body)
+    res.status(404).send()
   })
   await listen(PORT)
   console.log(`Mock server is listening on port ${PORT}`)

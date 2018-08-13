@@ -37,8 +37,14 @@ class LoginScreen extends PureComponent {
       componentId,
       params: {parentId}
     } = this.props
-    if (parentId) Navigation.popTo(parentId)
-    else Navigation.popToRoot(componentId)
+    console.log(componentId, parentId)
+    if (!parentId) {
+      Navigation.mergeOptions(componentId, {
+        bottomTabs: {
+          currentTabIndex: 0
+        }
+      })
+    } else Navigation.popTo(parentId)
   }
 
   componentDidDisappear() {

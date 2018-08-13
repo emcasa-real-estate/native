@@ -15,7 +15,7 @@ describe('auth/signUp', () => {
     await action.signUp({
       name: 'Test',
       email: 'test@example.com',
-      phone: '',
+      phone: '2199996666',
       password: 'passwd'
     })
     await waitFor(element(select.signUpScreen()))

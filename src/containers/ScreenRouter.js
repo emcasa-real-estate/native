@@ -6,12 +6,20 @@ import ScreenDelegator from './ScreenDelegator'
 class ScreenRouter extends PureComponent {
   screenRef = React.createRef()
 
+  state = {}
+
+  constructor(props) {
+    super(props)
+    this.state.Screen = props.Screen
+  }
+
   getWrappedInstance() {
     return this.screenRef.current
   }
 
   updateOptions() {
-    const {componentId, options, Screen} = this.props
+    const {componentId} = this.props
+    const {Screen, options} = this.state
     Navigation.mergeOptions(
       componentId,
       Object.assign({}, options, Screen.options)
@@ -23,11 +31,17 @@ class ScreenRouter extends PureComponent {
   }
 
   componentDidUpdate(prev) {
-    if (prev.Screen !== this.props.Screen) this.updateOptions()
+    const {Screen, options} = this.props
+    if (prev.Screen !== Screen) {
+      // Skip one cycle to update the screen
+      this.setState({Screen, options}, () => this.updateOptions())
+    }
   }
 
   render() {
-    const {Screen, ...props} = this.props
+    const {...props} = this.props
+    const {Screen} = this.state
+    delete props.Screen
     return <Screen ref={this.screenRef} {...props} />
   }
 }

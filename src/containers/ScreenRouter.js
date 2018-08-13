@@ -1,7 +1,9 @@
 import React, {PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
 
-export default class ScreenRouter extends PureComponent {
+import ScreenDelegator from './ScreenDelegator'
+
+class ScreenRouter extends PureComponent {
   screenRef = React.createRef()
 
   getWrappedInstance() {
@@ -29,3 +31,5 @@ export default class ScreenRouter extends PureComponent {
     return <Screen ref={this.screenRef} {...props} />
   }
 }
+
+export default ScreenDelegator(ScreenRouter)

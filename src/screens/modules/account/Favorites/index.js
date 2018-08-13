@@ -23,6 +23,10 @@ class FavoritesScreen extends PureComponent {
     }
   }
 
+  componentDidMount() {
+    Navigation.mergeOptions(this.props.componentId, this.constructor.options)
+  }
+
   onSelect = (id) =>
     Navigation.push(this.props.componentId, {
       component: {

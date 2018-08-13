@@ -15,12 +15,16 @@ export default {
     elevation: 1,
     borderColor: colors.gray.light,
     backButton: {title: ''},
+    visible: true,
     title: {
       fontSize: 18,
       fontWeight: '400',
       color: colors.gray.dark,
       fontFamily: OpenSans
     }
+  },
+  bottomTabs: {
+    visible: true
   },
   bottomTab: {
     badgeColor: colors.blue.medium,

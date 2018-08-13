@@ -16,7 +16,7 @@ export const TABS = {
     name: NewListingTab.screenName,
     options: {
       bottomTab: {
-        text: 'Anuncie',
+        text: 'Anunciar',
         icon: require('@/assets/img/tabs/tag.png')
       }
     }

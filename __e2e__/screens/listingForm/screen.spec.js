@@ -1,25 +1,20 @@
-import {navigateToLogin, login} from '../auth/interactions'
+import {login} from '../auth/interactions'
 import {loginScreen} from '../auth/selectors'
-import {backButton} from '../shared/selectors'
+import {addressScreen} from './selectors'
 import * as actions from './interactions'
 
 describe('listingForm', () => {
-  context('unauthenticated', () => {
-    beforeAll(actions.navigate)
+  beforeAll(actions.navigate)
 
-    it('redirects to the login page', async () => {
-      await expect(element(loginScreen())).toBeVisible()
-      await element(backButton()).tap()
-    })
+  it('redirects to the login page', async () => {
+    await expect(element(loginScreen())).toBeVisible()
   })
 
-  context('authenticated', () => {
-    beforeAll(async () => {
-      await navigateToLogin()
-      await login({email: 'foo@example.com', password: 'password'})
-      await actions.navigate()
-    })
-    require('./Address')
-    require('./Properties')
+  it('redirects to new listing screen after user logs in', async () => {
+    await login({email: 'test@example.com', password: 'passwd'})
+    await expect(element(addressScreen())).toBeVisible()
   })
+
+  require('./Address')
+  require('./Properties')
 })

@@ -37,29 +37,9 @@ global.screenShot = async (fileName = timestamp()) => {
   }
 }
 
-async function resetDatabase() {
-  try {
-    await exec(
-      [
-        'mix do ecto.drop, ecto.drop, ecto.create, ecto.migrate',
-        'mix run priv/repo/seeds.e2e.exs'
-      ].join('&&'),
-      {
-        cwd: path.resolve(__dirname, '../backend'),
-        env: {MIX_ENV: 'e2e'}
-      }
-    )
-    console.log('Database has been reset.')
-  } catch (error) {
-    console.error(error.message)
-  }
-}
-
 jest.setTimeout(180000)
 
 beforeAll(() => detox.init(pkg.detox))
-
-if (toBool(process.env.CLEANUP)) beforeAll(() => resetDatabase())
 
 if (toBool(process.env.SCREENSHOT)) afterEach(() => screenShot())
 

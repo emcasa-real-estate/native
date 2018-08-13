@@ -160,10 +160,7 @@ jobs:
     environment:
       API_URL: http://localhost:4000
       NODE_ENV: e2e
-      CLEANUP: yes
       SCREENSHOT: yes
-      PGUSER: postgres
-      PGPASSWORD: postgres
     steps:
       - attach_workspace:
           at: ~/emcasa

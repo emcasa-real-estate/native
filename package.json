@@ -18,7 +18,7 @@
     "log-ios": "react-native log-ios",
     "test": "jest --config __test__/jest.config.js",
     "build_e2e": "NODE_ENV=e2e scripts/env detox build -c ios.debug",
-    "record": "REPLAY_MODE=record scripts/server/start.js",
+    "test_server": "babel-node __e2e__/server/run.js",
     "e2e": "detox test -c ios.debug --platform ios"
   },
   "detox": {
@@ -102,6 +102,7 @@
   },
   "devDependencies": {
     "apollo-link-logger": "^1.2.2",
+    "apollo-server-express": "^2.0.0",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.3",
     "babel-jest": "^22.4.3",
@@ -113,20 +114,22 @@
     "babel-plugin-transform-inline-environment-variables": "^0.4.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react-native": "^4.0.0",
+    "body-parser": "^1.18.3",
     "detox": "^7.4.3",
     "express": "^4.16.3",
+    "faker": "^4.1.0",
+    "graphql-tools": "^3.1.1",
     "jest": "^22.4.3",
     "jest-plugin-context": "^2.9.0",
     "jest-react-native": "^18.0.0",
-    "node-cleanup": "^2.1.2",
+    "node-glob": "^1.2.0",
     "patch-package": "^5.1.1",
     "postinstall-prepare": "^1.0.1",
     "prettier": "^1.10.2",
     "react-test-renderer": "16.2.0",
     "redux-devtools-extension": "^2.13.5",
     "redux-logger": "^3.0.6",
-    "redux-mock-store": "^1.5.1",
-    "yakbak": "^3.0.0"
+    "redux-mock-store": "^1.5.1"
   },
   "optionalDependencies": {
     "app-icon": "^0.6.3",

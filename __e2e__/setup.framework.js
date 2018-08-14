@@ -1,8 +1,17 @@
+/* eslint-disable no-console */
 import path from 'path'
 import detox from 'detox'
-import {exec} from 'child_process'
+import {promisify} from 'util'
+import * as child_process from 'child_process'
 
 import pkg from '../package.json'
+
+const exec = promisify(child_process.exec)
+
+const toBool = (val) =>
+  ['true', 'yes', 'y'].findIndex(
+    (str) => val == str || val == str.toUpperCase()
+  ) !== -1
 
 const DEVICE_NAME = process.env.DEVICE_NAME || 'booted'
 const SCREENSHOT_PATH =
@@ -17,25 +26,21 @@ const timestamp = () => {
     .replace('@t', date.getTime())
 }
 
-global.screenShot = (fileName = timestamp()) =>
-  new Promise((resolve) =>
-    exec(
-      `xcrun simctl io "${DEVICE_NAME}" screenshot ${SCREENSHOT_PATH}/${fileName}.png`,
-      (error) => {
-        /* eslint-disable no-console */
-        if (error) console.error(error.message)
-        else
-          console.info(`Saved screenshot to ${SCREENSHOT_PATH}/${fileName}.png`)
-        resolve()
-        /* eslint-enable */
-      }
+global.screenShot = async (fileName = timestamp()) => {
+  try {
+    await exec(
+      `xcrun simctl io "${DEVICE_NAME}" screenshot ${SCREENSHOT_PATH}/${fileName}.png`
     )
-  )
+    console.info(`Saved screenshot to ${SCREENSHOT_PATH}/${fileName}.png`)
+  } catch (error) {
+    console.error(error.message)
+  }
+}
 
 jest.setTimeout(180000)
 
 beforeAll(() => detox.init(pkg.detox))
 
-afterEach(() => screenShot())
+if (toBool(process.env.SCREENSHOT)) afterEach(() => screenShot())
 
 afterAll(() => detox.cleanup())

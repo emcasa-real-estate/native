@@ -14,10 +14,9 @@ describe('listingForm', () => {
   })
 
   context('authenticated', () => {
-    //beforeAll(async () => device.reloadReactNative())
     beforeAll(async () => {
       await navigateToLogin()
-      await login({email: 'test@example.com', password: 'passwd'})
+      await login({email: 'foo@example.com', password: 'password'})
       await actions.navigate()
     })
     require('./Address')

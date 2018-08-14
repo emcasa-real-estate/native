@@ -19,7 +19,8 @@
     "test": "jest --config __test__/jest.config.js",
     "build_e2e": "NODE_ENV=e2e scripts/env detox build -c ios.debug",
     "test_server": "babel-node __e2e__/server/run.js",
-    "e2e": "detox test -c ios.debug --platform ios"
+    "e2e": "detox test -c ios.debug --platform ios",
+    "e2e:artifacts": "yarn e2e --artifacts-location tmp/detox/ --record-logs all --take-screenshots all"
   },
   "detox": {
     "specs": "__e2e__",
@@ -117,7 +118,7 @@
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
     "babel-preset-react-native": "^5.0.2",
     "body-parser": "^1.18.3",
-    "detox": "^7.4.3",
+    "detox": "^8.1.6",
     "express": "^4.16.3",
     "faker": "^4.1.0",
     "graphql-tools": "^3.1.1",

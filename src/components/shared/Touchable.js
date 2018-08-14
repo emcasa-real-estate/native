@@ -12,6 +12,7 @@ export default class Touchable extends PureComponent {
     const {onPress, children} = this.props
     return (
       <TouchableWithoutFeedback
+        touchableHandleStartShouldSetResponder={false}
         onPress={onPress}
         onPressIn={this.onHighlight(true)}
         onPressOut={this.onHighlight(false)}
@@ -22,8 +23,8 @@ export default class Touchable extends PureComponent {
   }
 }
 
-export const touchable = (Target) => ({onPress, ...props}) => (
-  <Touchable onPress={onPress}>
+export const touchable = (Target) => (props) => (
+  <Touchable onPress={props.onPress}>
     {(ctx) => <Target {...ctx} {...props} />}
   </Touchable>
 )

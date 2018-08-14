@@ -7,6 +7,7 @@ import Icon from '@/components/shared/Icon'
 import Price from '@/components/shared/Price'
 import Image from '@/components/listings/Image'
 import Gallery from '@/components/listings/Gallery'
+import {touchable} from '@/components/shared/Touchable'
 import styles, {iconColor} from './styles'
 
 function Button({children, icon, hitSlop, ...props}) {
@@ -118,4 +119,4 @@ ListingCard.defaultProps = {
   }
 }
 
-export default withFavoriteMutation(ListingCard)
+export default touchable(withFavoriteMutation(ListingCard))

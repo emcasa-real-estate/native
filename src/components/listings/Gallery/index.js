@@ -42,7 +42,9 @@ export default class ListingGallery extends PureComponent {
 
   onLayout = (e) => {
     const {position} = this.state
-    const {nativeEvent: {layout}} = e
+    const {
+      nativeEvent: {layout}
+    } = e
     const dimensions = {
       width: layout.width,
       height: layout.height
@@ -90,14 +92,19 @@ export default class ListingGallery extends PureComponent {
     if (Math.abs(index - position) > 2)
       return <View key={image.filename} style={this.imageLayout} />
     return (
-      <Image
+      <View
         key={`${index}.${image.filename}`}
-        style={[styles.image]}
-        resolution={scalable ? 4.5 : 1}
-        layout={scalable ? 'scalable' : undefined}
-        {...this.imageLayout}
-        {...image}
-      />
+        onStartShouldSetResponder={() => true}
+        onMoveShouldSetResponder={() => true}
+      >
+        <Image
+          style={[styles.image]}
+          resolution={scalable ? 4.5 : 1}
+          layout={scalable ? 'scalable' : undefined}
+          {...this.imageLayout}
+          {...image}
+        />
+      </View>
     )
   }
 

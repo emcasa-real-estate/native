@@ -51,7 +51,7 @@ function* initializePermission() {
 export default function* fcmSaga() {
   yield all([
     takeLatest(actions.REQUEST_PERMISSION, requestPermission),
-    takeLatest(actions.UPDATE_TOKEN, updateToken)
+    takeLatest(actions.UPDATE_TOKEN, updateToken),
     fork(initializePermission),
     fork(initializeToken)
   ])

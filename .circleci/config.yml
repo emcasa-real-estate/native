@@ -32,7 +32,7 @@ aliases:
   - &restore-homebrew
     keys:
       - v1-brew-{{ arch }}-{{ .Branch }}
-      # save caches
+  # save caches
   - &cache-node-modules
     paths:
       - node_modules
@@ -134,7 +134,6 @@ jobs:
     <<: *nodejs
     steps:
       - checkout
-      - run: git submodule update --init
       - run: sudo apt-get -y -qq install awscli
       - restore_cache: *restore-node-modules
       - restore_cache: *restore-gems
@@ -264,6 +263,7 @@ jobs:
     <<: *macos
     environment:
       API_URL: https://em-casa-backend.herokuapp.com
+      APOLLO_ENGINE_URL: https://em-casa-apollo-engine.herokuapp.com/graphql_api
       FRONTEND_URL: https://www.emcasa.com
       MESSENGER_RECEIVER_ID: 212
       NODE_ENV: production
@@ -294,6 +294,7 @@ jobs:
     <<: *android
     environment:
       API_URL: https://em-casa-backend.herokuapp.com
+      APOLLO_ENGINE_URL: https://em-casa-apollo-engine.herokuapp.com/graphql_api
       FRONTEND_URL: https://www.emcasa.com
       MESSENGER_RECEIVER_ID: 212
       NODE_ENV: production
@@ -337,14 +338,18 @@ workflows:
             - e2e_ios
             - build_android
       - deploy_staging_ios:
+          context: native-ios
           requires:
             - deploy_staging
       - deploy_staging_android:
+          context: native-android
           requires:
             - deploy_staging
       - deploy_production_ios:
+          context: native-ios
           requires:
             - deploy_production
       - deploy_production_android:
+          context: native-android
           requires:
             - deploy_production

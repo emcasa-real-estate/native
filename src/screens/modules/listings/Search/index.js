@@ -1,11 +1,12 @@
 import _ from 'lodash'
 import {PureComponent} from 'react'
-import {ScrollView} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import {updateFilters} from './module'
 import {getSearchFilters} from './module/selectors'
+import {Shell, Body, Footer} from '@/components/layout'
+import Button from '@/components/shared/Button'
 import Form from '@/components/listings/Search/Form'
 import HeaderButton from '@/screens/modules/shared/Header/TextButton'
 import Neighborhoods from './Neighborhoods'
@@ -114,13 +115,20 @@ export default class ListingSearchScreen extends PureComponent {
     const {options} = this.state
 
     return (
-      <ScrollView style={{flex: 1}}>
-        <Form
-          onChange={this.onChange}
-          onPressNeighborhoods={this.onPressNeighborhoods}
-          value={options}
-        />
-      </ScrollView>
+      <Shell>
+        <Body scroll>
+          <Form
+            onChange={this.onChange}
+            onPressNeighborhoods={this.onPressNeighborhoods}
+            value={options}
+          />
+        </Body>
+        <Footer style={{padding: 15}}>
+          <Button onPress={() => Navigation.pop(this.props.componentId)}>
+            Filtrar resultados
+          </Button>
+        </Footer>
+      </Shell>
     )
   }
 }

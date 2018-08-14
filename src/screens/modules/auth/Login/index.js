@@ -27,6 +27,7 @@ class LoginScreen extends PureComponent {
   }
 
   state = {
+    active: false,
     value: {}
   }
 
@@ -34,30 +35,24 @@ class LoginScreen extends PureComponent {
 
   returnToParentScreen() {
     const {
-      componentId,
       params: {parentId}
     } = this.props
-    console.log(componentId, parentId)
-    if (!parentId) {
-      Navigation.mergeOptions(componentId, {
-        bottomTabs: {
-          currentTabIndex: 0
-        }
-      })
-    } else Navigation.popTo(parentId)
+    if (parentId) Navigation.popTo(parentId)
   }
 
   componentDidDisappear() {
-    this.setState({value: undefined})
+    this.setState({value: undefined, active: false})
   }
 
   componentDidAppear() {
     this.props.reset()
+    this.setState({active: true})
   }
 
   componentDidUpdate(prev) {
     const {user} = this.props
-    if (user && !prev.user) this.returnToParentScreen()
+    const {active} = this.state
+    if (active && user && !prev.user) this.onSuccess()
   }
 
   onChange = (value) => this.setState({value})
@@ -68,6 +63,11 @@ class LoginScreen extends PureComponent {
     if (!loading && this.form.current.onValidate()) signIn(value)
   }
 
+  onSuccess = () => {
+    const {onLogin} = this.props.params
+    if (onLogin) onLogin()
+    this.returnToParentScreen()
+  }
   onSignUp = () => {
     const {componentId, params} = this.props
     Navigation.push(componentId, {

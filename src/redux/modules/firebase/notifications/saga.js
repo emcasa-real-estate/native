@@ -2,6 +2,8 @@ import {eventChannel} from 'redux-saga'
 import {all, call, put, fork, takeEvery} from 'redux-saga/effects'
 import Firebase from 'react-native-firebase'
 
+import {logEvent} from '@/redux/modules/firebase/analytics'
+
 import * as actions from './index'
 
 const notifications = Firebase.notifications()
@@ -22,10 +24,12 @@ const backgroundNotificationChannel = () =>
 
 function* notificationReceived({notification}) {
   yield put(actions.notificationReceived(notification))
+  logEvent('notification_received', {notification})
 }
 
 function* notificationOpened({notification, action}) {
   yield put(actions.notificationOpened(notification, action))
+  logEvent('notification_opened', {notification, action})
 }
 
 function* initialize() {

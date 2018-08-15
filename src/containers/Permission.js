@@ -5,22 +5,27 @@ import Permissions from 'react-native-permissions'
 export default class PermissionProvider extends PureComponent {
   state = {}
 
+  mounted = false
+
   componentDidMount() {
+    this.mounted = true
     this.initialRequest = this.onUpdatePermission()
     AppState.addEventListener('change', this.onAppStateChange)
   }
 
   componentWillUnmount() {
+    this.mounted = false
     AppState.removeEventListener('change', this.onAppStateChange)
   }
 
   onAppStateChange = (state) => {
-    if (state === 'active') this.onUpdatePermission()
+    if (state === 'active' && this.mounted) this.onUpdatePermission()
   }
 
   onUpdatePermission = async () => {
     const {permission, options} = this.props
     const response = await Permissions.check(permission, options)
+    if (!this.mounted) return
     // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
     this.setState({value: response})
     return response

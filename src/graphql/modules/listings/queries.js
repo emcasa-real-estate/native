@@ -24,7 +24,7 @@ export const GET_LISTINGS_FEED = gql`
   query listingsFeed(
     $exclude: [ID!]
     $pageSize: Int
-    $filters: ListingFilter!
+    $filters: ListingFilterInput!
   ) {
     listings(
       filters: $filters

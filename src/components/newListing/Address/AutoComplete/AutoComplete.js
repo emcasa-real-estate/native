@@ -46,6 +46,11 @@ const addressText = (place) => {
   }
 }
 
+const createSessionToken = (a) =>
+  a
+    ? (a ^ ((Math.random() * 16) >> (a / 4))).toString(16)
+    : ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, createSessionToken)
+
 export default class AutoComplete extends PureComponent {
   static defaultProps = {
     value: {}
@@ -54,7 +59,8 @@ export default class AutoComplete extends PureComponent {
   state = {
     text: '',
     active: false,
-    selection: {start: 0, end: 0}
+    selection: {start: 0, end: 0},
+    sessionToken: undefined
   }
 
   autoComplete = React.createRef()
@@ -64,6 +70,7 @@ export default class AutoComplete extends PureComponent {
   constructor(props) {
     super(props)
     if (props.value.text) this.state.text = props.value.text.value
+    this.state.sessionToken = createSessionToken()
   }
 
   get text() {
@@ -194,6 +201,7 @@ export default class AutoComplete extends PureComponent {
         filterReverseGeocodingByTypes={['geocode', 'street_address']}
         query={{
           key: GOOGLE_PLACES_API_KEY,
+          sessionToken: this.state.sessionToken,
           language: 'pt-BR',
           types: ['address'],
           components: {country: 'BR'}

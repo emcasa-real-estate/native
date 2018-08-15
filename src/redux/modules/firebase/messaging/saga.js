@@ -10,8 +10,6 @@ import {
 } from 'redux-saga/effects'
 import Firebase from 'react-native-firebase'
 
-import {logEvent} from '@/redux/modules/firebase/analytics'
-import {getUser} from '@/redux/modules/auth/selectors'
 import * as actions from './index'
 import {getToken} from './selectors'
 
@@ -21,9 +19,7 @@ const tokenRefreshChannel = () =>
   eventChannel((emit) => messaging.onTokenRefresh((token) => emit({token})))
 
 function* updateToken({token}) {
-  const _user = yield select(getUser)
-  const user = _user ? {id: _user.id, name: _user.name} : undefined
-  yield put(logEvent('debug_device_token_updated', {token, user}))
+  /* ... */
 }
 
 function* requestPermission() {
@@ -40,7 +36,7 @@ function* initializeToken() {
   let oldToken = yield select(getToken)
   const channel = tokenRefreshChannel()
   do {
-    // if (token !== currentToken)
+    if (token == oldToken) continue
     yield put(actions.updateToken(token))
     oldToken = token
   } while ((token = yield take(channel)))

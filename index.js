@@ -1,4 +1,7 @@
-import {YellowBox} from 'react-native'
+import 'moment/locale/pt-br'
+import moment from 'moment'
+import {YellowBox, Platform} from 'react-native'
+
 import initNavigation from '@/screens'
 
 // Temporary fix for
@@ -10,5 +13,7 @@ YellowBox.ignoreWarnings([
   'Warning: isMounted(...) is deprecated',
   'Remote debugger'
 ])
+
+moment.locale('pt-br')
 
 initNavigation()

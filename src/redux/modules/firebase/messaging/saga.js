@@ -37,10 +37,13 @@ function* requestPermission() {
 
 function* initializeToken() {
   let token = yield call(() => messaging.getToken())
-  const currentToken = yield select(getToken)
+  let oldToken = yield select(getToken)
   const channel = tokenRefreshChannel()
-  if (token !== currentToken) yield put(actions.updateToken(token))
-  while ((token = yield take(channel))) yield put(actions.updateToken(token))
+  do {
+    // if (token !== currentToken)
+    yield put(actions.updateToken(token))
+    oldToken = token
+  } while ((token = yield take(channel)))
 }
 
 function* initializePermission() {

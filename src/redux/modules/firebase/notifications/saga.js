@@ -24,12 +24,12 @@ const backgroundNotificationChannel = () =>
 
 function* notificationReceived({notification}) {
   yield put(actions.notificationReceived(notification))
-  logEvent('notification_received', {notification})
+  yield put(logEvent('notification_received', {notification}))
 }
 
 function* notificationOpened({notification, action}) {
   yield put(actions.notificationOpened(notification, action))
-  logEvent('notification_opened', {notification, action})
+  yield put(logEvent('notification_opened', {notification, action}))
 }
 
 function* initialize() {

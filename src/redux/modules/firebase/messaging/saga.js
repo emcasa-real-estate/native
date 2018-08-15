@@ -23,7 +23,7 @@ const tokenRefreshChannel = () =>
 function* updateToken({token}) {
   const _user = yield select(getUser)
   const user = _user ? {id: _user.id, name: _user.name} : undefined
-  logEvent('firebase_token_updated', {token, user})
+  yield put(logEvent('firebase_token_updated', {token, user}))
 }
 
 function* requestPermission() {

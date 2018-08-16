@@ -1,14 +1,12 @@
 import _ from 'lodash'
 import React, {PureComponent} from 'react'
 
-import {withPermission} from '@/containers/Permission'
 import UserPositionMarker from '@/components/listings/Map/UserPosition'
 import Map, {Marker, Aggregator} from '@/components/listings/Map'
 
 const zoom = ({longitudeDelta}) =>
   Math.round(Math.log(360 / longitudeDelta) / Math.LN2)
 
-@withPermission('location', 'whenInUse')
 export default class MapApp extends PureComponent {
   state = {
     zoom: 12,

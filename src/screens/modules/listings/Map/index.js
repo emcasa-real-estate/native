@@ -4,6 +4,7 @@ import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
+import {withPermission} from '@/containers/Permission'
 import {withListingsFeed} from '@/graphql/containers'
 import {getSearchFiltersQuery} from '@/screens/modules/listings/Search/module/selectors'
 import {
@@ -89,9 +90,9 @@ class MapScreen extends Component {
   onReturn = () => Navigation.pop(this.props.componentId)
 
   onShowFilters = () =>
-      Navigation.push(this.props.componentId, {
-        component: {name: FilterScreen.screenName}
-      })
+    Navigation.push(this.props.componentId, {
+      component: {name: FilterScreen.screenName}
+    })
 
   render() {
     const {
@@ -99,7 +100,8 @@ class MapScreen extends Component {
       activeListing,
       watchingPosition,
       isWithinBounds,
-      userPosition
+      userPosition,
+      onRequestPermission
     } = this.props
 
     return (
@@ -116,6 +118,7 @@ class MapScreen extends Component {
               onRequestPosition={this.onRequestPosition}
               onWatchPosition={this.onToggleWatchPosition(true)}
               onUnwatchPosition={this.onToggleWatchPosition(false)}
+              onRequestPermission={onRequestPermission}
             />
           )}
           <ListButton style={styles.button} onPress={this.onReturn} />
@@ -143,5 +146,6 @@ export default composeWithRef(
     {watchPosition, unwatchPosition, requestPosition, setActiveListing}
   ),
   connect((state) => ({filters: getSearchFiltersQuery(state)})),
-  withListingsFeed({pageSize: 1000, fetchPolicy: 'cache-then-network'})
+  withListingsFeed({pageSize: 1000, fetchPolicy: 'cache-then-network'}),
+  withPermission('location', 'whenInUse')
 )(MapScreen)

@@ -11,7 +11,7 @@ import {
 import Firebase from 'react-native-firebase'
 
 import * as actions from './index'
-import {getToken} from './selectors'
+import {getToken, hasPermission} from './selectors'
 
 const messaging = Firebase.messaging()
 
@@ -44,7 +44,11 @@ function* initializeToken() {
 
 function* initializePermission() {
   const enabled = yield call(() => messaging.hasPermission())
-  yield put(actions.updatePermission(enabled))
+  const currentPermission = yield select(hasPermission)
+  // Request permission if it's currently denied and the user's response hasn't been cached yet
+  if (!enabled && typeof currentPermission === 'undefined')
+    yield put(actions.requestPermission())
+  else yield put(actions.updatePermission(enabled))
 }
 
 export default function* fcmSaga() {

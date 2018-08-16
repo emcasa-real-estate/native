@@ -25,7 +25,7 @@ export default combineReducers({
   screens,
   network,
   auth: persistent(auth, {whitelist: ['user']}),
-  firebase,
+  firebase: persistent(firebase, {whitelist: ['messaging']}),
   relatedListings,
   gallery,
   interest,

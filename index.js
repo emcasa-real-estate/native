@@ -1,3 +1,5 @@
+import 'moment/locale/pt-br'
+import moment from 'moment'
 import {YellowBox, Platform} from 'react-native'
 import KeyboardManager from 'react-native-keyboard-manager'
 
@@ -12,6 +14,8 @@ YellowBox.ignoreWarnings([
   'Warning: isMounted(...) is deprecated',
   'Remote debugger'
 ])
+
+moment.locale('pt-br')
 
 initNavigation()
 

@@ -25,7 +25,7 @@ describe('listingForm.Address', () => {
     await actions.insertAddress('Rua Vergueiro 123')
     await actions.submitEditing(select.autoCompleteInput())
     await element(shared.input('Complemento')).tap()
-    await element(shared.input('Complemento')).typeText('123')
+    await element(shared.input('Complemento')).typeText('xxx')
     await element(by.text('Próximo').withAncestor(select.addressScreen())).tap()
     await waitFor(element(select.addressScreen())).toBeNotVisible()
     await expect(element(select.propertiesScreen())).toBeVisible()

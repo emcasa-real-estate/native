@@ -11,16 +11,6 @@ describe('auth/signUp', () => {
     await expect(element(by.text('A senha é obrigatória'))).toBeVisible()
   })
 
-  it('show an error when the email is already in use', async () => {
-    await action.signUp({
-      name: 'Test',
-      email: 'foo@example.com',
-      phone: '',
-      password: 'passwd'
-    })
-    await expect(element(by.text('Esse e-mail já está em uso'))).toBeVisible()
-  })
-
   it('redirects to a success page on success', async () => {
     await action.signUp({
       name: 'Test',

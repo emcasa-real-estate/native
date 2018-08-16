@@ -1,6 +1,5 @@
 import {PureComponent} from 'react'
 import {View, TouchableOpacity} from 'react-native'
-import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
@@ -8,7 +7,6 @@ import {withPermission} from '@/containers/Permission'
 import {watchPosition, unwatchPosition} from './module'
 import {isWatchingPosition} from './module/selectors'
 import * as colors from '@/assets/colors'
-import FilterScreen from '@/screens/modules/listings/Search'
 import Text from '@/components/shared/Text'
 import Icon from '@/components/shared/Icon'
 
@@ -35,14 +33,8 @@ class MapHeaderButton extends PureComponent {
       this.props.watchPosition()
   }
 
-  onShowFilters = () => {
-    Navigation.push(this.props.componentId, {
-      component: {name: FilterScreen.screenName}
-    })
-  }
-
   render() {
-    const {watchingPosition} = this.props
+    const {watchingPosition, onShowFilters} = this.props
 
     return (
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -53,7 +45,7 @@ class MapHeaderButton extends PureComponent {
           active
           icon="filter"
           style={{marginLeft: 10}}
-          onPress={this.onShowFilters}
+          onPress={onShowFilters}
         >
           Filtros
         </Button>

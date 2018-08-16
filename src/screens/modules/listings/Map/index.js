@@ -25,6 +25,7 @@ import Map from './Map'
 import styles from './styles'
 
 import ListingScreen from '@/screens/modules/listing/Listing'
+import FilterScreen from '@/screens/modules/listings/Search'
 
 class MapScreen extends Component {
   static screenName = 'listings.Map'
@@ -43,19 +44,6 @@ class MapScreen extends Component {
 
   state = {active: false}
 
-  componentDidMount() {
-    Navigation.mergeOptions(this.props.componentId, {
-      topBar: {
-        rightButtons: [
-          {
-            id: 'mapLocationButton',
-            component: {name: HeaderButton.screenName}
-          }
-        ]
-      }
-    })
-  }
-
   componentWillUnmount() {
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {rightButtons: []}
@@ -63,6 +51,18 @@ class MapScreen extends Component {
   }
 
   componentDidAppear() {
+    const passProps = {onShowFilters: this.onShowFilters}
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        rightButtons: [
+          {
+            id: 'mapLocationButton',
+            passProps,
+            component: {name: HeaderButton.screenName, passProps}
+          }
+        ]
+      }
+    })
     this.setState({active: true})
   }
 
@@ -87,6 +87,11 @@ class MapScreen extends Component {
   onSelect = (id) => this.props.setActiveListing(id)
 
   onReturn = () => Navigation.pop(this.props.componentId)
+
+  onShowFilters = () =>
+      Navigation.push(this.props.componentId, {
+        component: {name: FilterScreen.screenName}
+      })
 
   render() {
     const {

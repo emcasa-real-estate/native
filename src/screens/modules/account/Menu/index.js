@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
 import {signOut} from '@/redux/modules/auth'
-import {getToken} from '@/redux/modules/firebase/messaging/selectors'
 import {withUserListings, withMessengerUnreadCount} from '@/graphql/containers'
 import {Shell, Body, Header, Footer} from '@/components/layout'
 import BottomTabs from '@/screens/modules/navigation/BottomTabs'
@@ -41,7 +40,7 @@ class AccountMenuScreen extends PureComponent {
   }
 
   render() {
-    const {userListings, unreadCount, firebaseToken} = this.props
+    const {userListings, unreadCount} = this.props
     return (
       <Shell>
         <Header>
@@ -49,7 +48,6 @@ class AccountMenuScreen extends PureComponent {
         </Header>
         <Body>
           <Menu
-            firebaseToken={firebaseToken}
             listingsCount={
               !userListings.loading &&
               userListings.data &&
@@ -79,7 +77,7 @@ class AccountMenuScreen extends PureComponent {
 
 export default composeWithRef(
   connect(
-    (state) => ({firebaseToken: getToken(state)}),
+    null,
     {signOut}
   ),
   withUserListings,

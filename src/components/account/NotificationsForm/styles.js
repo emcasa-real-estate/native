@@ -5,24 +5,18 @@ import * as colors from '@/assets/colors'
 export default StyleSheet.create({
   form: {
     paddingTop: 20,
-    paddingBottom: 15
+    paddingBottom: 15,
+    borderBottomColor: colors.gray.lighter,
+    borderBottomWidth: 1
   },
-  input: {
-    borderColor: colors.gray.light
+  field: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
-  message: {
+  label: {
     fontSize: 16,
-    marginBottom: 20,
-    marginLeft: 20,
-    marginRight: 20
-  },
-  errorMessage: {
-    color: colors.red.medium
-  },
-  successMessage: {
-    color: colors.green.medium
+    marginBottom: 15,
+    color: colors.gray.mediumDark
   }
 })
-
-export const buttonIconColor = colors.blue.medium
-export const buttonUnderlayColor = colors.gray.offWhite

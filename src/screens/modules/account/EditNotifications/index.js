@@ -5,7 +5,10 @@ import {connect} from 'react-redux'
 import composeWithRef from '@/lib/composeWithRef'
 import {setContext, clearContext} from '@/screens/modules/context'
 import {getUser} from '@/redux/modules/auth/selectors'
-import {hasPermission} from '@/redux/modules/firebase/messaging/selectors'
+import {
+  hasPermission,
+  getToken
+} from '@/redux/modules/firebase/messaging/selectors'
 import {requestPermission} from '@/redux/modules/firebase/messaging'
 import {getContext} from '@/screens/modules/context/selectors'
 import {withProfileMutation} from '@/graphql/containers'
@@ -46,15 +49,17 @@ class EditNotificationsScreen extends PureComponent {
   onChange = (value) => this.setState({value}, this.onSubmit)
 
   render() {
-    const {value, message, hasPermission, requestPermission} = this.state
+    const {user, hasPermission, fcmToken, requestPermission} = this.props
+    const {value} = this.state
 
     return (
       <Shell>
         <Body>
           <NotificationsForm
             formRef={this.form}
-            message={message}
             value={value}
+            user={user}
+            fcmToken={fcmToken}
             onSubmit={this.onSubmit}
             onChange={this.onChange}
             hasPermission={hasPermission}
@@ -81,6 +86,7 @@ export default composeWithRef(
   connect(
     (state) => ({
       user: getUser(state),
+      fcmToken: getToken(state),
       hasPermission: hasPermission(state)
     }),
     {requestPermission}

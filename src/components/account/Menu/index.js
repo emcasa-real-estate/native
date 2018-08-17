@@ -1,4 +1,4 @@
-import {View, Clipboard} from 'react-native'
+import {View} from 'react-native'
 
 import * as colors from '@/assets/colors'
 import Button, {ButtonLabel} from '../FormButton'
@@ -6,7 +6,6 @@ import Button, {ButtonLabel} from '../FormButton'
 const green = {backgroundColor: colors.green.medium}
 
 export default function AccountMenu({
-  firebaseToken,
   listingsCount,
   unreadMessages,
   onEditProfile,
@@ -39,9 +38,6 @@ export default function AccountMenu({
       </Button>
       <Button onPress={onSignOut} icon="sign-out">
         Sair
-      </Button>
-      <Button onPress={() => Clipboard.setString(firebaseToken)} icon="fire">
-        {firebaseToken}
       </Button>
     </View>
   )

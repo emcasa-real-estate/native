@@ -16,7 +16,22 @@ export default StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    marginBottom: 15,
     color: colors.gray.mediumDark
+  },
+  labelBottom: {
+    marginTop: 2.5,
+    height: 15
+  },
+  warning: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  warningText: {
+    fontSize: 12,
+    color: colors.gray.medium,
+    fontWeight: '500',
+    marginHorizontal: 5
   }
 })
+
+export const iconColor = colors.blue.medium

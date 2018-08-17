@@ -20,7 +20,7 @@
     "build_e2e": "NODE_ENV=e2e scripts/env detox build -c ios.debug",
     "test_server": "babel-node __e2e__/server/run.js",
     "e2e": "detox test -c ios.debug --platform ios",
-    "e2e:artifacts": "yarn e2e --artifacts-location tmp/detox/ --record-logs all --take-screenshots all"
+    "e2e:artifacts": "yarn e2e --artifacts-location tmp/detox --record-logs all --take-screenshots all --record-videos failed"
   },
   "detox": {
     "specs": "__e2e__",

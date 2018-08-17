@@ -46,7 +46,11 @@ function* initializePermission() {
   const enabled = yield call(() => messaging.hasPermission())
   const currentPermission = yield select(hasPermission)
   // Request permission if it's currently denied and the user's response hasn't been cached yet
-  if (!enabled && typeof currentPermission === 'undefined')
+  if (
+    !enabled &&
+    typeof currentPermission === 'undefined' &&
+    process.env.NODE_ENV !== 'e2e'
+  )
     yield put(actions.requestPermission())
   else yield put(actions.updatePermission(enabled))
 }

@@ -27,11 +27,25 @@ export const EDIT_PASSWORD = gql`
 `
 
 export const EDIT_PROFILE = gql`
-  mutation editUserProfile($id: ID!, $name: String!, $phone: String!) {
-    editUserProfile(id: $id, name: $name, phone: $phone) {
+  mutation editUserProfile(
+    $id: ID!
+    $name: String
+    $phone: String
+    $notificationPreferences: NotificationPreferencesInput
+  ) {
+    editUserProfile(
+      id: $id
+      name: $name
+      phone: $phone
+      notificationPreferences: $notificationPreferences
+    ) {
       id
       name
       phone
+      notificationPreferences {
+        app
+        email
+      }
     }
   }
 `

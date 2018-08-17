@@ -11,6 +11,7 @@ import {Shell, Body, Footer} from '@/components/layout'
 import BottomTabs from '@/screens/modules/navigation/BottomTabs'
 import ProfileForm from '@/components/account/ProfileForm'
 import EditPasswordScreen from '../EditPassword'
+import EditNotificationsScreen from '../EditNotifications'
 import SubmitButtonScreen from '../SubmitButton'
 
 class EditProfileScreen extends PureComponent {
@@ -72,6 +73,12 @@ class EditProfileScreen extends PureComponent {
     })
   }
 
+  onEditNotifications = () => {
+    Navigation.push(this.props.componentId, {
+      component: {name: EditNotificationsScreen.screenName}
+    })
+  }
+
   render() {
     const {user} = this.props
     const {value} = this.state
@@ -86,6 +93,7 @@ class EditProfileScreen extends PureComponent {
             onSubmit={this.onSubmit}
             onChange={this.onChange}
             onEditPassword={this.onEditPassword}
+            onEditNotifications={this.onEditNotifications}
           />
         </Body>
         <Footer>
@@ -99,8 +107,11 @@ class EditProfileScreen extends PureComponent {
 export default composeWithRef(
   withProfileMutation,
   withEmailMutation,
-  connect((state) => getContext(state, {screen: 'account'}), {
-    setContext: setContext('account'),
-    clearContext: clearContext('account')
-  })
+  connect(
+    (state) => getContext(state, {screen: 'account'}),
+    {
+      setContext: setContext('account'),
+      clearContext: clearContext('account')
+    }
+  )
 )(EditProfileScreen)

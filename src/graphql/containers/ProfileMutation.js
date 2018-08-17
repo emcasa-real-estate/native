@@ -17,7 +17,10 @@ function ProfileMutation({children, user, patch}) {
     >
       {(mutate, props) =>
         children(
-          ({variables}) => mutate({variables: {...user, ...variables}}),
+          ({variables}) =>
+            mutate({
+              variables: {id: user.id, ...variables}
+            }),
           {...props, user}
         )
       }

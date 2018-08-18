@@ -22,9 +22,6 @@ class AccountMenuScreen extends PureComponent {
       drawBehind: true,
       height: 0,
       backButton: {title: 'Perfil'}
-    },
-    bottomTab: {
-      title: 'Perfil'
     }
   }
 
@@ -61,7 +58,6 @@ class AccountMenuScreen extends PureComponent {
               name: UserListingsScreen.screenName
             })}
             onViewMessenger={this.navigateTo({
-              id: 'user_listings',
               name: MessengerChannelsScreen.screenName
             })}
           />

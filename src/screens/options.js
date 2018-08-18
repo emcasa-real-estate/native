@@ -16,6 +16,7 @@ export default {
     borderColor: colors.gray.light,
     backButton: {title: ''},
     visible: true,
+    animate: false,
     title: {
       fontSize: 18,
       fontWeight: '400',
@@ -24,9 +25,12 @@ export default {
     }
   },
   bottomTabs: {
-    visible: true
+    visible: true,
+    titleDisplayMode: 'alwaysShow'
   },
   bottomTab: {
+    fontSize: 10,
+    selectedFontSize: 12,
     badgeColor: colors.blue.medium,
     iconColor: colors.gray.dark,
     selectedIconColor: colors.blue.medium,

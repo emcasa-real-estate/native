@@ -29,6 +29,7 @@ class EditPasswordScreen extends PureComponent {
     const passProps = {onPress: this.onSubmit}
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
+        ...this.constructor.options.topBar,
         rightButtons: [
           {
             passProps,

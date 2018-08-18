@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react'
-import {View, Keyboard, KeyboardAvoidingView} from 'react-native'
+import {View, Keyboard, KeyboardAvoidingView, Platform} from 'react-native'
 
 export default class Shell extends PureComponent {
   static defaultProps = {
@@ -45,7 +45,7 @@ export default class Shell extends PureComponent {
           style={[{flex: 1}, style, !keyboardVisible && layout]}
           keyboardVerticalOffset={offset}
           behavior={behavior !== 'none' ? behavior : undefined}
-          enabled={behavior !== 'none'}
+          enabled={Platform.OS !== 'android' && behavior !== 'none'}
         >
           <View style={{flex: 1, display: 'flex'}}>{children}</View>
         </KeyboardAvoidingView>

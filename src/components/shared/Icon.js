@@ -47,5 +47,6 @@ Icon.defaultProps = {
   name: '',
   size: 20,
   color: 'black',
-  type: 'light'
+  type: 'light',
+  pointerEvents: () => false
 }

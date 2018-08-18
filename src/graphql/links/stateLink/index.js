@@ -1,9 +1,13 @@
 import {withClientState} from 'apollo-link-state'
 
-import favorites from './resolvers/favorites'
+import Mutation from './resolvers/mutations'
+import Query from './resolvers/queries'
 
 export default ({cache}) =>
   withClientState({
-    ...favorites,
-    cache
+    cache,
+    resolvers: {
+      Mutation,
+      Query
+    }
   })

@@ -102,11 +102,11 @@ export default class ListingGallery extends PureComponent {
   }
 
   render() {
-    const {inline, testID} = this.props
+    const {inline, style, testID} = this.props
     const {position} = this.state
     return (
       <View
-        style={[styles.container, this.layout]}
+        style={[styles.container, this.layout, style]}
         onLayout={this.onLayout}
         testID={testID}
       >

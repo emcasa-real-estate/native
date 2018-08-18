@@ -1,7 +1,10 @@
+import {Fragment} from 'react'
 import {View, TouchableOpacity, Dimensions} from 'react-native'
+import {compose} from 'recompose'
 
-import {withFavoriteMutation} from '@/graphql/containers'
+import {withFavoriteMutation, withBlacklistMutation} from '@/graphql/containers'
 import LikeIcon from '@/components/listings/LikeIcon'
+import BlacklistIcon from '@/components/listings/BlacklistIcon'
 import Text from '@/components/shared/Text'
 import Icon from '@/components/shared/Icon'
 import Price from '@/components/shared/Price'
@@ -9,36 +12,21 @@ import Image from '@/components/listings/Image'
 import Gallery from '@/components/listings/Gallery'
 import styles, {iconColor} from './styles'
 
-function Button({children, icon, hitSlop, ...props}) {
+function Button({children, icon, ...props}) {
   return (
     <TouchableOpacity
       {...props}
       accessible
       style={styles.iconButton}
       hitSlop={{
-        top: hitSlop,
-        bottom: hitSlop,
-        left: hitSlop,
-        right: hitSlop
+        top: 15,
+        bottom: 15,
+        left: 5,
+        right: 5
       }}
     >
       {children || <Icon name={icon} size={19} color={iconColor} />}
     </TouchableOpacity>
-  )
-}
-
-Button.defaultProps = {hitSlop: 15}
-
-function LikeButton({favorite, ...props}) {
-  return (
-    <Button
-      {...props}
-      accessibilityLabel={
-        favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'
-      }
-    >
-      <LikeIcon active={favorite} size={19} />
-    </Button>
   )
 }
 
@@ -50,7 +38,9 @@ function ListingCard({
   price,
   isActive,
   favorite,
+  blacklisted,
   onFavorite,
+  onBlacklist,
   onPress,
   testUniqueID,
   ...props
@@ -60,31 +50,59 @@ function ListingCard({
     width: width - padding * 2,
     height: width * 0.64 - padding * 2
   }
+  const imageStyle = {opacity: blacklisted ? 0.5 : 1}
 
   return (
-    <View style={[styles.container].concat(style, {width})} {...props}>
+    <View
+      style={[
+        styles.container,
+        blacklisted && styles.containerBlacklisted,
+        style,
+        {width}
+      ]}
+      {...props}
+    >
       <View testID={`listing_card(${testUniqueID})`}>
         <View style={[styles.thumbnail, imageSize]}>
           {images.length ? (
-            <Gallery inline {...imageSize}>
+            <Gallery style={imageStyle} inline {...imageSize}>
               {images.slice(0, 4)}
             </Gallery>
           ) : (
-            <Image thumbnail style={styles.image} {...imageSize} />
+            <Image
+              thumbnail
+              style={[styles.image, imageStyle]}
+              {...imageSize}
+            />
           )}
         </View>
         <View style={styles.body}>
           <View style={[styles.row, styles.buttonsRow]}>
-            <View>
+            <View style={styles.row}>
               {isActive && (
-                <LikeButton
-                  testID="favorite_button"
-                  favorite={favorite}
-                  onPress={onFavorite}
-                />
+                <Fragment>
+                  <Button
+                    testID="favorite_button"
+                    onPress={onFavorite}
+                    accessibilityLabel={
+                      favorite
+                        ? 'Remover dos favoritos'
+                        : 'Adicionar aos favoritos'
+                    }
+                  >
+                    <LikeIcon active={favorite} size={19} />
+                  </Button>
+                  <Button
+                    testID="blacklist_button"
+                    onPress={onBlacklist}
+                    accessibilityLabel={blacklisted ? 'Exibir' : 'Ocultar'}
+                  >
+                    <BlacklistIcon active={blacklisted} size={19} />
+                  </Button>
+                </Fragment>
               )}
             </View>
-            <View>
+            <View style={styles.row}>
               <Button
                 hitSlop={30}
                 label="Visualizar"
@@ -118,4 +136,4 @@ ListingCard.defaultProps = {
   }
 }
 
-export default withFavoriteMutation(ListingCard)
+export default compose(withFavoriteMutation, withBlacklistMutation)(ListingCard)

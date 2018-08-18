@@ -1,5 +1,5 @@
 {
-  "presets": ["@babel/preset-flow", "@babel/preset-env", "react-native"],
+  "presets": ["@babel/preset-flow", "react-native"],
   "plugins": [
     "lodash",
     "react-require",

@@ -31,7 +31,7 @@ aliases:
       - v1-cocoapods-{{ checksum "ios/Podfile" }}
   - &restore-homebrew
     keys:
-      - v1-brew-{{ arch }}-{{ .Branch }}
+      - v1-brew-{{ arch }}-{{ checksum "/usr/local/Homebrew/.git/refs/heads/master" }}
   # save caches
   - &cache-node-modules
     paths:

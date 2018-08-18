@@ -5,25 +5,18 @@ import defaultOptions from './options'
 import bottomTabs from './modules/tabs'
 import {registerScreens} from './modules/screens'
 
-const tabComponent = ({options, ...component}) => ({
-  component: {
-    ...component,
-    options: _.defaultsDeep(options, {bottomTab: defaultOptions.bottomTab})
-  }
-})
-
 export default function init() {
   registerScreens()
   Navigation.events().registerAppLaunchedListener(() => {
+    Navigation.setDefaultOptions(defaultOptions)
     Navigation.setRoot({
       root: {
         bottomTabs: {
           children: bottomTabs.map((component) => ({
-            stack: {children: [tabComponent(component)]}
+            stack: {children: [{component}]}
           }))
         }
       }
     })
-    Navigation.setDefaultOptions(defaultOptions)
   })
 }

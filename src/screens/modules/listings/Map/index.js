@@ -41,6 +41,7 @@ class MapScreen extends Component {
     },
     bottomTabs: {
       visible: false,
+      drawBehind: true,
       animated: false
     }
   }

@@ -15,6 +15,7 @@ class ListingTourScreen extends PureComponent {
     },
     bottomTabs: {
       visible: false,
+      drawBehind: true,
       animated: false
     }
   }

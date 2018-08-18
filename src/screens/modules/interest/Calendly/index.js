@@ -12,6 +12,7 @@ export default class CalendlyScreen extends PureComponent {
     },
     bottomTabs: {
       visible: false,
+      drawBehind: true,
       animated: false
     }
   }

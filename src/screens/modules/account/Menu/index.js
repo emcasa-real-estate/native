@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
 import {signOut} from '@/redux/modules/auth'
+import {updateStackRoot} from '@/screens/modules/navigation'
 import {withUserListings, withMessengerUnreadCount} from '@/graphql/containers'
 import {Shell, Body, Header} from '@/components/layout'
 import Menu from '@/components/account/Menu'
@@ -30,9 +31,9 @@ class AccountMenuScreen extends PureComponent {
   }
 
   onSignOut = () => {
-    const {signOut} = this.props
+    const {signOut, updateStackRoot} = this.props
     signOut()
-    Navigation.popToRoot(this.props.componentId)
+    updateStackRoot()
   }
 
   render() {
@@ -70,7 +71,7 @@ class AccountMenuScreen extends PureComponent {
 export default composeWithRef(
   connect(
     null,
-    {signOut}
+    {signOut, updateStackRoot}
   ),
   withUserListings,
   withMessengerUnreadCount

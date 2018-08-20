@@ -10,7 +10,6 @@ import * as listingsScreens from './listings/screens'
 import * as interestScreens from './interest/screens'
 import * as messengerScreens from './messenger/screens'
 import * as sharedScreens from './shared/screens'
-import * as tabScreens from './tabs/screens'
 
 const screens = _.flow(
   _.map(_.values),
@@ -24,8 +23,7 @@ const screens = _.flow(
   listingsScreens,
   interestScreens,
   messengerScreens,
-  sharedScreens,
-  tabScreens
+  sharedScreens
 ])
 
 export default screens

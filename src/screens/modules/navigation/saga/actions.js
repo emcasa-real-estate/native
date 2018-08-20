@@ -1,18 +1,30 @@
 import {Navigation} from 'react-native-navigation'
-import {all, takeEvery} from 'redux-saga/effects'
+import {all, select, takeEvery} from 'redux-saga/effects'
 
-import {TABS} from '@/screens/modules/tabs'
+import getBottomTabs from '@/screens/tabs'
+import defaultOptions from '@/screens/options'
+import * as auth from '@/redux/modules/auth'
 import * as actions from '../index'
 
-function switchTab({tab: name}) {
-  const tab = TABS[name]
-  Navigation.mergeOptions(tab.id, {
-    bottomTabs: {
-      currentTabId: tab.id
+function* setRoot() {
+  const bottomTabs = yield select(getBottomTabs)
+  Navigation.setDefaultOptions(defaultOptions)
+  Navigation.setRoot({
+    root: {
+      bottomTabs: {
+        children: bottomTabs.map((component) => ({
+          stack: {children: [{component}]}
+        }))
+      }
     }
   })
 }
 
 export default function* navigationActionsSaga() {
-  yield all([takeEvery(actions.SWITCH_TAB, switchTab)])
+  yield all([
+    // Update stack root when auth state changes
+    takeEvery(auth.SUCCESS, setRoot),
+    takeEvery(auth.SIGN_OUT, setRoot),
+    takeEvery(actions.APP_LAUNCHED, setRoot)
+  ])
 }

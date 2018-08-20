@@ -1,6 +1,6 @@
 import 'moment/locale/pt-br'
 import moment from 'moment'
-import {YellowBox, Platform} from 'react-native'
+import {YellowBox} from 'react-native'
 
 import initNavigation from '@/screens'
 

@@ -5,7 +5,7 @@ export async function navigateToLogin() {
   await waitFor(element(shared.bottomTabs()))
     .toBeVisible()
     .withTimeout(12000)
-  await element(shared.bottomTabButton('Perfil')).tap()
+  await element(shared.bottomTabButton('Login')).tap()
   await waitFor(element(select.loginScreen()))
     .toBeVisible()
     .withTimeout(5000)

@@ -65,7 +65,7 @@ class LoginScreen extends PureComponent {
 
   onSuccess = () => {
     const {onLogin} = this.props.params
-    if (onLogin) onLogin()
+    if (onLogin) onLogin(this.props)
     this.returnToParentScreen()
   }
   onSignUp = () => {

@@ -1,5 +1,4 @@
 import {createSelector} from 'reselect'
-import {Navigation} from 'react-native-navigation'
 
 import {getUser} from '@/redux/modules/auth/selectors'
 import * as listingForm from '@/screens/modules/listingForm/screens'

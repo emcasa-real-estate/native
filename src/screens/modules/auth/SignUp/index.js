@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 
 import {getUser, getError, isLoading} from '@/redux/modules/auth/selectors'
 import {signUp, reset} from '@/redux/modules/auth'
+import {updateStackRoot} from '@/screens/modules/navigation'
 import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import SignUpForm from '@/components/auth/SignUp'
@@ -26,10 +27,8 @@ class SignUpScreen extends PureComponent {
   form = React.createRef()
 
   returnToParentScreen() {
-    const {
-      params: {parentId}
-    } = this.props
-    if (parentId) return Navigation.popTo(parentId)
+    const {updateStackRoot} = this.props
+    updateStackRoot()
   }
 
   componentDidDisappear() {
@@ -77,8 +76,8 @@ class SignUpScreen extends PureComponent {
   }
 
   onDismiss = async () => {
-    this.returnToParentScreen()
     await Navigation.dismissAllModals()
+    this.returnToParentScreen()
   }
 
   render() {
@@ -113,7 +112,7 @@ export default connect(
     error: getError(state),
     loading: isLoading(state)
   }),
-  {signUp, reset},
+  {signUp, reset, updateStackRoot},
   null,
   {withRef: true}
 )(SignUpScreen)

@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 
 import {getUser, getError, isLoading} from '@/redux/modules/auth/selectors'
 import {signIn, reset} from '@/redux/modules/auth'
+import {updateStackRoot} from '@/screens/modules/navigation'
 import {Shell, Body, Footer} from '@/components/layout'
 import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
@@ -33,13 +34,6 @@ class LoginScreen extends PureComponent {
 
   form = React.createRef()
 
-  returnToParentScreen() {
-    const {
-      params: {parentId}
-    } = this.props
-    if (parentId) Navigation.popTo(parentId)
-  }
-
   componentDidDisappear() {
     this.setState({value: undefined, active: false})
   }
@@ -64,10 +58,10 @@ class LoginScreen extends PureComponent {
   }
 
   onSuccess = () => {
-    const {onLogin} = this.props.params
-    if (onLogin) onLogin(this.props)
-    this.returnToParentScreen()
+    const {updateStackRoot} = this.props
+    updateStackRoot()
   }
+
   onSignUp = () => {
     const {componentId, params} = this.props
     Navigation.push(componentId, {
@@ -131,7 +125,7 @@ export default connect(
     error: getError(state),
     loading: isLoading(state)
   }),
-  {signIn, reset},
+  {signIn, reset, updateStackRoot},
   null,
   {withRef: true}
 )(LoginScreen)

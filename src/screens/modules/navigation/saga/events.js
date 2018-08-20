@@ -1,6 +1,7 @@
 import {Navigation} from 'react-native-navigation'
 import {eventChannel} from 'redux-saga'
-import {put, all, call, fork, take, takeEvery} from 'redux-saga/effects'
+import {PERSIST} from 'redux-persist'
+import {put, all, call, fork, select, take, takeEvery} from 'redux-saga/effects'
 
 import * as actions from '../index'
 
@@ -17,8 +18,8 @@ const createNavigationChannel = (event) =>
   })
 
 const createNavigationDispatcher = (action) =>
-  function* dispatchNavigationAction({componentId, componentName}) {
-    yield put(action({id: componentId, name: componentName}))
+  function* dispatchNavigationAction(args) {
+    yield put(action(args))
   }
 
 const createNavigationSaga = (fun, action) =>
@@ -27,7 +28,8 @@ const createNavigationSaga = (fun, action) =>
 function* watchNavigationEvents() {
   yield all([
     createNavigationSaga('ComponentDidAppear', actions.screenAppeared),
-    createNavigationSaga('ComponentDidDisappear', actions.screenDisappeared)
+    createNavigationSaga('ComponentDidDisappear', actions.screenDisappeared),
+    createNavigationSaga('BottomTabSelected', actions.tabSelected)
   ])
 }
 

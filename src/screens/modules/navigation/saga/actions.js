@@ -7,7 +7,7 @@ import * as actions from '../index'
 import {getStackRootId} from '../selectors'
 import {REHYDRATE} from 'redux-persist'
 
-const authPersisted = (state) => state.auth._persist.persisted
+const authPersisted = (state) => state.auth._persist.rehydrated
 const authPersistedAction = ({type, key}) =>
   type === REHYDRATE && key === 'auth'
 
@@ -21,7 +21,7 @@ function* initialize() {
 function* switchTab({tabIndex}) {
   const rootId = yield select(getStackRootId)
   Navigation.mergeOptions(rootId, {
-    bottomTab: {currentTabIndex: tabIndex}
+    bottomTabs: {currentTabIndex: tabIndex}
   })
   yield put(actions.tabSelected(tabIndex))
 }
@@ -32,6 +32,7 @@ function* updateStackRoot({rootId, tabIndex}) {
     root: {
       bottomTabs: {
         id: rootId,
+        options: {bottomTabs: {currentTabIndex: tabIndex}},
         children: bottomTabs.map((component) => ({
           stack: {children: [{component}]}
         }))

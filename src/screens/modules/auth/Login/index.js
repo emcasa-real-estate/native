@@ -58,8 +58,11 @@ class LoginScreen extends PureComponent {
   }
 
   onSuccess = () => {
-    const {updateStackRoot} = this.props
-    updateStackRoot()
+    const {
+      updateStackRoot,
+      params: {tabIndex}
+    } = this.props
+    updateStackRoot({tabIndex})
   }
 
   onSignUp = () => {

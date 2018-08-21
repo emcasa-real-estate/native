@@ -28,7 +28,10 @@ export default createSelector(getUser, (user) => [
   {
     name: user ? listingForm.Address.screenName : auth.Login.screenName,
     passProps: {
-      params: {notice: 'O login é necessário para anunciar um imóvel.'}
+      params: {
+        tabIndex: 2,
+        notice: 'O login é necessário para anunciar um imóvel.'
+      }
     },
     options: {
       bottomTab: {

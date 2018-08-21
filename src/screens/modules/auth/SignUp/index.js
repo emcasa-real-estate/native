@@ -26,11 +26,6 @@ class SignUpScreen extends PureComponent {
 
   form = React.createRef()
 
-  returnToParentScreen() {
-    const {updateStackRoot} = this.props
-    updateStackRoot()
-  }
-
   componentDidDisappear() {
     this.setState({value: undefined, active: false})
   }
@@ -76,8 +71,12 @@ class SignUpScreen extends PureComponent {
   }
 
   onDismiss = async () => {
+    const {
+      updateStackRoot,
+      params: {tabIndex}
+    } = this.props
     await Navigation.dismissAllModals()
-    this.returnToParentScreen()
+    updateStackRoot({tabIndex})
   }
 
   render() {

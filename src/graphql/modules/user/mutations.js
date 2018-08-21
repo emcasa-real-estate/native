@@ -31,12 +31,14 @@ export const EDIT_PROFILE = gql`
     $id: ID!
     $name: String
     $phone: String
+    $deviceToken: String
     $notificationPreferences: NotificationPreferencesInput
   ) {
     editUserProfile(
       id: $id
       name: $name
       phone: $phone
+      deviceToken: $deviceToken
       notificationPreferences: $notificationPreferences
     ) {
       id

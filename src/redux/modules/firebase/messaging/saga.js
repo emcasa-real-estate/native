@@ -6,10 +6,13 @@ import {
   select,
   fork,
   take,
-  takeLatest
+  takeLatest,
+  getContext
 } from 'redux-saga/effects'
 import Firebase from 'react-native-firebase'
 
+import {EDIT_PROFILE} from '@/graphql/modules/user/mutations'
+import {getUser} from '@/redux/modules/auth/selectors'
 import * as actions from './index'
 import {getToken, hasPermission} from './selectors'
 
@@ -19,7 +22,13 @@ const tokenRefreshChannel = () =>
   eventChannel((emit) => messaging.onTokenRefresh((token) => emit({token})))
 
 function* updateToken({token}) {
-  /* ... */
+  const graphql = yield getContext('graphql')
+  const user = yield select(getUser)
+  if (!user) return
+  yield call([graphql, graphql.mutation], {
+    mutation: EDIT_PROFILE,
+    variables: {id: user.id, deviceToken: token}
+  })
 }
 
 function* requestPermission() {

@@ -25,7 +25,7 @@ function* updateToken({token}) {
   const graphql = yield getContext('graphql')
   const user = yield select(getUser)
   if (!user) return
-  yield call([graphql, graphql.mutation], {
+  yield call([graphql, graphql.mutate], {
     mutation: EDIT_PROFILE,
     variables: {id: user.id, deviceToken: token}
   })

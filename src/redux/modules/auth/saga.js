@@ -3,15 +3,31 @@ import {
   call,
   race,
   fork,
+  all,
+  select,
   take,
   takeLatest,
-  all,
   getContext
 } from 'redux-saga/effects'
 
-import {GET_USER_PROFILE} from '@/graphql/modules/user/queries'
 import * as api from '@/lib/services/auth'
+import {GET_USER_PROFILE} from '@/graphql/modules/user/queries'
+import {EDIT_PROFILE} from '@/graphql/modules/user/mutations'
+import {getDeviceToken} from '@/redux/modules/firebase/messaging/selectors'
+import * as messaging from '@/redux/modules/firebase/messaging'
+import {getUser} from './selectors'
 import * as actions from './index'
+
+function* updateToken() {
+  const graphql = yield getContext('graphql')
+  const deviceToken = yield select(getDeviceToken)
+  const user = yield select(getUser)
+  if (!user || !deviceToken) return
+  yield call([graphql, graphql.mutate], {
+    mutation: EDIT_PROFILE,
+    variables: {id: user.id, deviceToken}
+  })
+}
 
 function* request(fun, params) {
   yield put(actions.request())
@@ -57,6 +73,8 @@ export default function* authSaga() {
     takeLatest(actions.SIGN_IN, signIn),
     takeLatest(actions.SIGN_UP, signUp),
     takeLatest(actions.RESET_PASSWORD, resetPassword),
-    takeLatest(actions.SUCCESS, patchStoreAuth)
+    takeLatest(actions.SUCCESS, patchStoreAuth),
+    takeLatest(actions.SUCCESS, updateToken),
+    takeLatest(messaging.UPDATE_TOKEN, updateToken)
   ])
 }

@@ -7,7 +7,7 @@ import {setContext, clearContext} from '@/screens/modules/context'
 import {getUser} from '@/redux/modules/auth/selectors'
 import {
   hasPermission,
-  getToken
+  getDeviceToken
 } from '@/redux/modules/firebase/messaging/selectors'
 import {requestPermission} from '@/redux/modules/firebase/messaging'
 import {getContext} from '@/screens/modules/context/selectors'
@@ -86,7 +86,7 @@ export default composeWithRef(
   connect(
     (state) => ({
       user: getUser(state),
-      fcmToken: getToken(state),
+      fcmToken: getDeviceToken(state),
       hasPermission: hasPermission(state)
     }),
     {requestPermission}

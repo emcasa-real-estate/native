@@ -1,7 +1,6 @@
 import {Navigation} from 'react-native-navigation'
 import {eventChannel} from 'redux-saga'
-import {PERSIST} from 'redux-persist'
-import {put, all, call, fork, select, take, takeEvery} from 'redux-saga/effects'
+import {put, all, call, fork, take, takeEvery} from 'redux-saga/effects'
 
 import * as actions from '../index'
 

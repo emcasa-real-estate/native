@@ -1,5 +1,6 @@
 import {Navigation} from 'react-native-navigation'
-import {all, put, select, takeEvery, take} from 'redux-saga/effects'
+import {delay} from 'redux-saga'
+import {all, put, select, race, takeEvery, take} from 'redux-saga/effects'
 
 import getBottomTabs from '@/screens/tabs'
 import defaultOptions from '@/screens/options'
@@ -13,7 +14,11 @@ const authPersistedAction = ({type, key}) =>
 
 function* initialize() {
   const ready = yield select(authPersisted)
-  if (!ready) yield take(authPersistedAction)
+  if (!ready)
+    yield race({
+      persist: take(authPersistedAction),
+      timeout: delay(500)
+    })
   Navigation.setDefaultOptions(defaultOptions)
   yield put(actions.updateStackRoot())
 }

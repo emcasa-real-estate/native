@@ -58,4 +58,4 @@ class NumberPicker extends Component {
   }
 }
 
-export default field(NumberPicker)
+export default field()(NumberPicker)

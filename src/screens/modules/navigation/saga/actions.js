@@ -26,16 +26,20 @@ function* switchTab({tabIndex}) {
   yield put(actions.tabSelected(tabIndex))
 }
 
-function* updateStackRoot({rootId, tabIndex}) {
-  const bottomTabs = yield select(getBottomTabs)
+function* updateStackRoot({rootId, tabIndex, children}) {
+  const bottomTabs = (yield select(getBottomTabs)).map((component) => ({
+    stack: {
+      children: [{component}],
+      options: component.options
+    }
+  }))
+  if (children.length) bottomTabs[tabIndex].stack.children.push(...children)
   Navigation.setRoot({
     root: {
       bottomTabs: {
         id: rootId,
         options: {bottomTabs: {currentTabIndex: tabIndex}},
-        children: bottomTabs.map((component) => ({
-          stack: {children: [{component}]}
-        }))
+        children: bottomTabs
       }
     }
   })

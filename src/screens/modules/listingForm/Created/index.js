@@ -1,6 +1,5 @@
 import {Component} from 'react'
 import {View} from 'react-native'
-import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import {getNeighborhoods} from '@/redux/modules/neighborhoods/selectors'
@@ -17,20 +16,11 @@ class ListingCreatedScreen extends Component {
 
   static screenName = 'listingForm.Created'
 
-  onClose = () => {
-    const {params: {listing: {id}}} = this.props
-    Navigation.setStackRoot(this.props.componentId, {
-      component: {
-        name: 'listings.Listing',
-        passProps: {
-          params: {id, editing: true}
-        }
-      }
-    })
-  }
-
   get isValidAddress() {
-    const {neighborhoods, params: {address}} = this.props
+    const {
+      neighborhoods,
+      params: {address}
+    } = this.props
     return (
       address.state === 'RJ' &&
       neighborhoods.findIndex((value) => value === address.neighborhood) !== -1

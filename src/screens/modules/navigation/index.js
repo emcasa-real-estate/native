@@ -29,10 +29,11 @@ export const tabSelected = ({
   tabIndex,
   previousTabIndex
 })
-export const updateStackRoot = ({rootId, tabIndex} = {}) => ({
+export const updateStackRoot = ({rootId, tabIndex, children} = {}) => ({
   type: UPDATE_STACK_ROOT,
   rootId: rootId || uniqId('bottom_tabs-'),
-  tabIndex: tabIndex || 0
+  tabIndex: tabIndex || 0,
+  children: children || []
 })
 export const switchTab = (tabIndex) => ({type: SWITCH_TAB, tabIndex})
 

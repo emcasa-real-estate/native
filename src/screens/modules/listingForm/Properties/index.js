@@ -5,9 +5,9 @@ import {connect} from 'react-redux'
 import composeWithRef from '@/lib/composeWithRef'
 import * as frag from '@/graphql/fragments'
 import {withListingMutation, withProfileMutation} from '@/graphql/containers'
+import {updateStackRoot} from '@/screens/modules/navigation'
 import withContext from '@/screens/modules/context/withContext'
 import {getUser} from '@/redux/modules/auth/selectors'
-import {setStack} from '@/screens/modules/navigation'
 import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import Progress from '@/components/shared/Progress'
@@ -27,38 +27,42 @@ class EditPropertiesScreen extends PureComponent {
   static options = {
     topBar: {
       title: {text: 'Dados principais'},
-      backButton: { title: '' }
+      backButton: {title: ''}
     }
   }
+
+  state = {}
 
   form = React.createRef()
 
   navigateToListing = ({id}) => {
     const params = {
       id,
-      editing: true,
       parentId: `new_listing_${id}`,
       contextId: `edit_listing_${id}`
     }
-    this.props.setStack(
-      [
-        {name: 'account.Menu'},
-        {name: 'account.Listings'},
-        {name: 'listing.Listing', passProps: {params}, id: params.parentId},
+    this.props.updateStackRoot({
+      tabIndex: 3,
+      children: [
+        {component: {name: 'account.Listings'}},
         {
-          name: 'listingForm.EditAddress',
-          passProps: {params},
-          id: params.contextId
+          component: {
+            name: 'listingForm.EditAddress',
+            passProps: {params},
+            id: params.contextId
+          }
         },
-        {name: 'listingForm.EditProperties', passProps: {params}},
-        {name: 'listingForm.EditGallery', passProps: {params}}
-      ],
-      'account'
-    )
+        {component: {name: 'listingForm.EditProperties', passProps: {params}}},
+        {component: {name: 'listingForm.EditGallery', passProps: {params}}}
+      ]
+    })
   }
 
   openSuccessModal = (listing) => {
-    const {componentId, value: {address}} = this.props
+    const {
+      componentId,
+      value: {address}
+    } = this.props
     Navigation.showModal({
       component: {
         id: `${componentId}_success`,
@@ -86,7 +90,9 @@ class EditPropertiesScreen extends PureComponent {
     setContext({loading: true})
     try {
       if (phone) await editUserProfile({variables: {phone}})
-      const {data: {insertListing}} = await submitListing({
+      const {
+        data: {insertListing}
+      } = await submitListing({
         variables: {
           listing: frag.ListingInput.parseInput({
             ...listing,
@@ -110,7 +116,7 @@ class EditPropertiesScreen extends PureComponent {
   }
 
   componentDidUpdate(prev) {
-    if (!prev.error && this.props.error && this.form.current)
+    if (!prev.error && this.props.error && this.form.current && this.state.active)
       this.validateForm()
   }
 
@@ -118,17 +124,21 @@ class EditPropertiesScreen extends PureComponent {
     const {componentId, params} = this.props
     if (!params.id) return
     const passProps = {params, onValidate: this.validateForm}
+    this.setState({active: true})
     Navigation.mergeOptions(componentId, {
       topBar: {
         rightButtons: [
           {
             id: `${componentId}_submit`,
-            passProps,
             component: {name: SubmitButtonScreen.screenName, passProps}
           }
         ]
       }
     })
+  }
+
+  componentDidDisappear(){
+    this.setState({ active: false })
   }
 
   onChange = (value) => this.props.setContext({value})
@@ -177,5 +187,8 @@ export default composeWithRef(
   withContext.byProp('params.contextId'),
   withProfileMutation,
   withListingMutation(({params: {id}}) => ({id})),
-  connect((state) => ({user: getUser(state)}), {setStack})
+  connect(
+    (state) => ({user: getUser(state)}),
+    {updateStackRoot}
+  )
 )(EditPropertiesScreen)

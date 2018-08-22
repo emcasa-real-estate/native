@@ -20,7 +20,6 @@ import Listing from './Listing'
 import GalleryScreen from '@/screens/modules/listing/Gallery'
 import TourScreen from '@/screens/modules/listing/Tour'
 import InterestFormScreen from '@/screens/modules/interest/Form'
-import MessengerScreen from '@/screens/modules/messenger/Conversation'
 
 class ListingScreen extends PureComponent {
   static screenName = 'listing.Listing'
@@ -155,30 +154,14 @@ class ListingScreen extends PureComponent {
   }
 
   renderFooter() {
-    const {
-      params: {id}
-    } = this.props
     return (
       <View style={{flexDirection: 'row'}}>
         <Button
           color="lightgreen"
-          styles={{
-            container: {flex: 0.5, marginRight: 5},
-            text: {fontSize: 14}
-          }}
+          style={{flex: 1}}
           onPress={this.navigateTo({name: InterestFormScreen.screenName})}
         >
           Marcar visita
-        </Button>
-        <Button
-          color="green"
-          styles={{container: {flex: 0.5, marginLeft: 5}, text: {fontSize: 14}}}
-          onPress={this.navigateTo(
-            {name: MessengerScreen.screenName},
-            {listing: {id}}
-          )}
-        >
-          Entre em contato
         </Button>
       </View>
     )

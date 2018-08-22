@@ -1,11 +1,12 @@
 import {PureComponent} from 'react'
-import {ScrollView} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import {getSearchFilters} from '@/screens/modules/listings/Search/module/selectors'
 import {getNeighborhoods} from '@/redux/modules/neighborhoods/selectors'
 import {MultiSelectOptions} from '@/components/listings/Search/Field'
+import {Shell, Body, Footer} from '@/components/layout'
+import Button from '@/components/shared/Button'
 import HeaderButton from '@/screens/modules/shared/Header/TextButton'
 
 class NeighborhoodsScreen extends PureComponent {
@@ -71,13 +72,20 @@ class NeighborhoodsScreen extends PureComponent {
 
   render() {
     return (
-      <ScrollView style={{flex: 1}}>
-        <MultiSelectOptions
-          value={this.state.value}
-          options={this.options}
-          onChange={this.onChange}
-        />
-      </ScrollView>
+      <Shell>
+        <Body scroll>
+          <MultiSelectOptions
+            value={this.state.value}
+            options={this.options}
+            onChange={this.onChange}
+          />
+        </Body>
+        <Footer style={{padding: 15}}>
+          <Button onPress={() => Navigation.pop(this.props.componentId)}>
+            Selecionar
+          </Button>
+        </Footer>
+      </Shell>
     )
   }
 }

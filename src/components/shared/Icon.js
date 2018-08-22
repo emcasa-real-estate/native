@@ -3,15 +3,18 @@ import {Svg, Path} from 'react-native-svg'
 import fontawesome from '@fortawesome/fontawesome'
 import faLight from '@fortawesome/fontawesome-pro-light'
 import faSolid from '@fortawesome/fontawesome-pro-solid'
+import faBrands from '@fortawesome/fontawesome-free-brands'
 
 fontawesome.library.add(faLight)
 fontawesome.library.add(faSolid)
+fontawesome.library.add(faBrands)
 
 const DEFAULT_ICON = 'question-circle'
 
 const FA_STYLES = {
   light: 'fal',
-  solid: 'fas'
+  solid: 'fas',
+  brands: 'fab'
 }
 
 export default function Icon({name, size, color, type, style, ...props}) {

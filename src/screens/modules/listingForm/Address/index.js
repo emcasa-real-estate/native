@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import React, {PureComponent} from 'react'
+import {withUserListings} from '@/graphql/containers'
 import {Navigation} from 'react-native-navigation'
 import {withApollo} from 'react-apollo'
 
@@ -13,7 +14,9 @@ import Progress from '@/components/shared/Progress'
 import AddressForm from '@/components/newListing/Address'
 
 import EditPropertiesScreen from '@/screens/modules/listingForm/Properties'
+import LearnMoreScreen from '@/screens/modules/listingForm/LearnMore'
 import SubmitButtonScreen from '@/screens/modules/listingForm/SubmitButton'
+import TextButtonScreen from '@/screens/modules/shared/Header/TextButton'
 
 const addressText = ({city, state, street, streetNumber, neighborhood}) => {
   let text = `${street}, ${streetNumber} - `
@@ -71,6 +74,12 @@ class EditAddressScreen extends PureComponent {
     }
   }
 
+  showLearnMoreScreen = () => {
+    Navigation.showModal({
+      component: {name: LearnMoreScreen.screenName}
+    })
+  }
+
   validateForm = () => {
     return (
       this.props.validListing !== false &&
@@ -92,23 +101,41 @@ class EditAddressScreen extends PureComponent {
 
   componentDidAppear() {
     const {componentId, params} = this.props
-    if (!params.id) return
-    const passProps = {
-      params,
-      contextId: componentId,
-      onValidate: this.validateForm
-    }
-    Navigation.mergeOptions(componentId, {
-      topBar: {
-        rightButtons: [
-          {
-            id: `${componentId}_submit`,
-            passProps,
-            component: {name: SubmitButtonScreen.screenName, passProps}
-          }
-        ]
+    if (!params.id) {
+      const passProps = {
+        icon: 'info-circle',
+        label: 'Saiba mais',
+        onPress: this.showLearnMoreScreen
       }
-    })
+      Navigation.mergeOptions(componentId, {
+        topBar: {
+          rightButtons: [
+            {
+              id: `${componentId}_learn_more`,
+              passProps,
+              component: {name: TextButtonScreen.screenName, passProps}
+            }
+          ]
+        }
+      })
+    } else {
+      const passProps = {
+        params,
+        contextId: componentId,
+        onValidate: this.validateForm
+      }
+      Navigation.mergeOptions(componentId, {
+        topBar: {
+          rightButtons: [
+            {
+              id: `${componentId}_submit`,
+              passProps,
+              component: {name: SubmitButtonScreen.screenName, passProps}
+            }
+          ]
+        }
+      })
+    }
   }
 
   onChange = (value) => this.props.setContext({value})
@@ -152,6 +179,9 @@ class EditAddressScreen extends PureComponent {
   }
 }
 
-export default composeWithRef(withContext.byProp('componentId'), withApollo)(
+export default composeWithRef(withContext.byProp('componentId'),
+
+  withUserListings,
+withApollo)(
   EditAddressScreen
 )

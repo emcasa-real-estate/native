@@ -4,6 +4,7 @@ import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
+import {withPermission} from '@/containers/Permission'
 import {withListingsFeed} from '@/graphql/containers'
 import {getSearchFiltersQuery} from '@/screens/modules/listings/Search/module/selectors'
 import {
@@ -25,6 +26,7 @@ import Map from './Map'
 import styles from './styles'
 
 import ListingScreen from '@/screens/modules/listing/Listing'
+import FilterScreen from '@/screens/modules/listings/Search'
 
 class MapScreen extends Component {
   static screenName = 'listings.Map'
@@ -48,19 +50,6 @@ class MapScreen extends Component {
 
   state = {active: false}
 
-  componentDidMount() {
-    Navigation.mergeOptions(this.props.componentId, {
-      topBar: {
-        rightButtons: [
-          {
-            id: 'mapLocationButton',
-            component: {name: HeaderButton.screenName}
-          }
-        ]
-      }
-    })
-  }
-
   componentWillUnmount() {
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {rightButtons: []}
@@ -68,6 +57,18 @@ class MapScreen extends Component {
   }
 
   componentDidAppear() {
+    const passProps = {onShowFilters: this.onShowFilters}
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        rightButtons: [
+          {
+            id: 'mapLocationButton',
+            passProps,
+            component: {name: HeaderButton.screenName, passProps}
+          }
+        ]
+      }
+    })
     this.setState({active: true})
   }
 
@@ -93,13 +94,19 @@ class MapScreen extends Component {
 
   onReturn = () => Navigation.pop(this.props.componentId)
 
+  onShowFilters = () =>
+    Navigation.push(this.props.componentId, {
+      component: {name: FilterScreen.screenName}
+    })
+
   render() {
     const {
       listingsFeed: {data},
       activeListing,
       watchingPosition,
       isWithinBounds,
-      userPosition
+      userPosition,
+      onRequestPermission
     } = this.props
 
     return (
@@ -116,6 +123,7 @@ class MapScreen extends Component {
               onRequestPosition={this.onRequestPosition}
               onWatchPosition={this.onToggleWatchPosition(true)}
               onUnwatchPosition={this.onToggleWatchPosition(false)}
+              onRequestPermission={onRequestPermission}
             />
           )}
           <ListButton style={styles.button} onPress={this.onReturn} />
@@ -133,6 +141,7 @@ class MapScreen extends Component {
 }
 
 export default composeWithRef(
+  withPermission('location', 'whenInUse'),
   connect(
     (state) => ({
       activeListing: getActiveListing(state),
@@ -143,5 +152,5 @@ export default composeWithRef(
     {watchPosition, unwatchPosition, requestPosition, setActiveListing}
   ),
   connect((state) => ({filters: getSearchFiltersQuery(state)})),
-  withListingsFeed({pageSize: 1000, fetchPolicy: 'cache-then-network'})
+  withListingsFeed({pageSize: 1000, fetchPolicy: 'cache-then-network'}),
 )(MapScreen)

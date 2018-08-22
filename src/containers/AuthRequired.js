@@ -11,16 +11,16 @@ class BaseAuthRequired extends PureComponent {
   state = {loginRequested: false}
 
   requestLogin() {
-    const {componentId, notice, screenOptions} = this.props
+    const {componentId, notice, onRequestLogin} = this.props
     this.setState({loginRequested: true})
     Navigation.push(componentId, {
       component: {
         id: `${componentId}_login`,
         name: LoginScreen.screenName,
         passProps: {params: {parentId: componentId, notice}}
-      },
-      options: screenOptions
+      }
     })
+    if (onRequestLogin) onRequestLogin()
   }
 
   async componentDidMount() {

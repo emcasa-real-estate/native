@@ -1,33 +1,29 @@
 import _ from 'lodash'
 import {compose, mapProps} from 'recompose'
 
-import FavoritesMutation from '@/graphql/containers/FavoritesMutation'
 import {
-  withFavoriteListingByID,
+  withFavoriteMutation,
+  withBlacklistMutation,
   withViewTourMutation
 } from '@/graphql/containers'
 import Listing from '@/components/listings/Listing'
 
 function ListingApp({viewTour, onOpenTour, ...props}) {
   return (
-    <FavoritesMutation id={props.id} favorite={props.favorite}>
-      {(favoriteListing) => (
-        <Listing
-          onViewTour={() => viewTour()}
-          onFavorite={() => favoriteListing()}
-          onOpenTour={() => {
-            viewTour()
-            onOpenTour()
-          }}
-          {...props}
-        />
-      )}
-    </FavoritesMutation>
+    <Listing
+      onViewTour={() => viewTour()}
+      onOpenTour={() => {
+        viewTour()
+        onOpenTour()
+      }}
+      {...props}
+    />
   )
 }
 
 export default compose(
-  withFavoriteListingByID,
+  withFavoriteMutation,
+  withBlacklistMutation,
   withViewTourMutation,
   mapProps(({viewTour, ...props}) => ({
     viewTour: _.once(viewTour),

@@ -39,10 +39,9 @@ class FavoritesScreen extends PureComponent {
     const {favorites} = this.props
     return (
       <Shell>
-        <Body>
+        <Body loading={favorites.loading}>
           <Feed
             data={favorites.data}
-            loading={favorites.loading}
             onSelect={this.onSelect}
             ListEmptyComponent={favorites.loading ? undefined : ListEmpty}
           />

@@ -1,4 +1,4 @@
-export {default as User} from './User'
+export {default as User, UserProfile} from './User'
 export {default as Image} from './Image'
 export {default as Address} from './Address'
 export {default as Listing, ListingFeed, UserListing} from './Listing'

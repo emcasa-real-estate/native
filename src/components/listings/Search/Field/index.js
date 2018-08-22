@@ -8,9 +8,11 @@ export default function SearchField({children, title, onReset}) {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>{title.toUpperCase()}</Text>
-        <TouchableOpacity onPress={onReset}>
-          <Text style={styles.button}>Limpar</Text>
-        </TouchableOpacity>
+        {Boolean(onReset) && (
+          <TouchableOpacity onPress={onReset}>
+            <Text style={styles.button}>Limpar</Text>
+          </TouchableOpacity>
+        )}
       </View>
       {children && <View>{children}</View>}
     </View>

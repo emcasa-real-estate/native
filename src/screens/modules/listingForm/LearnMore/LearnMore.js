@@ -4,7 +4,8 @@ import {View, FlatList, Animated} from 'react-native'
 import * as colors from '@/assets/colors'
 import Text from '@/components/shared/Text'
 import Icon from '@/components/shared/Icon'
-import styles from './styles'
+import Button from '@/components/shared/Button'
+import styles, {buttonStyles} from './styles'
 
 const animated = (Target) =>
   class extends PureComponent {
@@ -208,6 +209,27 @@ export default class LearnMore extends PureComponent {
     else return null
   }
 
+  renderFooter = () => {
+    return (
+      <View style={styles.footer}>
+        <Button
+          styles={buttonStyles}
+          color="lightblue"
+          onPress={this.props.onClose}
+        >
+          Anuncie agora
+        </Button>
+        <Button
+          styles={buttonStyles}
+          color="blue"
+          onPress={this.props.onOpenContactForm}
+        >
+          Fale com um consultor
+        </Button>
+      </View>
+    )
+  }
+
   render() {
     return (
       <FlatList
@@ -216,6 +238,7 @@ export default class LearnMore extends PureComponent {
         renderItem={this.renderItem}
         extraData={this.state}
         ItemSeparatorComponent={this.renderSeparator}
+        ListFooterComponent={this.renderFooter}
         viewabilityConfig={this.viewabilityConfig}
         onViewableItemsChanged={this.onViewableItemsChanged}
       />

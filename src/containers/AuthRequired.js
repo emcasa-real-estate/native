@@ -12,7 +12,7 @@ export default class AuthRequired extends PureComponent {
   state = {loginRequested: false}
 
   requestLogin() {
-    const {componentId, notice} = this.props
+    const {componentId, notice, onRequestLogin} = this.props
     this.setState({loginRequested: true})
     Navigation.push(componentId, {
       component: {
@@ -21,6 +21,7 @@ export default class AuthRequired extends PureComponent {
         passProps: {params: {parentId: componentId, notice}}
       }
     })
+    if (onRequestLogin) onRequestLogin()
   }
 
   async componentDidMount() {

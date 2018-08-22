@@ -87,10 +87,8 @@ class EditAddressScreen extends PureComponent {
   }
 
   componentDidMount() {
-    const {userListings, params: {id}} = this.props
+    const {params: {id}} = this.props
     if (id) this.setDefaultValue()
-    else if (!(userListings.data && userListings.data.length >= 1))
-      this.showLearnMoreScreen()
   }
 
   componentWillUnmount() {
@@ -175,7 +173,12 @@ class EditAddressScreen extends PureComponent {
 
 export default composeWithRef(
   authRequired(() => ({
-    notice: 'O login é necessário para anunciar um imóvel.'
+    notice: 'O login é necessário para anunciar um imóvel.',
+    onRequestLogin() {
+      Navigation.showModal({
+        component: {name: LearnMoreScreen.screenName}
+      })
+    }
   })),
   withContext.byProp('componentId'),
   withUserListings,

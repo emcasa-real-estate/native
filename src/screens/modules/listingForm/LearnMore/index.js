@@ -1,9 +1,10 @@
 import {Component} from 'react'
 import {Navigation} from 'react-native-navigation'
 
-import {Modal, Body, Footer} from '@/components/layout'
-import Button from '@/components/shared/Button'
+import {Modal, Body} from '@/components/layout'
 import LearnMore from './LearnMore'
+
+import ContactScreen from '@/screens/modules/listingForm/Contact'
 
 export default class LearnMoreScreen extends Component {
   static screenName = 'listingForm.LearnMore'
@@ -12,18 +13,22 @@ export default class LearnMoreScreen extends Component {
     Navigation.dismissAllModals()
   }
 
+  onOpenContactForm = () => {
+    Navigation.showModal({
+      component: {name: ContactScreen.screenName}
+    })
+  }
+
   render() {
     return (
       <Modal testID="@listingForm.LearnMore">
         <Modal.Header onDismiss={this.onClose} />
         <Body>
-          <LearnMore />
+          <LearnMore
+            onClose={this.onClose}
+            onOpenContactForm={this.onOpenContactForm}
+          />
         </Body>
-        <Footer style={{padding: 15}}>
-          <Button color="blue" onPress={this.onClose}>
-            Anuncie agora
-          </Button>
-        </Footer>
       </Modal>
     )
   }

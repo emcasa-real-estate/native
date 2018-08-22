@@ -1,8 +1,9 @@
-import {Component} from 'react'
+import {Component, Fragment} from 'react'
 import {View, TouchableOpacity, Dimensions} from 'react-native'
 
 import BaseIcon from '@/components/shared/Icon'
 import LikeIcon from '@/components/listings/LikeIcon'
+import BlacklistIcon from '@/components/listings/BlacklistIcon'
 import Image from '@/components/listings/Image'
 import Gallery from '@/components/listings/Gallery'
 import styles, {iconColor} from './styles'
@@ -35,9 +36,11 @@ export default class ListingThumbnail extends Component {
       testID,
       images,
       favorite,
+      blacklisted,
       matterportCode,
       isActive,
       onFavorite,
+      onBlacklist,
       onShare
     } = this.props
     let {width, height} = Dimensions.get('window')
@@ -61,23 +64,33 @@ export default class ListingThumbnail extends Component {
         <View style={styles.actionRow}>
           <View style={styles.actionCell}>
             {isActive && (
-              <ActionButton
-                title={
-                  favorite ? 'Adicionar aos favoritos' : 'Remover dos favoritos'
-                }
-                onPress={onFavorite}
-              >
-                <LikeIcon active={favorite} size={20} />
-              </ActionButton>
+              <Fragment>
+                <ActionButton
+                  title={
+                    favorite
+                      ? 'Adicionar aos favoritos'
+                      : 'Remover dos favoritos'
+                  }
+                  onPress={onFavorite}
+                >
+                  <LikeIcon active={favorite} size={20} />
+                </ActionButton>
+                <ActionButton
+                  title={blacklisted ? 'Ocultar' : 'Exibir'}
+                  onPress={onBlacklist}
+                >
+                  <BlacklistIcon active={blacklisted} size={20} />
+                </ActionButton>
+              </Fragment>
             )}
           </View>
           <View style={styles.actionCell}>
-            {images.length && (
+            {Boolean(images.length) && (
               <ActionButton title="Ver imagens" onPress={this.onOpenGallery}>
                 <Icon name="image" />
               </ActionButton>
             )}
-            {matterportCode && (
+            {Boolean(matterportCode) && (
               <ActionButton title="Ver em tela cheia" onPress={this.onOpenTour}>
                 <Icon name="cube" />
               </ActionButton>

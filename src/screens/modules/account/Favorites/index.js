@@ -24,6 +24,18 @@ class FavoritesScreen extends PureComponent {
     }
   }
 
+  onSwitchView = () => {
+    const {componentId, params: {switchViewId}} = this.props
+    if (switchViewId) Navigation.popTo(switchViewId)
+    else
+      Navigation.push(componentId, {
+        component: {
+          component: 'account.Blacklist',
+          passProps: {params: {switchViewId: componentId}}
+        }
+      })
+  }
+
   onSelect = (id) =>
     Navigation.push(this.props.componentId, {
       component: {
@@ -36,10 +48,9 @@ class FavoritesScreen extends PureComponent {
     const {favorites} = this.props
     return (
       <Shell>
-        <Body>
+        <Body loading={favorites.loading}>
           <Feed
             data={favorites.data}
-            loading={favorites.loading}
             onSelect={this.onSelect}
             ListEmptyComponent={favorites.loading ? undefined : ListEmpty}
           />

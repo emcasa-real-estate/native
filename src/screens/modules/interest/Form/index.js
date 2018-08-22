@@ -32,7 +32,6 @@ class InterestFormScreen extends PureComponent {
     const {componentId} = this.props
     Navigation.push(componentId, {
       component: {
-        id: `${componentId}_calendly`,
         name: CalendlyScreen.screenName
       }
     })

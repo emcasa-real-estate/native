@@ -1,6 +1,6 @@
 import {View} from 'react-native'
+import moment from 'moment'
 
-import * as format from '@/assets/format'
 import Text from '@/components/shared/Text'
 import Icon from '@/components/shared/Icon'
 import styles, {iconColor} from './styles'
@@ -47,14 +47,14 @@ export default function ListingDashboard({
       <Property
         title="Data de criação"
         icon="calendar-check"
-        value={format.date(new Date(insertedAt))}
+        value={moment.utc(insertedAt).format('D [de] MMM, YYYY')}
       />
       <Property
         title="Página do imóvel"
         icon="eye"
         value={`${listingVisualisationCount} visualizações`}
       />
-      {matterportCode && (
+      {Boolean(matterportCode) && (
         <Property
           title="Tour 3D"
           icon="home-heart"

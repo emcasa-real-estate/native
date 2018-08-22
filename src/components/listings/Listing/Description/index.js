@@ -21,7 +21,7 @@ export default function ListingDescrition(props) {
       <Section title="Tipo do Imóvel">
         <Text style={styles.text}>{props.type}</Text>
       </Section>
-      {(maintenanceFee || propertyTax) && (
+      {Boolean(maintenanceFee || propertyTax) && (
         <View style={styles.sectionContainer}>
           <Section nested title="Condomínio">
             <Price nullable>{maintenanceFee}</Price>

@@ -72,7 +72,6 @@ export default class LoginScreen extends PureComponent {
     const {componentId, params} = this.props
     Navigation.push(componentId, {
       component: {
-        id: 'sign_up',
         name: SignUpScreen.screenName,
         passProps: {params}
       }
@@ -83,7 +82,6 @@ export default class LoginScreen extends PureComponent {
     const {componentId, params} = this.props
     Navigation.push(componentId, {
       component: {
-        id: 'reset_password',
         name: ResetPasswordScreen.screenName,
         passProps: {params}
       }

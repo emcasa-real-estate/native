@@ -32,6 +32,11 @@ class ListingsFeedScreen extends PureComponent {
     }
   }
 
+  componentDidDisappear() {
+    const {listingsFeed: {loading, updateBlacklists}} = this.props
+    if (!loading) updateBlacklists()
+  }
+
   onLoadMore = () => {
     const {listingsFeed: {loading, fetchMore}} = this.props
     if (!loading) fetchMore()

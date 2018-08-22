@@ -73,7 +73,7 @@ export default class ListingGallery extends PureComponent {
     const opacity = 0.6 / (distanceFromActivePage + 1) + 0.4
     return (
       <Icon
-        key={image.filename}
+        key={`${index}.${image.filename}`}
         type="solid"
         name="circle"
         color="white"
@@ -91,10 +91,10 @@ export default class ListingGallery extends PureComponent {
       return <View key={image.filename} style={this.imageLayout} />
     return (
       <Image
+        key={`${index}.${image.filename}`}
         style={[styles.image]}
         resolution={scalable ? 4.5 : 1}
         layout={scalable ? 'scalable' : undefined}
-        key={image.filename}
         {...this.imageLayout}
         {...image}
       />
@@ -102,11 +102,11 @@ export default class ListingGallery extends PureComponent {
   }
 
   render() {
-    const {inline, testID} = this.props
+    const {inline, style, testID} = this.props
     const {position} = this.state
     return (
       <View
-        style={[styles.container, this.layout]}
+        style={[styles.container, this.layout, style]}
         onLayout={this.onLayout}
         testID={testID}
       >

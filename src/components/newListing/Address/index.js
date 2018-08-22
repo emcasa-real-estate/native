@@ -16,11 +16,7 @@ export default class ListingAddressForm extends Component {
           </View>
           <TextInput
             name="complement"
-            keyboardType={
-              process.env.NODE_ENV === 'e2e'
-                ? 'numbers-and-punctuation'
-                : 'default'
-            }
+            keyboardType="default"
             placeholder="Complemento"
           />
         </Form>

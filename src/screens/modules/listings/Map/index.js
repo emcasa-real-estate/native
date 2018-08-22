@@ -136,6 +136,7 @@ class MapScreen extends Component {
 }
 
 export default composeWithRef(
+  withPermission('location', 'whenInUse'),
   connect(
     (state) => ({
       activeListing: getActiveListing(state),
@@ -147,5 +148,4 @@ export default composeWithRef(
   ),
   connect((state) => ({filters: getSearchFiltersQuery(state)})),
   withListingsFeed({pageSize: 1000, fetchPolicy: 'cache-then-network'}),
-  withPermission('location', 'whenInUse')
 )(MapScreen)

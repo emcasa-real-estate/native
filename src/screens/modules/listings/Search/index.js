@@ -1,11 +1,12 @@
 import _ from 'lodash'
 import {PureComponent} from 'react'
-import {ScrollView} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import {updateFilters} from './module'
 import {getSearchFilters} from './module/selectors'
+import {Shell, Body, Footer} from '@/components/layout'
+import Button from '@/components/shared/Button'
 import Form from '@/components/listings/Search/Form'
 import Field from '@/components/listings/Search/Field'
 import FormButton from '@/components/account/FormButton'
@@ -124,18 +125,25 @@ export default class ListingSearchScreen extends PureComponent {
     const {options} = this.state
 
     return (
-      <ScrollView style={{flex: 1}}>
-        <Form
-          onChange={this.onChange}
-          onPressNeighborhoods={this.onPressNeighborhoods}
-          value={options}
-        />
-        <Field title="Imóveis ocultados">
-          <FormButton icon="eye-slash" onPress={this.onPressBlacklist}>
-            Imóveis que você ocultou da busca
-          </FormButton>
-        </Field>
-      </ScrollView>
+      <Shell>
+        <Body scroll>
+          <Form
+            onChange={this.onChange}
+            onPressNeighborhoods={this.onPressNeighborhoods}
+            value={options}
+          />
+          <Field title="Imóveis ocultados">
+            <FormButton icon="eye-slash" onPress={this.onPressBlacklist}>
+              Imóveis que você ocultou da busca
+            </FormButton>
+          </Field>
+        </Body>
+        <Footer style={{padding: 15}}>
+          <Button onPress={() => Navigation.pop(this.props.componentId)}>
+            Filtrar resultados
+          </Button>
+        </Footer>
+      </Shell>
     )
   }
 }

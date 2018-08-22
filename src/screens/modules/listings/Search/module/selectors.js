@@ -1,9 +1,12 @@
 import _ from 'lodash/fp'
 import {createSelector} from 'reselect'
 
+const omitEmpty = _.omitBy(_.isEmpty)
+
 export const getSearchScreen = (state) => state.screens.listings.Search
 
-export const getSearchFilters = (state) => getSearchScreen(state).filters || {}
+export const getSearchFilters = (state) =>
+  omitEmpty(getSearchScreen(state).filters || {})
 
 const parseRange = (name, {min, max}) => ({
   [`min${_.upperFirst(name)}`]: min,

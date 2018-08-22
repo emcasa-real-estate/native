@@ -7,8 +7,10 @@ export default StyleSheet.create({
     padding: 15,
     paddingTop: 20,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.gray.lighter,
-    borderRadius: 5
+    borderBottomColor: colors.gray.lighter
+  },
+  containerBlacklisted: {
+    backgroundColor: colors.gray.offWhite
   },
   thumbnail: {
     position: 'relative',
@@ -33,7 +35,11 @@ export default StyleSheet.create({
     marginBottom: 5
   },
   buttonsRow: {
-    marginBottom: 10
+    marginBottom: 10,
+    marginHorizontal: -5
+  },
+  iconButton: {
+    marginHorizontal: 5
   },
   street: {
     color: colors.gray.darker,

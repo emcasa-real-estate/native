@@ -8,8 +8,12 @@ import {getSearchFilters} from './module/selectors'
 import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import Form from '@/components/listings/Search/Form'
+import Field from '@/components/listings/Search/Field'
+import FormButton from '@/components/account/FormButton'
 import HeaderButton from '@/screens/modules/shared/Header/TextButton'
 import Neighborhoods from './Neighborhoods'
+
+import BlacklistScreen from '@/screens/modules/account/Blacklist'
 
 const defaultValue = {
   neighborhoods: [],
@@ -111,6 +115,12 @@ export default class ListingSearchScreen extends PureComponent {
     })
   }
 
+  onPressBlacklist = () => {
+    Navigation.push(this.props.componentId, {
+      component: {name: BlacklistScreen.screenName}
+    })
+  }
+
   render() {
     const {options} = this.state
 
@@ -122,6 +132,11 @@ export default class ListingSearchScreen extends PureComponent {
             onPressNeighborhoods={this.onPressNeighborhoods}
             value={options}
           />
+          <Field title="Imóveis ocultados">
+            <FormButton icon="eye-slash" onPress={this.onPressBlacklist}>
+              Imóveis que você ocultou da busca
+            </FormButton>
+          </Field>
         </Body>
         <Footer style={{padding: 15}}>
           <Button onPress={() => Navigation.pop(this.props.componentId)}>

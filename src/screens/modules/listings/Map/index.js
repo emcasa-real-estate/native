@@ -38,6 +38,11 @@ class MapScreen extends Component {
         text: 'Buscar imóveis',
         alignment: 'center'
       }
+    },
+    bottomTabs: {
+      visible: false,
+      drawBehind: true,
+      animated: false
     }
   }
 

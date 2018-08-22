@@ -1,29 +1,52 @@
-import * as listingForm from './modules/listingForm/screens'
-import * as listings from './modules/listings/screens'
-import * as account from './modules/account/screens'
-import * as auth from './modules/auth/screens'
+import {createSelector} from 'reselect'
 
-export default {
-  listings: {
+import {getUser} from '@/redux/modules/auth/selectors'
+import * as listingForm from '@/screens/modules/listingForm/screens'
+import * as listings from '@/screens/modules/listings/screens'
+import * as account from '@/screens/modules/account/screens'
+import * as auth from '@/screens/modules/auth/screens'
+
+export default createSelector(getUser, (user) => [
+  {
     name: listings.Feed.screenName,
-    isActive: ({name}) => /^listings/.test(name)
+    options: {
+      bottomTab: {
+        text: 'Imóveis',
+        icon: require('@/assets/img/tabs/home.png')
+      }
+    }
   },
-  newListing: {
-    name: listingForm.Address.screenName,
-    isActive: ({name}) => /^listingForm/.test(name)
-  },
-  favorites: {
+  {
     name: account.Favorites.screenName,
-    isActive: ({name}) => /^account\.Favorites/.test(name)
+    options: {
+      bottomTab: {
+        text: 'Favoritos',
+        icon: require('@/assets/img/tabs/heart.png')
+      }
+    }
   },
-  account: {
-    name: account.Menu.screenName,
-    isActive: ({name}) => /^account\.(?!Favorites)/.test(name)
+  {
+    name: user ? listingForm.Address.screenName : auth.Login.screenName,
+    passProps: {
+      params: {
+        tabIndex: 2,
+        notice: 'O login é necessário para anunciar um imóvel.'
+      }
+    },
+    options: {
+      bottomTab: {
+        text: 'Anunciar',
+        icon: require('@/assets/img/tabs/tag.png')
+      }
+    }
   },
-  auth: {
-    name: auth.Login.screenName,
-    isActive: ({name}) => /^auth/.test(name)
+  {
+    name: user ? account.Menu.screenName : auth.Login.screenName,
+    options: {
+      bottomTab: {
+        text: user ? 'Perfil' : 'Login',
+        icon: require('@/assets/img/tabs/user.png')
+      }
+    }
   }
-}
-
-export const STACK_ROOT = 'listings'
+])

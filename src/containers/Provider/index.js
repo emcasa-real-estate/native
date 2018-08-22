@@ -1,10 +1,12 @@
 import _ from 'lodash'
-import React, {PureComponent} from 'react'
+import {PureComponent} from 'react'
 import {Provider} from 'react-redux'
 import {PersistGate} from 'redux-persist/integration/react'
+import {Navigation} from 'react-native-navigation'
 
 import defaultOptions from '@/screens/options'
 import client from '@/lib/client'
+import ScreenDelegator from '../ScreenDelegator'
 import ApolloProvider from './ApolloProvider'
 
 export default class AppProvider extends PureComponent {
@@ -29,48 +31,16 @@ export default class AppProvider extends PureComponent {
 }
 
 export const withProvider = (Target) =>
-  class extends PureComponent {
+  class extends ScreenDelegator(Target) {
     static defaultProps = {params: {}}
 
     static displayName = `withProvider(${Target.displayName || Target.name})`
 
-    screen = React.createRef()
-
     static options = _.defaultsDeep(Target.options || {}, defaultOptions)
 
-    getWrappedInstance() {
-      let instance = this.screen.current
-      try {
-        while (instance && instance.getWrappedInstance)
-          instance = instance.getWrappedInstance()
-      } catch (error) {
-        throw new Error(
-          `Unable to access ref for screen ${Target.screenName}.\n${
-            error.message
-          }`,
-          error
-        )
-      }
-      return instance
-    }
-
-    resendEvent = (eventName, params) => {
-      const instance = this.getWrappedInstance()
-      if (instance && instance[eventName]) {
-        instance[eventName](params)
-      }
-    }
-
-    componentDidAppear() {
-      this.resendEvent('componentDidAppear')
-    }
-
-    componentDidDisappear() {
-      this.resendEvent('componentDidDisappear')
-    }
-
-    onNavigationButtonPressed(buttonId) {
-      this.resendEvent('onNavigationButtonPressed', buttonId)
+    constructor(props) {
+      super(props)
+      Navigation.events().bindComponent(this)
     }
 
     render() {

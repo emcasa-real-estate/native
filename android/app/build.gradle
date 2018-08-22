@@ -113,7 +113,7 @@ android {
         versionName "1.0"
         testBuildType System.getProperty('testBuildType', 'debug')
         missingDimensionStrategy "minReactNative", "minReactNative46"
-        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative55"
+        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative56"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             abiFilters "armeabi-v7a", "x86"

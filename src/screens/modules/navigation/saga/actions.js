@@ -1,62 +1,59 @@
-import _ from 'lodash'
 import {Navigation} from 'react-native-navigation'
-import {put, all, select, takeEvery} from 'redux-saga/effects'
+import {delay} from 'redux-saga'
+import {all, put, select, race, takeEvery, take} from 'redux-saga/effects'
 
-import TABS, {STACK_ROOT} from '@/screens/tabs'
+import getBottomTabs from '@/screens/tabs'
 import defaultOptions from '@/screens/options'
 import * as actions from '../index'
-import {getCurrentTab, getStackRoot} from '../selectors'
+import {getStackRootId} from '../selectors'
+import {REHYDRATE} from 'redux-persist'
 
-const uniqId = () =>
-  Math.random()
-    .toString(36)
-    .substr(2, 9)
+const authPersisted = (state) => state.auth._persist.rehydrated
+const authPersistedAction = ({type, key}) =>
+  type === REHYDRATE && key === 'auth'
 
-function* setStack({stack, tab}) {
-  stack.unshift({id: `${STACK_ROOT}_${uniqId()}`, name: TABS[STACK_ROOT].name})
+function* initialize() {
+  const ready = yield select(authPersisted)
+  if (!ready)
+    yield race({
+      persist: take(authPersistedAction),
+      timeout: delay(500)
+    })
+  Navigation.setDefaultOptions(defaultOptions)
+  yield put(actions.updateStackRoot())
+}
+
+function* switchTab({tabIndex}) {
+  const rootId = yield select(getStackRootId)
+  Navigation.mergeOptions(rootId, {
+    bottomTabs: {currentTabIndex: tabIndex}
+  })
+  yield put(actions.tabSelected(tabIndex))
+}
+
+function* updateStackRoot({rootId, tabIndex, children}) {
+  const bottomTabs = (yield select(getBottomTabs)).map((component) => ({
+    stack: {
+      children: [{component}],
+      options: component.options
+    }
+  }))
+  if (children.length) bottomTabs[tabIndex].stack.children.push(...children)
   Navigation.setRoot({
     root: {
-      stack: {
-        children: stack.map((component) => ({component}))
+      bottomTabs: {
+        id: rootId,
+        options: {bottomTabs: {currentTabIndex: tabIndex}},
+        children: bottomTabs
       }
     }
   })
-  yield put(actions.updateTab(tab || STACK_ROOT))
-  yield put(actions.updateStackRoot(stack[0]))
-}
-
-function* setInitialStack() {
-  yield put(actions.setStack([]))
-}
-
-function* switchTab({tab}) {
-  const currentTab = yield select(getCurrentTab)
-  const stackRoot = yield select(getStackRoot)
-  if (tab === currentTab) return
-  yield put(actions.updateTab(tab))
-  Navigation.setDefaultOptions(defaultOptions)
-  if (currentTab !== STACK_ROOT) Navigation.popTo(stackRoot.id)
-  if (tab !== STACK_ROOT) {
-    Navigation.push(stackRoot.id, {
-      component: {
-        id: tab,
-        name: TABS[tab].name
-      }
-    })
-  }
-}
-
-function* updateCurrentTab(action) {
-  const tab = _.findKey(TABS, ({isActive}) => isActive(action))
-  const currentTab = yield select(getCurrentTab)
-  if (tab && tab !== currentTab) yield put(actions.updateTab(tab))
 }
 
 export default function* navigationActionsSaga() {
   yield all([
+    takeEvery(actions.APP_LAUNCHED, initialize),
     takeEvery(actions.SWITCH_TAB, switchTab),
-    takeEvery(actions.SET_STACK, setStack),
-    takeEvery(actions.SCREEN_APPEARED, updateCurrentTab),
-    takeEvery(actions.APP_LAUNCHED, setInitialStack)
+    takeEvery(actions.UPDATE_STACK_ROOT, updateStackRoot)
   ])
 }

@@ -11,14 +11,15 @@ class BaseAuthRequired extends PureComponent {
   state = {loginRequested: false}
 
   requestLogin() {
-    const {componentId, notice} = this.props
+    const {componentId, notice, screenOptions} = this.props
     this.setState({loginRequested: true})
     Navigation.push(componentId, {
       component: {
         id: `${componentId}_login`,
         name: LoginScreen.screenName,
         passProps: {params: {parentId: componentId, notice}}
-      }
+      },
+      options: screenOptions
     })
   }
 
@@ -26,7 +27,7 @@ class BaseAuthRequired extends PureComponent {
     const {jwt, componentId} = this.props
     const registerThisComponentAppearedListener = (fun) =>
       Navigation.events().registerComponentDidAppearListener(
-        (_componentId) => _componentId === componentId && fun()
+        ({componentId: id}) => id === componentId && fun()
       )
     if (!jwt) {
       await new Promise((resolve) => {

@@ -14,6 +14,10 @@ class NeighborhoodsScreen extends PureComponent {
   static options = {
     topBar: {
       title: {text: 'Bairros'}
+    },
+    bottomTabs: {
+      visible: false,
+      animated: false
     }
   }
 

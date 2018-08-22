@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 
 import {getUser, getError, isLoading} from '@/redux/modules/auth/selectors'
 import {signIn, reset} from '@/redux/modules/auth'
+import {updateStackRoot} from '@/screens/modules/navigation'
 import {Shell, Body, Footer} from '@/components/layout'
 import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
@@ -27,31 +28,25 @@ class LoginScreen extends PureComponent {
   }
 
   state = {
+    active: false,
     value: {}
   }
 
   form = React.createRef()
 
-  returnToParentScreen() {
-    const {
-      componentId,
-      params: {parentId}
-    } = this.props
-    if (parentId) Navigation.popTo(parentId)
-    else Navigation.popToRoot(componentId)
-  }
-
   componentDidDisappear() {
-    this.setState({value: undefined})
+    this.setState({value: undefined, active: false})
   }
 
   componentDidAppear() {
     this.props.reset()
+    this.setState({active: true})
   }
 
   componentDidUpdate(prev) {
     const {user} = this.props
-    if (user && !prev.user) this.returnToParentScreen()
+    const {active} = this.state
+    if (active && user && !prev.user) this.onSuccess()
   }
 
   onChange = (value) => this.setState({value})
@@ -60,6 +55,14 @@ class LoginScreen extends PureComponent {
     const {signIn, loading} = this.props
     const {value} = this.state
     if (!loading && this.form.current.onValidate()) signIn(value)
+  }
+
+  onSuccess = () => {
+    const {
+      updateStackRoot,
+      params: {tabIndex}
+    } = this.props
+    updateStackRoot({tabIndex})
   }
 
   onSignUp = () => {
@@ -125,7 +128,7 @@ export default connect(
     error: getError(state),
     loading: isLoading(state)
   }),
-  {signIn, reset},
+  {signIn, reset, updateStackRoot},
   null,
   {withRef: true}
 )(LoginScreen)

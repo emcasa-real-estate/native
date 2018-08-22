@@ -32,6 +32,11 @@ class ListingSearchScreen extends PureComponent {
   static options = {
     topBar: {
       title: {text: 'Filtrar busca'}
+    },
+    bottomTabs: {
+      visible: false,
+      drawBehind: true,
+      animated: false
     }
   }
 

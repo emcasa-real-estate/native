@@ -22,7 +22,12 @@ class InterestFormScreen extends PureComponent {
   static options = {
     topBar: {
       title: {text: 'Marcar visita'},
-      backButtonTitle: ''
+      backButton: {title: ''}
+    },
+    bottomTabs: {
+      visible: false,
+      drawBehind: true,
+      animated: false
     }
   }
 
@@ -77,7 +82,11 @@ class InterestFormScreen extends PureComponent {
   onChange = (value) => this.setState({value})
 
   onSubmit = () => {
-    const {request, loading, params: {id}} = this.props
+    const {
+      request,
+      loading,
+      params: {id}
+    } = this.props
     const {value} = this.state
     const interestType = value.interest_type_id
     if (loading) return

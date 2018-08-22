@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 
 import {getUser, getError, isLoading} from '@/redux/modules/auth/selectors'
 import {signUp, reset} from '@/redux/modules/auth'
+import {updateStackRoot} from '@/screens/modules/navigation'
 import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import SignUpForm from '@/components/auth/SignUp'
@@ -19,30 +20,31 @@ class SignUpScreen extends PureComponent {
   }
 
   state = {
+    active: false,
     value: {}
   }
 
   form = React.createRef()
 
-  async returnToParentScreen() {
-    const {params: {parentId}} = this.props
-    if (parentId) return Navigation.popTo(parentId)
+  componentDidDisappear() {
+    this.setState({value: undefined, active: false})
   }
 
-  componentDidDisappear() {
-    this.setState({value: undefined})
+  componentDidAppear() {
+    this.setState({active: true})
   }
 
   componentDidMount() {
     this.props.reset()
   }
 
-  onChange = (value) => this.setState({value})
-
   componentDidUpdate(prev) {
     const {user} = this.props
-    if (!prev.user && user) this.onSuccess()
+    const {active} = this.state
+    if (active && !prev.user && user) this.onSuccess()
   }
+
+  onChange = (value) => this.setState({value})
 
   onSubmit = () => {
     const {signUp, loading} = this.props
@@ -51,7 +53,9 @@ class SignUpScreen extends PureComponent {
   }
 
   onSuccess = () => {
-    const {user: {name}} = this.props
+    const {
+      user: {name}
+    } = this.props
     const firstName = name.split(' ')[0]
     Navigation.showModal({
       component: {
@@ -67,8 +71,12 @@ class SignUpScreen extends PureComponent {
   }
 
   onDismiss = async () => {
-    await this.returnToParentScreen()
+    const {
+      updateStackRoot,
+      params: {tabIndex}
+    } = this.props
     await Navigation.dismissAllModals()
+    updateStackRoot({tabIndex})
   }
 
   render() {
@@ -103,7 +111,7 @@ export default connect(
     error: getError(state),
     loading: isLoading(state)
   }),
-  {signUp, reset},
+  {signUp, reset, updateStackRoot},
   null,
   {withRef: true}
 )(SignUpScreen)

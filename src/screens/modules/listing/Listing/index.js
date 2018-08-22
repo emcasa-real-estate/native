@@ -27,7 +27,12 @@ class ListingScreen extends PureComponent {
 
   static options = {
     topBar: {
-      backButtonTitle: ''
+      backButton: {title: ''}
+    },
+    bottomTabs: {
+      visible: false,
+      drawBehind: true,
+      animated: false
     }
   }
 
@@ -52,7 +57,10 @@ class ListingScreen extends PureComponent {
   }
 
   updateNavigation() {
-    const {listing: {data}, componentId} = this.props
+    const {
+      listing: {data},
+      componentId
+    } = this.props
     if (!data) return
     Navigation.mergeOptions(componentId, {
       topBar: {
@@ -77,7 +85,9 @@ class ListingScreen extends PureComponent {
   }
 
   componentDidUpdate(prev) {
-    const {listing: {data}} = this.props
+    const {
+      listing: {data}
+    } = this.props
     if (data && !_.isEqual(data, prev.listing.data)) this.updateNavigation()
   }
 
@@ -119,7 +129,10 @@ class ListingScreen extends PureComponent {
     })
 
   onShare = async () => {
-    const {logEvent, params: {id}} = this.props
+    const {
+      logEvent,
+      params: {id}
+    } = this.props
     try {
       const {app} = await Share.open(this.shareOptions)
       logEvent('share_listing', {id, app})
@@ -142,7 +155,9 @@ class ListingScreen extends PureComponent {
   }
 
   renderFooter() {
-    const {params: {id}} = this.props
+    const {
+      params: {id}
+    } = this.props
     return (
       <View style={{flexDirection: 'row'}}>
         <Button
@@ -170,7 +185,9 @@ class ListingScreen extends PureComponent {
   }
 
   render() {
-    const {listing: {data, loading}} = this.props
+    const {
+      listing: {data, loading}
+    } = this.props
 
     return (
       <Shell>

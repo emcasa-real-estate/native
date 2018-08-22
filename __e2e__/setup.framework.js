@@ -1,46 +1,16 @@
 /* eslint-disable no-console */
-import path from 'path'
 import detox from 'detox'
-import {promisify} from 'util'
-import * as child_process from 'child_process'
+import detoxAdapter from 'detox/runners/jest/adapter'
 
 import pkg from '../package.json'
 
-const exec = promisify(child_process.exec)
-
-const toBool = (val) =>
-  ['true', 'yes', 'y'].findIndex(
-    (str) => val == str || val == str.toUpperCase()
-  ) !== -1
-
-const DEVICE_NAME = process.env.DEVICE_NAME || 'booted'
-const SCREENSHOT_PATH =
-  process.env.SCREENSHOT_PATH || path.join(__dirname, '../tmp/screenshots')
-
-const timestamp = () => {
-  const date = new Date()
-  return 'Y-m-d.@t'
-    .replace('Y', date.getFullYear())
-    .replace('m', date.getMonth() + 1)
-    .replace('d', date.getDate())
-    .replace('@t', date.getTime())
-}
-
-global.screenShot = async (fileName = timestamp()) => {
-  try {
-    await exec(
-      `xcrun simctl io "${DEVICE_NAME}" screenshot ${SCREENSHOT_PATH}/${fileName}.png`
-    )
-    console.info(`Saved screenshot to ${SCREENSHOT_PATH}/${fileName}.png`)
-  } catch (error) {
-    console.error(error.message)
-  }
-}
-
 jest.setTimeout(180000)
+jasmine.getEnv().addReporter(detoxAdapter)
 
 beforeAll(() => detox.init(pkg.detox))
 
-if (toBool(process.env.SCREENSHOT)) afterEach(() => screenShot())
+beforeEach(() => detoxAdapter.beforeEach())
+
+afterAll(() => detoxAdapter.afterAll())
 
 afterAll(() => detox.cleanup())

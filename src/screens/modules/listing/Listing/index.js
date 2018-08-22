@@ -20,7 +20,6 @@ import Listing from './Listing'
 import GalleryScreen from '@/screens/modules/listing/Gallery'
 import TourScreen from '@/screens/modules/listing/Tour'
 import InterestFormScreen from '@/screens/modules/interest/Form'
-import MessengerScreen from '@/screens/modules/messenger/Conversation'
 
 class ListingScreen extends PureComponent {
   static screenName = 'listing.Listing'
@@ -52,7 +51,10 @@ class ListingScreen extends PureComponent {
   }
 
   updateNavigation() {
-    const {listing: {data}, componentId} = this.props
+    const {
+      listing: {data},
+      componentId
+    } = this.props
     if (!data) return
     Navigation.mergeOptions(componentId, {
       topBar: {
@@ -77,7 +79,9 @@ class ListingScreen extends PureComponent {
   }
 
   componentDidUpdate(prev) {
-    const {listing: {data}} = this.props
+    const {
+      listing: {data}
+    } = this.props
     if (data && !_.isEqual(data, prev.listing.data)) this.updateNavigation()
   }
 
@@ -119,7 +123,10 @@ class ListingScreen extends PureComponent {
     })
 
   onShare = async () => {
-    const {logEvent, params: {id}} = this.props
+    const {
+      logEvent,
+      params: {id}
+    } = this.props
     try {
       const {app} = await Share.open(this.shareOptions)
       logEvent('share_listing', {id, app})
@@ -142,35 +149,23 @@ class ListingScreen extends PureComponent {
   }
 
   renderFooter() {
-    const {params: {id}} = this.props
     return (
       <View style={{flexDirection: 'row'}}>
         <Button
           color="lightgreen"
-          styles={{
-            container: {flex: 0.5, marginRight: 5},
-            text: {fontSize: 14}
-          }}
+          style={{flex: 1}}
           onPress={this.navigateTo({name: InterestFormScreen.screenName})}
         >
           Marcar visita
-        </Button>
-        <Button
-          color="green"
-          styles={{container: {flex: 0.5, marginLeft: 5}, text: {fontSize: 14}}}
-          onPress={this.navigateTo(
-            {name: MessengerScreen.screenName},
-            {listing: {id}}
-          )}
-        >
-          Entre em contato
         </Button>
       </View>
     )
   }
 
   render() {
-    const {listing: {data, loading}} = this.props
+    const {
+      listing: {data, loading}
+    } = this.props
 
     return (
       <Shell>

@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
 import {signOut} from '@/redux/modules/auth'
-import {withUserListings, withMessengerUnreadCount} from '@/graphql/containers'
+import {withUserListings} from '@/graphql/containers'
 import {Shell, Body, Header, Footer} from '@/components/layout'
 import BottomTabs from '@/screens/modules/navigation/BottomTabs'
 import Menu from '@/components/account/Menu'
@@ -12,7 +12,6 @@ import AccountHeader from './Header'
 
 import EditProfileScreen from '@/screens/modules/account/EditProfile'
 import UserListingsScreen from '@/screens/modules/account/Listings'
-import MessengerChannelsScreen from '@/screens/modules/messenger/Channels'
 
 class AccountMenuScreen extends PureComponent {
   static screenName = 'account.Menu'
@@ -61,10 +60,6 @@ class AccountMenuScreen extends PureComponent {
             onViewListings={this.navigateTo({
               name: UserListingsScreen.screenName
             })}
-            onViewMessenger={this.navigateTo({
-              id: 'user_listings',
-              name: MessengerChannelsScreen.screenName
-            })}
           />
         </Body>
         <Footer>
@@ -80,6 +75,5 @@ export default composeWithRef(
     null,
     {signOut}
   ),
-  withUserListings,
-  withMessengerUnreadCount
+  withUserListings
 )(AccountMenuScreen)

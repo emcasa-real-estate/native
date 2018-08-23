@@ -6,7 +6,6 @@ import * as listingScreens from './listing/screens'
 import * as listingFormScreens from './listingForm/screens'
 import * as listingsScreens from './listings/screens'
 import * as interestScreens from './interest/screens'
-import * as messengerScreens from './messenger/screens'
 import * as sharedScreens from './shared/screens'
 
 const screens = _.flow(
@@ -20,7 +19,6 @@ const screens = _.flow(
   listingFormScreens,
   listingsScreens,
   interestScreens,
-  messengerScreens,
   sharedScreens
 ])
 

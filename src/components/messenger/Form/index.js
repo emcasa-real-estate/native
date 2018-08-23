@@ -22,6 +22,7 @@ export default class MessengerForm extends PureComponent {
         <View style={styles.inputContainer}>
           <TextInput
             multiline
+            center
             maxHeight={160}
             minHeight={40}
             styles={{input: {fontSize: 14}}}

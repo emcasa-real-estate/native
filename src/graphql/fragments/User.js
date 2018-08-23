@@ -1,6 +1,7 @@
 import gql from 'graphql-tag'
+import {ListingFeed} from './Listing'
 
-export default gql`
+const User = gql`
   fragment User on User {
     id
     name
@@ -16,9 +17,21 @@ export const UserProfile = gql`
     email
     phone
     role
-    notificationPreferences {
-      app
-      email
+  }
+`
+
+export default User
+
+export const UserProfile = gql`
+  fragment UserProfile on User {
+    ...User
+    favorites {
+      ...ListingFeed
+    }
+    listings {
+      ...ListingFeed
     }
   }
+  ${User}
+  ${ListingFeed}
 `

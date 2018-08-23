@@ -5,6 +5,7 @@ import contextLink from './contextLink'
 import stateLink from './stateLink'
 import errorLink from './errorLink'
 import httpLink from './httpLink'
+import queryResolverLink from './queryResolverLink'
 import wsLink from './wsLink'
 
 export default (options) => {
@@ -13,6 +14,7 @@ export default (options) => {
   links.set('error', errorLink(options))
   links.set('context', contextLink(options))
   links.set('state', stateLink(options))
+  links.set('queryResolver', queryResolverLink(options))
   links.set(
     'server',
     new ApolloLink.split(
@@ -24,4 +26,4 @@ export default (options) => {
   return links
 }
 
-export {default as sync} from './stateLink/resolvers/favorites/sync'
+export {default as sync} from './stateLink/sync'

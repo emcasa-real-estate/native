@@ -7,7 +7,6 @@ schema {
 type Address {
   city: String
   citySlug: String
-  id: ID
   lat: Float
   lng: Float
   neighborhood: String
@@ -94,43 +93,43 @@ type InterestType {
 }
 
 type Listing {
-  hasElevator: Boolean
+  tourVisualisationCount: Int
+  interestCount: Int
   type: String
+  suggestedPrice: Float
+  hasElevator: Boolean
+  balconies: Int
   id: ID
-  listingVisualisationCount: Int
-  address: Address
-  insertedAt: DateTime
-  isRelease: Boolean
-  price: Int
-  bathrooms: Int
-  isExclusive: Boolean
-  rooms: Int
-  propertyTax: Float
-  complement: String
-  matterportCode: String
-  dependencies: Int
-  images(isActive: Boolean, limit: Int): [Image]
   related(
     filters: ListingFilterInput!
     pagination: ListingPagination!
   ): ListingIndex
+  listingFavoriteCount: Int
+  address: Address
+  priceRecentlyReduced: Boolean
+  matterportCode: String
+  previousPrices: [PriceHistory]
+  propertyTax: Float
+  rooms: Int
+  inPersonVisitCount: Int
+  listingVisualisationCount: Int
+  isRelease: Boolean
+  maintenanceFee: Float
+  insertedAt: DateTime
+  price: Int
+  dependencies: Int
+  isActive: Boolean
+  images(isActive: Boolean, limit: Int): [Image]
   floor: String
   description: String
-  listingFavoriteCount: Int
-  priceRecentlyReduced: Boolean
+  isExclusive: Boolean
   area: Int
-  maintenanceFee: Float
   owner: User
-  suggestedPrice: Float
-  tourVisualisationCount: Int
-  restrooms: Int
-  suites: Int
-  isActive: Boolean
-  inPersonVisitCount: Int
-  previousPrices: [PriceHistory]
   garageSpots: Int
-  balconies: Int
-  interestCount: Int
+  restrooms: Int
+  complement: String
+  bathrooms: Int
+  suites: Int
 }
 
 type ListingFilter {
@@ -176,8 +175,7 @@ type ListingIndex {
 }
 
 input ListingInput {
-  address: AddressInput
-  addressId: ID
+  address: AddressInput!
   area: Int
   balconies: Int
   bathrooms: Int
@@ -279,9 +277,6 @@ type RootMutationType {
   # Activate listing
   activateListing(id: ID!): Listing
 
-  # Insert address
-  addressInsert(input: AddressInput!): Address
-
   # Change email
   changeEmail(email: String, id: ID!): User
 
@@ -296,7 +291,6 @@ type RootMutationType {
 
   # Edit user profile
   editUserProfile(
-    deviceToken: String
     id: ID!
     name: String
     notificationPreferences: NotificationPreferencesInput
@@ -326,7 +320,6 @@ type RootMutationType {
 
   # Register
   register(
-    deviceToken: String
     email: String!
     name: String!
     password: String!

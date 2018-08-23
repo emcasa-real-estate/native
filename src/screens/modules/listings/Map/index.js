@@ -21,7 +21,7 @@ import {
 } from './module/selectors'
 import ListButton from '@/components/listings/Feed/Button'
 import Feed from '@/components/listings/Feed/Map'
-import HeaderButton from './HeaderButton'
+import {LocationHeaderButton, FilterHeaderButton} from './HeaderButton'
 import Map from './Map'
 import styles from './styles'
 
@@ -36,10 +36,7 @@ class MapScreen extends Component {
       visible: true,
       animate: true,
       height: 50,
-      title: {
-        text: 'Buscar imóveis',
-        alignment: 'center'
-      }
+      title: {text: 'Buscar imóveis'}
     },
     bottomTabs: {
       visible: false,
@@ -57,14 +54,22 @@ class MapScreen extends Component {
   }
 
   componentDidAppear() {
-    const passProps = {onShowFilters: this.onShowFilters}
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
         rightButtons: [
           {
-            id: 'mapLocationButton',
-            passProps,
-            component: {name: HeaderButton.screenName, passProps}
+            id: 'map_filter_button',
+            component: {
+              name: FilterHeaderButton.screenName,
+              passProps: {onPress: this.onShowFilters}
+            }
+          },
+          {
+            id: 'map_location_button',
+            component: {
+              name: LocationHeaderButton.screenName,
+              passProps: {onPress: this.onToggleWatchPosition()}
+            }
           }
         ]
       }
@@ -76,8 +81,15 @@ class MapScreen extends Component {
     this.setState({active: false})
   }
 
-  onToggleWatchPosition = (active) => () =>
-    this.props[active ? 'watchPosition' : 'unwatchPosition'].call()
+  onToggleWatchPosition = (activeState) => async () => {
+    const isActive =
+      typeof activeState === 'undefined'
+        ? this.props.watchingPosition
+        : activeState
+    if (isActive) this.props.unwatchPosition()
+    else if ((await this.props.onRequestPermission()) === 'authorized')
+      this.props.watchPosition()
+  }
 
   onRequestPosition = () => this.props.requestPosition()
 
@@ -152,5 +164,5 @@ export default composeWithRef(
     {watchPosition, unwatchPosition, requestPosition, setActiveListing}
   ),
   connect((state) => ({filters: getSearchFiltersQuery(state)})),
-  withListingsFeed({pageSize: 1000, fetchPolicy: 'cache-then-network'}),
+  withListingsFeed({pageSize: 1000, fetchPolicy: 'cache-then-network'})
 )(MapScreen)

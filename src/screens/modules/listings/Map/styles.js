@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native'
+import {StyleSheet, Platform} from 'react-native'
 
 export default StyleSheet.create({
   container: {
@@ -15,5 +15,9 @@ export default StyleSheet.create({
     bottom: 10,
     right: 10,
     zIndex: 1
-  }
+  },
+  headerButton: Platform.select({
+    android: {width: 55},
+    ios: {}
+  })
 })

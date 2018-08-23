@@ -1,5 +1,5 @@
 export {default as Feed} from './Feed'
 export {default as Map} from './Map'
-export {default as MapHeaderButton} from './Map/HeaderButton'
+export {LocationHeaderButton, FilterHeaderButton} from './Map/HeaderButton'
 export {default as Search} from './Search'
 export {default as SearchNeighborhoods} from './Search/Neighborhoods'

@@ -1,9 +1,9 @@
 export const backButton = () => by.type('_UIButtonBarButton')
 
-export const bottomTabs = () => by.id('bottom_tabs')
+export const bottomTabs = () => by.type('UITabBar')
 
 export const bottomTabButton = (label) =>
-  by.label(label).withAncestor(bottomTabs())
+  by.text(label).withAncestor(bottomTabs())
 
 export const modalCloseButton = () => by.id('close_modal_button')
 

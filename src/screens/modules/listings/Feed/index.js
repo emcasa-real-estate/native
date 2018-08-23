@@ -5,10 +5,9 @@ import {connect} from 'react-redux'
 import composeWithRef from '@/lib/composeWithRef'
 import {withListingsFeed} from '@/graphql/containers'
 import {getSearchFiltersQuery} from '@/screens/modules/listings/Search/module/selectors'
-import {Shell, Body, Header, Footer} from '@/components/layout'
+import {Shell, Body, Header} from '@/components/layout'
 import InfiniteScroll from '@/containers/InfiniteScroll'
 import MapButton from '@/components/listings/Map/Button'
-import BottomTabs from '@/screens/modules/navigation/BottomTabs'
 import Feed from '@/components/listings/Feed/Listing'
 import SearchHeader from './Header'
 import ListEmpty from './ListEmpty'
@@ -28,7 +27,10 @@ class ListingsFeedScreen extends PureComponent {
       drawBehind: true,
       translucent: true,
       height: 0,
-      backButtonTitle: 'Imóveis'
+      backButton: {title: 'Imóveis'}
+    },
+    bottomTabs: {
+      visible: true
     }
   }
 
@@ -93,9 +95,6 @@ class ListingsFeedScreen extends PureComponent {
           </InfiniteScroll>
           <MapButton style={styles.mapButton} onPress={this.onOpenMap} />
         </Body>
-        <Footer>
-          <BottomTabs />
-        </Footer>
       </Shell>
     )
   }

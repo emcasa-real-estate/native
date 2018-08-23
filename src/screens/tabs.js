@@ -1,39 +1,52 @@
-import * as listingForm from './modules/listingForm/screens'
-import * as listings from './modules/listings/screens'
-import * as account from './modules/account/screens'
-import * as auth from './modules/auth/screens'
+import {createSelector} from 'reselect'
 
-const FAVORITES_SCREEN_NAME = 'Favorites'
+import {getUser} from '@/redux/modules/auth/selectors'
+import * as listingForm from '@/screens/modules/listingForm/screens'
+import * as listings from '@/screens/modules/listings/screens'
+import * as account from '@/screens/modules/account/screens'
+import * as auth from '@/screens/modules/auth/screens'
 
-const matchScreens = (namespace, {exclude, include} = {}) => {
-  let pattern = `/^${namespace}`
-  if (exclude) pattern += `\\.(?!${exclude.join('|')})`
-  else if (include) pattern += `\\.(${include.join('|')})`
-  const regex = new RegExp(pattern)
-  return ({name}) => regex.test(name)
-}
-
-export default {
-  listings: {
+export default createSelector(getUser, (user) => [
+  {
     name: listings.Feed.screenName,
-    isActive: matchScreens('listings')
+    options: {
+      bottomTab: {
+        text: 'Imóveis',
+        icon: require('@/assets/img/tabs/home.png')
+      }
+    }
   },
-  newListing: {
-    name: listingForm.Address.screenName,
-    isActive: matchScreens('listingForm')
-  },
-  favorites: {
+  {
     name: account.Favorites.screenName,
-    isActive: matchScreens('listings', {include: [FAVORITES_SCREEN_NAME]})
+    options: {
+      bottomTab: {
+        text: 'Favoritos',
+        icon: require('@/assets/img/tabs/heart.png')
+      }
+    }
   },
-  account: {
-    name: account.Menu.screenName,
-    isActive: matchScreens('listings', {exclude: [FAVORITES_SCREEN_NAME]})
+  {
+    name: user ? listingForm.Address.screenName : auth.Login.screenName,
+    passProps: {
+      params: {
+        tabIndex: 2,
+        notice: 'O login é necessário para anunciar um imóvel.'
+      }
+    },
+    options: {
+      bottomTab: {
+        text: 'Anunciar',
+        icon: require('@/assets/img/tabs/tag.png')
+      }
+    }
   },
-  auth: {
-    name: auth.Login.screenName,
-    isActive: matchScreens('auth')
+  {
+    name: user ? account.Menu.screenName : auth.Login.screenName,
+    options: {
+      bottomTab: {
+        text: user ? 'Perfil' : 'Login',
+        icon: require('@/assets/img/tabs/user.png')
+      }
+    }
   }
-}
-
-export const STACK_ROOT = 'listings'
+])

@@ -1,0 +1,26 @@
+patch-package
+--- a/node_modules/react-swipeable-views-native/lib/SwipeableViews.scroll.js
++++ b/node_modules/react-swipeable-views-native/lib/SwipeableViews.scroll.js
+@@ -275,7 +275,7 @@ SwipeableViews.propTypes = process.env.NODE_ENV !== "production" ? {
+    * This is the inlined style that will be applied
+    * to each slide container.
+    */
+-  containerStyle: _reactNative.ScrollView.propTypes.style,
++  containerStyle: _propTypes2.default.any,
+   /**
+    * If `true`, it will disable touch events.
+    * This is useful when you want to prohibit the user from changing slides.
+@@ -319,11 +319,11 @@ SwipeableViews.propTypes = process.env.NODE_ENV !== "production" ? {
+    * This is the inlined style that will be applied
+    * on the slide component.
+    */
+-  slideStyle: _reactNative.View.propTypes.style,
++  slideStyle: _propTypes2.default.any,
+   /**
+    * This is the inlined style that will be applied
+    * on the root component.
+    */
+-  style: _reactNative.View.propTypes.style
++  style: _propTypes2.default.any
+ } : {};
+ exports.default = SwipeableViews;

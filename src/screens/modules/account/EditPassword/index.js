@@ -8,8 +8,7 @@ import {EDIT_PASSWORD} from '@/graphql/modules/user/mutations'
 import {setContext, clearContext} from '@/screens/modules/context'
 import {getUser} from '@/redux/modules/auth/selectors'
 import {getContext} from '@/screens/modules/context/selectors'
-import {Shell, Body, Footer} from '@/components/layout'
-import BottomTabs from '@/screens/modules/navigation/BottomTabs'
+import {Shell, Body} from '@/components/layout'
 import PasswordForm from '@/components/account/PasswordForm'
 import SubmitButtonScreen from '../SubmitButton'
 
@@ -30,6 +29,7 @@ class EditPasswordScreen extends PureComponent {
     const passProps = {onPress: this.onSubmit}
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
+        ...this.constructor.options.topBar,
         rightButtons: [
           {
             passProps,
@@ -77,7 +77,7 @@ class EditPasswordScreen extends PureComponent {
 
     return (
       <Shell>
-        <Body>
+        <Body scroll>
           <PasswordForm
             formRef={this.form}
             message={message}
@@ -86,19 +86,19 @@ class EditPasswordScreen extends PureComponent {
             onChange={this.onChange}
           />
         </Body>
-        <Footer>
-          <BottomTabs />
-        </Footer>
       </Shell>
     )
   }
 }
 
 export default composeWithRef(
-  connect((state) => getContext(state, {screen: 'account'}), {
-    setContext: setContext('account'),
-    clearContext: clearContext('account')
-  }),
+  connect(
+    (state) => getContext(state, {screen: 'account'}),
+    {
+      setContext: setContext('account'),
+      clearContext: clearContext('account')
+    }
+  ),
   connect((state) => ({
     user: getUser(state)
   })),

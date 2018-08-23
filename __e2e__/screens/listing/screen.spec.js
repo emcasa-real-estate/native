@@ -9,6 +9,15 @@ describe('listing', () => {
     await expect(element(select.thumbnailGallery())).toBeVisible()
   })
 
+  it('opens the gallery modal', async () => {
+    await element(select.galleryButton()).tap()
+    await waitFor(element(select.listingScreen())).toBeNotVisible()
+    await expect(element(select.galleryScreen())).toBeVisible()
+    await element(shared.modalCloseButton()).tap()
+    await waitFor(element(select.galleryScreen())).toBeNotVisible()
+    await expect(element(select.galleryScreen())).toBeNotVisible()
+  })
+
   it('opens the 3d tour modal', async () => {
     await element(select.tourButton()).tap()
     await waitFor(element(select.listingScreen())).toBeNotVisible()
@@ -19,14 +28,5 @@ describe('listing', () => {
     await element(shared.modalCloseButton()).tap()
     await waitFor(element(select.tourScreen())).toBeNotVisible()
     await expect(element(select.tourScreen())).toBeNotVisible()
-  })
-
-  it('opens the gallery modal', async () => {
-    await element(select.galleryButton()).tap()
-    await waitFor(element(select.listingScreen())).toBeNotVisible()
-    await expect(element(select.galleryScreen())).toBeVisible()
-    await element(shared.modalCloseButton()).tap()
-    await waitFor(element(select.galleryScreen())).toBeNotVisible()
-    await expect(element(select.galleryScreen())).toBeNotVisible()
   })
 })

@@ -7,8 +7,7 @@ import composeWithRef from '@/lib/composeWithRef'
 import {setContext, clearContext} from '@/screens/modules/context'
 import {getContext} from '@/screens/modules/context/selectors'
 import {withEmailMutation, withProfileMutation} from '@/graphql/containers'
-import {Shell, Body, Footer} from '@/components/layout'
-import BottomTabs from '@/screens/modules/navigation/BottomTabs'
+import {Shell, Body} from '@/components/layout'
 import ProfileForm from '@/components/account/ProfileForm'
 import EditPasswordScreen from '../EditPassword'
 import SubmitButtonScreen from '../SubmitButton'
@@ -38,6 +37,7 @@ class EditProfileScreen extends PureComponent {
     const passProps = {onPress: this.onSubmit}
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
+        ...this.constructor.options.topBar,
         rightButtons: [
           {
             passProps,
@@ -88,9 +88,6 @@ class EditProfileScreen extends PureComponent {
             onEditPassword={this.onEditPassword}
           />
         </Body>
-        <Footer>
-          <BottomTabs />
-        </Footer>
       </Shell>
     )
   }
@@ -99,8 +96,11 @@ class EditProfileScreen extends PureComponent {
 export default composeWithRef(
   withProfileMutation,
   withEmailMutation,
-  connect((state) => getContext(state, {screen: 'account'}), {
-    setContext: setContext('account'),
-    clearContext: clearContext('account')
-  })
+  connect(
+    (state) => getContext(state, {screen: 'account'}),
+    {
+      setContext: setContext('account'),
+      clearContext: clearContext('account')
+    }
+  )
 )(EditProfileScreen)

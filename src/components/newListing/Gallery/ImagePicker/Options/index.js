@@ -7,13 +7,7 @@ import CameraRoll from './CameraRoll'
 import Button from './Button'
 import styles from './styles'
 
-@withPermission(
-  Platform.select({
-    android: 'readStorage',
-    ios: 'photo'
-  })
-)
-export default class ImagePickerOptions extends PureComponent {
+class ImagePickerOptions extends PureComponent {
   state = {
     layout: {
       width: Dimensions.get('window').width,
@@ -48,3 +42,10 @@ export default class ImagePickerOptions extends PureComponent {
     )
   }
 }
+
+export default withPermission(
+  Platform.select({
+    android: 'readStorage',
+    ios: 'photo'
+  })
+)(ImagePickerOptions)

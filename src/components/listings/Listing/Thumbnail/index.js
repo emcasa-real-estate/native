@@ -8,18 +8,28 @@ import Image from '@/components/listings/Image'
 import Gallery from '@/components/listings/Gallery'
 import styles, {iconColor} from './styles'
 
-const ActionButton = ({children, title, onPress}) => (
+const ActionButton = ({children, title, onPress, hitSlop}) => (
   <View style={styles.button}>
     <TouchableOpacity
       accessible
       accessibilityLabel={title}
       accessibilityTraits="button"
+      hitSlop={{
+        top: hitSlop,
+        bottom: hitSlop,
+        left: hitSlop,
+        right: hitSlop
+      }}
       onPress={onPress}
     >
       {children}
     </TouchableOpacity>
   </View>
 )
+
+ActionButton.defaultProps = {
+  hitSlop: 5
+}
 
 const Icon = (props) => <BaseIcon size={20} color={iconColor} {...props} />
 

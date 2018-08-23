@@ -5,25 +5,17 @@ import {connect} from 'react-redux'
 
 import {getUser, getError, isLoading} from '@/redux/modules/auth/selectors'
 import {signIn, reset} from '@/redux/modules/auth'
+import {updateStackRoot} from '@/screens/modules/navigation'
 import {Shell, Body, Footer} from '@/components/layout'
 import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
 import LoginForm from '@/components/auth/Login'
+
 import SignUpScreen from '@/screens/modules/auth/SignUp'
 import ResetPasswordScreen from '@/screens/modules/auth/ResetPassword'
 import styles from './styles'
 
-@connect(
-  (state) => ({
-    user: getUser(state),
-    error: getError(state),
-    loading: isLoading(state)
-  }),
-  {signIn, reset},
-  null,
-  {withRef: true}
-)
-export default class LoginScreen extends PureComponent {
+class LoginScreen extends PureComponent {
   static screenName = 'auth.Login'
 
   static options = {
@@ -36,28 +28,25 @@ export default class LoginScreen extends PureComponent {
   }
 
   state = {
+    active: false,
     value: {}
   }
 
   form = React.createRef()
 
-  returnToParentScreen() {
-    const {componentId, params: {parentId}} = this.props
-    if (parentId) Navigation.popTo(parentId)
-    else Navigation.popToRoot(componentId)
-  }
-
   componentDidDisappear() {
-    this.setState({value: undefined})
+    this.setState({value: undefined, active: false})
   }
 
   componentDidAppear() {
     this.props.reset()
+    this.setState({active: true})
   }
 
   componentDidUpdate(prev) {
     const {user} = this.props
-    if (user && !prev.user) this.returnToParentScreen()
+    const {active} = this.state
+    if (active && user && !prev.user) this.onSuccess()
   }
 
   onChange = (value) => this.setState({value})
@@ -66,6 +55,14 @@ export default class LoginScreen extends PureComponent {
     const {signIn, loading} = this.props
     const {value} = this.state
     if (!loading && this.form.current.onValidate()) signIn(value)
+  }
+
+  onSuccess = () => {
+    const {
+      updateStackRoot,
+      params: {tabIndex}
+    } = this.props
+    updateStackRoot({tabIndex})
   }
 
   onSignUp = () => {
@@ -89,7 +86,11 @@ export default class LoginScreen extends PureComponent {
   }
 
   render() {
-    const {loading, error, params: {notice}} = this.props
+    const {
+      loading,
+      error,
+      params: {notice}
+    } = this.props
     const {value} = this.state
 
     return (
@@ -120,3 +121,14 @@ export default class LoginScreen extends PureComponent {
     )
   }
 }
+
+export default connect(
+  (state) => ({
+    user: getUser(state),
+    error: getError(state),
+    loading: isLoading(state)
+  }),
+  {signIn, reset, updateStackRoot},
+  null,
+  {withRef: true}
+)(LoginScreen)

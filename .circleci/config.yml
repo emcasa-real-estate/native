@@ -139,7 +139,7 @@ jobs:
       - restore_cache: *restore-gems
       - run: *install-node-modules
       - run: *install-gems
-      - run: mkdir -p tmp/logs tmp/screenshots tmp/.secrets
+      - run: mkdir -p tmp/logs tmp/detox tmp/.secrets
       - run: aws s3 sync $AWS_SECRETS_BUCKET ~/emcasa/tmp/.secrets
       - save_cache: *cache-node-modules
       - save_cache: *cache-gems
@@ -186,7 +186,7 @@ jobs:
       - run: |-
           xcrun simctl install "iPhone 6" ios/build/Build/Products/Debug-iphonesimulator/EmCasa.app
           xcrun simctl launch "iPhone 6" com.EmCasa.native-debug && sleep 5
-      - run: yarn e2e --artifacts-location tmp/detox/ --record-logs all --take-screenshots all --debug-synchronization 10000
+      - run: yarn e2e --artifacts-location tmp/detox/ --take-screenshots all --debug-synchronization 10000
       - store_artifacts:
           path: tmp/detox
           destination: e2e

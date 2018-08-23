@@ -68,7 +68,11 @@ export class ControlledDropdown extends PureComponent {
 
   onToggle = (active) => () => this.setState({active})
 
-  onLayout = ({nativeEvent: {layout: {width}}}) => this.setState({width})
+  onLayout = ({
+    nativeEvent: {
+      layout: {width}
+    }
+  }) => this.setState({width})
 
   get selectedId() {
     const {value, options} = this.props

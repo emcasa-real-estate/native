@@ -1,3 +1,5 @@
+import {Platform} from 'react-native'
+
 import {required} from '@/lib/validations'
 import Form from '@/components/shared/Form/Form'
 import Dropdown from '@/components/shared/Form/Dropdown'
@@ -25,6 +27,7 @@ export default function ListingPropertiesForm({
       <Dropdown
         name="type"
         placeholder="Tipo de imóvel"
+        styles={Platform.OS === 'ios' ? {dropdown: {marginTop: 62}} : undefined}
         options={[
           {value: 'Apartamento', label: 'Apartamento'},
           {value: 'Casa', label: 'Casa'},

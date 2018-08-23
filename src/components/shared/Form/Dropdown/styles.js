@@ -21,7 +21,7 @@ export default StyleSheet({
     borderColor: colors.gray.light,
     borderBottomLeftRadius: 4,
     borderBottomRightRadius: 4,
-    marginTop: Platform.OS === 'ios' ? 13 : -2,
+    marginTop: -2,
     marginLeft: -1,
     overflow: 'hidden',
     ':active': {

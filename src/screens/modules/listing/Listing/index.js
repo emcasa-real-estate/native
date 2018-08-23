@@ -157,7 +157,7 @@ class ListingScreen extends PureComponent {
     return (
       <View style={{flexDirection: 'row'}}>
         <Button
-          color="lightgreen"
+          color="green"
           style={{flex: 1}}
           onPress={this.navigateTo({name: InterestFormScreen.screenName})}
         >

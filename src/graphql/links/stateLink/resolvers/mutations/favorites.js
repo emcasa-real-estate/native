@@ -30,7 +30,7 @@ export async function favoriteListing(_, {id}, {cache}) {
   return {
     __typename: 'ListingUser',
     listing: {id, __typename: 'Listing'},
-    user: null
+    user: {id: '0'}
   }
 }
 
@@ -41,6 +41,6 @@ export async function unfavoriteListing(_, {id}) {
   return {
     __typename: 'ListingUser',
     listing: {id, __typename: 'Listing'},
-    user: null
+    user: {id: '0'}
   }
 }

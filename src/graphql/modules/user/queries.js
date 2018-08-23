@@ -16,6 +16,7 @@ export const GET_FAVORITE_LISTINGS_IDS = _.memoize(
   ({cache}) => gql`
     query favoritedListingsIds {
       userProfile ${cache === true ? '@client' : ''} {
+        id
         favorites(
           filters: {}
           pagination: {excludedListingIds: [], pageSize: 1000}
@@ -35,6 +36,7 @@ export const GET_FAVORITE_LISTINGS = _.memoize(
       $pageSize: Int = 1000
     ) {
       userProfile ${cache === true ? '@client' : ''} {
+        id
         favorites(
           filters: $filters
           pagination: {excludedListingIds: $excludedListingIds, pageSize: $pageSize}
@@ -51,6 +53,7 @@ export const GET_BLACKLISTED_LISTINGS_IDS = _.memoize(
   ({cache}) => gql`
     query blacklistedListingsIds {
       userProfile ${cache === true ? '@client' : ''} {
+        id
         blacklists(
           filters: {}
           pagination: {excludedListingIds: [], pageSize: 1000}
@@ -70,6 +73,7 @@ export const GET_BLACKLISTED_LISTINGS = _.memoize(
       $pageSize: Int = 1000
     ) {
       userProfile ${cache === true ? '@client' : ''} {
+        id
         blacklists(
           filters: $filters
           pagination: {excludedListingIds: $excludedListingIds, pageSize: $pageSize}

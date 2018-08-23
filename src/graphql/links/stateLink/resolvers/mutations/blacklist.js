@@ -30,7 +30,7 @@ export async function listingBlacklist(_, {id}, {cache}) {
   return {
     __typename: 'ListingUser',
     listing: {id, __typename: 'Listing'},
-    user: null
+    user: {id: '0'}
   }
 }
 
@@ -41,6 +41,6 @@ export async function listingUnblacklist(_, {id}) {
   return {
     __typename: 'ListingUser',
     listing: {id, __typename: 'Listing'},
-    user: null
+    user: {id: '0'}
   }
 }

@@ -1,9 +1,9 @@
 {
-  "presets": ["react-native"],
+  "presets": ["@babel/preset-flow", "react-native"],
   "plugins": [
     "lodash",
-    "transform-decorators-legacy",
     "react-require",
+    ["@babel/plugin-syntax-decorators", { "legacy": true }],
     [
       "module-resolver",
       {
@@ -38,7 +38,7 @@
   ],
   "env": {
     "development": {
-      "plugins": ["transform-react-jsx-source"]
+      "plugins": ["@babel/plugin-transform-react-jsx-source"]
     }
   }
 }

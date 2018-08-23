@@ -52,10 +52,7 @@ const Icon = () => (
   />
 )
 
-@connect((state) => ({
-  options: getSearchFilters(state)
-}))
-export default class ListingsFeedHeader extends PureComponent {
+class ListingsFeedHeader extends PureComponent {
   render() {
     const {options, onPress} = this.props
     const filters = omitEmpty(options)
@@ -79,3 +76,7 @@ export default class ListingsFeedHeader extends PureComponent {
     )
   }
 }
+
+export default connect((state) => ({
+  options: getSearchFilters(state)
+}))(ListingsFeedHeader)

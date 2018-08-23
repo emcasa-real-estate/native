@@ -8,8 +8,7 @@ import styles, {LABEL_WIDTH} from './styles'
 
 const sliderWidth = () => Dimensions.get('window').width - 120
 
-@field()
-export default class SlideRangeField extends Component {
+class SlideRangeField extends Component {
   static defaultProps = {
     min: 0,
     value: {},
@@ -122,3 +121,5 @@ export default class SlideRangeField extends Component {
     )
   }
 }
+
+export default field()(SlideRangeField)

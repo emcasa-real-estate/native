@@ -9,21 +9,16 @@ import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import HeaderButton from '@/screens/modules/shared/Header/TextButton'
 
-@connect(
-  (state) => ({
-    neighborhoods: getNeighborhoods(state),
-    options: getSearchFilters(state)
-  }),
-  null,
-  null,
-  {withRef: true}
-)
-export default class NeighborhoodsScreen extends PureComponent {
+class NeighborhoodsScreen extends PureComponent {
   static screenName = 'listings.Search.Neighborhoods'
 
   static options = {
     topBar: {
       title: {text: 'Bairros'}
+    },
+    bottomTabs: {
+      visible: false,
+      animated: false
     }
   }
 
@@ -94,3 +89,13 @@ export default class NeighborhoodsScreen extends PureComponent {
     )
   }
 }
+
+export default connect(
+  (state) => ({
+    neighborhoods: getNeighborhoods(state),
+    options: getSearchFilters(state)
+  }),
+  null,
+  null,
+  {withRef: true}
+)(NeighborhoodsScreen)

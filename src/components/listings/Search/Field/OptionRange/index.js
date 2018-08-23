@@ -11,8 +11,7 @@ const overlaps = (a, b) =>
   (a[0] <= b[1] && b[1] <= a[1]) ||
   (b[0] < a[0] && a[1] < b[1])
 
-@field()
-export default class OptionRangeField extends Component {
+class OptionRangeField extends Component {
   static defaultProps = {
     min: 0,
     options: [],
@@ -149,3 +148,5 @@ export default class OptionRangeField extends Component {
     )
   }
 }
+
+export default field()(OptionRangeField)

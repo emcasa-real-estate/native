@@ -1,30 +1,28 @@
-import {navigateToLogin, login} from '../auth/interactions'
+import {login} from '../auth/interactions'
 import {loginScreen} from '../auth/selectors'
-import {backButton} from '../shared/selectors'
+import {addressScreen} from './selectors'
 import * as select from './selectors'
 import * as actions from './interactions'
 
 describe('listingForm', () => {
-  context('unauthenticated', () => {
-    beforeAll(actions.navigate)
+  beforeAll(actions.navigate)
 
-    it('redirects to a modal within the login page', async () => {
-      await expect(element(select.learnMoreScreen())).toBeVisible()
-      await element(by.id('close_modal_button')).tap()
-      await waitFor(element(select.learnMoreScreen())).toBeNotVisible()
-      await expect(element(loginScreen())).toBeVisible()
-      await element(backButton()).tap()
-    })
+  it('redirects to login screen', async () => {
+    await expect(element(loginScreen())).toBeVisible()
   })
 
-  context('authenticated', () => {
-    beforeAll(async () => {
-      await navigateToLogin()
-      await login({email: 'foo@example.com', password: 'password'})
-      await actions.navigate()
-    })
-
-    require('./Address')
-    require('./Properties')
+  it('redirects to new listing screen after user logs in', async () => {
+    await login({email: 'test@example.com', password: 'passwd'})
+    await expect(element(addressScreen())).toBeVisible()
   })
+
+  it('shows a modal when "learn more" is pressed', async () => {
+    await element(by.id('learn_more_button')).tap()
+    await expect(element(select.learnMoreScreen())).toBeVisible()
+    await element(by.id('close_modal_button')).tap()
+    await waitFor(element(select.learnMoreScreen())).toBeNotVisible()
+  })
+
+  require('./Address')
+  require('./Properties')
 })

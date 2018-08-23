@@ -12,13 +12,13 @@ const navigationEvent = (event) =>
 const createNavigationChannel = (event) =>
   eventChannel((emitter) => {
     const fun = navigationEvent(event)
-    const subscription = fun((...args) => emitter({args}))
+    const subscription = fun((args) => emitter(args || {}))
     return () => subscription.remove()
   })
 
 const createNavigationDispatcher = (action) =>
-  function* dispatchNavigationAction({args}) {
-    yield put(action(...args))
+  function* dispatchNavigationAction(args) {
+    yield put(action(args))
   }
 
 const createNavigationSaga = (fun, action) =>
@@ -27,7 +27,8 @@ const createNavigationSaga = (fun, action) =>
 function* watchNavigationEvents() {
   yield all([
     createNavigationSaga('ComponentDidAppear', actions.screenAppeared),
-    createNavigationSaga('ComponentDidDisappear', actions.screenDisappeared)
+    createNavigationSaga('ComponentDidDisappear', actions.screenDisappeared),
+    createNavigationSaga('BottomTabSelected', actions.tabSelected)
   ])
 }
 

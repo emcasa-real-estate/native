@@ -13,11 +13,19 @@ class ListingDashboardScreen extends PureComponent {
   static options = {
     topBar: {
       title: {text: 'Estatísticas'}
+    },
+    bottomTabs: {
+      visible: false,
+      drawBehind: true,
+      animated: false
     }
   }
 
   updateTitle() {
-    const {componentId, listing: {data}} = this.props
+    const {
+      componentId,
+      listing: {data}
+    } = this.props
     if (!data || !data.address) return
     Navigation.mergeOptions(componentId, {
       topBar: {title: {text: data.address.street}}
@@ -34,7 +42,9 @@ class ListingDashboardScreen extends PureComponent {
   }
 
   render() {
-    const {listing: {data, loading}} = this.props
+    const {
+      listing: {data, loading}
+    } = this.props
 
     return (
       <Shell testID="@listing.Dashboard">

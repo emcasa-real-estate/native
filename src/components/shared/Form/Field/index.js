@@ -7,33 +7,36 @@ import Text from '@/components/shared/Text'
 import {field as baseField} from './Provider'
 import styles from './styles'
 
-@baseField
-export default class FieldView extends PureComponent {
-  renderInput() {
-    const {children, onValidate, ...props} = this.props
-    return React.cloneElement(React.Children.only(children), {
-      ...props,
-      onValidate,
-      onBlur: onValidate
-    })
-  }
+const FieldView = baseField(
+  class _FieldView extends PureComponent {
+    renderInput() {
+      const {children, onValidate, ...props} = this.props
+      return React.cloneElement(React.Children.only(children), {
+        ...props,
+        onValidate,
+        onBlur: onValidate
+      })
+    }
 
-  render() {
-    const {valid, errors} = this.props
+    render() {
+      const {valid, errors} = this.props
 
-    return (
-      <View style={styles.container}>
-        {this.renderInput()}
-        {!valid &&
-          errors.map((message, i) => (
-            <Text key={i} style={styles.error}>
-              {message}
-            </Text>
-          ))}
-      </View>
-    )
+      return (
+        <View style={styles.container}>
+          {this.renderInput()}
+          {!valid &&
+            errors.map((message, i) => (
+              <Text key={i} style={styles.error}>
+                {message}
+              </Text>
+            ))}
+        </View>
+      )
+    }
   }
-}
+)
+
+export default FieldView
 
 const mergeValidations = _.flow(
   (a = [], b = []) => b.concat(a),

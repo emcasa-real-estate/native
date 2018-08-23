@@ -7,8 +7,7 @@ import composeWithRef from '@/lib/composeWithRef'
 import {setContext, clearContext} from '@/screens/modules/context'
 import {getContext} from '@/screens/modules/context/selectors'
 import {withEmailMutation, withProfileMutation} from '@/graphql/containers'
-import {Shell, Body, Footer} from '@/components/layout'
-import BottomTabs from '@/screens/modules/navigation/BottomTabs'
+import {Shell, Body} from '@/components/layout'
 import ProfileForm from '@/components/account/ProfileForm'
 import EditPasswordScreen from '../EditPassword'
 import EditNotificationsScreen from '../EditNotifications'
@@ -39,6 +38,7 @@ class EditProfileScreen extends PureComponent {
     const passProps = {onPress: this.onSubmit}
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
+        ...this.constructor.options.topBar,
         rightButtons: [
           {
             passProps,
@@ -96,9 +96,6 @@ class EditProfileScreen extends PureComponent {
             onEditNotifications={this.onEditNotifications}
           />
         </Body>
-        <Footer>
-          <BottomTabs />
-        </Footer>
       </Shell>
     )
   }

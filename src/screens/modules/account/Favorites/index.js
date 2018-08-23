@@ -3,9 +3,8 @@ import {Navigation} from 'react-native-navigation'
 
 import composeWithRef from '@/lib/composeWithRef'
 import {withFavoriteListings} from '@/graphql/containers'
-import {Shell, Body, Footer} from '@/components/layout'
+import {Shell, Body} from '@/components/layout'
 import Feed from '@/components/listings/Feed/Listing'
-import BottomTabs from '@/screens/modules/navigation/BottomTabs'
 import ListEmpty from './ListEmpty'
 
 import ListingScreen from '@/screens/modules/listing/Listing'
@@ -20,20 +19,12 @@ class FavoritesScreen extends PureComponent {
   static options = {
     topBar: {
       title: {text: 'Meus imóveis favoritos'},
-      backButtonTitle: 'Favoritos'
+      backButton: {title: 'Favoritos'}
     }
   }
 
-  onSwitchView = () => {
-    const {componentId, params: {switchViewId}} = this.props
-    if (switchViewId) Navigation.popTo(switchViewId)
-    else
-      Navigation.push(componentId, {
-        component: {
-          component: 'account.Blacklist',
-          passProps: {params: {switchViewId: componentId}}
-        }
-      })
+  componentDidMount() {
+    Navigation.mergeOptions(this.props.componentId, this.constructor.options)
   }
 
   onSelect = (id) =>
@@ -55,9 +46,6 @@ class FavoritesScreen extends PureComponent {
             ListEmptyComponent={favorites.loading ? undefined : ListEmpty}
           />
         </Body>
-        <Footer>
-          <BottomTabs />
-        </Footer>
       </Shell>
     )
   }

@@ -4,9 +4,9 @@ import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
 import {signOut} from '@/redux/modules/auth'
+import {updateStackRoot} from '@/screens/modules/navigation'
 import {withUserListings} from '@/graphql/containers'
-import {Shell, Body, Header, Footer} from '@/components/layout'
-import BottomTabs from '@/screens/modules/navigation/BottomTabs'
+import {Shell, Body, Header} from '@/components/layout'
 import Menu from '@/components/account/Menu'
 import AccountHeader from './Header'
 
@@ -21,10 +21,7 @@ class AccountMenuScreen extends PureComponent {
       visible: false,
       drawBehind: true,
       height: 0,
-      backButtonTitle: 'Perfil'
-    },
-    bottomTab: {
-      title: 'Perfil'
+      backButton: {title: 'Perfil'}
     }
   }
 
@@ -33,9 +30,9 @@ class AccountMenuScreen extends PureComponent {
   }
 
   onSignOut = () => {
-    const {signOut} = this.props
+    const {signOut, updateStackRoot} = this.props
     signOut()
-    Navigation.popToRoot(this.props.componentId)
+    updateStackRoot()
   }
 
   render() {
@@ -62,9 +59,6 @@ class AccountMenuScreen extends PureComponent {
             })}
           />
         </Body>
-        <Footer>
-          <BottomTabs />
-        </Footer>
       </Shell>
     )
   }
@@ -73,7 +67,7 @@ class AccountMenuScreen extends PureComponent {
 export default composeWithRef(
   connect(
     null,
-    {signOut}
+    {signOut, updateStackRoot}
   ),
   withUserListings
 )(AccountMenuScreen)

@@ -6,7 +6,8 @@ export default StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    width: '100%'
+    width: '100%',
+    backgroundColor: 'white'
   },
   buttonContainer: {
     flex: 1,

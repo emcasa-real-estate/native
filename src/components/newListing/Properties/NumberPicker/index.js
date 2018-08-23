@@ -6,8 +6,7 @@ import Icon from '@/components/shared/Icon'
 import {field} from '@/components/shared/Form/Field'
 import styles, {iconColor} from './styles'
 
-@field()
-export default class NumberPicker extends Component {
+class NumberPicker extends Component {
   static defaultProps = {
     value: 0,
     min: 0
@@ -58,3 +57,5 @@ export default class NumberPicker extends Component {
     )
   }
 }
+
+export default field()(NumberPicker)

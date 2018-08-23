@@ -8,8 +8,7 @@ import Options from './Options'
 import Button from './Button'
 import styles, {iconColor} from './styles'
 
-@field()
-export default class MultiSelectField extends PureComponent {
+class MultiSelectField extends PureComponent {
   static Options = Options
 
   static defaultProps = {
@@ -53,3 +52,5 @@ export default class MultiSelectField extends PureComponent {
     )
   }
 }
+
+export default field()(MultiSelectField)

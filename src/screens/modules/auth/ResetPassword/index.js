@@ -1,5 +1,4 @@
 import React, {PureComponent} from 'react'
-import {View, ScrollView} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
@@ -10,17 +9,7 @@ import Button from '@/components/shared/Button'
 import ResetPasswordForm from '@/components/auth/ResetPassword'
 import SuccessScreen from '@/screens/modules/shared/Success'
 
-@connect(
-  (state) => ({
-    response: getData(state),
-    error: getError(state),
-    loading: isLoading(state)
-  }),
-  {resetPassword, reset},
-  null,
-  {withRef: true}
-)
-export default class ResetPasswordScreen extends PureComponent {
+class ResetPasswordScreen extends PureComponent {
   static screenName = 'auth.ResetPassword'
 
   static options = {
@@ -103,3 +92,14 @@ export default class ResetPasswordScreen extends PureComponent {
     )
   }
 }
+
+export default connect(
+  (state) => ({
+    response: getData(state),
+    error: getError(state),
+    loading: isLoading(state)
+  }),
+  {resetPassword, reset},
+  null,
+  {withRef: true}
+)(ResetPasswordScreen)

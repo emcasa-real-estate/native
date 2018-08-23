@@ -6,6 +6,7 @@ import {padding} from '@/assets/styles'
 export default StyleSheet.create({
   container: {
     display: 'flex',
+    alignItems: 'flex-start',
     ...padding(10, 20)
   },
   title: {
@@ -14,6 +15,7 @@ export default StyleSheet.create({
     marginBottom: 10
   },
   sectionContainer: {
+    flex: 1,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between'
@@ -29,5 +31,19 @@ export default StyleSheet.create({
     fontSize: 17,
     lineHeight: 30,
     fontWeight: '300'
+  },
+  listingId: {
+    flex: 0,
+    height: 25,
+    borderRadius: 25 / 2,
+    paddingHorizontal: 10,
+    backgroundColor: colors.gray.offWhite,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  listingIdText: {
+    color: colors.gray.mediumDark,
+    fontSize: 12,
+    fontWeight: '500'
   }
 })

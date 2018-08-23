@@ -1,3 +1,4 @@
+import _ from 'lodash/fp'
 import {PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
@@ -28,9 +29,9 @@ class InterestFormScreen extends PureComponent {
     }
   }
 
-  state = {value: undefined, interestType: undefined}
+  state = {value: undefined, interestType: undefined, active: false}
 
-  openSuccessModal = () => {
+  openSuccessModal = _.once(() => {
     const {componentId} = this.props
     Navigation.showModal({
       component: {
@@ -47,7 +48,7 @@ class InterestFormScreen extends PureComponent {
         }
       }
     })
-  }
+  })
 
   get defaultValue() {
     const {user} = this.props
@@ -62,7 +63,15 @@ class InterestFormScreen extends PureComponent {
   componentDidUpdate(prev) {
     const {loading, error} = this.props
     const finishedLoading = prev.loading && !loading
-    if (finishedLoading && !error) this.openSuccessModal()
+    if (finishedLoading && !error && this.state.active) this.openSuccessModal()
+  }
+
+  componentDidAppear() {
+    this.setState({active: true})
+  }
+
+  componentDidDisappear() {
+    this.setState({active: false})
   }
 
   onChange = (value) => this.setState({value})

@@ -69,8 +69,8 @@ class EditPropertiesScreen extends PureComponent {
         name: CreatedScreen.screenName,
         passProps: {
           params: {listing, address: address.details},
-          onDismiss: () => {
-            Navigation.dismissModal(`${componentId}_success`)
+          onDismiss: async () => {
+            await Navigation.dismissModal(`${componentId}_success`)
             this.navigateToListing(listing)
           }
         }

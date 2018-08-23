@@ -41,9 +41,9 @@ class InterestFormScreen extends PureComponent {
           title: 'Agente EmCasa notificado',
           children:
             'Entraremos em contato o mais rápido possível para agendarmos uma visita!',
-          onDismiss: () => {
-            Navigation.dismissModal(`${componentId}_success`)
-            Navigation.pop(componentId)
+          onDismiss: async () => {
+            await Navigation.dismissModal(`${componentId}_success`)
+            await Navigation.pop(componentId)
           }
         }
       }

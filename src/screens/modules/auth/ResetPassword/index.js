@@ -62,9 +62,9 @@ class ResetPasswordScreen extends PureComponent {
     })
   }
 
-  onDismiss = () => {
-    Navigation.dismissModal(`${this.props.componentId}_success`)
-    Navigation.popToRoot(this.props.componentId)
+  onDismiss = async () => {
+    await Navigation.dismissModal(`${this.props.componentId}_success`)
+    await Navigation.popToRoot(this.props.componentId)
   }
 
   render() {

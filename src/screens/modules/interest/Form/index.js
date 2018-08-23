@@ -11,10 +11,7 @@ import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import Form from '@/components/interest/Form'
 
-import CalendlyScreen from '@/screens/modules/interest/Calendly'
 import SuccessScreen from '@/screens/modules/shared/Success'
-
-const CALENDLY_ID = 5
 
 class InterestFormScreen extends PureComponent {
   static screenName = 'interest.Form'
@@ -33,15 +30,6 @@ class InterestFormScreen extends PureComponent {
 
   state = {value: undefined, interestType: undefined}
 
-  openCalendly = () => {
-    const {componentId} = this.props
-    Navigation.push(componentId, {
-      component: {
-        name: CalendlyScreen.screenName
-      }
-    })
-  }
-
   openSuccessModal = () => {
     const {componentId} = this.props
     Navigation.showModal({
@@ -53,8 +41,8 @@ class InterestFormScreen extends PureComponent {
           children:
             'Entraremos em contato o mais rápido possível para agendarmos uma visita!',
           onDismiss: () => {
-            Navigation.pop(componentId)
             Navigation.dismissModal(`${componentId}_success`)
+            Navigation.pop(componentId)
           }
         }
       }
@@ -73,10 +61,8 @@ class InterestFormScreen extends PureComponent {
 
   componentDidUpdate(prev) {
     const {loading, error} = this.props
-    const {interestType} = this.state
     const finishedLoading = prev.loading && !loading
-    if (finishedLoading && !error && interestType !== CALENDLY_ID)
-      this.openSuccessModal()
+    if (finishedLoading && !error) this.openSuccessModal()
   }
 
   onChange = (value) => this.setState({value})
@@ -90,11 +76,6 @@ class InterestFormScreen extends PureComponent {
     const {value} = this.state
     const interestType = value.interest_type_id
     if (loading) return
-    if (interestType === CALENDLY_ID) {
-      value.message =
-        'Esta mensagem está sendo enviada porque algum usuário tentou agendar uma visita pelo Calendly neste imóvel.'
-      this.openCalendly()
-    }
     request(id, value)
     this.setState({interestType})
   }

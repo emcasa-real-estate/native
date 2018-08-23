@@ -11,7 +11,7 @@ const Section = ({children, title, nested}) => (
   </View>
 )
 
-export default function ListingDescrition(props) {
+export default function ListingDescription(props) {
   const {maintenanceFee, propertyTax} = props
   return (
     <View style={styles.container}>

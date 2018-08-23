@@ -12,8 +12,7 @@ import {
 import {requestPermission} from '@/redux/modules/firebase/messaging'
 import {getContext} from '@/screens/modules/context/selectors'
 import {withProfileMutation} from '@/graphql/containers'
-import {Shell, Body, Footer} from '@/components/layout'
-import BottomTabs from '@/screens/modules/navigation/BottomTabs'
+import {Shell, Body} from '@/components/layout'
 import NotificationsForm from '@/components/account/NotificationsForm'
 
 class EditNotificationsScreen extends PureComponent {
@@ -66,9 +65,6 @@ class EditNotificationsScreen extends PureComponent {
             onRequestPermission={requestPermission}
           />
         </Body>
-        <Footer>
-          <BottomTabs />
-        </Footer>
       </Shell>
     )
   }

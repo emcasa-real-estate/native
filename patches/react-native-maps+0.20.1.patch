@@ -4,7 +4,7 @@ patch-package
 @@ -1,4 +1,4 @@
 -import MapView from './lib/components/MapView';
 +import  MapView  from './lib/components/MapView';
-
+ 
  export { default as Marker } from './lib/components/MapMarker.js';
  export { default as Polyline } from './lib/components/MapPolyline.js';
 @@ -9,7 +9,9 @@ export { default as LocalTile } from './lib/components/MapLocalTile.js';
@@ -17,11 +17,11 @@ patch-package
 +export const MAP_TYPES = MapView.MAP_TYPES;
  export const PROVIDER_GOOGLE = MapView.PROVIDER_GOOGLE;
  export const PROVIDER_DEFAULT = MapView.PROVIDER_DEFAULT;
-
+ 
 --- a/node_modules/react-native-maps/lib/android/build.gradle
 +++ b/node_modules/react-native-maps/lib/android/build.gradle
 @@ -35,6 +35,6 @@ android {
-
+ 
  dependencies {
    provided "com.facebook.react:react-native:+"
 -  compile "com.google.android.gms:play-services-base:10.2.4"

@@ -78,6 +78,7 @@
     "react-native": "0.56.0",
     "react-native-check-app-install": "^0.0.4",
     "react-native-communications": "^2.2.1",
+    "react-native-facebook-account-kit": "^0.10.1",
     "react-native-fbsdk": "^0.7.0",
     "react-native-firebase": "4.2.0",
     "react-native-fontawesome-pro": "^1.0.12",

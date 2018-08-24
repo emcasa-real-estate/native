@@ -3,6 +3,8 @@ package com.emcasa;
 import android.app.Application;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.support.multidex.MultiDex;
+import android.content.Context;
 
 import com.facebook.react.ReactApplication;
 import com.rpt.reactnativecheckpackageinstallation.CheckPackageInstallationPackage;
@@ -51,33 +53,28 @@ public class MainApplication extends NavigationApplication implements ShareAppli
     };
   }
 
-	@Override
-	public boolean isDebug() {
-		return BuildConfig.DEBUG;
-	}
+  @Override
+  public boolean isDebug() {
+    return BuildConfig.DEBUG;
+  }
 
   @Override
   public List<ReactPackage> createAdditionalReactPackages() {
-    return Arrays.<ReactPackage>asList(
-      new MainReactPackage(),
-      new CheckPackageInstallationPackage(),
-      new FBSDKPackage(mCallbackManager),
-      new RNFirebasePackage(),
-      new RNFirebaseAnalyticsPackage(),
-      new RNFirebaseMessagingPackage(),
-      new RNFirebaseCrashlyticsPackage(),
-      new RNFirebaseNotificationsPackage(),
-      new RNSharePackage(),
-      new ImagePickerPackage(),
-      new SvgPackage(),
-      new PhotoViewPackage(),
-      new MapsPackage()
-    );
+    return Arrays.<ReactPackage>asList(new MainReactPackage(), new CheckPackageInstallationPackage(),
+        new FBSDKPackage(mCallbackManager), new RNFirebasePackage(), new RNFirebaseAnalyticsPackage(),
+        new RNFirebaseMessagingPackage(), new RNFirebaseCrashlyticsPackage(), new RNFirebaseNotificationsPackage(),
+        new RNSharePackage(), new ImagePickerPackage(), new SvgPackage(), new PhotoViewPackage(), new MapsPackage());
   }
 
   @Override
   public String getFileProviderAuthority() {
     return "com.emcasa.provider";
+  }
+
+  @Override
+  protected void attachBaseContext(Context base) {
+    super.attachBaseContext(base);
+    MultiDex.install(this);
   }
 
   @Override

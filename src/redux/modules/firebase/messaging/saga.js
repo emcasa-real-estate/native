@@ -1,8 +1,17 @@
 import {eventChannel} from 'redux-saga'
-import {all, call, put, fork, take, takeLatest} from 'redux-saga/effects'
+import {
+  all,
+  call,
+  put,
+  select,
+  fork,
+  take,
+  takeLatest
+} from 'redux-saga/effects'
 import Firebase from 'react-native-firebase'
 
 import * as actions from './index'
+import {getDeviceToken, hasPermission} from './selectors'
 
 const messaging = Firebase.messaging()
 
@@ -20,14 +29,26 @@ function* requestPermission() {
 
 function* initializeToken() {
   let token = yield call(() => messaging.getToken())
+  let oldToken = yield select(getDeviceToken)
   const channel = tokenRefreshChannel()
-  if (token) yield put(actions.updateToken(token))
-  while ((token = yield take(channel))) yield put(actions.updateToken(token))
+  do {
+    if (token == oldToken) continue
+    yield put(actions.updateToken(token))
+    oldToken = token
+  } while ((token = yield take(channel)))
 }
 
 function* initializePermission() {
   const enabled = yield call(() => messaging.hasPermission())
-  yield put(actions.updatePermission(enabled))
+  const currentPermission = yield select(hasPermission)
+  // Request permission if it's currently denied and the user's response hasn't been cached yet
+  if (
+    !enabled &&
+    typeof currentPermission === 'undefined' &&
+    process.env.NODE_ENV !== 'e2e'
+  )
+    yield put(actions.requestPermission())
+  else yield put(actions.updatePermission(enabled))
 }
 
 export default function* fcmSaga() {

@@ -12,6 +12,15 @@ export const GET_USER_LISTINGS = gql`
   ${frag.UserListing}
 `
 
+export const GET_USER_PROFILE = gql`
+  query userProfile {
+    userProfile {
+      ...UserProfile
+    }
+  }
+  ${frag.UserProfile}
+`
+
 export const GET_FAVORITE_LISTINGS_IDS = _.memoize(
   ({cache}) => gql`
     query favoritedListingsIds {
@@ -32,7 +41,7 @@ export const GET_FAVORITE_LISTINGS = _.memoize(
   ({cache}) => gql`
     query favoritedListings(
       $excludedListingIds: [ID] = []
-      $filters: ListingFilter = {}
+      $filters: ListingFilterInput = {}
       $pageSize: Int = 1000
     ) {
       userProfile ${cache === true ? '@client' : ''} {
@@ -69,7 +78,7 @@ export const GET_BLACKLISTED_LISTINGS = _.memoize(
   ({cache}) => gql`
     query blacklistedListings(
       $excludedListingIds: [ID] = []
-      $filters: ListingFilter = {}
+      $filters: ListingFilterInput = {}
       $pageSize: Int = 1000
     ) {
       userProfile ${cache === true ? '@client' : ''} {

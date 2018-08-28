@@ -1,6 +1,6 @@
 import {Navigation} from 'react-native-navigation'
 import {eventChannel} from 'redux-saga'
-import {put, all, call, fork, take, takeEvery} from 'redux-saga/effects'
+import {put, all, fork, take, cancelled, cancel} from 'redux-saga/effects'
 
 import * as actions from '../index'
 
@@ -16,26 +16,31 @@ const createNavigationChannel = (event) =>
     return () => subscription.remove()
   })
 
-const createNavigationDispatcher = (action) =>
-  function* dispatchNavigationAction(args) {
-    yield put(action(args))
-  }
-
-const createNavigationSaga = (fun, action) =>
-  takeEvery(createNavigationChannel(fun), createNavigationDispatcher(action))
-
-function* watchNavigationEvents() {
-  yield all([
-    createNavigationSaga('ComponentDidAppear', actions.screenAppeared),
-    createNavigationSaga('ComponentDidDisappear', actions.screenDisappeared),
-    createNavigationSaga('BottomTabSelected', actions.tabSelected)
-  ])
-}
+const createNavigationSaga = (fun, dispatch) =>
+  fork(function*() {
+    let action
+    const channel = createNavigationChannel(fun)
+    try {
+      while ((action = yield take(channel))) {
+        yield put(dispatch(action))
+      }
+    } finally {
+      if (yield cancelled()) {
+        channel.close()
+      }
+    }
+  })
 
 export default function* navigationEventsSaga() {
+  let tasks
   const channel = createNavigationChannel('AppLaunched')
-  yield take(channel)
-  yield put({type: actions.APP_LAUNCHED})
-  yield call(channel.close)
-  yield fork(watchNavigationEvents)
+  while (yield take(channel)) {
+    if (tasks) yield cancel(...tasks)
+    yield put({type: actions.APP_LAUNCHED})
+    tasks = yield all([
+      createNavigationSaga('ComponentDidAppear', actions.screenAppeared),
+      createNavigationSaga('ComponentDidDisappear', actions.screenDisappeared),
+      createNavigationSaga('BottomTabSelected', actions.tabSelected)
+    ])
+  }
 }

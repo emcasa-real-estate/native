@@ -6,6 +6,9 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.NonNull;
+import android.view.View;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.modules.core.PermissionAwareActivity;
@@ -41,5 +44,12 @@ public class MainActivity extends NavigationActivity implements PermissionAwareA
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         MainApplication.getCallbackManager().onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        View splash = new View(this);
+        setContentView(splash);
     }
 }

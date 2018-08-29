@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react'
 import {View} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
+import AccountKit from 'react-native-facebook-account-kit'
 
 import {getUser, getError, isLoading} from '@/redux/modules/auth/selectors'
 import {signIn, reset} from '@/redux/modules/auth'
@@ -41,6 +42,9 @@ class LoginScreen extends PureComponent {
   componentDidAppear() {
     this.props.reset()
     this.setState({active: true})
+    AccountKit.loginWithPhone()
+      .then((x) => console.log(1, x))
+      .catch((x) => console.log(2, x))
   }
 
   componentDidUpdate(prev) {

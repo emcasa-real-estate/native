@@ -221,7 +221,6 @@ jobs:
       - run: *configure-keychain
       - run: *bump-ios
       - run: cp ~/emcasa/tmp/.secrets/ios/GoogleService-Info.staging.plist ~/emcasa/ios/EmCasa/GoogleService-Info.plist
-      - run: cp ~/emcasa/tmp/.secrets/ios/staging.entitlements ~/emcasa/ios/EmCasa/EmCasa.entitlements
       - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-ios-staging.png --platforms ios
       - run: BUILD_CONFIGURATION=Beta .circleci/ios/build.sh
       - run: .circleci/ios/sign.sh
@@ -279,7 +278,6 @@ jobs:
       - run: *configure-keychain
       - run: *bump-ios
       - run: cp ~/emcasa/tmp/.secrets/ios/GoogleService-Info.production.plist ~/emcasa/ios/EmCasa/GoogleService-Info.plist
-      - run: cp ~/emcasa/tmp/.secrets/ios/production.entitlements ~/emcasa/ios/EmCasa/EmCasa.entitlements
       - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-ios.png --platforms ios
       - run: BUILD_CONFIGURATION=Release .circleci/ios/build.sh
       - run: .circleci/ios/sign.sh

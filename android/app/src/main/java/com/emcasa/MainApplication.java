@@ -7,6 +7,7 @@ import android.support.multidex.MultiDex;
 import android.content.Context;
 
 import com.facebook.react.ReactApplication;
+import io.underscope.react.fbak.RNAccountKitPackage;
 import com.rpt.reactnativecheckpackageinstallation.CheckPackageInstallationPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import cl.json.RNSharePackage;
@@ -60,10 +61,22 @@ public class MainApplication extends NavigationApplication implements ShareAppli
 
   @Override
   public List<ReactPackage> createAdditionalReactPackages() {
-    return Arrays.<ReactPackage>asList(new MainReactPackage(), new CheckPackageInstallationPackage(),
-        new FBSDKPackage(mCallbackManager), new RNFirebasePackage(), new RNFirebaseAnalyticsPackage(),
-        new RNFirebaseMessagingPackage(), new RNFirebaseCrashlyticsPackage(), new RNFirebaseNotificationsPackage(),
-        new RNSharePackage(), new ImagePickerPackage(), new SvgPackage(), new PhotoViewPackage(), new MapsPackage());
+    return Arrays.<ReactPackage>asList(
+        new MainReactPackage(),
+        new RNAccountKitPackage(),
+        new CheckPackageInstallationPackage(),
+        new FBSDKPackage(mCallbackManager),
+        new RNFirebasePackage(),
+        new RNFirebaseAnalyticsPackage(),
+        new RNFirebaseMessagingPackage(),
+        new RNFirebaseCrashlyticsPackage(),
+        new RNFirebaseNotificationsPackage(),
+        new RNSharePackage(),
+        new ImagePickerPackage(),
+        new SvgPackage(),
+        new PhotoViewPackage(),
+        new MapsPackage()
+    );
   }
 
   @Override

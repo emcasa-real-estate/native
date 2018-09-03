@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React, {PureComponent} from 'react'
 import {View} from 'react-native'
 import {Navigation} from 'react-native-navigation'
@@ -35,6 +36,12 @@ class LoginScreen extends PureComponent {
 
   form = React.createRef()
 
+  showView = _.once(() => {
+    AccountKit.loginWithPhone()
+      .then((token) => console.log('success', token))
+      .catch((err) => console.log('error', err))
+  })
+
   componentDidDisappear() {
     this.setState({value: undefined, active: false})
   }
@@ -42,9 +49,7 @@ class LoginScreen extends PureComponent {
   componentDidAppear() {
     this.props.reset()
     this.setState({active: true})
-    AccountKit.loginWithPhone()
-      .then((x) => console.log(1, x))
-      .catch((x) => console.log(2, x))
+    this.showView()
   }
 
   componentDidUpdate(prev) {

@@ -26,6 +26,7 @@ const akView = (text) =>
 AccountKit.configure({
   responseType: 'token',
   defaultCountry: 'BR',
+  receiveSMS: true,
   advancedUI: {
     header: akView('Header'),
     footer: akView('Footer'),

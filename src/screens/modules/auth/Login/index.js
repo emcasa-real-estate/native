@@ -1,20 +1,16 @@
 import _ from 'lodash'
 import React, {PureComponent} from 'react'
-import {View} from 'react-native'
-import {Navigation} from 'react-native-navigation'
+import {View, ActivityIndicator} from 'react-native'
 import {connect} from 'react-redux'
 import AccountKit from 'react-native-facebook-account-kit'
 
 import {getUser, getError, isLoading} from '@/redux/modules/auth/selectors'
 import {signIn, reset} from '@/redux/modules/auth'
 import {updateStackRoot} from '@/screens/modules/navigation'
-import {Shell, Body, Footer} from '@/components/layout'
+import {Shell, Body} from '@/components/layout'
 import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
-import LoginForm from '@/components/auth/Login'
 
-import SignUpScreen from '@/screens/modules/auth/SignUp'
-import ResetPasswordScreen from '@/screens/modules/auth/ResetPassword'
 import styles from './styles'
 
 class LoginScreen extends PureComponent {
@@ -30,32 +26,32 @@ class LoginScreen extends PureComponent {
   }
 
   state = {
-    active: false,
-    value: {}
+    viewActive: false,
+    akActive: false,
+    token: undefined,
+    error: undefined
   }
 
   form = React.createRef()
 
-  showView = _.once(() => {
+  accountKitLogin = () => {
+    this.setState({akActive: true})
     AccountKit.loginWithPhone()
-      .then((token) => console.log('success', token))
-      .catch((err) => console.log('error', err))
-  })
-
-  componentDidDisappear() {
-    this.setState({value: undefined, active: false})
+      .then((token) =>
+        this.setState({token, akActive: false}, () => {
+          if (token) this.onSuccess(token)
+        })
+      )
+      .catch((error) => this.setState({error, akActive: false}))
   }
 
   componentDidAppear() {
-    this.props.reset()
-    this.setState({active: true})
-    this.showView()
+    if (!this.state.viewActive)
+      this.setState({viewActive: true}, this.accountKitLogin)
   }
 
-  componentDidUpdate(prev) {
-    const {user} = this.props
-    const {active} = this.state
-    if (active && user && !prev.user) this.onSuccess()
+  componentDidDisappear() {
+    if (!this.state.akActive) this.setState({viewActive: false})
   }
 
   onChange = (value) => this.setState({value})
@@ -74,58 +70,43 @@ class LoginScreen extends PureComponent {
     updateStackRoot({tabIndex})
   }
 
-  onSignUp = () => {
-    const {componentId, params} = this.props
-    Navigation.push(componentId, {
-      component: {
-        name: SignUpScreen.screenName,
-        passProps: {params}
-      }
-    })
+  renderLoginButton() {
+    const {
+      params: {notice}
+    } = this.props
+    return (
+      <View style={{flex: 1}}>
+        {notice && (
+          <View style={styles.notice}>
+            <Text style={styles.noticeText}>{notice}</Text>
+          </View>
+        )}
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Button onPress={this.accountKitLogin}>Faça login</Button>
+        </View>
+      </View>
+    )
   }
 
-  onPasswordRecovery = () => {
-    const {componentId, params} = this.props
-    Navigation.push(componentId, {
-      component: {
-        name: ResetPasswordScreen.screenName,
-        passProps: {params}
-      }
-    })
+  renderActivityIndicator() {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignContent: 'center'}}>
+        <ActivityIndicator size="large" />
+      </View>
+    )
+  }
+
+  renderBody() {
+    if (!this.state.akActive) {
+      if (!this.state.token) return this.renderLoginButton()
+    }
+    return this.renderActivityIndicator()
   }
 
   render() {
-    const {
-      loading,
-      error,
-      params: {notice}
-    } = this.props
-    const {value} = this.state
-
     return (
       <Shell testID="@auth.Login">
-        <Body scroll>
-          {notice && (
-            <View style={styles.notice}>
-              <Text style={styles.noticeText}>{notice}</Text>
-            </View>
-          )}
-          <LoginForm
-            formRef={this.form}
-            value={value}
-            error={error}
-            loading={loading}
-            onChange={this.onChange}
-            onSubmit={this.onSubmit}
-            onSignUp={this.onSignUp}
-            onPasswordRecovery={this.onPasswordRecovery}
-          />
-        </Body>
-        <Footer style={{padding: 15}}>
-          <Button disabled={loading} onPress={this.onSubmit}>
-            {loading ? 'Enviando...' : 'Enviar'}
-          </Button>
-        </Footer>
+        <Body>{this.renderBody()}</Body>
       </Shell>
     )
   }

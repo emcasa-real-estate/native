@@ -6,6 +6,12 @@ import Query from './resolvers/queries'
 export default ({cache}) =>
   withClientState({
     cache,
+    defaults: {
+      credentials: {
+        __typename: 'Credentials',
+        jwt: null
+      }
+    },
     resolvers: {
       Mutation,
       Query

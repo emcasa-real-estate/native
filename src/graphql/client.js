@@ -6,7 +6,7 @@ import {ApolloLink} from 'apollo-link'
 
 import createLinks, {sync} from './links'
 
-const SCHEMA_VERSION = '1'
+const SCHEMA_VERSION = '2'
 const SCHEMA_VERSION_KEY = '__emcasa_schema_version'
 
 export default async function createApolloClient(client) {

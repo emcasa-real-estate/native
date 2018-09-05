@@ -1,7 +1,7 @@
 import {ApolloLink} from 'apollo-link'
 import {setContext} from 'apollo-link-context'
 
-import {getToken} from '@/redux/modules/auth/selectors'
+import {GET_CREDENTIALS} from '@/graphql/modules/user/queries'
 
 export default ({client}) =>
   ApolloLink.from([
@@ -11,8 +11,9 @@ export default ({client}) =>
         state: client.store.getState()
       }
     })),
-    setContext((_, {headers, redux}) => {
-      const jwt = getToken(redux.state)
+    setContext(async (_, {headers, cache}) => {
+      const {jwt} = await cache.readQuery({query: GET_CREDENTIALS})
+      console.log('...', jwt)
       return {
         authenticated: Boolean(jwt),
         headers: {

@@ -94,3 +94,11 @@ export const GET_BLACKLISTED_LISTINGS = _.memoize(
     ${frag.ListingFeed}
   `
 )
+
+export const GET_CREDENTIALS = gql`
+  query credentials {
+    credentials @client {
+      jwt
+    }
+  }
+`

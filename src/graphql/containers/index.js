@@ -22,3 +22,9 @@ export {withMessengerFeed, withMessengerUnreadCount} from './MessengerFeedQuery'
 export {withSendMessageMutation} from './SendMessageMutation'
 export {withMarkAsReadMutation} from './MarkAsReadMutation'
 export {withRequestContactMutation} from './ContactMutation'
+export {
+  withSignInMutation,
+  withSignUpMutation,
+  withSignOutMutation
+} from './AuthMutation'
+export {withJwt, withUserProfile} from './CredentialsQuery'

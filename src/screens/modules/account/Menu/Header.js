@@ -1,7 +1,7 @@
 import {PureComponent} from 'react'
-import {connect} from 'react-redux'
 
-import {getUser} from '@/redux/modules/auth/selectors'
+import composeWithRef from '@/lib/composeWithRef'
+import {withUserProfile} from '@/graphql/containers'
 import Header from '@/components/account/Menu/Header'
 
 class AccountMenuHeader extends PureComponent {
@@ -13,6 +13,4 @@ class AccountMenuHeader extends PureComponent {
   }
 }
 
-export default connect((state) => ({user: getUser(state)}), null, null, {
-  withRef: true
-})(AccountMenuHeader)
+export default composeWithRef(withUserProfile)(AccountMenuHeader)

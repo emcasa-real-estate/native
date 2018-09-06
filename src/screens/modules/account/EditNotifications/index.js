@@ -3,8 +3,8 @@ import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
+import {withUserProfile} from '@/graphql/containers'
 import {setContext, clearContext} from '@/screens/modules/context'
-import {getUser} from '@/redux/modules/auth/selectors'
 import {
   hasPermission,
   getDeviceToken
@@ -72,6 +72,7 @@ class EditNotificationsScreen extends PureComponent {
 
 export default composeWithRef(
   withProfileMutation,
+  withUserProfile,
   connect(
     (state) => getContext(state, {screen: 'account'}),
     {
@@ -81,7 +82,6 @@ export default composeWithRef(
   ),
   connect(
     (state) => ({
-      user: getUser(state),
       fcmToken: getDeviceToken(state),
       hasPermission: hasPermission(state)
     }),

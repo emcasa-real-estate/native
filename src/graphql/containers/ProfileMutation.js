@@ -1,20 +1,15 @@
 import _ from 'lodash'
 import {Mutation} from 'react-apollo'
-import {connect} from 'react-redux'
 
 import {EDIT_PROFILE} from '@/graphql/modules/user/mutations'
-import {patch} from '@/redux/modules/auth'
-import {getUser} from '@/redux/modules/auth/selectors'
+import {withUserProfile} from './CredentialsQuery'
 
-function ProfileMutation({children, user, patch}) {
+const ProfileMutation = withUserProfile(function _ProfileMutation({
+  children,
+  user
+}) {
   return (
-    <Mutation
-      mutation={EDIT_PROFILE}
-      variables={{id: user.id}}
-      update={(__, {data: {editUserProfile}}) => {
-        patch(_.omit(editUserProfile, ['id', '__typename']))
-      }}
-    >
+    <Mutation mutation={EDIT_PROFILE} variables={{id: user.id}}>
       {(mutate, props) =>
         children(
           ({variables}) =>
@@ -26,16 +21,9 @@ function ProfileMutation({children, user, patch}) {
       }
     </Mutation>
   )
-}
+})
 
-const ProfileMutationWithData = connect(
-  (state) => ({
-    user: getUser(state)
-  }),
-  {patch}
-)(ProfileMutation)
-
-export default ProfileMutationWithData
+export default ProfileMutation
 
 export const withProfileMutation = (Target) => (props) => (
   <ProfileMutationWithData>

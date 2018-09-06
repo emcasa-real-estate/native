@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
 import {withRequestContactMutation} from '@/graphql/containers'
-import {getUser} from '@/redux/modules/auth/selectors'
+import { withUserProfile } from '@/graphql/containers'
 import {Modal, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import ContactForm from '@/components/newListing/ContactForm'
@@ -94,6 +94,6 @@ class ContactScreen extends PureComponent {
 }
 
 export default composeWithRef(
-  connect((state) => ({user: getUser(state) || {}})),
+  withUserProfile,
   withRequestContactMutation()
 )(ContactScreen)

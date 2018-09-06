@@ -4,9 +4,9 @@ import {connect} from 'react-redux'
 import {graphql} from 'react-apollo'
 
 import composeWithRef from '@/lib/composeWithRef'
+import {withUserProfile} from '@/graphql/containers'
 import {EDIT_PASSWORD} from '@/graphql/modules/user/mutations'
 import {setContext, clearContext} from '@/screens/modules/context'
-import {getUser} from '@/redux/modules/auth/selectors'
 import {getContext} from '@/screens/modules/context/selectors'
 import {Shell, Body} from '@/components/layout'
 import PasswordForm from '@/components/account/PasswordForm'
@@ -92,6 +92,7 @@ class EditPasswordScreen extends PureComponent {
 }
 
 export default composeWithRef(
+  withUserProfile,
   connect(
     (state) => getContext(state, {screen: 'account'}),
     {
@@ -99,9 +100,6 @@ export default composeWithRef(
       clearContext: clearContext('account')
     }
   ),
-  connect((state) => ({
-    user: getUser(state)
-  })),
   graphql(EDIT_PASSWORD, {
     props: ({mutate, ownProps: {user}}) => ({
       changePassword: (variables) =>

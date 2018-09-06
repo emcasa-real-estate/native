@@ -1,10 +1,8 @@
 import {PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
-import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
-import {withMessengerFeed} from '@/graphql/containers'
-import {getUser} from '@/redux/modules/auth/selectors'
+import {withUserProfile, withMessengerFeed} from '@/graphql/containers'
 import {Shell, Body} from '@/components/layout'
 import Channels from '@/components/messenger/Channels'
 import ListEmpty from './ListEmpty'
@@ -64,7 +62,6 @@ class MessengerChannelsScreen extends PureComponent {
   }
 }
 
-export default composeWithRef(
-  withMessengerFeed,
-  connect((state) => ({user: getUser(state)}))
-)(MessengerChannelsScreen)
+export default composeWithRef(withMessengerFeed, withUserProfile)(
+  MessengerChannelsScreen
+)

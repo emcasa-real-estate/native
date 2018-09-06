@@ -1,5 +1,4 @@
 import {Mutation} from 'react-apollo'
-import {connect} from 'react-redux'
 
 import {MESSENGER_RECEIVER_ID} from '@/lib/config'
 import {
@@ -7,15 +6,13 @@ import {
   GET_CHANNEL_FEED
 } from '@/graphql/modules/messenger/queries'
 import {SEND_MESSAGE} from '@/graphql/modules/messenger/mutations'
-import {getUser} from '@/redux/modules/auth/selectors'
+import {withUserProfile} from './CredentialsQuery'
 
-const SendMessageMutation = connect((state) => ({
-  sender: getUser(state)
-}))(function _SendMessageMutation({
+const SendMessageMutation = withUserProfile(function _SendMessageMutation({
   children,
   listing,
   receiver,
-  sender,
+  user,
   ...options
 }) {
   return (
@@ -25,7 +22,7 @@ const SendMessageMutation = connect((state) => ({
         {query: GET_CHANNEL_FEED},
         {
           query: GET_MESSAGES,
-          variables: {listingId: listing.id, senderId: sender.id}
+          variables: {listingId: listing.id, senderId: user.id}
         }
       ]}
       {...options}

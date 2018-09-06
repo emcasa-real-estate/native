@@ -14,7 +14,7 @@ export const GET_USER_LISTINGS = gql`
 
 export const GET_USER_PROFILE = gql`
   query userProfile {
-    userProfile {
+    userProfile @client {
       ...UserProfile
     }
   }

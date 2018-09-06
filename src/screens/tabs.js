@@ -1,12 +1,9 @@
-import {createSelector} from 'reselect'
-
-import {getUser} from '@/redux/modules/auth/selectors'
 import * as listingForm from '@/screens/modules/listingForm/screens'
 import * as listings from '@/screens/modules/listings/screens'
 import * as account from '@/screens/modules/account/screens'
 import * as auth from '@/screens/modules/auth/screens'
 
-export default createSelector(getUser, (user) => [
+export default (_, {user}) => [
   {
     name: listings.Feed.screenName,
     options: {
@@ -49,4 +46,4 @@ export default createSelector(getUser, (user) => [
       }
     }
   }
-])
+]

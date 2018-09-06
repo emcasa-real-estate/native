@@ -18,8 +18,4 @@ class AppApolloProvider extends Component {
   }
 }
 
-const props = (state) => ({
-  jwt: getToken(state)
-})
-
-export default connect(props)(AppApolloProvider)
+export default AppApolloProvider

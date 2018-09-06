@@ -4,8 +4,8 @@ import {View, ActivityIndicator} from 'react-native'
 import {connect} from 'react-redux'
 import AccountKit from 'react-native-facebook-account-kit'
 
-import {getUser, getError, isLoading} from '@/redux/modules/auth/selectors'
-import {signIn, reset} from '@/redux/modules/auth'
+import composeWithRef from '@/lib/composeWithRef'
+import {withUserProfile, withSignInMutation} from '@/graphql/containers'
 import {updateStackRoot} from '@/screens/modules/navigation'
 import {Shell, Body} from '@/components/layout'
 import Text from '@/components/shared/Text'
@@ -112,13 +112,11 @@ class LoginScreen extends PureComponent {
   }
 }
 
-export default connect(
-  (state) => ({
-    user: getUser(state),
-    error: getError(state),
-    loading: isLoading(state)
-  }),
-  {signIn, reset, updateStackRoot},
-  null,
-  {withRef: true}
+export default composeWithRef(
+  withUserProfile,
+  withSignInMutation,
+  connect(
+    null,
+    {updateStackRoot}
+  )
 )(LoginScreen)

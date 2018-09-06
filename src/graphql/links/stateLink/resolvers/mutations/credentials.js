@@ -10,9 +10,14 @@ export const setJwt = async (jwt) => AsyncStorage.setItem(JWT_CACHE_KEY, jwt)
 
 export const resetJwt = () => AsyncStorage.removeItem(JWT_CACHE_KEY)
 
-export async function storeCredentials(_, {jwt, user}) {
-  if (!jwt) await resetJwt()
-  else await setJwt(jwt)
+export async function storeCredentials(_, {jwt, user}, {graphql}) {
+  if (!jwt) {
+    await resetJwt()
+    await graphql.resetStore()
+  } else {
+    await setJwt(jwt)
+    await graphql.sync()
+  }
   return {
     __typename: 'Credentials',
     jwt,

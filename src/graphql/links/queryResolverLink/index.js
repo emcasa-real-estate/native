@@ -9,7 +9,9 @@ export default ({cache}) =>
     listingsFeed(data, op) {
       if (op.getContext().authenticated) return data
       try {
-        const {userProfile: {blacklists}} = cache.readQuery({
+        const {
+          userProfile: {blacklists}
+        } = cache.readQuery({
           query: GET_BLACKLISTED_LISTINGS_IDS({cache: true})
         })
         if (!blacklists.length) return data

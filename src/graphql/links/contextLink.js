@@ -6,6 +6,7 @@ import {GET_CREDENTIALS} from '@/graphql/modules/user/queries'
 export default ({client}) =>
   ApolloLink.from([
     setContext(() => ({
+      graphql: client.graphql,
       redux: {
         dispatch: client.store.dispatch,
         state: client.store.getState()
@@ -13,7 +14,6 @@ export default ({client}) =>
     })),
     setContext(async (_, {headers, cache}) => {
       const {jwt} = await cache.readQuery({query: GET_CREDENTIALS})
-      console.log('...', jwt)
       return {
         authenticated: Boolean(jwt),
         headers: {

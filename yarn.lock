@@ -1749,6 +1749,12 @@ apollo-utilities@^1.0.1:
   dependencies:
     fast-json-stable-stringify "^2.0.0"
 
+apollo-utilities@^1.0.20:
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.0.20.tgz#b14318686cb67838279fb5f009cca0ec97a4d140"
+  dependencies:
+    fast-json-stable-stringify "^2.0.0"
+
 app-icon@^0.6.3:
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/app-icon/-/app-icon-0.6.3.tgz#94cf1ced78d53f6654409f1774645c4c076c4985"

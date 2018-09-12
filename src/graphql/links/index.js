@@ -1,11 +1,12 @@
-import {ApolloLink} from 'apollo-link'
 import {hasSubscription} from '@jumpn/utils-graphql'
+import {ApolloLink} from 'apollo-link'
 
+import authLink from './authLink'
 import contextLink from './contextLink'
-import stateLink from './stateLink'
 import errorLink from './errorLink'
 import httpLink from './httpLink'
 import queryResolverLink from './queryResolverLink'
+import stateLink from './stateLink'
 import wsLink from './wsLink'
 
 export default (options) => {
@@ -13,6 +14,7 @@ export default (options) => {
   if (__DEV__) links.set('logger', require('apollo-link-logger').default)
   links.set('error', errorLink(options))
   links.set('context', contextLink(options))
+  links.set('auth', authLink(options))
   links.set('state', stateLink(options))
   links.set('queryResolver', queryResolverLink(options))
   links.set(

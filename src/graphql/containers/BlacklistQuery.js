@@ -8,26 +8,10 @@ import {
 } from '@/graphql/modules/user/queries'
 import {withJwt} from './CredentialsQuery'
 
-const BlacklistQuery = withJwt(function _BlacklistQuery({
-  children,
-  jwt,
-  query,
-  ...props
-}) {
-  const options = {cache: !jwt}
-  return (
-    <Query query={query(options)} {...props}>
-      {children}
-    </Query>
-  )
-})
-
-export default BlacklistQuery
-
 const createBlacklistContainer = (query, getProps) => (Target) => (props) => (
-  <BlacklistQuery query={query}>
+  <Query fetchPolicy="cache-and-network" query={query}>
     {(response) => <Target {...props} {...getProps(response)} />}
-  </BlacklistQuery>
+  </Query>
 )
 
 export const withBlacklistedListings = createBlacklistContainer(

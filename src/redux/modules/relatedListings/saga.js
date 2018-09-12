@@ -17,8 +17,11 @@ function* request({id, limit}) {
   yield put(actions.request(id))
   try {
     const graphql = yield getContext('graphql')
-    const {userProfile: {blacklists}} = graphql.cache.readQuery({
-      query: GET_BLACKLISTED_LISTINGS_IDS({cache: true})
+    const {
+      userProfile: {blacklists}
+    } = graphql.cache.readQuery({
+      query: GET_BLACKLISTED_LISTINGS_IDS,
+      fetchPolicy: 'cache-only'
     })
     const blacklistedIds = blacklists.map(({id}) => id)
     const response = yield call(api.related, id, {page_size: limit})

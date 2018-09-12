@@ -8,19 +8,15 @@ import {logEvent} from '@/redux/modules/firebase/analytics'
 import {withJwt} from './CredentialsQuery'
 import {withFavoriteListingByID} from './FavoritesQuery'
 
-const FavoriteMutation = compose(
-  withJwt,
-  connect(
-    null,
-    {logEvent}
-  )
-)(function _FavoritesMutation({children, id, favorite, jwt, logEvent}) {
-  const query = {cache: !jwt}
+const FavoriteMutation = connect(
+  null,
+  {logEvent}
+)(function _FavoritesMutation({children, id, favorite, logEvent}) {
   return (
     <Mutation
-      mutation={favorite ? UNFAVORITE(query) : FAVORITE(query)}
+      mutation={favorite ? UNFAVORITE : FAVORITE}
       variables={{id}}
-      refetchQueries={[{query: GET_FAVORITE_LISTINGS_IDS(query)}]}
+      refetchQueries={[{query: GET_FAVORITE_LISTINGS_IDS}]}
       update={() =>
         logEvent(favorite ? 'unfavorite_listing' : 'favorite_listing', {id})
       }

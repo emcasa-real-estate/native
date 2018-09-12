@@ -12,7 +12,8 @@ export default ({cache}) =>
         const {
           userProfile: {blacklists}
         } = cache.readQuery({
-          query: GET_BLACKLISTED_LISTINGS_IDS({cache: true})
+          query: GET_BLACKLISTED_LISTINGS_IDS,
+          fetchPolicy: 'cache-only'
         })
         if (!blacklists.length) return data
         const blacklistedIds = blacklists.map(({id}) => id)

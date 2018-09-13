@@ -100,6 +100,8 @@
     <string>$(PRODUCT_NAME) precisa de permissão para acessar sua galeria de fotos</string>
     <key>NSSpeechRecognitionUsageDescription</key>
     <string>Acesso ao serviço de reconhecimento de fala</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>$(PRODUCT_NAME) usa a sua localização enviar notificações segmentadas ao seu local</string>
     <key>UIAppFonts</key>
     <array>
       <string>OpenSans-Bold.ttf</string>

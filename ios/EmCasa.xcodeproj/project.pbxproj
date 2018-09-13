@@ -485,6 +485,8 @@
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		AE377F8F509E44F996FA4476 /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
 		C300924A20E150130004339A /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
+		C30AC4F521388CC50023FEB7 /* EmCasa-release.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = "EmCasa-release.entitlements"; path = "EmCasa/EmCasa-release.entitlements"; sourceTree = "<group>"; };
+		C30AC52621388CC50023FEB7 /* EmCasa-beta.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = "EmCasa-beta.entitlements"; path = "EmCasa/EmCasa-beta.entitlements"; sourceTree = "<group>"; };
 		C314BCD820EBFDE000235F22 /* RNShare.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNShare.xcodeproj; path = "../node_modules/react-native-share/ios/RNShare.xcodeproj"; sourceTree = "<group>"; };
 		C336DC072118B7A600273254 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/lib/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		C33831B720EB0D5D0061F81C /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
@@ -658,6 +660,8 @@
 		13B07FAE1A68108700A75B9A /* EmCasa */ = {
 			isa = PBXGroup;
 			children = (
+				C30AC52621388CC50023FEB7 /* EmCasa-beta.entitlements */,
+				C30AC4F521388CC50023FEB7 /* EmCasa-release.entitlements */,
 				C371D9A2212354FA00A2AD36 /* EmCasa.entitlements */,
 				C347F5FB20E5835400C76519 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -1869,7 +1873,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				BUNDLE_IDENTIFIER_SUFFIX = "";
-				CODE_SIGN_ENTITLEMENTS = EmCasa/EmCasa.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "EmCasa/EmCasa-release.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: EMCASA NEGOCIOS IMOBILIARIOS LTDA (8C6H76958R)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -2165,7 +2169,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				BUNDLE_IDENTIFIER_SUFFIX = "-beta";
-				CODE_SIGN_ENTITLEMENTS = EmCasa/EmCasa.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "EmCasa/EmCasa-beta.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: EMCASA NEGOCIOS IMOBILIARIOS LTDA (8C6H76958R)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

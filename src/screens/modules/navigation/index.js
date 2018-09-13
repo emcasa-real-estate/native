@@ -45,6 +45,8 @@ const initialState = {
 
 export default function screenReducer(state = initialState, action) {
   switch (action.type) {
+    case APP_LAUNCHED:
+      return initialState
     case TAB_SELECTED:
       return {
         ...state,

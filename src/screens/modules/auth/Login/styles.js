@@ -4,6 +4,7 @@ import * as colors from '@/assets/colors'
 
 export default StyleSheet.create({
   notice: {
+    flex: 0,
     paddingHorizontal: 5,
     paddingVertical: 10,
     marginHorizontal: 15,
@@ -14,7 +15,7 @@ export default StyleSheet.create({
     borderColor: colors.blue.medium
   },
   noticeText: {
-    flex: 1,
+    lineHeight: 15,
     fontSize: 12,
     textAlign: 'center',
     color: colors.blue.medium

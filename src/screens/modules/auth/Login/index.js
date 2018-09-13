@@ -1,5 +1,4 @@
-import _ from 'lodash'
-import React, {PureComponent} from 'react'
+import React, {PureComponent, Fragment} from 'react'
 import {View, ActivityIndicator} from 'react-native'
 import {connect} from 'react-redux'
 import AccountKit from 'react-native-facebook-account-kit'
@@ -75,7 +74,7 @@ class LoginScreen extends PureComponent {
       params: {notice}
     } = this.props
     return (
-      <View style={{flex: 1}}>
+      <Fragment>
         {notice && (
           <View style={styles.notice}>
             <Text style={styles.noticeText}>{notice}</Text>
@@ -84,7 +83,7 @@ class LoginScreen extends PureComponent {
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <Button onPress={this.accountKitLogin}>Faça login</Button>
         </View>
-      </View>
+      </Fragment>
     )
   }
 

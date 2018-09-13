@@ -1,7 +1,16 @@
 import {Navigation} from 'react-native-navigation'
 import {eventChannel} from 'redux-saga'
-import {put, all, fork, take, cancelled, cancel} from 'redux-saga/effects'
+import {
+  put,
+  all,
+  fork,
+  take,
+  cancelled,
+  cancel,
+  getContext
+} from 'redux-saga/effects'
 
+import {READY} from '@/lib/client'
 import * as actions from '../index'
 
 const emitter = Navigation.events()
@@ -34,7 +43,9 @@ const createNavigationSaga = (fun, dispatch) =>
 export default function* navigationEventsSaga() {
   let tasks
   const channel = createNavigationChannel('AppLaunched')
-  while (yield take(channel)) {
+  yield all([take(READY), take(channel)])
+  do {
+    yield* getContext('ready')
     if (tasks) yield cancel(...tasks)
     yield put({type: actions.APP_LAUNCHED})
     tasks = yield all([
@@ -42,5 +53,5 @@ export default function* navigationEventsSaga() {
       createNavigationSaga('ComponentDidDisappear', actions.screenDisappeared),
       createNavigationSaga('BottomTabSelected', actions.tabSelected)
     ])
-  }
+  } while (yield take(channel))
 }

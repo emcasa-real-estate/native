@@ -13,6 +13,9 @@ export const GET_USER_LISTINGS = gql`
 
 export const GET_USER_PROFILE = gql`
   query userProfile {
+    credentials @client {
+      jwt
+    }
     userProfile @clientAuth {
       ...UserProfile
     }
@@ -90,12 +93,4 @@ export const GET_BLACKLISTED_LISTINGS = gql`
     }
   }
   ${frag.ListingFeed}
-`
-
-export const GET_CREDENTIALS = gql`
-  query credentials {
-    credentials @client {
-      jwt
-    }
-  }
 `

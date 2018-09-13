@@ -1,15 +1,17 @@
 import {call, put, all, takeLatest, getContext} from 'redux-saga/effects'
 
-import {GET_CREDENTIALS} from '@/graphql/modules/user/queries'
+import {GET_USER_PROFILE} from '@/graphql/modules/user/queries'
 import * as api from '@/lib/services/listingGallery'
 import * as actions from './index'
 
 function* getJwt() {
   const graphql = yield getContext('graphql')
-  const {credentials} = yield call([graphql, graphql.query], {
-    query: GET_CREDENTIALS
+  const {
+    data: {credentials}
+  } = yield call([graphql, graphql.query], {
+    query: GET_USER_PROFILE
   })
-  return credentials.jwt
+  return credentials ? credentials.jwt : undefined
 }
 
 function* request({id}) {

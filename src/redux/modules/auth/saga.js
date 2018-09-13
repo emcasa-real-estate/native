@@ -20,10 +20,13 @@ import * as actions from './index'
 function* updateToken() {
   const graphql = yield getContext('graphql')
   const deviceToken = yield select(getDeviceToken)
-  const {userProfile} = yield call([graphql, graphql.query], {
-    query: GET_USER_PROFILE
+  const {
+    data: {userProfile, credentials}
+  } = yield call([graphql, graphql.query], {
+    query: GET_USER_PROFILE,
+    errorPolicy: 'ignore'
   })
-  if (!userProfile || !deviceToken) return
+  if (!credentials.jwt || !userProfile || !deviceToken) return
   yield call([graphql, graphql.mutate], {
     mutation: EDIT_PROFILE,
     variables: {id: userProfile.id, deviceToken}

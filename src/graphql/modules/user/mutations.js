@@ -100,3 +100,5 @@ export const STORE_CREDENTIALS = gql`
     }
   }
 `
+
+window.STORE_CREDENTIALS = STORE_CREDENTIALS

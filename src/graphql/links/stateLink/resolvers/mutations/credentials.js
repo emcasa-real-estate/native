@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import {AsyncStorage} from 'react-native'
 
 export const JWT_CACHE_KEY = '__emcasa_jwt'

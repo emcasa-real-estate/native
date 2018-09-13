@@ -6,11 +6,15 @@ import {
   SIGN_OUT,
   STORE_CREDENTIALS
 } from '@/graphql/modules/user/mutations'
-import {GET_CREDENTIALS, GET_USER_PROFILE} from '@/graphql/modules/user/queries'
+import {GET_USER_PROFILE} from '@/graphql/modules/user/queries'
 
 const withAuthMutation = (mutationName, Mutation) => (Target) => (props) => (
   <Mutation>
-    {(mutate) => <Target {...{...props, [mutationName]: mutate}} />}
+    {(mutate) => (
+      <Target
+        {...{...props, [mutationName]: (variables) => mutate({variables})}}
+      />
+    )}
   </Mutation>
 )
 
@@ -19,7 +23,7 @@ export function SignInMutation({children, ...props}) {
     <Mutation
       {...props}
       mutation={AK_SIGN_IN}
-      refetchQueries={[{query: GET_USER_PROFILE}, {query: GET_CREDENTIALS}]}
+      refetchQueries={[{query: GET_USER_PROFILE}]}
       update={(cache, {accountKitSignIn}) => {
         cache.writeQuery({
           query: STORE_CREDENTIALS,
@@ -27,7 +31,7 @@ export function SignInMutation({children, ...props}) {
         })
       }}
     >
-      {(mutate, props) => children(({variables}) => mutate({variables}), props)}
+      {children}
     </Mutation>
   )
 }
@@ -39,7 +43,7 @@ export function SignUpMutation({children, ...props}) {
     <Mutation
       {...props}
       mutation={SIGN_UP}
-      refetchQueries={[{query: GET_USER_PROFILE}, {query: GET_CREDENTIALS}]}
+      refetchQueries={[{query: GET_USER_PROFILE}]}
       update={(cache, {accountKitSignIn}) => {
         cache.writeQuery({
           query: STORE_CREDENTIALS,
@@ -59,9 +63,9 @@ export function SignOutMutation({children, ...props}) {
     <Mutation
       {...props}
       mutation={SIGN_OUT}
-      refetchQueries={[{query: GET_USER_PROFILE}, {query: GET_CREDENTIALS}]}
+      refetchQueries={[{query: GET_USER_PROFILE}]}
     >
-      {(mutate, props) => children(({variables}) => mutate({variables}), props)}
+      {children}
     </Mutation>
   )
 }

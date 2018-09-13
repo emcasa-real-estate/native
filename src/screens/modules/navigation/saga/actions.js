@@ -43,19 +43,20 @@ function* switchTab({tabIndex}) {
 
 function* updateStackRoot({rootId, tabIndex, children}) {
   const graphql = yield getContext('graphql')
-  console.log(graphql)
-  const {userProfile} = yield call([graphql, graphql.query], {
+  const {
+    data: {userProfile}
+  } = yield call([graphql, graphql.query], {
     query: GET_USER_PROFILE,
     errorPolicy: 'ignore'
   })
-  const bottomTabs = (yield select(getBottomTabs, {user: userProfile})).map(
-    (component) => ({
-      stack: {
-        children: [{component}],
-        options: component.options
-      }
-    })
-  )
+  const bottomTabs = (yield select(getBottomTabs, {
+    user: userProfile || {}
+  })).map((component) => ({
+    stack: {
+      children: [{component}],
+      options: component.options
+    }
+  }))
   if (children.length) bottomTabs[tabIndex].stack.children.push(...children)
   Navigation.setRoot({
     root: {

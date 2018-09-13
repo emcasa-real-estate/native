@@ -9,7 +9,7 @@ import {
   getContext
 } from 'redux-saga/effects'
 
-import {GET_CREDENTIALS} from '@/graphql/modules/user/queries'
+import {GET_USER_PROFILE} from '@/graphql/modules/user/queries'
 import * as api from '@/lib/services/listingGallery'
 import * as cdn from '@/lib/services/cloudinary'
 import * as actions from './index'
@@ -18,9 +18,11 @@ function* request({id, image, position}) {
   try {
     const graphql = yield getContext('graphql')
     const {
-      credentials: {jwt}
+      data: {
+        credentials: {jwt}
+      }
     } = yield call([graphql, graphql.query], {
-      query: GET_CREDENTIALS
+      query: GET_USER_PROFILE
     })
     const {filename} = yield call(cdn.upload, image)
     const response = yield call(api.create, id, {filename, position}, {jwt})

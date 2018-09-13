@@ -20,12 +20,14 @@ function identifySession({data}) {
 
 function* initialize() {
   const graphql = yield getContext('graphql')
-  const {userProfile} = yield call([graphql, graphql.query], {
+  const {
+    data: {userProfile}
+  } = yield call([graphql, graphql.query], {
     query: GET_USER_PROFILE,
     errorPolicy: 'ignore'
   })
-  console.log('........', userProfile)
-  if (userProfile) yield fork(identifySession, {data: userProfile})
+  if (userProfile && userProfile.id)
+    yield fork(identifySession, {data: userProfile})
 }
 
 export default function* crashlyticsSaga() {

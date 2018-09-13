@@ -24,14 +24,17 @@ function logCurrentScreen({name}) {
 
 function* initialize() {
   const graphql = yield getContext('graphql')
-  const {userProfile} = yield call([graphql, graphql.query], {
+  const {
+    data: {userProfile}
+  } = yield call([graphql, graphql.query], {
     query: GET_USER_PROFILE,
     errorPolicy: 'ignore'
   })
   analytics.setAnalyticsCollectionEnabled(true)
   analytics.setMinimumSessionDuration(10 * 1000)
   analytics.setSessionTimeoutDuration(15 * 60 * 1000)
-  if (userProfile) yield fork(identifySession, {data: userProfile})
+  if (userProfile && userProfile.id)
+    yield fork(identifySession, {data: userProfile})
 }
 
 export default function* analyticsSaga() {

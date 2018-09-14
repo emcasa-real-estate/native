@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import {Mutation} from 'react-apollo'
 
 import {EDIT_PROFILE} from '@/graphql/modules/user/mutations'
@@ -26,7 +25,7 @@ const ProfileMutation = withUserProfile(function _ProfileMutation({
 export default ProfileMutation
 
 export const withProfileMutation = (Target) => (props) => (
-  <ProfileMutationWithData>
+  <ProfileMutation>
     {(mutate, ctx) => (
       <Target
         {...props}
@@ -35,5 +34,5 @@ export const withProfileMutation = (Target) => (props) => (
         editUserProfile={mutate}
       />
     )}
-  </ProfileMutationWithData>
+  </ProfileMutation>
 )

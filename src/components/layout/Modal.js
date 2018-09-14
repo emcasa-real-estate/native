@@ -45,19 +45,21 @@ const styles = StyleSheet.create({
 Modal.Header = ({style, children, inline, iconColor, onDismiss}) => (
   <View style={[styles.header, !inline && styles.headerAbsolute, style]}>
     <View style={styles.button}>
-      <TouchableOpacity
-        testID="close_modal_button"
-        onPress={onDismiss}
-        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-      >
-        <Icon
-          name="times"
-          size={24}
-          strokeWidth={20}
-          stroke={iconColor}
-          color={iconColor}
-        />
-      </TouchableOpacity>
+      {onDismiss && (
+        <TouchableOpacity
+          testID="close_modal_button"
+          onPress={onDismiss}
+          hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+        >
+          <Icon
+            name="times"
+            size={24}
+            strokeWidth={20}
+            stroke={iconColor}
+            color={iconColor}
+          />
+        </TouchableOpacity>
+      )}
     </View>
     {children && (
       <View style={styles.title}>

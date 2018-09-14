@@ -29,12 +29,12 @@ export function SignInMutation({children, client, ...props}) {
     <Mutation
       {...props}
       mutation={AK_SIGN_IN}
-      refetchQueries={[{query: GET_USER_PROFILE}]}
       update={function(cache, {data: {accountKitSignIn}}) {
         if (accountKitSignIn)
           client.mutate({
             mutation: STORE_CREDENTIALS,
-            variables: accountKitSignIn
+            variables: accountKitSignIn,
+            refetchQueries: [{query: GET_USER_PROFILE}]
           })
       }}
     >

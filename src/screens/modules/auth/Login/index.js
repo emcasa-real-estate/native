@@ -36,16 +36,14 @@ class LoginScreen extends PureComponent {
   }
 
   accountKitLogin = () => {
-    this.setState({akActive: true})
-    if (window.__akToken) {
-      return this.onSubmit({token: window.__akToken})
-    }
-    AccountKit.loginWithPhone()
-      .then((response) => {
-        this.setState({akActive: false, active: true})
-        if (response) this.onSubmit(response)
-      })
-      .catch((error) => this.setState({error, akActive: false, active: true}))
+    this.setState({akActive: true}, () =>
+      AccountKit.loginWithPhone()
+        .then((response) => {
+          this.setState({akActive: false})
+          if (response) this.onSubmit(response)
+        })
+        .catch((error) => this.setState({error, akActive: false}))
+    )
   }
 
   componentDidAppear() {
@@ -86,8 +84,15 @@ class LoginScreen extends PureComponent {
   }
 
   onSignUp = () => {
-    Navigation.push(this.props.componentId, {
-      component: {name: SignUpScreen.screenName}
+    const {componentId} = this.props
+    Navigation.showModal({
+      component: {
+        id: `${componentId}_signUp`,
+        name: SignUpScreen.screenName,
+        passProps: {
+          onSuccess: this.onSuccess
+        }
+      }
     })
   }
 
@@ -118,7 +123,7 @@ class LoginScreen extends PureComponent {
   }
 
   renderBody() {
-    if (!this.state.akActive || this.state.loading)
+    if (this.state.akActive || this.state.loading)
       return this.renderActivityIndicator()
     return this.renderLoginButton()
   }

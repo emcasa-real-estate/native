@@ -334,7 +334,7 @@ workflows:
       - deploy_production:
           type: approval
           requires:
-            - e2e_ios
+            # - e2e_ios
             - build_android
       - deploy_staging_ios:
           context: ios-staging

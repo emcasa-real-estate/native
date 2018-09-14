@@ -12,7 +12,7 @@ const EmailMutation = withUserProfile(function _EmailMutation({
     <Mutation mutation={EDIT_EMAIL}>
       {(mutate, props) =>
         children(
-          ({variables}) => mutate({variables: {id: user.id, ...variables}}),
+          (variables) => mutate({variables: {id: user.id, ...variables}}),
           {...props, user}
         )
       }

@@ -12,7 +12,7 @@ const ProfileMutation = withUserProfile(function _ProfileMutation({
     <Mutation mutation={EDIT_PROFILE} variables={{id: user.id}}>
       {(mutate, props) =>
         children(
-          ({variables}) =>
+          (variables) =>
             mutate({
               variables: {id: user.id, ...variables}
             }),

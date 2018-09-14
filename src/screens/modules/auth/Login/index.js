@@ -1,16 +1,20 @@
-import React, {PureComponent, Fragment} from 'react'
+import {PureComponent, Fragment} from 'react'
 import {View, ActivityIndicator} from 'react-native'
-import {connect} from 'react-redux'
+import {Navigation} from 'react-native-navigation'
 import AccountKit from 'react-native-facebook-account-kit'
+import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
-import {withUserProfile, withSignInMutation} from '@/graphql/containers'
+import {withSignInMutation} from '@/graphql/containers'
 import {updateStackRoot} from '@/screens/modules/navigation'
 import {Shell, Body} from '@/components/layout'
 import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
 
+import SignUpScreen from '@/screens/modules/auth/SignUp'
 import styles from './styles'
+
+const isRegistrationComplete = (user) => Boolean(user.name)
 
 class LoginScreen extends PureComponent {
   static screenName = 'auth.Login'
@@ -27,21 +31,21 @@ class LoginScreen extends PureComponent {
   state = {
     viewActive: false,
     akActive: false,
-    token: undefined,
+    loading: false,
     error: undefined
   }
 
-  form = React.createRef()
-
   accountKitLogin = () => {
     this.setState({akActive: true})
+    if (window.__akToken) {
+      return this.onSubmit({token: window.__akToken})
+    }
     AccountKit.loginWithPhone()
-      .then((token) =>
-        this.setState({token, akActive: false}, () => {
-          if (token) this.onSuccess(token)
-        })
-      )
-      .catch((error) => this.setState({error, akActive: false}))
+      .then((response) => {
+        this.setState({akActive: false, active: true})
+        if (response) this.onSubmit(response)
+      })
+      .catch((error) => this.setState({error, akActive: false, active: true}))
   }
 
   componentDidAppear() {
@@ -55,10 +59,22 @@ class LoginScreen extends PureComponent {
 
   onChange = (value) => this.setState({value})
 
-  onSubmit = () => {
-    const {signIn, loading} = this.props
-    const {value} = this.state
-    if (!loading && this.form.current.onValidate()) signIn(value)
+  onSubmit = async ({token}) => {
+    const {signIn} = this.props
+    if (this.state.loading) return
+    this.setState({loading: true, error: undefined})
+    try {
+      const {
+        data: {accountKitSignIn}
+      } = await signIn({token})
+      if (!accountKitSignIn) return
+      if (isRegistrationComplete(accountKitSignIn.user)) this.onSuccess()
+      else this.onSignUp()
+    } catch (error) {
+      this.setState({error})
+    } finally {
+      this.setState({loading: false})
+    }
   }
 
   onSuccess = () => {
@@ -67,6 +83,12 @@ class LoginScreen extends PureComponent {
       params: {tabIndex}
     } = this.props
     updateStackRoot({tabIndex})
+  }
+
+  onSignUp = () => {
+    Navigation.push(this.props.componentId, {
+      component: {name: SignUpScreen.screenName}
+    })
   }
 
   renderLoginButton() {
@@ -96,10 +118,9 @@ class LoginScreen extends PureComponent {
   }
 
   renderBody() {
-    if (!this.state.akActive) {
-      if (!this.state.token) return this.renderLoginButton()
-    }
-    return this.renderActivityIndicator()
+    if (!this.state.akActive || this.state.loading)
+      return this.renderActivityIndicator()
+    return this.renderLoginButton()
   }
 
   render() {
@@ -112,7 +133,6 @@ class LoginScreen extends PureComponent {
 }
 
 export default composeWithRef(
-  withUserProfile,
   withSignInMutation,
   connect(
     null,

@@ -101,6 +101,7 @@ def playStoreCredential = System.getenv("PLAY_STORE_CREDENTIAL")
 def fabricApiKey = System.getenv("FABRIC_API_KEY") ?: ""
 def googleMapsApiKey = System.getenv("GOOGLE_MAPS_API_KEY") ?: ""
 def accountKitClientToken = System.getenv("ACCOUNTKIT_CLIENT_TOKEN") ?: ""
+def facebookAppId = System.getenv("FACEBOOK_APP_ID") ?: ""
 
 android {
     compileSdkVersion 26
@@ -123,7 +124,8 @@ android {
         manifestPlaceholders = [
           fabricApiKey: fabricApiKey,
           googleMapsApiKey: googleMapsApiKey,
-          accountKitClientToken: accountKitClientToken
+          accountKitClientToken: accountKitClientToken,
+          facebookAppId: facebookAppId
         ]
     }
     splits {

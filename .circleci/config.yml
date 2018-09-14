@@ -337,18 +337,18 @@ workflows:
             - e2e_ios
             - build_android
       - deploy_staging_ios:
-          context: native-ios
+          context: ios-staging
           requires:
             - deploy_staging
       - deploy_staging_android:
-          context: native-android
+          context: android-staging
           requires:
             - deploy_staging
       - deploy_production_ios:
-          context: native-ios
+          context: ios-prouction
           requires:
             - deploy_production
       - deploy_production_android:
-          context: native-android
+          context: android-prouction
           requires:
             - deploy_production

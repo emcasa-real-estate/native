@@ -101,7 +101,7 @@ def playStoreCredential = System.getenv("PLAY_STORE_CREDENTIAL")
 def fabricApiKey = System.getenv("FABRIC_API_KEY") ?: ""
 def googleMapsApiKey = System.getenv("GOOGLE_MAPS_API_KEY") ?: ""
 def accountKitClientToken = System.getenv("ACCOUNTKIT_CLIENT_TOKEN") ?: ""
-def facebookAppId = System.getenv("FACEBOOK_APP_ID") ?: ""
+def facebookAppId = System.getenv("FACEBOOK_APP_ID") ?: "246686149385389" // Defaults to debug app id
 
 android {
     compileSdkVersion 26
@@ -121,11 +121,11 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        resValue "string", "facebook_app_id", facebookAppId
         manifestPlaceholders = [
           fabricApiKey: fabricApiKey,
           googleMapsApiKey: googleMapsApiKey,
-          accountKitClientToken: accountKitClientToken,
-          facebookAppId: facebookAppId
+          accountKitClientToken: accountKitClientToken
         ]
     }
     splits {

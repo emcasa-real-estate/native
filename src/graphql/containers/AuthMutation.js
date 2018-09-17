@@ -22,21 +22,24 @@ const withAuthMutation = (mutationName, Mutation) => (Target) => (props) => (
     )}
   </Mutation>
 )
-export function SignInMutation({children, ...props}) {
+export function SignInMutation({children}) {
   return (
     <Mutation
+      ignoreResults
+      awaitRefetchQueries
       mutation={STORE_CREDENTIALS}
       refetchQueries={[{query: GET_USER_PROFILE}]}
     >
       {(storeCredentials) => (
-        <Mutation {...props} mutation={AK_SIGN_IN}>
+        <Mutation mutation={AK_SIGN_IN}>
           {(signIn, state) =>
             children(async (...args) => {
               const result = await signIn(...args)
               const {
                 data: {accountKitSignIn}
               } = result
-              if (accountKitSignIn) await storeCredentials(accountKitSignIn)
+              if (accountKitSignIn)
+                await storeCredentials({variables: accountKitSignIn})
               return result
             }, state)
           }
@@ -48,10 +51,10 @@ export function SignInMutation({children, ...props}) {
 
 export const withSignInMutation = withAuthMutation('signIn', SignInMutation)
 
-export function SignOutMutation({children, ...props}) {
+export function SignOutMutation({children}) {
   return (
     <Mutation
-      {...props}
+      awaitRefetchQueries
       mutation={SIGN_OUT}
       refetchQueries={[{query: GET_USER_PROFILE}]}
     >

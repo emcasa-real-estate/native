@@ -1,5 +1,5 @@
 import {PureComponent, Fragment} from 'react'
-import {View, ActivityIndicator} from 'react-native'
+import {View, ActivityIndicator, Platform} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import AccountKit from 'react-native-facebook-account-kit'
 import {connect} from 'react-redux'
@@ -7,6 +7,7 @@ import {connect} from 'react-redux'
 import composeWithRef from '@/lib/composeWithRef'
 import {withSignInMutation} from '@/graphql/containers'
 import {updateStackRoot} from '@/screens/modules/navigation'
+import {withPermission} from '@/containers/Permission'
 import {Shell, Body} from '@/components/layout'
 import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
@@ -46,7 +47,10 @@ class LoginScreen extends PureComponent {
     )
   }
 
-  componentDidAppear() {
+  async componentDidAppear() {
+    const {onRequestPermission, permission} = this.props
+    if (Platform.OS === 'android' && permission === 'undetermined')
+      await onRequestPermission()
     if (!this.state.viewActive)
       this.setState({viewActive: true}, this.accountKitLogin)
   }
@@ -138,6 +142,7 @@ class LoginScreen extends PureComponent {
 }
 
 export default composeWithRef(
+  withPermission('receiveSms'),
   withSignInMutation,
   connect(
     null,

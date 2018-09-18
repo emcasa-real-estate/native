@@ -47,6 +47,7 @@ function* updateStackRoot({rootId, tabIndex, children}) {
     data: {userProfile}
   } = yield call([graphql, graphql.query], {
     query: GET_USER_PROFILE,
+    fetchPolicy: 'cache-first',
     errorPolicy: 'ignore'
   })
   const bottomTabs = (yield select(getBottomTabs, {

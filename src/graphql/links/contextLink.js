@@ -1,7 +1,7 @@
 import {ApolloLink} from 'apollo-link'
 import {setContext} from 'apollo-link-context'
 
-import getCredentials from './stateLink/resolvers/queries/credentials'
+import {GET_CREDENTIALS} from '@/graphql/modules/user/queries'
 
 export default ({client}) =>
   ApolloLink.from([
@@ -12,8 +12,15 @@ export default ({client}) =>
         state: client.store.getState()
       }
     })),
-    setContext(async (_, {headers}) => {
-      const {jwt} = await getCredentials()
+    setContext(async (_, {headers, cache}) => {
+      let jwt
+      try {
+        const data = cache.readQuery({query: GET_CREDENTIALS})
+        jwt = data.credentials.jwt
+      } catch (err) {
+        /* ... */
+      }
+      console.log('jwt:', jwt)
       return {
         authenticated: Boolean(jwt),
         headers: {

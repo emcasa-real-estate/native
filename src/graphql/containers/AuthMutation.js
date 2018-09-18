@@ -1,11 +1,6 @@
 import {Mutation} from 'react-apollo'
 
-import {
-  AK_SIGN_IN,
-  SIGN_OUT,
-  STORE_CREDENTIALS
-} from '@/graphql/modules/user/mutations'
-import {GET_USER_PROFILE} from '@/graphql/modules/user/queries'
+import {AK_SIGN_IN, STORE_CREDENTIALS} from '@/graphql/modules/user/mutations'
 
 const withAuthMutation = (mutationName, Mutation) => (Target) => (props) => (
   <Mutation>
@@ -24,12 +19,7 @@ const withAuthMutation = (mutationName, Mutation) => (Target) => (props) => (
 )
 export function SignInMutation({children}) {
   return (
-    <Mutation
-      ignoreResults
-      awaitRefetchQueries
-      mutation={STORE_CREDENTIALS}
-      refetchQueries={[{query: GET_USER_PROFILE}]}
-    >
+    <Mutation ignoreResults mutation={STORE_CREDENTIALS}>
       {(storeCredentials) => (
         <Mutation mutation={AK_SIGN_IN}>
           {(signIn, state) =>
@@ -53,13 +43,13 @@ export const withSignInMutation = withAuthMutation('signIn', SignInMutation)
 
 export function SignOutMutation({children}) {
   return (
-    <Mutation
-      ignoreResults
-      awaitRefetchQueries
-      mutation={SIGN_OUT}
-      refetchQueries={[{query: GET_USER_PROFILE}]}
-    >
-      {children}
+    <Mutation ignoreResults mutation={STORE_CREDENTIALS}>
+      {(signOut, state) =>
+        children(
+          async () => signOut({variables: {jwt: null, user: null}}),
+          state
+        )
+      }
     </Mutation>
   )
 }

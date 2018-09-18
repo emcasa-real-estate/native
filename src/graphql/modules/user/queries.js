@@ -17,6 +17,14 @@ export const GET_USER_LISTINGS = gql`
   ${frag.UserListing}
 `
 
+export const GET_CREDENTIALS = gql`
+  query userProfile {
+    credentials @client {
+      jwt
+    }
+  }
+`
+
 export const GET_USER_PROFILE = gql`
   query userProfile {
     credentials @client {

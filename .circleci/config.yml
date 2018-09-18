@@ -19,7 +19,7 @@ aliases:
   # restore caches
   - &restore-node-modules
     keys:
-      - v2-node-modules-{{ checksum "package.json" }}
+      - v3-node-modules-{{ checksum "package.json" }}
   - &restore-gems
     keys:
       - v1-gems-{{ checksum "Gemfile.lock" }}
@@ -36,7 +36,7 @@ aliases:
   - &cache-node-modules
     paths:
       - node_modules
-    key: v2-node-modules-{{ checksum "package.json" }}
+    key: v3-node-modules-{{ checksum "package.json" }}
   - &cache-gems
     paths:
       - vendor/bundle

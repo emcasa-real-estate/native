@@ -347,10 +347,10 @@ workflows:
           requires:
             - deploy_staging
       - deploy_production_ios:
-          context: ios-prouction
+          context: ios-production
           requires:
             - deploy_production
       - deploy_production_android:
-          context: android-prouction
+          context: android-production
           requires:
             - deploy_production

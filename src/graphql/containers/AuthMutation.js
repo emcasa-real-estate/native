@@ -14,7 +14,7 @@ const withAuthMutation = (mutationName, Mutation) => (Target) => (props) => (
         {...{
           ...props,
           [mutationName]: Object.assign(
-            (variables) => mutate({variables}),
+            (variables = {}) => mutate({variables}),
             state
           )
         }}
@@ -54,6 +54,7 @@ export const withSignInMutation = withAuthMutation('signIn', SignInMutation)
 export function SignOutMutation({children}) {
   return (
     <Mutation
+      ignoreResults
       awaitRefetchQueries
       mutation={SIGN_OUT}
       refetchQueries={[{query: GET_USER_PROFILE}]}

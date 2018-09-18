@@ -9,6 +9,7 @@ export default async function userProfile(prev = {}) {
     name: null,
     email: null,
     phone: null,
+    listings: [],
     favorites: await getFavorites(),
     blacklists: await getBlacklist(),
     notificationPreferences: {

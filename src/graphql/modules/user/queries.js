@@ -4,8 +4,14 @@ import _ from 'lodash'
 
 export const GET_USER_LISTINGS = gql`
   query userListings {
-    userListings @clientAuth {
-      ...UserListing
+    userProfile @clientAuth {
+      id
+      listings(
+        filters: {}
+        pagination: {excludedListingIds: [], pageSize: 1000}
+      ) {
+        ...UserListing
+      }
     }
   }
   ${frag.UserListing}

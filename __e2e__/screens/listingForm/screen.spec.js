@@ -12,7 +12,7 @@ describe('listingForm', () => {
   })
 
   it('redirects to new listing screen after user logs in', async () => {
-    await login({email: 'test@example.com', password: 'passwd'})
+    await login()
     await expect(element(addressScreen())).toBeVisible()
   })
 

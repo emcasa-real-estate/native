@@ -51,7 +51,7 @@ class LoginScreen extends PureComponent {
     const {onRequestPermission, permission} = this.props
     if (Platform.OS === 'android' && permission === 'undetermined')
       await onRequestPermission()
-    if (!this.state.viewActive)
+    if (!this.state.viewActive && process.env.NODE_ENV !== 'e2e')
       this.setState({viewActive: true}, this.accountKitLogin)
   }
 
@@ -112,7 +112,9 @@ class LoginScreen extends PureComponent {
           </View>
         )}
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Button onPress={this.accountKitLogin}>Faça login</Button>
+          <Button testID="login_button" onPress={this.accountKitLogin}>
+            Faça login
+          </Button>
         </View>
       </Fragment>
     )

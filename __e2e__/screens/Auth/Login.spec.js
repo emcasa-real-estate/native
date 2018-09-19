@@ -5,14 +5,8 @@ import * as action from './interactions'
 describe('auth.Login', () => {
   beforeAll(action.navigateToLogin)
 
-  it('validates input data', async () => {
-    await action.login({email: 'test', password: ''})
-    await expect(element(by.text('Este email é inválido'))).toBeVisible()
-    await expect(element(by.text('A senha é obrigatória'))).toBeVisible()
-  })
-
   it('redirects to the main screen on success', async () => {
-    await action.login({email: 'foo@example.com', password: 'password'})
+    await action.login()
     await waitFor(element(select.loginScreen()))
       .toBeNotVisible()
       .withTimeout(1000)

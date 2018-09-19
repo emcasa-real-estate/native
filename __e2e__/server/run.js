@@ -2,8 +2,8 @@
 /* eslint-disable no-console */
 import {promisify} from 'util'
 import express from 'express'
+import {createApolloServer} from 'em-casa-mock-server'
 
-import applyApolloMiddleware from './graphql'
 import apiMiddleware from './api'
 
 const PORT = process.env.PORT || 4000
@@ -17,7 +17,12 @@ async function start() {
     console.log(`[${req.method}] ${req.path}`)
     next()
   })
-  await applyApolloMiddleware(app)
+  const server = await createApolloServer()
+  server.applyMiddleware({
+    app,
+    path: '/graphql_api',
+    gui: {endpoint: '/graphql_api/graphiql'}
+  })
   app.use('/', apiMiddleware)
   app.use((req, res) => {
     console.log(`Can't respond to ${req.url}`)

@@ -12,7 +12,6 @@ import {Shell, Body} from '@/components/layout'
 import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
 
-import SignUpScreen from '@/screens/modules/auth/SignUp'
 import styles from './styles'
 
 const isRegistrationComplete = (user) => Boolean(user.name)

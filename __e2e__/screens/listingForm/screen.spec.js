@@ -23,6 +23,6 @@ describe('listingForm', () => {
     await waitFor(element(select.learnMoreScreen())).toBeNotVisible()
   })
 
-  require('./Address')
-  require('./Properties')
+  // require('./Address')
+  // require('./Properties')
 })

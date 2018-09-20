@@ -322,21 +322,21 @@ workflows:
       - test:
           requires:
             - checkout
-      # - e2e_ios:
-      #     requires:
-      #       - checkout
+      - e2e_ios:
+          requires:
+            - checkout
       - build_android:
           requires:
             - checkout
       - deploy_staging:
           type: approval
           requires:
-            # - e2e_ios
+            - e2e_ios
             - build_android
       - deploy_production:
           type: approval
           requires:
-            # - e2e_ios
+            - e2e_ios
             - build_android
       - deploy_staging_ios:
           context: ios-staging

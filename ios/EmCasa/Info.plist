@@ -67,6 +67,12 @@
           <key>NSExceptionAllowsInsecureHTTPLoads</key>
           <true/>
         </dict>
+        <key>codepush.azurewebsites.net</key>
+        <dict/>
+        <key>codepush.blob.core.windows.net</key>
+        <dict/>
+        <key>codepushupdates.azureedge.net</key>
+        <dict/>
       </dict>
     </dict>
     <key>NSAppleMusicUsageDescription</key>
@@ -115,5 +121,7 @@
     </array>
     <key>UIViewControllerBasedStatusBarAppearance</key>
     <false/>
+    <key>CodePushDeploymentKey</key>
+    <string>$(CODEPUSH_DEPLOYMENT_KEY)</string>
   </dict>
 </plist>

@@ -77,6 +77,7 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -100,6 +101,7 @@ def playStoreCertificate = System.getenv("PLAY_STORE_CERTIFICATE_FILE")
 def playStoreCredential = System.getenv("PLAY_STORE_CREDENTIAL")
 def fabricApiKey = System.getenv("FABRIC_API_KEY") ?: ""
 def googleMapsApiKey = System.getenv("GOOGLE_MAPS_API_KEY") ?: ""
+def codePushKey = System.getenv("CODEPUSH_DEPLOYMENT_KEY") ?: ""
 
 android {
     compileSdkVersion 26
@@ -118,6 +120,7 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        resValue "string", "reactNativeCodePush_androidDeploymentKey", codePushKey
         manifestPlaceholders = [
           fabricApiKey: fabricApiKey,
           googleMapsApiKey: googleMapsApiKey
@@ -203,6 +206,7 @@ repositories {
 }
 
 dependencies {
+    compile project(':react-native-code-push')
     compile project(':react-native-check-app-install')
     compile project(':react-native-fbsdk')
     implementation fileTree(dir: "libs", include: ["*.jar"])

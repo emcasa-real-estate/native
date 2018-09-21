@@ -7,7 +7,7 @@ import initNavigation from '@/screens'
 
 AccountKit.configure({
   responseType: 'token',
-  defaultCountry: 'BR',
+  // defaultCountry: 'BR',
   receiveSMS: true
 })
 

@@ -314,7 +314,7 @@ jobs:
       - run: *bundle-android
       - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-android.png --platforms android
       - run: export TERM=xterm && cd android && ./gradlew assembleRelease
-      - run: export TERM=xterm && cd android && ./gradlew publishApkRelease
+      - run: export TERM=xterm && cd android && ./gradlew publishApkRelease -x bundleReleaseJsAndAssets
 
 workflows:
   version: 2

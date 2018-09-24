@@ -227,6 +227,7 @@ jobs:
       - run: *bump-ios
       - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-ios-staging.png --platforms ios
       - run: BUILD_CONFIGURATION=Beta .circleci/ios/build.sh
+      - run: tar -zcvf ios/build/EmCasa.xcarchive.tar.gz ios/build/EmCasa.xcarchive
       - run: .circleci/ios/sign.sh
       - run: >-
           bundle exec fastlane run crashlytics
@@ -234,6 +235,12 @@ jobs:
           api_token:"$FABRIC_API_KEY"
           build_secret:"$FABRIC_BUILD_SECRET"
           groups:"$TESTER_GROUPS"
+      - store_artifacts:
+          path: ios/build/EmCasa-Beta.ipa
+          destination: build/EmCasa.ipa
+      - store_artifacts:
+          path: ios/build/EmCasa.xcarchive.tar.gz
+          destination: build/EmCasa.xcarchive.tar.gz
   deploy_staging_android:
     <<: *android
     environment:
@@ -261,6 +268,9 @@ jobs:
           api_token:"$FABRIC_API_KEY"
           build_secret:"$FABRIC_BUILD_SECRET"
           groups:"$TESTER_GROUPS"
+      - store_artifacts:
+          path: android/app/build/outputs/apk/staging
+          destination: build
   # production deploy
   deploy_production_ios:
     <<: *macos
@@ -284,6 +294,7 @@ jobs:
       - run: *bump-ios
       - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-ios.png --platforms ios
       - run: BUILD_CONFIGURATION=Release .circleci/ios/build.sh
+      - run: tar -zcvf ios/build/EmCasa.xcarchive.tar.gz ios/build/EmCasa.xcarchive
       - run: .circleci/ios/sign.sh
       - run: >-
           bundle exec fastlane deliver
@@ -293,6 +304,12 @@ jobs:
           --username $APPLE_ID
           --app_version $VERSION_NAME
           --app_identifier com.EmCasa.native
+      - store_artifacts:
+          path: ios/build/EmCasa.ipa
+          destination: build/EmCasa.ipa
+      - store_artifacts:
+          path: ios/build/EmCasa.xcarchive.tar.gz
+          destination: build/EmCasa.xcarchive.tar.gz
   deploy_production_android:
     <<: *android
     environment:
@@ -315,6 +332,9 @@ jobs:
       - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-android.png --platforms android
       - run: export TERM=xterm && cd android && ./gradlew assembleRelease
       - run: export TERM=xterm && cd android && ./gradlew publishApkRelease -x bundleReleaseJsAndAssets
+      - store_artifacts:
+          path: android/app/build/outputs/apk/release
+          destination: build
 
 workflows:
   version: 2

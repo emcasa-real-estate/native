@@ -1,8 +1,16 @@
 import 'moment/locale/pt-br'
 import moment from 'moment'
 import {YellowBox} from 'react-native'
+import codePush from 'react-native-code-push'
 
 import initNavigation from '@/screens'
+
+function initCodePush() {
+  codePush.sync({
+    checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
+    installMode: codePush.InstallMode.ON_NEXT_RESUME
+  })
+}
 
 // Temporary fix for
 // https://github.com/facebook/react-native/issues/17504
@@ -17,3 +25,4 @@ YellowBox.ignoreWarnings([
 moment.locale('pt-br')
 
 initNavigation()
+initCodePush()

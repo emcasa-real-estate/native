@@ -49,6 +49,11 @@ public class MainApplication extends NavigationApplication implements ShareAppli
       protected String getJSMainModuleName() {
         return "index";
       }
+
+      @Override
+      protected String getJSBundleFile() {
+          return CodePush.getJSBundleFile();
+      }
     };
   }
 
@@ -61,7 +66,10 @@ public class MainApplication extends NavigationApplication implements ShareAppli
   public List<ReactPackage> createAdditionalReactPackages() {
     return Arrays.<ReactPackage>asList(
       new MainReactPackage(),
-      new CodePush(null, getApplicationContext(), BuildConfig.DEBUG),
+      new CodePush(
+        getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey),
+        getApplicationContext(),
+        BuildConfig.DEBUG),
       new CheckPackageInstallationPackage(),
       new FBSDKPackage(mCallbackManager),
       new RNFirebasePackage(),

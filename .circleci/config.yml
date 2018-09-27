@@ -126,6 +126,24 @@ aliases:
     command: |-
       sed -i'' -re "s/(versionCode) ([[:digit:]]*)/\1 $BUILD_NUMBER/" android/app/build.gradle
       sed -i'' -re "s/(versionName) \"(.*)\"/\1 \"$VERSION_NAME\"/" android/app/build.gradle
+  # deploy scripts
+  - &codepush-login
+    name: Login to CodePush
+    command: node_modules/.bin/code-push login --accessKey $CODEPUSH_ACCESS_KEY
+  - &codepush-deploy-android
+    name: Deploy to CodePush (Android)
+    command: |-
+      node_modules/.bin/code-push react-release
+      EmCasa/EmCasa-android android -x
+      --deploymentName ${DEPLOY_TARGET:-Staging}
+      --targetBinaryVersion $(.circleci/version.sh)
+  - &codepush-deploy-ios
+    name: Deploy to CodePush (iOS)
+    command: |-
+      node_modules/.bin/code-push react-release
+      EmCasa/EmCasa-ios ios -x
+      --deploymentName ${DEPLOY_TARGET:-Staging}
+      --targetBinaryVersion $(.circleci/version.sh)
 
 version: 2
 jobs:
@@ -200,7 +218,19 @@ jobs:
       - run: export TERM=xterm && cd android && ./gradlew assembleDebug
       - save_cache: *cache-gradle
   # staging deploy
-  deploy_staging_ios:
+  deploy_staging_codepush_ios:
+    <<: *nodejs
+    environment:
+      API_URL: https://em-casa-backend-staging.herokuapp.com
+      APOLLO_ENGINE_URL: https://em-casa-apollo-engine-staging.herokuapp.com/graphql_api
+      MESSENGER_RECEIVER_ID: 16
+      NODE_ENV: production
+      DEPLOYMENT_TARGET: Staging
+    steps:
+      - attach_workspace:
+          at: ~/emcasa
+      - run: *codepush-deploy-ios
+  deploy_staging_binary_ios:
     <<: *macos
     environment:
       API_URL: https://em-casa-backend-staging.herokuapp.com
@@ -230,7 +260,19 @@ jobs:
           api_token:"$FABRIC_API_KEY"
           build_secret:"$FABRIC_BUILD_SECRET"
           groups:"$TESTER_GROUPS"
-  deploy_staging_android:
+  deploy_staging_codepush_android:
+    <<: *nodejs
+    environment:
+      API_URL: https://em-casa-backend-staging.herokuapp.com
+      APOLLO_ENGINE_URL: https://em-casa-apollo-engine-staging.herokuapp.com/graphql_api
+      MESSENGER_RECEIVER_ID: 16
+      NODE_ENV: production
+      DEPLOYMENT_TARGET: Staging
+    steps:
+      - attach_workspace:
+          at: ~/emcasa
+      - run: *codepush-deploy-android
+  deploy_staging_binary_android:
     <<: *android
     environment:
       API_URL: https://em-casa-backend-staging.herokuapp.com
@@ -258,7 +300,20 @@ jobs:
           build_secret:"$FABRIC_BUILD_SECRET"
           groups:"$TESTER_GROUPS"
   # production deploy
-  deploy_production_ios:
+  deploy_production_codepush_ios:
+    <<: *nodejs
+    environment:
+      API_URL: https://em-casa-backend.herokuapp.com
+      APOLLO_ENGINE_URL: https://em-casa-apollo-engine.herokuapp.com/graphql_api
+      FRONTEND_URL: https://www.emcasa.com
+      MESSENGER_RECEIVER_ID: 212
+      NODE_ENV: production
+      DEPLOYMENT_TARGET: Production
+    steps:
+      - attach_workspace:
+          at: ~/emcasa
+      - run: *codepush-deploy-ios
+  deploy_production_binary_ios:
     <<: *macos
     environment:
       API_URL: https://em-casa-backend.herokuapp.com
@@ -289,7 +344,20 @@ jobs:
           --username $APPLE_ID
           --app_version $VERSION_NAME
           --app_identifier com.EmCasa.native
-  deploy_production_android:
+  deploy_production_codepush_android:
+    <<: *nodejs
+    environment:
+      API_URL: https://em-casa-backend.herokuapp.com
+      APOLLO_ENGINE_URL: https://em-casa-apollo-engine.herokuapp.com/graphql_api
+      FRONTEND_URL: https://www.emcasa.com
+      MESSENGER_RECEIVER_ID: 212
+      NODE_ENV: production
+      DEPLOYMENT_TARGET: Production
+    steps:
+      - attach_workspace:
+          at: ~/emcasa
+      - run: *codepush-deploy-android
+  deploy_production_binary_android:
     <<: *android
     environment:
       API_URL: https://em-casa-backend.herokuapp.com
@@ -326,29 +394,55 @@ workflows:
       - build_android:
           requires:
             - checkout
-      - deploy_staging:
+      - deploy_staging_binary:
           type: approval
           requires:
             - e2e_ios
             - build_android
-      - deploy_production:
+      - deploy_staging_codepush:
           type: approval
           requires:
             - e2e_ios
             - build_android
-      - deploy_staging_ios:
+      - deploy_production_binary:
+          type: approval
+          requires:
+            - e2e_ios
+            - build_android
+      - deploy_production_codepush:
+          type: approval
+          requires:
+            - e2e_ios
+            - build_android
+      - deploy_staging_binary_ios:
           context: native-ios
           requires:
-            - deploy_staging
-      - deploy_staging_android:
-          context: native-android
-          requires:
-            - deploy_staging
-      - deploy_production_ios:
+            - deploy_staging_binary
+      - deploy_staging_codepush_ios:
           context: native-ios
           requires:
-            - deploy_production
-      - deploy_production_android:
+            - deploy_staging_codepush
+      - deploy_staging_binary_android:
           context: native-android
           requires:
-            - deploy_production
+            - deploy_staging_binary
+      - deploy_staging_codepush_android:
+          context: native-android
+          requires:
+            - deploy_staging_codepush
+      - deploy_production_binary_ios:
+          context: native-ios
+          requires:
+            - deploy_production_binary
+       - deploy_production_codepush_ios:
+          context: native-ios
+          requires:
+            - deploy_production_codepush
+      - deploy_production_binary_android:
+          context: native-android
+          requires:
+            - deploy_production_binary
+      - deploy_production_codepush_android:
+          context: native-android
+          requires:
+            - deploy_production_codepush

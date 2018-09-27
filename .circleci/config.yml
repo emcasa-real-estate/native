@@ -149,7 +149,6 @@ aliases:
       --deploymentName ${DEPLOY_TARGET:-Staging}
       --targetBinaryVersion $VERSION_NAME
 
-
 version: 2
 jobs:
   # Tests
@@ -409,7 +408,6 @@ jobs:
       - run: export TERM=xterm && cd android && ./gradlew assembleRelease
       - run: export TERM=xterm && cd android && ./gradlew publishApkRelease
 
-
 workflows:
   version: 2
   commit:
@@ -464,7 +462,7 @@ workflows:
           context: native-ios
           requires:
             - deploy_production_binary
-       - deploy_production_codepush_ios:
+      - deploy_production_codepush_ios:
           context: native-ios
           requires:
             - deploy_production_codepush

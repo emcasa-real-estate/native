@@ -32,6 +32,7 @@ aliases:
   - &restore-homebrew
     keys:
       - v1-brew-{{ arch }}-{{ checksum "/usr/local/Homebrew/.git/refs/heads/master" }}
+
   # save caches
   - &cache-node-modules
     paths:
@@ -53,6 +54,7 @@ aliases:
     paths:
       - /usr/local/Homebrew
     key: v1-brew-{{ arch }}-{{ .Branch }}
+
     # install dependencies
   - &install-sdkmanager
     command: |-
@@ -72,6 +74,7 @@ aliases:
       npm install --global detox-cli
       detox clean-framework-cache
       detox build-framework-cache
+
   # build configurations
   - &configure-version-staging
     command: echo "export VERSION_TAG=$([ $CIRCLE_BRANCH != \"master\" ] && echo $CIRCLE_BRANCH)" >> $BASH_ENV
@@ -108,6 +111,7 @@ aliases:
       security list-keychains -s login.keychain $KEYCHAIN_NAME
       security list-keychains
       security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $KEYCHAIN_PASSWORD $KEYCHAIN_NAME
+
   # build scripts
   - &bundle-android
     command: >-
@@ -136,18 +140,20 @@ aliases:
       node_modules/.bin/code-push react-release
       EmCasa/EmCasa-android android -x
       --deploymentName ${DEPLOY_TARGET:-Staging}
-      --targetBinaryVersion $(.circleci/version.sh)
+      --targetBinaryVersion $VERSION_NAME
   - &codepush-deploy-ios
     name: Deploy to CodePush (iOS)
     command: |-
       node_modules/.bin/code-push react-release
       EmCasa/EmCasa-ios ios -x
       --deploymentName ${DEPLOY_TARGET:-Staging}
-      --targetBinaryVersion $(.circleci/version.sh)
+      --targetBinaryVersion $VERSION_NAME
+
 
 version: 2
 jobs:
-  # checkout and install
+  # Tests
+  # ~ checkout and install
   checkout:
     <<: *nodejs
     steps:
@@ -164,14 +170,16 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: .
-  # unit tests
+
+  # ~ unit tests
   test:
     <<: *nodejs
     steps:
       - attach_workspace:
           at: ~/emcasa
       - run: yarn test
-  # e2e tests
+
+  # ~ e2e tests
   e2e_ios:
     <<: *macos
     environment:
@@ -208,6 +216,7 @@ jobs:
       - store_artifacts:
           path: tmp/detox
           destination: e2e
+
   build_android:
     <<: *android
     steps:
@@ -217,7 +226,9 @@ jobs:
       - run: *install-sdkmanager
       - run: export TERM=xterm && cd android && ./gradlew assembleDebug
       - save_cache: *cache-gradle
-  # staging deploy
+
+  # Staging deploy
+  # ~ iOS
   deploy_staging_codepush_ios:
     <<: *nodejs
     environment:
@@ -229,7 +240,10 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/emcasa
+      - run: *configure-release
+      - run: *codepush-login
       - run: *codepush-deploy-ios
+
   deploy_staging_binary_ios:
     <<: *macos
     environment:
@@ -260,6 +274,8 @@ jobs:
           api_token:"$FABRIC_API_KEY"
           build_secret:"$FABRIC_BUILD_SECRET"
           groups:"$TESTER_GROUPS"
+
+  # ~ Android
   deploy_staging_codepush_android:
     <<: *nodejs
     environment:
@@ -271,7 +287,10 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/emcasa
+      - run: *configure-release
+      - run: *codepush-login
       - run: *codepush-deploy-android
+
   deploy_staging_binary_android:
     <<: *android
     environment:
@@ -299,7 +318,9 @@ jobs:
           api_token:"$FABRIC_API_KEY"
           build_secret:"$FABRIC_BUILD_SECRET"
           groups:"$TESTER_GROUPS"
-  # production deploy
+
+  # Production deploy
+  # ~ iOS
   deploy_production_codepush_ios:
     <<: *nodejs
     environment:
@@ -312,7 +333,10 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/emcasa
+      - run: *configure-release
+      - run: *codepush-login
       - run: *codepush-deploy-ios
+
   deploy_production_binary_ios:
     <<: *macos
     environment:
@@ -344,6 +368,8 @@ jobs:
           --username $APPLE_ID
           --app_version $VERSION_NAME
           --app_identifier com.EmCasa.native
+
+  # ~ Android
   deploy_production_codepush_android:
     <<: *nodejs
     environment:
@@ -356,7 +382,10 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/emcasa
+      - run: *configure-release
+      - run: *codepush-login
       - run: *codepush-deploy-android
+
   deploy_production_binary_android:
     <<: *android
     environment:
@@ -379,6 +408,7 @@ jobs:
       - run: node_modules/.bin/app-icon generate -i ~/emcasa/src/assets/img/icon-android.png --platforms android
       - run: export TERM=xterm && cd android && ./gradlew assembleRelease
       - run: export TERM=xterm && cd android && ./gradlew publishApkRelease
+
 
 workflows:
   version: 2

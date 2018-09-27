@@ -136,14 +136,14 @@ aliases:
     command: node_modules/.bin/code-push login --accessKey $CODEPUSH_ACCESS_KEY
   - &codepush-deploy-android
     name: Deploy to CodePush (Android)
-    command: |-
+    command: >-
       node_modules/.bin/code-push react-release
       EmCasa/EmCasa-android android -x
       --deploymentName ${DEPLOY_TARGET:-Staging}
       --targetBinaryVersion $VERSION_NAME
   - &codepush-deploy-ios
     name: Deploy to CodePush (iOS)
-    command: |-
+    command: >-
       node_modules/.bin/code-push react-release
       EmCasa/EmCasa-ios ios -x
       --deploymentName ${DEPLOY_TARGET:-Staging}

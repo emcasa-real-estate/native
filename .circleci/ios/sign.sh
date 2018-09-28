@@ -26,7 +26,7 @@ OPTIONS=("OTHER_CODE_SIGN_FLAGS=--keychain '$KEYCHAIN_NAME'")
 
 cd ios && xcodebuild \
   -verbose \
-  -exportArchive \ 
+  -exportArchive \
   -exportPath build \
   -archivePath build/EmCasa.xcarchive \
   -exportOptionsPlist ../tmp/release.plist \

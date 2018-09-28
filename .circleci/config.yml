@@ -138,16 +138,18 @@ aliases:
     name: Deploy to CodePush (Android)
     command: >-
       node_modules/.bin/code-push release-react
-      EmCasa/EmCasa-android android -x
+      EmCasa/EmCasa-android android
       --deploymentName ${DEPLOY_TARGET:-Staging}
       --targetBinaryVersion $VERSION_NAME
+      $CODEPUSH_FLAGS
   - &codepush-deploy-ios
     name: Deploy to CodePush (iOS)
     command: >-
       node_modules/.bin/code-push release-react
-      EmCasa/EmCasa-ios ios -x
+      EmCasa/EmCasa-ios ios
       --deploymentName ${DEPLOY_TARGET:-Staging}
       --targetBinaryVersion $VERSION_NAME
+      $CODEPUSH_FLAGS
 
 version: 2
 jobs:
@@ -329,6 +331,7 @@ jobs:
       MESSENGER_RECEIVER_ID: 212
       NODE_ENV: production
       DEPLOYMENT_TARGET: Production
+      CODEPUSH_FLAGS: -x
     steps:
       - attach_workspace:
           at: ~/emcasa
@@ -378,6 +381,7 @@ jobs:
       MESSENGER_RECEIVER_ID: 212
       NODE_ENV: production
       DEPLOYMENT_TARGET: Production
+      CODEPUSH_FLAGS: -x
     steps:
       - attach_workspace:
           at: ~/emcasa

@@ -58,10 +58,9 @@ class EditProfileScreen extends PureComponent {
     const {user, changeEmail, editUserProfile, setContext} = this.props
     const {value} = this.state
     setContext({loading: true})
-    if (user.email != value.email)
-      await changeEmail({variables: {email: value.email}})
+    if (user.email != value.email) await changeEmail({email: value.email})
     if (user.name != value.name || user.phone != value.phone)
-      await editUserProfile({variables: {name: value.name, phone: value.phone}})
+      await editUserProfile({name: value.name, phone: value.phone})
     setContext({loading: false})
   }
 

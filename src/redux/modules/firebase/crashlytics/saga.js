@@ -1,7 +1,7 @@
-import {takeLatest, all, fork, select} from 'redux-saga/effects'
+import {takeLatest, all, call, fork, getContext} from 'redux-saga/effects'
 import Firebase from 'react-native-firebase'
 
-import {getUser} from '@/redux/modules/auth/selectors'
+import {GET_USER_PROFILE} from '@/graphql/modules/user/queries'
 import * as auth from '@/redux/modules/auth'
 import * as actions from './index'
 
@@ -19,8 +19,15 @@ function identifySession({data}) {
 }
 
 function* initialize() {
-  const data = yield select(getUser)
-  yield fork(identifySession, {data})
+  const graphql = yield getContext('graphql')
+  const {
+    data: {userProfile}
+  } = yield call([graphql, graphql.query], {
+    query: GET_USER_PROFILE,
+    errorPolicy: 'ignore'
+  })
+  if (userProfile && userProfile.id)
+    yield fork(identifySession, {data: userProfile})
 }
 
 export default function* crashlyticsSaga() {

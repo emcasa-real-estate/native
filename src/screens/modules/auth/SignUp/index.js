@@ -1,14 +1,11 @@
 import React, {PureComponent} from 'react'
-import {Navigation} from 'react-native-navigation'
-import {connect} from 'react-redux'
 
-import {getUser, getError, isLoading} from '@/redux/modules/auth/selectors'
-import {signUp, reset} from '@/redux/modules/auth'
-import {updateStackRoot} from '@/screens/modules/navigation'
-import {Shell, Body, Footer} from '@/components/layout'
+import {required} from '@/lib/validations'
+import composeWithRef from '@/lib/composeWithRef'
+import {withEmailMutation, withProfileMutation} from '@/graphql/containers'
+import {Modal, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
-import SignUpForm from '@/components/auth/SignUp'
-import SuccessScreen from '@/screens/modules/shared/Success'
+import Form, {TextInput, Email} from '@/components/shared/Form'
 
 class SignUpScreen extends PureComponent {
   static screenName = 'auth.SignUp'
@@ -21,6 +18,7 @@ class SignUpScreen extends PureComponent {
 
   state = {
     active: false,
+    loading: false,
     value: {}
   }
 
@@ -34,84 +32,65 @@ class SignUpScreen extends PureComponent {
     this.setState({active: true})
   }
 
-  componentDidMount() {
-    this.props.reset()
-  }
-
-  componentDidUpdate(prev) {
-    const {user} = this.props
-    const {active} = this.state
-    if (active && !prev.user && user) this.onSuccess()
-  }
-
   onChange = (value) => this.setState({value})
 
-  onSubmit = () => {
-    const {signUp, loading} = this.props
-    const {value} = this.state
-    if (!loading && this.form.current.onValidate()) signUp(value)
-  }
-
-  onSuccess = () => {
+  onSubmit = async () => {
+    const {editUserProfile, changeEmail, onSuccess} = this.props
     const {
-      user: {name}
-    } = this.props
-    const firstName = name.split(' ')[0]
-    Navigation.showModal({
-      component: {
-        id: `${this.props.componentId}_success`,
-        name: SuccessScreen.screenName,
-        passProps: {
-          title: 'Cadastro concluído',
-          children: `${firstName}, enviamos um e-mail para você confirmar seu cadastro.`,
-          onDismiss: this.onDismiss
-        }
-      }
-    })
-  }
-
-  onDismiss = async () => {
-    const {
-      updateStackRoot,
-      params: {tabIndex}
-    } = this.props
-    await Navigation.dismissAllModals()
-    updateStackRoot({tabIndex})
+      value: {name, email}
+    } = this.state
+    if (this.state.loading || !this.form.current.onValidate()) return
+    this.setState({loading: true, error: undefined})
+    try {
+      if (email) await changeEmail({email})
+      await editUserProfile({name})
+      onSuccess()
+    } catch (error) {
+      this.setState({error})
+    } finally {
+      this.setState({loading: false})
+    }
   }
 
   render() {
-    const {loading, error} = this.props
-    const {value} = this.state
+    const {loading, value} = this.state
 
     return (
-      <Shell testID="@auth.SignUp">
-        <Body scroll>
-          <SignUpForm
+      <Modal testID="@auth.SignUp">
+        <Modal.Header inline>Cadastre-se</Modal.Header>
+        <Body loading={loading}>
+          <Form
+            style={{margin: 15}}
             formRef={this.form}
             value={value}
-            error={error}
-            loading={loading}
             onChange={this.onChange}
             onSubmit={this.onSubmit}
-          />
+          >
+            <TextInput
+              name="name"
+              returnKeyType="next"
+              nextField="email"
+              placeholder="Nome"
+              validations={[required('O nome é obrigatório')]}
+            />
+            <Email
+              name="email"
+              returnKeyType="done"
+              placeholder="Email (opcional)"
+              validations={[required(false)]}
+            />
+          </Form>
         </Body>
         <Footer style={{padding: 15}}>
           <Button disabled={loading} onPress={this.onSubmit}>
             {loading ? 'Enviando...' : 'Enviar'}
           </Button>
         </Footer>
-      </Shell>
+      </Modal>
     )
   }
 }
 
-export default connect(
-  (state) => ({
-    user: getUser(state),
-    error: getError(state),
-    loading: isLoading(state)
-  }),
-  {signUp, reset, updateStackRoot},
-  null,
-  {withRef: true}
-)(SignUpScreen)
+export default composeWithRef(withEmailMutation, withProfileMutation)(
+  SignUpScreen
+)

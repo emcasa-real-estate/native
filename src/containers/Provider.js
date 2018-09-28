@@ -2,12 +2,12 @@ import _ from 'lodash'
 import {PureComponent} from 'react'
 import {Provider} from 'react-redux'
 import {PersistGate} from 'redux-persist/integration/react'
+import {ApolloProvider} from 'react-apollo'
 import {Navigation} from 'react-native-navigation'
 
 import defaultOptions from '@/screens/options'
 import client from '@/lib/client'
-import ScreenDelegator from '../ScreenDelegator'
-import ApolloProvider from './ApolloProvider'
+import ScreenDelegator from './ScreenDelegator'
 
 export default class AppProvider extends PureComponent {
   state = {ready: false}

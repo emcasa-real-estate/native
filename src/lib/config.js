@@ -39,3 +39,6 @@ export const WEB_SOCKET_URL =
 export const MESSENGER_RECEIVER_ID = process.env.MESSENGER_RECEIVER_ID
 
 export const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY
+
+export const PERSIST_TIMEOUT =
+  Platform.OS === 'android' && __DEV__ ? 100000 : 5000

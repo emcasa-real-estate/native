@@ -3,9 +3,10 @@ import {View, TouchableOpacity} from 'react-native'
 import Text from '@/components/shared/Text'
 import $styles from './styles'
 
-function Button({styles, style, children, disabled, onPress}) {
+function Button({testID, styles, style, children, disabled, onPress}) {
   return (
     <TouchableOpacity
+      testID={testID}
       style={styles.container.concat(style)}
       onPress={disabled ? undefined : onPress}
     >

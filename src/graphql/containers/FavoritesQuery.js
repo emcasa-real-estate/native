@@ -1,31 +1,16 @@
 import _ from 'lodash'
 import {Query} from 'react-apollo'
-import {connect} from 'react-redux'
 import {compose, mapProps} from 'recompose'
 
 import {
   GET_FAVORITE_LISTINGS_IDS,
   GET_FAVORITE_LISTINGS
 } from '@/graphql/modules/user/queries'
-import {getToken} from '@/redux/modules/auth/selectors'
-
-const props = (state) => ({jwt: getToken(state)})
-
-const FavoritesQuery = connect(props)(({children, jwt, query}) => {
-  const options = {cache: !jwt}
-  return (
-    <Query fetchPolicy="cache-and-network" query={query(options)}>
-      {children}
-    </Query>
-  )
-})
-
-export default FavoritesQuery
 
 const createFavoritesContainer = (query, getProps) => (Target) => (props) => (
-  <FavoritesQuery query={query}>
+  <Query fetchPolicy="cache-and-network" query={query}>
     {(response) => <Target {...props} {...getProps(response)} />}
-  </FavoritesQuery>
+  </Query>
 )
 
 export const withFavoriteListings = createFavoritesContainer(

@@ -1,21 +1,22 @@
 import {Mutation} from 'react-apollo'
 import {connect} from 'react-redux'
+import {compose} from 'recompose'
 
 import {FAVORITE, UNFAVORITE} from '@/graphql/modules/listings/mutations'
 import {GET_FAVORITE_LISTINGS_IDS} from '@/graphql/modules/user/queries'
 import {logEvent} from '@/redux/modules/firebase/analytics'
-import {getToken} from '@/redux/modules/auth/selectors'
+import {withJwt} from './CredentialsQuery'
 import {withFavoriteListingByID} from './FavoritesQuery'
 
-const FavoriteMutation = connect((state) => ({jwt: getToken(state)}), {
-  logEvent
-})(function _FavoritesMutation({children, id, favorite, jwt, logEvent}) {
-  const query = {cache: !jwt}
+const FavoriteMutation = connect(
+  null,
+  {logEvent}
+)(function _FavoritesMutation({children, id, favorite, logEvent}) {
   return (
     <Mutation
-      mutation={favorite ? UNFAVORITE(query) : FAVORITE(query)}
+      mutation={favorite ? UNFAVORITE : FAVORITE}
       variables={{id}}
-      refetchQueries={[{query: GET_FAVORITE_LISTINGS_IDS(query)}]}
+      refetchQueries={[{query: GET_FAVORITE_LISTINGS_IDS}]}
       update={() =>
         logEvent(favorite ? 'unfavorite_listing' : 'favorite_listing', {id})
       }

@@ -25,7 +25,7 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>fb2093551407535609</string>
+          <string>fb$(FACEBOOK_APP_ID)</string>
         </array>
       </dict>
     </array>
@@ -46,9 +46,20 @@
       </array>
     </dict>
     <key>FacebookAppID</key>
-    <string>2093551407535609</string>
+    <string>$(FACEBOOK_APP_ID)</string>
     <key>FacebookDisplayName</key>
     <string>EmCasa</string>
+    <key>AccountKitClientToken</key>
+    <string>$(ACCOUNTKIT_CLIENT_TOKEN)</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>ak$(FACEBOOK_APP_ID)</string>
+        </array>
+      </dict>
+    </array>
     <key>GoogleMapsApiKey</key>
     <string>$(GOOGLE_MAPS_API_KEY)</string>
     <key>LSApplicationQueriesSchemes</key>

@@ -1,7 +1,6 @@
 import _ from 'lodash'
 import {PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
-import {connect} from 'react-redux'
 
 import * as colors from '@/assets/colors'
 import composeWithRef from '@/lib/composeWithRef'
@@ -9,10 +8,10 @@ import {authRequired} from '@/containers/AuthRequired'
 import {
   withListing,
   withMessages,
+  withUserProfile,
   withMarkAsReadMutation,
   withSendMessageMutation
 } from '@/graphql/containers'
-import {getUser} from '@/redux/modules/auth/selectors'
 import {Shell, Body, Footer} from '@/components/layout'
 import MessageForm from '@/components/messenger/Form'
 import Conversation from '@/components/messenger/Conversation'
@@ -101,7 +100,7 @@ export default composeWithRef(
   authRequired(() => ({
     notice: 'O login é necessário para enviar mensagens.'
   })),
-  connect((state) => ({user: getUser(state)})),
+  withUserProfile,
   withListing(({params: {listing: {id}}}) => ({id})),
   withMessages(({params: {listing}}) => ({listing})),
   withSendMessageMutation(({params: {listing, receiver}}) => ({

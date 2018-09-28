@@ -20,7 +20,12 @@ export default class PermissionProvider extends PureComponent {
 
   onUpdatePermission = async () => {
     const {permission, options} = this.props
-    const response = await Permissions.check(permission, options)
+    let response
+    try {
+      response = await Permissions.check(permission, options)
+    } catch (err) {
+      response = 'undetermined'
+    }
     // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
     this.setState({value: response})
     return response

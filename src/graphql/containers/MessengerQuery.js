@@ -1,23 +1,25 @@
 import _ from 'lodash'
 import {Query} from 'react-apollo'
-import {connect} from 'react-redux'
 
 import {GET_MESSAGES} from '@/graphql/modules/messenger/queries'
 import {MESSAGE_SENT} from '@/graphql/modules/messenger/subscriptions'
-import {getUser} from '@/redux/modules/auth/selectors'
+import {withUserProfile} from './CredentialsQuery'
 
-const MessengerQuery = connect((state) => ({
-  sender: getUser(state)
-}))(function _MessengerQuery({children, listing, sender, ...options}) {
+const MessengerQuery = withUserProfile(function _MessengerQuery({
+  children,
+  listing,
+  user,
+  ...options
+}) {
   const isThisChannel = (message) =>
     message.listing.id == listing.id &&
-    (message.sender.id == sender.id || message.receiver.id == sender.id)
-  if (!sender) return children({})
+    (message.sender.id == user.id || message.receiver.id == user.id)
+  if (!user) return children({})
   return (
     <Query
       notifyOnNetworkStatusChange
       query={GET_MESSAGES}
-      variables={{listingId: listing.id, senderId: sender.id}}
+      variables={{listingId: listing.id, senderId: user.id}}
       {...options}
     >
       {({subscribeToMore, ...response}) =>
@@ -50,6 +52,8 @@ const MessengerQuery = connect((state) => ({
 MessengerQuery.defaultProps = {
   fetchPolicy: 'cache-and-network'
 }
+
+export default MessengerQuery
 
 export const withMessages = (getOptions) => (Target) => (props) => (
   <MessengerQuery {...(getOptions ? getOptions(props) : {})}>

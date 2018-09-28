@@ -4,7 +4,7 @@ import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
-import {getUser} from '@/redux/modules/auth/selectors'
+import {withUserProfile} from '@/graphql/containers'
 import {getInterestTypes} from '@/redux/modules/interest/types/selectors'
 import {isLoading, getError} from '@/redux/modules/interest/form/selectors'
 import {request} from '@/redux/modules/interest/form'
@@ -116,12 +116,12 @@ class InterestFormScreen extends PureComponent {
 }
 
 export default composeWithRef(
+  withUserProfile,
   connect(
     (state) => ({
       types: getInterestTypes(state),
       loading: isLoading(state),
-      error: getError(state),
-      user: getUser(state)
+      error: getError(state)
     }),
     {request}
   )

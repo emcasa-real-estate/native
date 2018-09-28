@@ -100,6 +100,8 @@ def playStoreCertificate = System.getenv("PLAY_STORE_CERTIFICATE_FILE")
 def playStoreCredential = System.getenv("PLAY_STORE_CREDENTIAL")
 def fabricApiKey = System.getenv("FABRIC_API_KEY") ?: ""
 def googleMapsApiKey = System.getenv("GOOGLE_MAPS_API_KEY") ?: ""
+def accountKitClientToken = System.getenv("ACCOUNTKIT_CLIENT_TOKEN") ?: ""
+def facebookAppId = System.getenv("FACEBOOK_APP_ID") ?: "246686149385389" // Defaults to debug app id
 
 android {
     compileSdkVersion 26
@@ -115,12 +117,15 @@ android {
         missingDimensionStrategy "minReactNative", "minReactNative46"
         missingDimensionStrategy "RNN.reactNativeVersion", "reactNative56"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        resValue "string", "facebook_app_id", facebookAppId
         manifestPlaceholders = [
           fabricApiKey: fabricApiKey,
-          googleMapsApiKey: googleMapsApiKey
+          googleMapsApiKey: googleMapsApiKey,
+          accountKitClientToken: accountKitClientToken
         ]
     }
     splits {
@@ -203,8 +208,9 @@ repositories {
 }
 
 dependencies {
-    compile project(':react-native-check-app-install')
-    compile project(':react-native-fbsdk')
+    implementation project(':react-native-facebook-account-kit')
+    implementation project(':react-native-check-app-install')
+    implementation project(':react-native-fbsdk')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(':react-native-share')
     implementation project(':react-native-navigation')
@@ -217,7 +223,7 @@ dependencies {
     implementation "com.android.support:appcompat-v7:26.1.0"
     implementation "com.android.support:support-annotations:26.1.0"
     implementation "com.android.support:design:26.1.0"
-    implementation 'com.android.support:multidex:1.0.1'
+    implementation 'com.android.support:multidex:1.0.3'
     implementation "com.google.android.gms:play-services-base:15.0.1"
     implementation "com.google.android.gms:play-services-basement:15.0.1"
     implementation "com.google.android.gms:play-services-maps:15.0.1"

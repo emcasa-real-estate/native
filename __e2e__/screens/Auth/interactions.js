@@ -11,34 +11,6 @@ export async function navigateToLogin() {
     .withTimeout(5000)
 }
 
-export async function navigateToSignUp() {
-  await navigateToLogin()
-  await element(select.signUpButton()).tap()
-  await waitFor(element(select.signUpScreen()))
-    .toBeVisible()
-    .withTimeout(5000)
-}
-
-export async function login({email, password}) {
-  const input = (label) =>
-    shared.input(label).withAncestor(select.loginScreen())
-  await element(input('Email')).tap()
-  await element(input('Email')).clearText()
-  await element(input('Email')).typeText(email + '\n')
-  await element(input('Senha')).typeText(password + '\n')
-}
-
-export async function signUp({name, email, phone, password}) {
-  const input = (label) =>
-    shared.input(label).withAncestor(select.signUpScreen())
-  await element(input('Nome')).tap()
-  await element(input('Nome')).clearText()
-  await element(input('Nome')).typeText(name + '\n')
-  await element(input('Email')).clearText()
-  await element(input('Email')).typeText(email + '\n')
-  // Phone pad doesn't have a "done" button on iOS,
-  // so the next input must be manually selected
-  if (phone) await element(input('Telefone (opcional)')).typeText(phone)
-  await element(input('Senha')).tap()
-  await element(input('Senha')).typeText(password + '\n')
+export async function login() {
+  await element(select.loginButton()).tap()
 }

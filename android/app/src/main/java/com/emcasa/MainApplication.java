@@ -3,8 +3,11 @@ package com.emcasa;
 import android.app.Application;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.support.multidex.MultiDex;
+import android.content.Context;
 
 import com.facebook.react.ReactApplication;
+import io.underscope.react.fbak.RNAccountKitPackage;
 import com.rpt.reactnativecheckpackageinstallation.CheckPackageInstallationPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import cl.json.RNSharePackage;
@@ -51,33 +54,40 @@ public class MainApplication extends NavigationApplication implements ShareAppli
     };
   }
 
-	@Override
-	public boolean isDebug() {
-		return BuildConfig.DEBUG;
-	}
+  @Override
+  public boolean isDebug() {
+    return BuildConfig.DEBUG;
+  }
 
   @Override
   public List<ReactPackage> createAdditionalReactPackages() {
     return Arrays.<ReactPackage>asList(
-      new MainReactPackage(),
-      new CheckPackageInstallationPackage(),
-      new FBSDKPackage(mCallbackManager),
-      new RNFirebasePackage(),
-      new RNFirebaseAnalyticsPackage(),
-      new RNFirebaseMessagingPackage(),
-      new RNFirebaseCrashlyticsPackage(),
-      new RNFirebaseNotificationsPackage(),
-      new RNSharePackage(),
-      new ImagePickerPackage(),
-      new SvgPackage(),
-      new PhotoViewPackage(),
-      new MapsPackage()
+        new MainReactPackage(),
+        new RNAccountKitPackage(),
+        new CheckPackageInstallationPackage(),
+        new FBSDKPackage(mCallbackManager),
+        new RNFirebasePackage(),
+        new RNFirebaseAnalyticsPackage(),
+        new RNFirebaseMessagingPackage(),
+        new RNFirebaseCrashlyticsPackage(),
+        new RNFirebaseNotificationsPackage(),
+        new RNSharePackage(),
+        new ImagePickerPackage(),
+        new SvgPackage(),
+        new PhotoViewPackage(),
+        new MapsPackage()
     );
   }
 
   @Override
   public String getFileProviderAuthority() {
     return "com.emcasa.provider";
+  }
+
+  @Override
+  protected void attachBaseContext(Context base) {
+    super.attachBaseContext(base);
+    MultiDex.install(this);
   }
 
   @Override

@@ -25,6 +25,7 @@ export default createSelector(getUser, (user) => [
       }
     }
   },
+  /*
   {
     name: user ? listingForm.Address.screenName : auth.Login.screenName,
     passProps: {
@@ -40,6 +41,7 @@ export default createSelector(getUser, (user) => [
       }
     }
   },
+  */
   {
     name: user ? account.Menu.screenName : auth.Login.screenName,
     options: {

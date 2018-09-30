@@ -447,34 +447,34 @@ workflows:
             - e2e_ios
             - build_android
       - deploy_staging_binary_ios:
-          context: native-ios
+          context: ios-staging
           requires:
             - deploy_staging_binary
       - deploy_staging_codepush_ios:
-          context: native-ios
+          context: ios-staging
           requires:
             - deploy_staging_codepush
       - deploy_staging_binary_android:
-          context: native-android
+          context: android-staging
           requires:
             - deploy_staging_binary
       - deploy_staging_codepush_android:
-          context: native-android
+          context: android-staging
           requires:
             - deploy_staging_codepush
       - deploy_production_binary_ios:
-          context: native-ios
+          context: ios-production
           requires:
             - deploy_production_binary
       - deploy_production_codepush_ios:
-          context: native-ios
+          context: ios-production
           requires:
             - deploy_production_codepush
       - deploy_production_binary_android:
-          context: native-android
+          context: android-production
           requires:
             - deploy_production_binary
       - deploy_production_codepush_android:
-          context: native-android
+          context: android-production
           requires:
             - deploy_production_codepush

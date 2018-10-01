@@ -23,7 +23,6 @@ export default function* root() {
     fork(codePushSaga, {
       syncOnResume: true,
       syncOptions: {
-        updateDialog: true,
         installMode: codePush.InstallMode.ON_NEXT_RESUME
       }
     }),

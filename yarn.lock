@@ -7590,6 +7590,10 @@ react-native-check-app-install@^0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/react-native-check-app-install/-/react-native-check-app-install-0.0.4.tgz#336b842e9816c9af373498fe397072ec9c54ed40"
 
+react-native-code-push-saga@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-code-push-saga/-/react-native-code-push-saga-1.0.1.tgz#66af9a7ede4cfd5e2dbf6752ebbcac2933f05886"
+
 react-native-code-push@^5.4.2:
   version "5.4.2"
   resolved "https://registry.yarnpkg.com/react-native-code-push/-/react-native-code-push-5.4.2.tgz#a43f976f983b9866005aac50fe7c1e915ab23943"

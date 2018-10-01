@@ -83,6 +83,7 @@ aliases:
     environment:
       BETA_TESTERS: product,dev
       ALPHA_TESTERS: product,dev
+      RELEASE_PROFILE: staging
     command: |-
       echo "export BUILD_NUMBER=$((CIRCLE_BUILD_NUM+100))" >> $BASH_ENV
       echo "export VERSION_NAME=$(.circleci/version.sh ${VERSION_TAG:-})" >> $BASH_ENV

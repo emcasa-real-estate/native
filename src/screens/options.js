@@ -20,7 +20,7 @@ export default {
     title: {
       fontSize: 18,
       fontWeight: '400',
-      color: colors.gray.dark,
+      color: colors.gray.darker,
       fontFamily: OpenSans
     }
   },

@@ -11,53 +11,45 @@ export const VISUALIZE_TOUR = gql`
   }
 `
 
-export const FAVORITE = _.memoize(
-  ({cache}) => gql`
+export const FAVORITE = gql`
   mutation favoriteListing($id: ID!) {
-    favoriteListing(id: $id) ${cache ? '@client' : ''} {
+    favoriteListing(id: $id) @clientAuth {
       listing {
         id
       }
     }
   }
 `
-)
 
-export const UNFAVORITE = _.memoize(
-  ({cache}) => gql`
+export const UNFAVORITE = gql`
   mutation unfavoriteListing($id: ID!) {
-    unfavoriteListing(id: $id) ${cache ? '@client' : ''} {
+    unfavoriteListing(id: $id) @clientAuth {
       listing {
         id
       }
     }
   }
 `
-)
 
-export const BLACKLIST = _.memoize(
-  ({cache}) => gql`
+export const BLACKLIST = gql`
   mutation blacklistListing($id: ID!) {
-    listingBlacklist(id: $id) ${cache ? '@client' : ''} {
+    listingBlacklist(id: $id) @clientAuth {
       listing {
         id
       }
     }
   }
 `
-)
 
-export const WHITELIST = _.memoize(
-  ({cache}) => gql`
+export const WHITELIST = gql`
   mutation whilelistListing($id: ID!) {
-    listingUnblacklist(id: $id) ${cache ? '@client' : ''} {
+    listingUnblacklist(id: $id) @clientAuth {
       listing {
         id
       }
     }
   }
 `
-)
 
 export const INSERT_LISTING = gql`
   mutation insertListing($listing: ListingInput!) {

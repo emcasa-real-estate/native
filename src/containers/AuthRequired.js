@@ -1,9 +1,8 @@
 import {PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
-import {connect} from 'react-redux'
 
 import {Shell, Body} from '@/components/layout'
-import {getToken} from '@/redux/modules/auth/selectors'
+import {withJwt} from '@/lib/composeWithRef'
 
 import LoginScreen from '@/screens/modules/auth/Login'
 
@@ -64,9 +63,7 @@ class BaseAuthRequired extends PureComponent {
   }
 }
 
-const AuthRequired = connect((state) => ({jwt: getToken(state)}))(
-  BaseAuthRequired
-)
+const AuthRequired = withJwt(BaseAuthRequired)
 
 export default AuthRequired
 

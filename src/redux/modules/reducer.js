@@ -3,6 +3,7 @@ import {combineReducers} from 'redux'
 import {persistReducer} from 'redux-persist'
 import {reducer as network} from 'react-native-offline'
 
+import {PERSIST_TIMEOUT} from '@/lib/config'
 import auth from './auth'
 import relatedListings from './relatedListings'
 import gallery from './gallery'
@@ -16,6 +17,7 @@ const persistent = (reducer, options = {}) =>
     {
       key: reducer.name,
       storage: AsyncStorage,
+      timeout: PERSIST_TIMEOUT,
       ...options
     },
     reducer

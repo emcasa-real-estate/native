@@ -6,7 +6,7 @@ import {ApolloLink} from 'apollo-link'
 
 import createLinks, {sync} from './links'
 
-const SCHEMA_VERSION = '1'
+const SCHEMA_VERSION = '3'
 const SCHEMA_VERSION_KEY = '__emcasa_schema_version'
 
 export default async function createApolloClient(client) {
@@ -19,7 +19,7 @@ export default async function createApolloClient(client) {
 
   const currentSchemaVersion = await AsyncStorage.getItem(SCHEMA_VERSION_KEY)
 
-  if (currentSchemaVersion === SCHEMA_VERSION) await persistor.persist()
+  if (currentSchemaVersion === SCHEMA_VERSION) await persistor.restore()
   else {
     await persistor.purge()
     await AsyncStorage.setItem(SCHEMA_VERSION_KEY, SCHEMA_VERSION)

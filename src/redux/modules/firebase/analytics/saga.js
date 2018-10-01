@@ -1,10 +1,10 @@
-import {takeLatest, all, fork, select} from 'redux-saga/effects'
+import {takeLatest, all, fork, call, getContext} from 'redux-saga/effects'
 import Firebase from 'react-native-firebase'
 
+import {GET_USER_PROFILE} from '@/graphql/modules/user/queries'
 import {getScreenByName} from '@/screens/modules/screens'
 import * as navigation from '@/screens/modules/navigation'
 import * as auth from '@/redux/modules/auth'
-import {getUser} from '@/redux/modules/auth/selectors'
 import * as actions from './index'
 import analyticsEventsSaga from './events'
 
@@ -23,11 +23,18 @@ function logCurrentScreen({name}) {
 }
 
 function* initialize() {
-  const data = yield select(getUser)
+  const graphql = yield getContext('graphql')
+  const {
+    data: {userProfile}
+  } = yield call([graphql, graphql.query], {
+    query: GET_USER_PROFILE,
+    errorPolicy: 'ignore'
+  })
   analytics.setAnalyticsCollectionEnabled(true)
   analytics.setMinimumSessionDuration(10 * 1000)
   analytics.setSessionTimeoutDuration(15 * 60 * 1000)
-  if (data) yield fork(identifySession, {data})
+  if (userProfile && userProfile.id)
+    yield fork(identifySession, {data: userProfile})
 }
 
 export default function* analyticsSaga() {

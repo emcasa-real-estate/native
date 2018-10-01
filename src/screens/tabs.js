@@ -1,12 +1,9 @@
-import {createSelector} from 'reselect'
-
-import {getUser} from '@/redux/modules/auth/selectors'
 import * as listingForm from '@/screens/modules/listingForm/screens'
 import * as listings from '@/screens/modules/listings/screens'
 import * as account from '@/screens/modules/account/screens'
 import * as auth from '@/screens/modules/auth/screens'
 
-export default createSelector(getUser, (user) => [
+export default (_, {user}) => [
   {
     name: listings.Feed.screenName,
     options: {
@@ -27,7 +24,7 @@ export default createSelector(getUser, (user) => [
   },
   /*
   {
-    name: user ? listingForm.Address.screenName : auth.Login.screenName,
+    name: user.id ? listingForm.Address.screenName : auth.Login.screenName,
     passProps: {
       params: {
         tabIndex: 2,
@@ -43,12 +40,12 @@ export default createSelector(getUser, (user) => [
   },
   */
   {
-    name: user ? account.Menu.screenName : auth.Login.screenName,
+    name: user.id ? account.Menu.screenName : auth.Login.screenName,
     options: {
       bottomTab: {
-        text: user ? 'Perfil' : 'Login',
+        text: user.id ? 'Perfil' : 'Login',
         icon: require('@/assets/img/tabs/user.png')
       }
     }
   }
-])
+]

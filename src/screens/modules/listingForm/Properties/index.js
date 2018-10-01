@@ -4,10 +4,9 @@ import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
 import * as frag from '@/graphql/fragments'
-import {withListingMutation, withProfileMutation} from '@/graphql/containers'
+import {withUserProfile, withListingMutation, withProfileMutation} from '@/graphql/containers'
 import {updateStackRoot} from '@/screens/modules/navigation'
 import withContext from '@/screens/modules/context/withContext'
-import {getUser} from '@/redux/modules/auth/selectors'
 import {Shell, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import Progress from '@/components/shared/Progress'
@@ -116,7 +115,12 @@ class EditPropertiesScreen extends PureComponent {
   }
 
   componentDidUpdate(prev) {
-    if (!prev.error && this.props.error && this.form.current && this.state.active)
+    if (
+      !prev.error &&
+      this.props.error &&
+      this.form.current &&
+      this.state.active
+    )
       this.validateForm()
   }
 
@@ -137,8 +141,8 @@ class EditPropertiesScreen extends PureComponent {
     })
   }
 
-  componentDidDisappear(){
-    this.setState({ active: false })
+  componentDidDisappear() {
+    this.setState({active: false})
   }
 
   onChange = (value) => this.props.setContext({value})
@@ -185,10 +189,11 @@ class EditPropertiesScreen extends PureComponent {
 
 export default composeWithRef(
   withContext.byProp('params.contextId'),
+  withUserProfile,
   withProfileMutation,
   withListingMutation(({params: {id}}) => ({id})),
   connect(
-    (state) => ({user: getUser(state)}),
+    null,
     {updateStackRoot}
   )
 )(EditPropertiesScreen)

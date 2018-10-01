@@ -9,7 +9,10 @@ export const withUserListings = (Target) => (props) => (
         {...props}
         userListings={{
           loading: response.loading,
-          data: response.data ? response.data.userListings : [],
+          data:
+            response.data && response.data.userProfile
+              ? response.data.userProfile.listings
+              : [],
           refetch: response.refetch
         }}
       />

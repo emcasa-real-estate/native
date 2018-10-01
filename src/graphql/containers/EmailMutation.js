@@ -1,40 +1,29 @@
 import _ from 'lodash'
 import {Mutation} from 'react-apollo'
-import {connect} from 'react-redux'
 
 import {EDIT_EMAIL} from '@/graphql/modules/user/mutations'
-import {patch} from '@/redux/modules/auth'
-import {getUser} from '@/redux/modules/auth/selectors'
+import {withUserProfile} from './CredentialsQuery'
 
-function EmailMutation({children, user, patch}) {
+const EmailMutation = withUserProfile(function _EmailMutation({
+  children,
+  user
+}) {
   return (
-    <Mutation
-      mutation={EDIT_EMAIL}
-      update={(__, {data: {changeEmail}}) => {
-        patch(_.omit(changeEmail, ['id', '__typename']))
-      }}
-    >
+    <Mutation mutation={EDIT_EMAIL}>
       {(mutate, props) =>
         children(
-          ({variables}) => mutate({variables: {id: user.id, ...variables}}),
+          (variables) => mutate({variables: {id: user.id, ...variables}}),
           {...props, user}
         )
       }
     </Mutation>
   )
-}
+})
 
-const EmailMutationWithData = connect(
-  (state) => ({
-    user: getUser(state)
-  }),
-  {patch}
-)(EmailMutation)
-
-export default EmailMutationWithData
+export default EmailMutation
 
 export const withEmailMutation = (Target) => (props) => (
-  <EmailMutationWithData>
+  <EmailMutation>
     {(mutate, ctx) => (
       <Target
         {...props}
@@ -43,5 +32,5 @@ export const withEmailMutation = (Target) => (props) => (
         changeEmail={mutate}
       />
     )}
-  </EmailMutationWithData>
+  </EmailMutation>
 )

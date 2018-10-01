@@ -102,6 +102,8 @@ def playStoreCredential = System.getenv("PLAY_STORE_CREDENTIAL")
 def fabricApiKey = System.getenv("FABRIC_API_KEY") ?: ""
 def googleMapsApiKey = System.getenv("GOOGLE_MAPS_API_KEY") ?: ""
 def codePushKey = System.getenv("CODEPUSH_DEPLOYMENT_KEY") ?: ""
+def accountKitClientToken = System.getenv("ACCOUNTKIT_CLIENT_TOKEN") ?: ""
+def facebookAppId = System.getenv("FACEBOOK_APP_ID") ?: "246686149385389" // Defaults to debug app id
 
 android {
     compileSdkVersion 26
@@ -118,13 +120,16 @@ android {
         missingDimensionStrategy "minReactNative", "minReactNative46"
         missingDimensionStrategy "RNN.reactNativeVersion", "reactNative56"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
         resValue "string", "reactNativeCodePush_androidDeploymentKey", codePushKey
+        resValue "string", "facebook_app_id", facebookAppId
         manifestPlaceholders = [
           fabricApiKey: fabricApiKey,
-          googleMapsApiKey: googleMapsApiKey
+          googleMapsApiKey: googleMapsApiKey,
+          accountKitClientToken: accountKitClientToken
         ]
     }
     splits {
@@ -207,9 +212,10 @@ repositories {
 }
 
 dependencies {
-    compile project(':react-native-code-push')
-    compile project(':react-native-check-app-install')
-    compile project(':react-native-fbsdk')
+    implementation project(':react-native-code-push')
+    implementation project(':react-native-facebook-account-kit')
+    implementation project(':react-native-check-app-install')
+    implementation project(':react-native-fbsdk')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(':react-native-share')
     implementation project(':react-native-navigation')

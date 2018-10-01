@@ -56,6 +56,9 @@
 		C3D3B5C0205C4AB20004FBF1 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D3B598205C4AAA0004FBF1 /* libAirMaps.a */; };
 		C3D6CCF5209774AA00E1D8D1 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D6CCF02097749200E1D8D1 /* libRNSVG.a */; };
 		C3E6462A2093CD2000CABB50 /* libRNPhotoView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C33522C22063422100AF766A /* libRNPhotoView.a */; };
+		C3F7957121307849004C6C8F /* libRNAccountKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F7957021307832004C6C8F /* libRNAccountKit.a */; };
+		C3F7960D213087AE004C6C8F /* AccountKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F795DA213087AE004C6C8F /* AccountKit.framework */; };
+		C3F7960F213087BA004C6C8F /* AccountKitStrings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C3F7960E213087BA004C6C8F /* AccountKitStrings.bundle */; };
 		DD38508A522671808AAB45C4 /* Pods_EmCasa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA9B0A2BDB982F6C676D60BC /* Pods_EmCasa.framework */; };
 		E58E3BD668E147E88B11A36E /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1628E5320CD54949AD213729 /* OpenSans-Bold.ttf */; };
 		E85C9CB2634347619F34FCDA /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E58918718EB94278B0A51F78 /* OpenSans-Regular.ttf */; };
@@ -433,6 +436,20 @@
 			remoteGlobalIDString = 58B5115D1A9E6B3D00147676;
 			remoteInfo = RCTCameraRoll;
 		};
+		C3F795692130781A004C6C8F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1D4B4DD58C4F4720B09DAD5D /* RNAccountKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2C7C6901CD1552900C9B392;
+			remoteInfo = RNAccountKit;
+		};
+		C3F7956F21307832004C6C8F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C3F7956B21307832004C6C8F /* RNAccountKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2C7C6901CD1552900C9B392;
+			remoteInfo = RNAccountKit;
+		};
 		C3F868D020E5DF9E00030741 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AE377F8F509E44F996FA4476 /* RNFirebase.xcodeproj */;
@@ -465,6 +482,7 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		1628E5320CD54949AD213729 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-Bold.ttf"; path = "../src/assets/fonts/OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		1A78C75678D844D4A6D6FF76 /* OpenSans-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-Light.ttf"; path = "../src/assets/fonts/OpenSans-Light.ttf"; sourceTree = "<group>"; };
+		1D4B4DD58C4F4720B09DAD5D /* RNAccountKit.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNAccountKit.xcodeproj; path = "../node_modules/react-native-facebook-account-kit/ios/RNAccountKit.xcodeproj"; sourceTree = "<group>"; };
 		1DC0995126FE247C998EF169 /* Pods-EmCasa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmCasa.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmCasa/Pods-EmCasa.release.xcconfig"; sourceTree = "<group>"; };
 		27AF0EE749DB426EB358DFCF /* libRNFirebase.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFirebase.a; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* EmCasa-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EmCasa-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -490,7 +508,6 @@
 		C33831B720EB0D5D0061F81C /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		C33831EA20EB0D6B0061F81C /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		C347F5FB20E5835400C76519 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "EmCasa/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		C350457620B37A8600C05F9A /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = IQKeyboardManager.bundle; path = "../node_modules/react-native-keyboard-manager/ios/IQKeyboardManager/Resources/IQKeyboardManager.bundle"; sourceTree = "<group>"; };
 		C371D9A2212354FA00A2AD36 /* EmCasa.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = EmCasa.entitlements; path = EmCasa/EmCasa.entitlements; sourceTree = "<group>"; };
 		C39C669A21543B9600F7ED61 /* CodePush.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CodePush.xcodeproj; path = "../node_modules/react-native-code-push/ios/CodePush.xcodeproj"; sourceTree = "<group>"; };
 		C39C66EB21543D3400F7ED61 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -498,6 +515,10 @@
 		C3ABC46720C747AB0009230C /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		C3D3B593205C4AAA0004FBF1 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		C3D6CCC22097749200E1D8D1 /* RNSVG.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSVG.xcodeproj; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; };
+		C3F7956B21307832004C6C8F /* RNAccountKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNAccountKit.xcodeproj; path = "../node_modules/react-native-facebook-account-kit/ios/RNAccountKit.xcodeproj"; sourceTree = "<group>"; };
+		C3F79576213078C6004C6C8F /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		C3F795DA213087AE004C6C8F /* AccountKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AccountKit.framework; path = "../node_modules/react-native-facebook-account-kit/ios/AccountKit.framework"; sourceTree = "<group>"; };
+		C3F7960E213087BA004C6C8F /* AccountKitStrings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AccountKitStrings.bundle; path = "../node_modules/react-native-facebook-account-kit/ios/AccountKitStrings.bundle"; sourceTree = "<group>"; };
 		CE81788E224C1EB049484A2A /* Pods-EmCasaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmCasaTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmCasaTests/Pods-EmCasaTests.release.xcconfig"; sourceTree = "<group>"; };
 		DA9B0A2BDB982F6C676D60BC /* Pods_EmCasa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EmCasa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E58918718EB94278B0A51F78 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-Regular.ttf"; path = "../src/assets/fonts/OpenSans-Regular.ttf"; sourceTree = "<group>"; };
@@ -521,6 +542,7 @@
 			files = (
 				C39C671E21543D3400F7ED61 /* libz.tbd in Frameworks */,
 				C39C66D321543BB000F7ED61 /* libCodePush.a in Frameworks */,
+				C3F7957121307849004C6C8F /* libRNAccountKit.a in Frameworks */,
 				C336DC3F2118B7D100273254 /* libReactNativeNavigation.a in Frameworks */,
 				C314BCDF20EBFDF500235F22 /* libRCTCameraRoll.a in Frameworks */,
 				C314BCDE20EBFDEB00235F22 /* libRNShare.a in Frameworks */,
@@ -541,6 +563,7 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				C3E6462A2093CD2000CABB50 /* libRNPhotoView.a in Frameworks */,
+				C3F7960D213087AE004C6C8F /* AccountKit.framework in Frameworks */,
 				C33831E920EB0D5E0061F81C /* Social.framework in Frameworks */,
 				C33831EB20EB0D6B0061F81C /* MessageUI.framework in Frameworks */,
 				DD38508A522671808AAB45C4 /* Pods_EmCasa.framework in Frameworks */,
@@ -698,6 +721,8 @@
 			isa = PBXGroup;
 			children = (
 				C39C66EB21543D3400F7ED61 /* libz.tbd */,
+				C3F795DA213087AE004C6C8F /* AccountKit.framework */,
+				C3F79576213078C6004C6C8F /* Accounts.framework */,
 				C33831EA20EB0D6B0061F81C /* MessageUI.framework */,
 				C33831B720EB0D5D0061F81C /* Social.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
@@ -728,7 +753,7 @@
 		7E4AFE5F5EC34142AAD2E6FA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				C350457620B37A8600C05F9A /* IQKeyboardManager.bundle */,
+				C3F7960E213087BA004C6C8F /* AccountKitStrings.bundle */,
 				1628E5320CD54949AD213729 /* OpenSans-Bold.ttf */,
 				013F8C74D0DC4BF9BF7E23FA /* OpenSans-ExtraBold.ttf */,
 				1A78C75678D844D4A6D6FF76 /* OpenSans-Light.ttf */,
@@ -742,6 +767,7 @@
 			isa = PBXGroup;
 			children = (
 				C39C669A21543B9600F7ED61 /* CodePush.xcodeproj */,
+				C3F7956B21307832004C6C8F /* RNAccountKit.xcodeproj */,
 				C336DC072118B7A600273254 /* ReactNativeNavigation.xcodeproj */,
 				C314BCD820EBFDE000235F22 /* RNShare.xcodeproj */,
 				C300924A20E150130004339A /* RCTCameraRoll.xcodeproj */,
@@ -764,6 +790,7 @@
 				75507F174CF7438483601C83 /* RNPhotoView.xcodeproj */,
 				AE377F8F509E44F996FA4476 /* RNFirebase.xcodeproj */,
 				EE500972F61F43FDA473F064 /* RCTFBSDK.xcodeproj */,
+				1D4B4DD58C4F4720B09DAD5D /* RNAccountKit.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -916,6 +943,22 @@
 			children = (
 				C3D6CCF02097749200E1D8D1 /* libRNSVG.a */,
 				C3D6CCF22097749200E1D8D1 /* libRNSVG-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C3F795662130781A004C6C8F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C3F7956A2130781A004C6C8F /* libRNAccountKit.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C3F7956C21307832004C6C8F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C3F7957021307832004C6C8F /* libRNAccountKit.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1127,6 +1170,14 @@
 				{
 					ProductGroup = C3AA0D8D20B86FD6008A4D1A /* Products */;
 					ProjectRef = C3AA0D8C20B86FD6008A4D1A /* ReactNativePermissions.xcodeproj */;
+				},
+				{
+					ProductGroup = C3F7956C21307832004C6C8F /* Products */;
+					ProjectRef = C3F7956B21307832004C6C8F /* RNAccountKit.xcodeproj */;
+				},
+				{
+					ProductGroup = C3F795662130781A004C6C8F /* Products */;
+					ProjectRef = 1D4B4DD58C4F4720B09DAD5D /* RNAccountKit.xcodeproj */;
 				},
 				{
 					ProductGroup = C3F868CD20E5DF9E00030741 /* Products */;
@@ -1510,6 +1561,20 @@
 			remoteRef = C3E6B01920E759AC0069302D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		C3F7956A2130781A004C6C8F /* libRNAccountKit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNAccountKit.a;
+			remoteRef = C3F795692130781A004C6C8F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C3F7957021307832004C6C8F /* libRNAccountKit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNAccountKit.a;
+			remoteRef = C3F7956F21307832004C6C8F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		C3F868D120E5DF9E00030741 /* libRNFirebase.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1538,6 +1603,7 @@
 				3EEAAC4E956E475C99F6FF0C /* OpenSans-Light.ttf in Resources */,
 				E85C9CB2634347619F34FCDA /* OpenSans-Regular.ttf in Resources */,
 				5CFBFF8ECB7F46339FD1EE04 /* OpenSans-SemiBold.ttf in Resources */,
+				C3F7960F213087BA004C6C8F /* AccountKitStrings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1740,11 +1806,15 @@
 					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
+					"$(SRCROOT)/../node_modules/react-native-facebook-account-kit/ios/**",
 				);
 				INFOPLIST_FILE = EmCasaTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1766,11 +1836,15 @@
 					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
+					"$(SRCROOT)/../node_modules/react-native-facebook-account-kit/ios/**",
 				);
 				INFOPLIST_FILE = EmCasaTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1785,6 +1859,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F72983F049B35542A88E5139 /* Pods-EmCasa.debug.xcconfig */;
 			buildSettings = {
+				ACCOUNTKIT_CLIENT_TOKEN = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				BUNDLE_IDENTIFIER_SUFFIX = "-debug";
@@ -1798,6 +1873,24 @@
 				DEVELOPMENT_TEAM = 8C6H76958R;
 				FABRIC_API_KEY = "";
 				FABRIC_BUILD_SECRET = "";
+				FACEBOOK_APP_ID = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Bolts\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKCoreKit\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKLoginKit\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKShareKit\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleToolboxForMac\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Protobuf\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/nanopb\"",
+					"\"${PODS_ROOT}/Crashlytics/iOS\"",
+					"\"${PODS_ROOT}/Fabric/iOS\"",
+					"\"${PODS_ROOT}/FirebaseAnalytics/Frameworks\"",
+					"\"${PODS_ROOT}/FirebaseCore/Frameworks\"",
+					"\"${PODS_ROOT}/FirebaseInstanceID/Frameworks\"",
+					"\"${PODS_ROOT}/FirebaseMessaging/Frameworks\"",
+					"$(SRCROOT)/../node_modules/react-native-facebook-account-kit/ios",
+				);
 				GOOGLE_MAPS_API_KEY = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1805,8 +1898,10 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/react-native-navigation/lib/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-facebook-account-kit/ios/**",
 				);
 				INFOPLIST_FILE = EmCasa/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1825,6 +1920,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1DC0995126FE247C998EF169 /* Pods-EmCasa.release.xcconfig */;
 			buildSettings = {
+				ACCOUNTKIT_CLIENT_TOKEN = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				BUNDLE_IDENTIFIER_SUFFIX = "";
@@ -1836,6 +1932,24 @@
 				DEVELOPMENT_TEAM = 8C6H76958R;
 				FABRIC_API_KEY = "";
 				FABRIC_BUILD_SECRET = "";
+				FACEBOOK_APP_ID = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Bolts\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKCoreKit\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKLoginKit\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKShareKit\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleToolboxForMac\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Protobuf\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/nanopb\"",
+					"\"${PODS_ROOT}/Crashlytics/iOS\"",
+					"\"${PODS_ROOT}/Fabric/iOS\"",
+					"\"${PODS_ROOT}/FirebaseAnalytics/Frameworks\"",
+					"\"${PODS_ROOT}/FirebaseCore/Frameworks\"",
+					"\"${PODS_ROOT}/FirebaseInstanceID/Frameworks\"",
+					"\"${PODS_ROOT}/FirebaseMessaging/Frameworks\"",
+					"$(SRCROOT)/../node_modules/react-native-facebook-account-kit/ios",
+				);
 				GOOGLE_MAPS_API_KEY = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1843,8 +1957,10 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/react-native-navigation/lib/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-facebook-account-kit/ios/**",
 				);
 				INFOPLIST_FILE = EmCasa/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1875,10 +1991,14 @@
 					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
+					"$(SRCROOT)/../node_modules/react-native-facebook-account-kit/ios/**",
 				);
 				INFOPLIST_FILE = "EmCasa-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1908,10 +2028,14 @@
 					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
+					"$(SRCROOT)/../node_modules/react-native-facebook-account-kit/ios/**",
 				);
 				INFOPLIST_FILE = "EmCasa-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1937,7 +2061,10 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "EmCasa-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.EmCasa-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -1959,7 +2086,10 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "EmCasa-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.EmCasa-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -2088,6 +2218,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 458AC7EBDF9D283A02862F16 /* Pods-EmCasa.beta.xcconfig */;
 			buildSettings = {
+				ACCOUNTKIT_CLIENT_TOKEN = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				BUNDLE_IDENTIFIER_SUFFIX = "-beta";
@@ -2099,6 +2230,24 @@
 				DEVELOPMENT_TEAM = 8C6H76958R;
 				FABRIC_API_KEY = "";
 				FABRIC_BUILD_SECRET = "";
+				FACEBOOK_APP_ID = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Bolts\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKCoreKit\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKLoginKit\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBSDKShareKit\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleToolboxForMac\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Protobuf\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/nanopb\"",
+					"\"${PODS_ROOT}/Crashlytics/iOS\"",
+					"\"${PODS_ROOT}/Fabric/iOS\"",
+					"\"${PODS_ROOT}/FirebaseAnalytics/Frameworks\"",
+					"\"${PODS_ROOT}/FirebaseCore/Frameworks\"",
+					"\"${PODS_ROOT}/FirebaseInstanceID/Frameworks\"",
+					"\"${PODS_ROOT}/FirebaseMessaging/Frameworks\"",
+					"$(SRCROOT)/../node_modules/react-native-facebook-account-kit/ios",
+				);
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GOOGLE_MAPS_API_KEY = "";
 				HEADER_SEARCH_PATHS = (
@@ -2108,8 +2257,10 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/react-native-navigation/lib/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-facebook-account-kit/ios/**",
 				);
 				INFOPLIST_FILE = EmCasa/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(BUILD_DIR)/Release-$(PLATFORM_NAME)";
 				OTHER_LDFLAGS = (
@@ -2136,11 +2287,15 @@
 					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
+					"$(SRCROOT)/../node_modules/react-native-facebook-account-kit/ios/**",
 				);
 				INFOPLIST_FILE = EmCasaTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -2169,10 +2324,14 @@
 					"$(SRCROOT)/../node_modules/react-native-orientation/iOS/RCTOrientation/**",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
+					"$(SRCROOT)/../node_modules/react-native-facebook-account-kit/ios/**",
 				);
 				INFOPLIST_FILE = "EmCasa-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -2198,7 +2357,10 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "EmCasa-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.EmCasa-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;

@@ -9,13 +9,14 @@ import {resetFavorites} from './resolvers/mutations/favorites'
 async function syncBlacklist(proxy) {
   await resetBlacklist()
   const {data} = await proxy.query({
-    query: GET_BLACKLISTED_LISTINGS_IDS({cache: true})
+    query: GET_BLACKLISTED_LISTINGS_IDS,
+    fetchPolicy: 'cache-only'
   })
   const ops = data.userProfile.blacklists.map((listing) =>
     proxy.mutate({
       mutation: BLACKLIST({cache: false}),
       variables: {id: listing.id},
-      refetchQueries: [{query: GET_BLACKLISTED_LISTINGS_IDS({cache: false})}]
+      refetchQueries: [{query: GET_BLACKLISTED_LISTINGS_IDS}]
     })
   )
   return Promise.all(ops)
@@ -24,13 +25,14 @@ async function syncBlacklist(proxy) {
 async function syncFavorites(proxy) {
   await resetFavorites()
   const {data} = await proxy.query({
-    query: GET_FAVORITE_LISTINGS_IDS({cache: true})
+    query: GET_FAVORITE_LISTINGS_IDS,
+    fetchPolicy: 'cache-only'
   })
   const ops = data.userProfile.favorites.map((listing) =>
     proxy.mutate({
       mutation: FAVORITE({cache: false}),
       variables: {id: listing.id},
-      refetchQueries: [{query: GET_FAVORITE_LISTINGS_IDS({cache: false})}]
+      refetchQueries: [{query: GET_FAVORITE_LISTINGS_IDS}]
     })
   )
   return Promise.all(ops)

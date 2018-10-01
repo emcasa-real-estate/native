@@ -1,31 +1,17 @@
 import _ from 'lodash'
 import {Query} from 'react-apollo'
-import {connect} from 'react-redux'
 import {compose, mapProps} from 'recompose'
 
 import {
   GET_BLACKLISTED_LISTINGS_IDS,
   GET_BLACKLISTED_LISTINGS
 } from '@/graphql/modules/user/queries'
-import {getToken} from '@/redux/modules/auth/selectors'
-
-const props = (state) => ({jwt: getToken(state)})
-
-const BlacklistQuery = connect(props)(({children, jwt, query, ...props}) => {
-  const options = {cache: !jwt}
-  return (
-    <Query query={query(options)} {...props}>
-      {children}
-    </Query>
-  )
-})
-
-export default BlacklistQuery
+import {withJwt} from './CredentialsQuery'
 
 const createBlacklistContainer = (query, getProps) => (Target) => (props) => (
-  <BlacklistQuery query={query}>
+  <Query fetchPolicy="cache-and-network" query={query}>
     {(response) => <Target {...props} {...getProps(response)} />}
-  </BlacklistQuery>
+  </Query>
 )
 
 export const withBlacklistedListings = createBlacklistContainer(

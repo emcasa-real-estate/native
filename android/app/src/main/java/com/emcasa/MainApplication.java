@@ -3,9 +3,12 @@ package com.emcasa;
 import android.app.Application;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.support.multidex.MultiDex;
+import android.content.Context;
 
 import com.facebook.react.ReactApplication;
 import com.microsoft.codepush.react.CodePush;
+import io.underscope.react.fbak.RNAccountKitPackage;
 import com.rpt.reactnativecheckpackageinstallation.CheckPackageInstallationPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import cl.json.RNSharePackage;
@@ -57,10 +60,10 @@ public class MainApplication extends NavigationApplication implements ShareAppli
     };
   }
 
-	@Override
-	public boolean isDebug() {
-		return BuildConfig.DEBUG;
-	}
+  @Override
+  public boolean isDebug() {
+    return BuildConfig.DEBUG;
+  }
 
   @Override
   public List<ReactPackage> createAdditionalReactPackages() {
@@ -70,6 +73,7 @@ public class MainApplication extends NavigationApplication implements ShareAppli
         getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey),
         getApplicationContext(),
         BuildConfig.DEBUG),
+      new RNAccountKitPackage(),
       new CheckPackageInstallationPackage(),
       new FBSDKPackage(mCallbackManager),
       new RNFirebasePackage(),
@@ -88,6 +92,12 @@ public class MainApplication extends NavigationApplication implements ShareAppli
   @Override
   public String getFileProviderAuthority() {
     return "com.emcasa.provider";
+  }
+
+  @Override
+  protected void attachBaseContext(Context base) {
+    super.attachBaseContext(base);
+    MultiDex.install(this);
   }
 
   @Override

@@ -1,19 +1,20 @@
-import React, {PureComponent} from 'react'
-import {View} from 'react-native'
+import {PureComponent, Fragment} from 'react'
+import {View, ActivityIndicator, Platform} from 'react-native'
 import {Navigation} from 'react-native-navigation'
+import AccountKit from 'react-native-facebook-account-kit'
 import {connect} from 'react-redux'
 
-import {getUser, getError, isLoading} from '@/redux/modules/auth/selectors'
-import {signIn, reset} from '@/redux/modules/auth'
+import composeWithRef from '@/lib/composeWithRef'
+import {withSignInMutation} from '@/graphql/containers'
 import {updateStackRoot} from '@/screens/modules/navigation'
-import {Shell, Body, Footer} from '@/components/layout'
+import {withPermission} from '@/containers/Permission'
+import {Shell, Body} from '@/components/layout'
 import Text from '@/components/shared/Text'
 import Button from '@/components/shared/Button'
-import LoginForm from '@/components/auth/Login'
 
-import SignUpScreen from '@/screens/modules/auth/SignUp'
-import ResetPasswordScreen from '@/screens/modules/auth/ResetPassword'
 import styles from './styles'
+
+const isRegistrationComplete = (user) => Boolean(user.name)
 
 class LoginScreen extends PureComponent {
   static screenName = 'auth.Login'
@@ -28,33 +29,53 @@ class LoginScreen extends PureComponent {
   }
 
   state = {
-    active: false,
-    value: {}
+    viewActive: false,
+    akActive: false,
+    loading: false,
+    error: undefined
   }
 
-  form = React.createRef()
+  accountKitLogin = () => {
+    this.setState({akActive: true}, () =>
+      AccountKit.loginWithPhone()
+        .then((response) => {
+          this.setState({akActive: false})
+          if (response) this.onSubmit(response)
+        })
+        .catch((error) => this.setState({error, akActive: false}))
+    )
+  }
+
+  async componentDidAppear() {
+    const {onRequestPermission, permission} = this.props
+    if (Platform.OS === 'android' && permission === 'undetermined')
+      await onRequestPermission()
+    if (!this.state.viewActive && process.env.NODE_ENV !== 'e2e')
+      this.setState({viewActive: true}, this.accountKitLogin)
+  }
 
   componentDidDisappear() {
-    this.setState({value: undefined, active: false})
-  }
-
-  componentDidAppear() {
-    this.props.reset()
-    this.setState({active: true})
-  }
-
-  componentDidUpdate(prev) {
-    const {user} = this.props
-    const {active} = this.state
-    if (active && user && !prev.user) this.onSuccess()
+    if (!this.state.akActive) this.setState({viewActive: false})
   }
 
   onChange = (value) => this.setState({value})
 
-  onSubmit = () => {
-    const {signIn, loading} = this.props
-    const {value} = this.state
-    if (!loading && this.form.current.onValidate()) signIn(value)
+  onSubmit = async ({token}) => {
+    const {signIn} = this.props
+    if (this.state.loading) return
+    this.setState({loading: true, error: undefined})
+    try {
+      const {
+        data: {accountKitSignIn}
+      } = await signIn({token})
+      if (!accountKitSignIn) return
+      if (isRegistrationComplete(accountKitSignIn.user)) this.onSuccess()
+      else this.onSignUp()
+    } catch (error) {
+      this.setState({error})
+    } finally {
+      this.setState({loading: false})
+    }
   }
 
   onSuccess = () => {
@@ -66,69 +87,66 @@ class LoginScreen extends PureComponent {
   }
 
   onSignUp = () => {
-    const {componentId, params} = this.props
-    Navigation.push(componentId, {
+    const {componentId} = this.props
+    Navigation.showModal({
       component: {
+        id: `${componentId}_signUp`,
         name: SignUpScreen.screenName,
-        passProps: {params}
+        passProps: {
+          onSuccess: this.onSuccess
+        }
       }
     })
   }
 
-  onPasswordRecovery = () => {
-    const {componentId, params} = this.props
-    Navigation.push(componentId, {
-      component: {
-        name: ResetPasswordScreen.screenName,
-        passProps: {params}
-      }
-    })
+  renderLoginButton() {
+    const {
+      params: {notice}
+    } = this.props
+    return (
+      <Fragment>
+        {notice && (
+          <View style={styles.notice}>
+            <Text style={styles.noticeText}>{notice}</Text>
+          </View>
+        )}
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Button testID="login_button" onPress={this.accountKitLogin}>
+            Faça login
+          </Button>
+        </View>
+      </Fragment>
+    )
+  }
+
+  renderActivityIndicator() {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignContent: 'center'}}>
+        <ActivityIndicator size="large" />
+      </View>
+    )
+  }
+
+  renderBody() {
+    if (this.state.akActive || this.state.loading)
+      return this.renderActivityIndicator()
+    return this.renderLoginButton()
   }
 
   render() {
-    const {
-      loading,
-      error,
-      params: {notice}
-    } = this.props
-    const {value} = this.state
-
     return (
       <Shell testID="@auth.Login">
-        <Body scroll>
-          {notice && (
-            <View style={styles.notice}>
-              <Text style={styles.noticeText}>{notice}</Text>
-            </View>
-          )}
-          <LoginForm
-            formRef={this.form}
-            value={value}
-            error={error}
-            loading={loading}
-            onChange={this.onChange}
-            onSubmit={this.onSubmit}
-            onSignUp={this.onSignUp}
-            onPasswordRecovery={this.onPasswordRecovery}
-          />
-        </Body>
-        <Footer style={{padding: 15}}>
-          <Button disabled={loading} onPress={this.onSubmit}>
-            {loading ? 'Enviando...' : 'Enviar'}
-          </Button>
-        </Footer>
+        <Body>{this.renderBody()}</Body>
       </Shell>
     )
   }
 }
 
-export default connect(
-  (state) => ({
-    user: getUser(state),
-    error: getError(state),
-    loading: isLoading(state)
-  }),
-  {signIn, reset, updateStackRoot},
-  null,
-  {withRef: true}
+export default composeWithRef(
+  withPermission('receiveSms'),
+  withSignInMutation,
+  connect(
+    null,
+    {updateStackRoot}
+  )
 )(LoginScreen)

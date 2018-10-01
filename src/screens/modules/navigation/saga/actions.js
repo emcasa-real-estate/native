@@ -1,7 +1,17 @@
 import {Navigation} from 'react-native-navigation'
 import {delay} from 'redux-saga'
-import {all, put, select, race, takeEvery, take} from 'redux-saga/effects'
+import {
+  call,
+  all,
+  put,
+  select,
+  race,
+  takeEvery,
+  take,
+  getContext
+} from 'redux-saga/effects'
 
+import {GET_USER_PROFILE} from '@/graphql/modules/user/queries'
 import getBottomTabs from '@/screens/tabs'
 import defaultOptions from '@/screens/options'
 import * as actions from '../index'
@@ -32,7 +42,17 @@ function* switchTab({tabIndex}) {
 }
 
 function* updateStackRoot({rootId, tabIndex, children}) {
-  const bottomTabs = (yield select(getBottomTabs)).map((component) => ({
+  const graphql = yield getContext('graphql')
+  const {
+    data: {userProfile}
+  } = yield call([graphql, graphql.query], {
+    query: GET_USER_PROFILE,
+    fetchPolicy: 'cache-first',
+    errorPolicy: 'ignore'
+  })
+  const bottomTabs = (yield select(getBottomTabs, {
+    user: userProfile || {}
+  })).map((component) => ({
     stack: {
       children: [{component}],
       options: component.options

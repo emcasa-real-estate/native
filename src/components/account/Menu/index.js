@@ -1,6 +1,5 @@
 import {View} from 'react-native'
 
-import * as colors from '@/assets/colors'
 import Button, {ButtonLabel} from '../FormButton'
 
 export default function AccountMenu({

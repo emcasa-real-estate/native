@@ -22,6 +22,7 @@ export default function* root() {
     fork(neighborhoods),
     fork(codePushSaga, {
       syncOnResume: true,
+      delayByInterval: 10 * 60, // 10 minutes
       syncOptions: {
         installMode: codePush.InstallMode.ON_NEXT_RESUME
       }

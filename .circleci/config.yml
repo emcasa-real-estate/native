@@ -241,6 +241,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/emcasa
+      - run: *configure-version-staging
       - run: *configure-release
       - run: *codepush-login
       - run: *codepush-deploy-ios
@@ -288,6 +289,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/emcasa
+      - run: *configure-version-staging
       - run: *configure-release
       - run: *codepush-login
       - run: *codepush-deploy-android

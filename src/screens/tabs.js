@@ -22,7 +22,6 @@ export default (_, {user}) => [
       }
     }
   },
-  /*
   {
     name: user.id ? listingForm.Address.screenName : auth.Login.screenName,
     passProps: {
@@ -38,7 +37,6 @@ export default (_, {user}) => [
       }
     }
   },
-  */
   {
     name: user.id ? account.Menu.screenName : auth.Login.screenName,
     options: {

@@ -44,9 +44,11 @@
   "dependencies": {
     "@absinthe/socket": "^0.1.10",
     "@absinthe/socket-apollo-link": "^0.1.11",
-    "@fortawesome/fontawesome-free-brands": "^5.0.13",
-    "@fortawesome/fontawesome-pro-light": "^5.0.10",
-    "@fortawesome/fontawesome-pro-solid": "^5.0.10",
+    "@emcasa/ui": "^0.4.1",
+    "@emcasa/ui-native": "^0.4.1",
+    "@fortawesome/free-brands-svg-icons": "^5.4.1",
+    "@fortawesome/pro-light-svg-icons": "^5.4.1",
+    "@fortawesome/pro-solid-svg-icons": "^5.4.1",
     "@jumpn/utils-graphql": "^0.5.3",
     "@ptomasroos/react-native-multi-slider": "^1.0.0",
     "apollo-cache-inmemory": "^1.2.9",
@@ -105,7 +107,9 @@
     "redux": "^3.7.2",
     "redux-persist": "^5.9.1",
     "redux-saga": "^0.16.0",
-    "reselect": "^3.0.1"
+    "reselect": "^3.0.1",
+    "styled-components": "^3.4.10",
+    "styled-system": "^3.1.11"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.54",

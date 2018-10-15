@@ -1,16 +1,21 @@
 import _ from 'lodash'
 import {PureComponent} from 'react'
+import {Platform} from 'react-native'
 import {Provider} from 'react-redux'
 import {PersistGate} from 'redux-persist/integration/react'
 import {ApolloProvider} from 'react-apollo'
 import {Navigation} from 'react-native-navigation'
+import {ThemeProvider} from 'styled-components'
 
 import defaultOptions from '@/screens/options'
+import theme from '@/lib/theme'
 import client from '@/lib/client'
 import ScreenDelegator from './ScreenDelegator'
 
 export default class AppProvider extends PureComponent {
-  state = {ready: false}
+  state = {
+    ready: false
+  }
 
   async componentDidMount() {
     await client.ready
@@ -23,7 +28,9 @@ export default class AppProvider extends PureComponent {
     return (
       <Provider store={client.store}>
         <PersistGate persistor={client.store.persistor}>
-          <ApolloProvider client={client.graphql}>{children}</ApolloProvider>
+          <ThemeProvider theme={theme}>
+            <ApolloProvider client={client.graphql}>{children}</ApolloProvider>
+          </ThemeProvider>
         </PersistGate>
       </Provider>
     )

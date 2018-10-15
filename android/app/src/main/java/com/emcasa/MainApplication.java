@@ -7,6 +7,7 @@ import android.support.multidex.MultiDex;
 import android.content.Context;
 
 import com.facebook.react.ReactApplication;
+import com.microsoft.codepush.react.CodePush;
 import io.underscope.react.fbak.RNAccountKitPackage;
 import com.rpt.reactnativecheckpackageinstallation.CheckPackageInstallationPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
@@ -51,6 +52,11 @@ public class MainApplication extends NavigationApplication implements ShareAppli
       protected String getJSMainModuleName() {
         return "index";
       }
+
+      @Override
+      protected String getJSBundleFile() {
+          return CodePush.getJSBundleFile();
+      }
     };
   }
 
@@ -62,20 +68,24 @@ public class MainApplication extends NavigationApplication implements ShareAppli
   @Override
   public List<ReactPackage> createAdditionalReactPackages() {
     return Arrays.<ReactPackage>asList(
-        new MainReactPackage(),
-        new RNAccountKitPackage(),
-        new CheckPackageInstallationPackage(),
-        new FBSDKPackage(mCallbackManager),
-        new RNFirebasePackage(),
-        new RNFirebaseAnalyticsPackage(),
-        new RNFirebaseMessagingPackage(),
-        new RNFirebaseCrashlyticsPackage(),
-        new RNFirebaseNotificationsPackage(),
-        new RNSharePackage(),
-        new ImagePickerPackage(),
-        new SvgPackage(),
-        new PhotoViewPackage(),
-        new MapsPackage()
+      new MainReactPackage(),
+      new CodePush(
+        getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey),
+        getApplicationContext(),
+        BuildConfig.DEBUG),
+      new RNAccountKitPackage(),
+      new CheckPackageInstallationPackage(),
+      new FBSDKPackage(mCallbackManager),
+      new RNFirebasePackage(),
+      new RNFirebaseAnalyticsPackage(),
+      new RNFirebaseMessagingPackage(),
+      new RNFirebaseCrashlyticsPackage(),
+      new RNFirebaseNotificationsPackage(),
+      new RNSharePackage(),
+      new ImagePickerPackage(),
+      new SvgPackage(),
+      new PhotoViewPackage(),
+      new MapsPackage()
     );
   }
 

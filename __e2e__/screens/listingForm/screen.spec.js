@@ -4,7 +4,7 @@ import {addressScreen} from './selectors'
 import * as select from './selectors'
 import * as actions from './interactions'
 
-describe('listingForm', () => {
+describe.skip('listingForm', () => {
   beforeAll(actions.navigate)
 
   it('redirects to login screen', async () => {

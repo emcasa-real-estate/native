@@ -8,6 +8,7 @@
  */
 
 #import "AppDelegate.h"
+#import <CodePush/CodePush.h>
 
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
@@ -25,7 +26,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+  NSURL * jsCodeLocation;
+
+  #ifdef DEBUG
+  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+  #else
+  jsCodeLocation = [CodePush bundleURL];
+  #endif
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                moduleName:@"EmCasa"

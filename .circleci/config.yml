@@ -142,7 +142,7 @@ aliases:
     command: >-
       node_modules/.bin/code-push release-react
       EmCasa/EmCasa-android android
-      --deploymentName ${DEPLOY_TARGET:-Staging}
+      --deploymentName ${DEPLOYMENT_TARGET:-Staging}
       --targetBinaryVersion $VERSION_NAME
       $CODEPUSH_FLAGS
   - &codepush-deploy-ios
@@ -150,7 +150,7 @@ aliases:
     command: >-
       node_modules/.bin/code-push release-react
       EmCasa/EmCasa-ios ios
-      --deploymentName ${DEPLOY_TARGET:-Staging}
+      --deploymentName ${DEPLOYMENT_TARGET:-Staging}
       --targetBinaryVersion $VERSION_NAME
       $CODEPUSH_FLAGS
 

@@ -18,6 +18,9 @@ export default function ListingDescription(props) {
       <Section title="O Imóvel">
         <Text style={styles.text}>{props.description}</Text>
       </Section>
+      <View style={styles.listingId}>
+        <Text style={styles.listingIdText}>Cód. imóvel {props.id}</Text>
+      </View>
       <Section title="Tipo do Imóvel">
         <Text style={styles.text}>{props.type}</Text>
       </Section>

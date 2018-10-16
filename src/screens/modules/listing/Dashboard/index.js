@@ -13,11 +13,6 @@ class ListingDashboardScreen extends PureComponent {
   static options = {
     topBar: {
       title: {text: 'Estatísticas'}
-    },
-    bottomTabs: {
-      visible: false,
-      drawBehind: true,
-      animated: false
     }
   }
 

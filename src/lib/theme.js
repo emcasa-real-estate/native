@@ -13,7 +13,7 @@ export default {
     brands: fab
   },
   fontFamily: Platform.select({
-    ios: 'OpenSans',
-    android: 'Open Sans'
+    ios: 'Open Sans',
+    android: 'OpenSans'
   })
 }

@@ -63,7 +63,12 @@ function* updateStackRoot({rootId, tabIndex, children}) {
     root: {
       bottomTabs: {
         id: rootId,
-        options: {bottomTabs: {currentTabIndex: tabIndex}},
+        options: {
+          bottomTabs: {
+            currentTabIndex: tabIndex,
+            visible: false
+          }
+        },
         children: bottomTabs
       }
     }

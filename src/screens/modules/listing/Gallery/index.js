@@ -11,11 +11,6 @@ class ListingGalleryScreen extends PureComponent {
   static options = {
     layout: {
       orientation: ['portrait', 'landscape']
-    },
-    bottomTabs: {
-      visible: false,
-      drawBehind: true,
-      animated: false
     }
   }
 

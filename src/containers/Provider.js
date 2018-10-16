@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import {PureComponent} from 'react'
-import {Platform} from 'react-native'
 import {Provider} from 'react-redux'
 import {PersistGate} from 'redux-persist/integration/react'
 import {ApolloProvider} from 'react-apollo'

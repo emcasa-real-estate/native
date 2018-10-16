@@ -37,11 +37,6 @@ class MapScreen extends Component {
       animate: true,
       height: 50,
       title: {text: 'Buscar imóveis'}
-    },
-    bottomTabs: {
-      visible: false,
-      drawBehind: true,
-      animated: false
     }
   }
 

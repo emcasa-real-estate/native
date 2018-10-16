@@ -28,19 +28,20 @@ class ListingsFeedScreen extends PureComponent {
       translucent: true,
       height: 0,
       backButton: {title: 'Imóveis'}
-    },
-    bottomTabs: {
-      visible: true
     }
   }
 
   componentDidDisappear() {
-    const {listingsFeed: {loading, updateBlacklists}} = this.props
+    const {
+      listingsFeed: {loading, updateBlacklists}
+    } = this.props
     if (!loading) updateBlacklists()
   }
 
   onLoadMore = () => {
-    const {listingsFeed: {loading, fetchMore}} = this.props
+    const {
+      listingsFeed: {loading, fetchMore}
+    } = this.props
     if (!loading) fetchMore()
   }
 
@@ -72,7 +73,9 @@ class ListingsFeedScreen extends PureComponent {
   }
 
   render() {
-    const {listingsFeed: {loading, data, remainingCount}} = this.props
+    const {
+      listingsFeed: {loading, data, remainingCount}
+    } = this.props
     return (
       <Shell testID="@listings.Feed">
         <Header>
@@ -85,6 +88,7 @@ class ListingsFeedScreen extends PureComponent {
             onLoad={this.onLoadMore}
           >
             <Feed
+              automaticallyAdjustContentInsets={false}
               data={data}
               onSelect={this.onSelect}
               ListHeaderComponent={ListHeader}

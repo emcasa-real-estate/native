@@ -25,17 +25,7 @@ export default {
     }
   },
   bottomTabs: {
-    visible: true,
-    titleDisplayMode: 'alwaysShow'
-  },
-  bottomTab: {
-    fontSize: 10,
-    selectedFontSize: 12,
-    badgeColor: colors.blue.medium,
-    iconColor: colors.gray.dark,
-    selectedIconColor: colors.blue.medium,
-    textColor: colors.gray.dark,
-    selectedTextColor: colors.blue.medium,
-    fontFamily: OpenSans
+    visible: false,
+    drawBehind: true
   }
 }

@@ -22,11 +22,6 @@ class ConversationScreen extends PureComponent {
   static options = {
     topBar: {
       title: {text: 'Entre em contato'}
-    },
-    bottomTabs: {
-      visible: false,
-      drawBehind: true,
-      animated: false
     }
   }
 

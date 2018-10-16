@@ -21,11 +21,6 @@ class InterestFormScreen extends PureComponent {
     topBar: {
       title: {text: 'Marcar visita'},
       backButton: {title: ''}
-    },
-    bottomTabs: {
-      visible: false,
-      drawBehind: true,
-      animated: false
     }
   }
 

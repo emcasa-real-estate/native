@@ -27,11 +27,6 @@ class ListingScreen extends PureComponent {
   static options = {
     topBar: {
       backButton: {title: ''}
-    },
-    bottomTabs: {
-      visible: false,
-      drawBehind: true,
-      animated: false
     }
   }
 

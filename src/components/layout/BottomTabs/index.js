@@ -9,28 +9,35 @@ import {getCurrentTabIndex} from '@/screens/modules/navigation/selectors'
 import {withUserProfile} from '@/graphql/containers'
 import Button, {ButtonContainer} from './Button'
 import Tabs from './Tabs'
-import Background from './Background'
+import {BackgroundImage, BackgroundColor} from './Background'
 import {compose} from 'recompose'
 
 const BaseBottomTabs = styled(function BottomTabs({
-  children,
   tabs,
   tabIndex,
   onChange,
+  icon,
+  type,
+  onPress,
   ...props
 }) {
-  const hasChildren = Boolean(children)
+  const hasChildren = Boolean(icon)
   return (
     <View {...props}>
-      {hasChildren && <ButtonContainer>{children}</ButtonContainer>}
+      {hasChildren && (
+        <ButtonContainer>
+          <Button icon={icon} type={type} onPress={onPress} />
+        </ButtonContainer>
+      )}
       <Tabs
         tabs={tabs}
         tabIndex={tabIndex}
         hasChildren={hasChildren}
         onChange={onChange}
       />
-      <Background left={0} />
-      <Background right={0} />
+      <BackgroundImage left={0} />
+      <BackgroundImage right={0} />
+      <BackgroundColor />
     </View>
   )
 })`
@@ -48,7 +55,5 @@ const BottomTabs = compose(
     {onChange: switchTab}
   )
 )(BaseBottomTabs)
-
-BottomTabs.Button = Button
 
 export default BottomTabs

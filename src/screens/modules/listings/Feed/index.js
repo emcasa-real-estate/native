@@ -77,7 +77,13 @@ class ListingsFeedScreen extends PureComponent {
       listingsFeed: {loading, data, remainingCount}
     } = this.props
     return (
-      <Shell testID="@listings.Feed">
+      <Shell
+        testID="@listings.Feed"
+        bottomTabs={{
+          icon: 'map-marker-alt',
+          onPress: this.onPressTabButton
+        }}
+      >
         <Header>
           <SearchHeader onPress={this.onOpenSearch} />
         </Header>
@@ -99,9 +105,6 @@ class ListingsFeedScreen extends PureComponent {
           </InfiniteScroll>
           <MapButton style={styles.mapButton} onPress={this.onOpenMap} />
         </Body>
-        <BottomTabs>
-          <BottomTabs.Button icon="map-marker-alt" type="solid" />
-        </BottomTabs>
       </Shell>
     )
   }

@@ -1,5 +1,17 @@
 import React, {PureComponent} from 'react'
+import styled from 'styled-components'
+import {themeGet} from 'styled-system'
 import {View, Keyboard, KeyboardAvoidingView, Platform} from 'react-native'
+
+import BottomTabs from './BottomTabs'
+
+const AbsoluteBottomTabs = styled(BottomTabs)`
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+`
 
 export default class Shell extends PureComponent {
   static defaultProps = {
@@ -32,8 +44,9 @@ export default class Shell extends PureComponent {
   }
 
   render() {
-    const {style, children, testID, behavior} = this.props
+    const {style, children, testID, behavior, bottomTabs} = this.props
     const {offset, layout, keyboardVisible} = this.state
+    const bottomTabProps = typeof bottomTabs === 'object' ? bottomTabs : {}
     return (
       <View
         testID={testID}
@@ -49,6 +62,7 @@ export default class Shell extends PureComponent {
         >
           <View style={{flex: 1, display: 'flex'}}>{children}</View>
         </KeyboardAvoidingView>
+        {bottomTabs && <AbsoluteBottomTabs {...bottomTabProps} />}
       </View>
     )
   }

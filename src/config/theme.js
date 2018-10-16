@@ -15,5 +15,12 @@ export default {
   fontFamily: Platform.select({
     ios: 'Open Sans',
     android: 'OpenSans'
-  })
+  }),
+  size: {
+    bottomTabs: 55,
+    bottomTabsBg: {
+      width: 122,
+      height: 45
+    }
+  }
 }

@@ -99,7 +99,9 @@ class ListingsFeedScreen extends PureComponent {
           </InfiniteScroll>
           <MapButton style={styles.mapButton} onPress={this.onOpenMap} />
         </Body>
-        <BottomTabs icon="marker" />
+        <BottomTabs>
+          <BottomTabs.Button icon="map-marker-alt" type="solid" />
+        </BottomTabs>
       </Shell>
     )
   }

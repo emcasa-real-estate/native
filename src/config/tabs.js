@@ -13,44 +13,30 @@ import * as auth from '@/screens/modules/auth/screens'
 export default (_, {user}) => [
   {
     name: listings.Feed.screenName,
-    options: {
-      bottomTab: {
-        text: 'Imóveis',
-        icon: require('@/assets/img/tabs/home.png')
-      }
-    }
-  },
-  {
-    name: account.Favorites.screenName,
-    options: {
-      bottomTab: {
-        text: 'Favoritos',
-        icon: require('@/assets/img/tabs/heart.png')
-      }
+    props: {
+      icon: 'search',
+      label: 'Explorar'
     }
   },
   {
     name: user.id ? listingForm.Address.screenName : auth.Login.screenName,
-    passProps: {
-      params: {
-        tabIndex: 2,
-        notice: 'O login é necessário para anunciar um imóvel.'
-      }
-    },
-    options: {
-      bottomTab: {
-        text: 'Anunciar',
-        icon: require('@/assets/img/tabs/tag.png')
-      }
+    props: {
+      icon: 'flag',
+      label: 'Anunciar'
+    }
+  },
+  {
+    name: account.Favorites.screenName,
+    props: {
+      icon: 'heart',
+      label: 'Favoritos'
     }
   },
   {
     name: user.id ? account.Menu.screenName : auth.Login.screenName,
-    options: {
-      bottomTab: {
-        text: user.id ? 'Perfil' : 'Login',
-        icon: require('@/assets/img/tabs/user.png')
-      }
+    props: {
+      icon: 'user',
+      label: user.id ? 'Meu Perfil' : 'Login'
     }
   }
 ]

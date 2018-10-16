@@ -1,4 +1,4 @@
-import {CDN_UPLOAD_PRESET, CDN_UPLOAD_URL} from '@/lib/config'
+import {CDN_UPLOAD_PRESET, CDN_UPLOAD_URL} from '@/config/const'
 
 export async function upload({uri, type, fileName}) {
   const data = new FormData()

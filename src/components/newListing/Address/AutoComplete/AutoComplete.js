@@ -3,7 +3,7 @@ import React, {PureComponent} from 'react'
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete'
 
 import {gray} from '@/assets/colors'
-import {GOOGLE_PLACES_API_KEY} from '@/lib/config'
+import {GOOGLE_PLACES_API_KEY} from '@/config/const'
 
 const filterComponent = (place, property) => {
   const component = place.address_components.find((val) =>

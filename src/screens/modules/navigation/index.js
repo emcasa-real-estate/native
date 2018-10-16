@@ -31,7 +31,7 @@ export const tabSelected = ({
 })
 export const updateStackRoot = ({rootId, tabIndex, children} = {}) => ({
   type: UPDATE_STACK_ROOT,
-  rootId: rootId || uniqId('bottom_tabs-'),
+  rootId: rootId || uniqId('root-'),
   tabIndex: tabIndex || 0,
   children: children || []
 })

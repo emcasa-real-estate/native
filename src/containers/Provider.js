@@ -6,8 +6,8 @@ import {ApolloProvider} from 'react-apollo'
 import {Navigation} from 'react-native-navigation'
 import {ThemeProvider} from 'styled-components'
 
-import defaultOptions from '@/screens/options'
-import theme from '@/lib/theme'
+import defaultOptions from '@/config/screen'
+import theme from '@/config/theme'
 import client from '@/lib/client'
 import ScreenDelegator from './ScreenDelegator'
 

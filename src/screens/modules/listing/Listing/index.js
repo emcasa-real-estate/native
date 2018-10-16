@@ -5,7 +5,7 @@ import {Navigation} from 'react-native-navigation'
 import Share from 'react-native-share'
 import {connect} from 'react-redux'
 
-import {FRONTEND_URL} from '@/lib/config'
+import {FRONTEND_URL} from '@/config/const'
 import composeWithRef from '@/lib/composeWithRef'
 import * as format from '@/assets/format'
 import {withListing} from '@/graphql/containers'

@@ -1,9 +1,10 @@
-import {Platform} from 'react-native'
-
+import theme from './theme'
 import * as colors from '@/assets/colors'
 
-const OpenSans = Platform.OS === 'ios' ? 'Open Sans' : 'OpenSans'
-
+/**
+ * react-native-navigation default screen options
+ * https://wix.github.io/react-native-navigation/v2/#/docs/styling?id=options-object-format
+ */
 export default {
   layout: {
     backgroundColor: 'white',
@@ -21,7 +22,7 @@ export default {
       fontSize: 18,
       fontWeight: '400',
       color: colors.gray.dark,
-      fontFamily: OpenSans
+      fontFamily: theme.fontFamily
     }
   },
   bottomTabs: {

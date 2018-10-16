@@ -12,8 +12,8 @@ import {
 } from 'redux-saga/effects'
 
 import {GET_USER_PROFILE} from '@/graphql/modules/user/queries'
-import getBottomTabs from '@/screens/tabs'
-import defaultOptions from '@/screens/options'
+import getBottomTabs from '@/config/tabs'
+import defaultOptions from '@/config/screen'
 import * as actions from '../index'
 import {getStackRootId} from '../selectors'
 import {REHYDRATE} from 'redux-persist'

@@ -75,6 +75,7 @@ export default class Body extends PureComponent {
 
     return (
       <ViewComponent
+        automaticallyAdjustContentInsets={false}
         testID={testID}
         style={[styles.container, style]}
         {...props}

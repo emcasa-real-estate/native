@@ -27,6 +27,6 @@ export default {
   },
   bottomTabs: {
     visible: false,
-    drawBehind: true
+    drawBehind: false
   }
 }

@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import composeWithRef from '@/lib/composeWithRef'
 import {withListingsFeed} from '@/graphql/containers'
 import {getSearchFiltersQuery} from '@/screens/modules/listings/Search/module/selectors'
-import {Shell, Body, Header} from '@/components/layout'
+import {Shell, Body, Header, BottomTabs} from '@/components/layout'
 import InfiniteScroll from '@/containers/InfiniteScroll'
 import MapButton from '@/components/listings/Map/Button'
 import Feed from '@/components/listings/Feed/Listing'
@@ -99,6 +99,7 @@ class ListingsFeedScreen extends PureComponent {
           </InfiniteScroll>
           <MapButton style={styles.mapButton} onPress={this.onOpenMap} />
         </Body>
+        <BottomTabs icon="marker" />
       </Shell>
     )
   }

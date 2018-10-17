@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react'
 import styled from 'styled-components'
-import {themeGet} from 'styled-system'
 import {View, Keyboard, KeyboardAvoidingView, Platform} from 'react-native'
 
 import BottomTabs from './BottomTabs'

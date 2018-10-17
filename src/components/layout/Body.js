@@ -7,6 +7,7 @@ import {
   Dimensions
 } from 'react-native'
 
+import BottomtabsAvoidingScrollView from '@/containers/BottomTabsAvoidingScrollView'
 import * as colors from '@/assets/colors'
 
 const styles = StyleSheet.create({
@@ -73,7 +74,7 @@ export default class Body extends PureComponent {
     const {children} = this.state
     const ViewComponent = scroll ? ScrollView : View
 
-    return (
+    const component = (
       <ViewComponent
         automaticallyAdjustContentInsets={false}
         testID={testID}
@@ -83,6 +84,10 @@ export default class Body extends PureComponent {
         {loading && this.renderOverlay()}
         <View style={styles.body}>{children}</View>
       </ViewComponent>
+    )
+    if (!(scroll && hasBottomTabs)) return component
+    return (
+      <BottomTabsAvoidingScrollView>{component}</BottomTabsAvoidingScrollView>
     )
   }
 }

@@ -46,6 +46,9 @@ export default class Shell extends PureComponent {
     const {style, children, testID, behavior, bottomTabs} = this.props
     const {offset, layout, keyboardVisible} = this.state
     const bottomTabProps = typeof bottomTabs === 'object' ? bottomTabs : {}
+    const layoutInfo = {
+      hasBottomTabs: Boolean(bottomTabs)
+    }
     return (
       <View
         testID={testID}
@@ -59,9 +62,13 @@ export default class Shell extends PureComponent {
           behavior={behavior !== 'none' ? behavior : undefined}
           enabled={Platform.OS !== 'android' && behavior !== 'none'}
         >
-          <View style={{flex: 1, display: 'flex'}}>{children}</View>
+          <View style={{flex: 1, display: 'flex'}}>
+            {React.Children.map(children, (node) =>
+              React.cloneElement(node, layoutInfo)
+            )}
+          </View>
         </KeyboardAvoidingView>
-        {bottomTabs && <AbsoluteBottomTabs {...bottomTabProps} />}
+        {layoutInfo.hasBottomTabs && <AbsoluteBottomTabs {...bottomTabProps} />}
       </View>
     )
   }

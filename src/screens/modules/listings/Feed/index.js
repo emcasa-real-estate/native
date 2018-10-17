@@ -5,12 +5,8 @@ import {connect} from 'react-redux'
 import composeWithRef from '@/lib/composeWithRef'
 import {withListingsFeed} from '@/graphql/containers'
 import {getSearchFiltersQuery} from '@/screens/modules/listings/Search/module/selectors'
-import {
-  Shell,
-  Body,
-  Header,
-  BottomTabsAvoidingScrollView
-} from '@/components/layout'
+import {Shell, Body, Header} from '@/components/layout'
+import BottomTabsAvoidingScrollView from '@/containers/BottomTabsAvoidingScrollView'
 import InfiniteScroll from '@/containers/InfiniteScroll'
 import MapButton from '@/components/listings/Map/Button'
 import Feed from '@/components/listings/Feed/Listing'

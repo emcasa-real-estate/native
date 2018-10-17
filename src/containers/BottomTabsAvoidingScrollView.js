@@ -5,20 +5,19 @@ function BottomTabsAvoidingScrollView({
   theme,
   children,
   contentInset,
-  scrollIndicatorInsets
+  scrollIndicatorInsets,
+  ...props
 }) {
-  const nextProps = {
-    scrollIndicatorInsets: {
-      ...scrollIndicatorInsets,
-      bottom: theme.size.bottomTabs
-    },
-    contentInset: {
-      ...contentInset,
-      bottom: 10
-    }
+  props.scrollIndicatorInsets = {
+    ...scrollIndicatorInsets,
+    bottom: theme.size.bottomTabs
   }
-  if (typeof children === 'function') return children(nextProps)
-  return React.cloneElement(React.Children.only(children), nextProps)
+  props.contentInset = {
+    ...contentInset,
+    bottom: theme.size.bottomTabs
+  }
+  if (typeof children === 'function') return children(props)
+  return React.cloneElement(React.Children.only(children), props)
 }
 
 BottomTabsAvoidingScrollView.defaultProps = {

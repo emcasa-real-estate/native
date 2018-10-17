@@ -4,11 +4,25 @@ import {themeGet} from 'styled-system'
 import {TouchableOpacity} from 'react-native'
 import {View, Icon, Text} from '@emcasa/ui-native'
 
-const Tab = styled(function Tab({label, icon, type, active, ...props}) {
+const Tab = styled(function Tab({
+  label,
+  icon,
+  type,
+  active,
+  strokeWidth,
+  ...props
+}) {
   const color = active ? 'pink' : 'dark'
   return (
     <TouchableOpacity {...props}>
-      <Icon name={icon} type={type} size={16} color={color} />
+      <Icon
+        name={icon}
+        type={type}
+        size={16}
+        color={color}
+        stroke={color}
+        strokeWidth={strokeWidth}
+      />
       <Text fontSize={9} color={color}>
         {label}
       </Text>

@@ -15,6 +15,8 @@ export default (_, {user}) => [
     name: listings.Feed.screenName,
     props: {
       icon: 'search',
+      type: 'light',
+      strokeWidth: 25,
       label: 'Explorar'
     }
   },

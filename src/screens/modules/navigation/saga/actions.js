@@ -16,7 +16,7 @@ import {GET_USER_PROFILE} from '@/graphql/modules/user/queries'
 import getBottomTabs from '@/config/tabs'
 import defaultOptions from '@/config/screen'
 import * as actions from '../index'
-import {getStackRootId} from '../selectors'
+import {getStackRootId, getCurrentTabIndex} from '../selectors'
 import {REHYDRATE} from 'redux-persist'
 
 const authPersisted = (state) => state.auth._persist.rehydrated
@@ -36,10 +36,13 @@ function* initialize() {
 
 function* switchTab({tabIndex}) {
   const rootId = yield select(getStackRootId)
+  const unselectedTabIndex = yield select(getCurrentTabIndex)
   Navigation.mergeOptions(rootId, {
     bottomTabs: {currentTabIndex: tabIndex}
   })
-  yield put(actions.tabSelected(tabIndex))
+  yield put(
+    actions.tabSelected({selectedTabIndex: tabIndex, unselectedTabIndex})
+  )
 }
 
 function* updateStackRoot({rootId, tabIndex, children}) {

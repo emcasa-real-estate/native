@@ -7,6 +7,7 @@ import android.support.multidex.MultiDex;
 import android.content.Context;
 
 import com.facebook.react.ReactApplication;
+import com.BV.LinearGradient.LinearGradientPackage;
 import com.microsoft.codepush.react.CodePush;
 import io.underscope.react.fbak.RNAccountKitPackage;
 import com.rpt.reactnativecheckpackageinstallation.CheckPackageInstallationPackage;
@@ -69,6 +70,7 @@ public class MainApplication extends NavigationApplication implements ShareAppli
   public List<ReactPackage> createAdditionalReactPackages() {
     return Arrays.<ReactPackage>asList(
       new MainReactPackage(),
+      new LinearGradientPackage(),
       new CodePush(
         getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey),
         getApplicationContext(),

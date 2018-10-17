@@ -1,9 +1,12 @@
 import {Fragment} from 'react'
-import {Image, TouchableOpacity} from 'react-native'
-import styled from 'styled-components/native'
+import {View} from 'react-native'
+import styled, {withTheme} from 'styled-components/native'
 import {themeGet} from 'styled-system'
 import {top, bottom, zIndex} from 'styled-system'
+import LinearGradient from 'react-native-linear-gradient'
 import {Icon} from '@emcasa/ui-native'
+
+import {touchable} from '@/components/shared/Touchable'
 
 const SIZE = 60
 
@@ -29,9 +32,11 @@ const ButtonIcon = styled(Icon)`
   transform: rotate(45deg);
 `
 
-const Button = styled(function Button({icon, type, ...props}) {
+const Button = styled(function Button({icon, type, active, ...props}) {
+  let colors = ['#FB0090', '#F50057']
+  if (active) colors[1] = colors[0]
   return (
-    <TouchableOpacity {...props}>
+    <LinearGradient colors={colors} {...props}>
       <ButtonIcon
         name={icon}
         type={type}
@@ -39,19 +44,18 @@ const Button = styled(function Button({icon, type, ...props}) {
         stroke="white"
         strokeWidth={10}
       />
-    </TouchableOpacity>
+    </LinearGradient>
   )
 })`
   justify-content: center;
   align-items: center;
   width: ${SIZE};
   height: ${SIZE};
-  background-color: ${themeGet('colors.pink')};
   border-radius: 20;
   transform: rotate(-45deg);
 `
 
-export default Button
+export default touchable(Button)
 
 const BackgroundImage = styled.Image`
   resize-mode: stretch;

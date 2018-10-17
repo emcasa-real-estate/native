@@ -7,7 +7,7 @@ import theme from '@emcasa/ui'
 export default {
   ...theme,
   icons: {
-    default: fal,
+    default: fas,
     solid: fas,
     light: fal,
     brands: fab

@@ -8,14 +8,13 @@ import {getSearchFiltersQuery} from '@/screens/modules/listings/Search/module/se
 import {Shell, Body, Header} from '@/components/layout'
 import BottomTabsAvoidingScrollView from '@/containers/BottomTabsAvoidingScrollView'
 import InfiniteScroll from '@/containers/InfiniteScroll'
-import MapButton from '@/components/listings/Map/Button'
 import Feed from '@/components/listings/Feed/Listing'
+import LocationSearch from '@/components/listings/Search/Location'
 import SearchHeader from './Header'
 import ListEmpty from './ListEmpty'
 import ListHeader from './ListHeader'
 import styles from './styles'
 
-import MapScreen from '@/screens/modules/listings/Map'
 import SearchScreen from '@/screens/modules/listings/Search'
 import ListingScreen from '@/screens/modules/listing/Listing'
 
@@ -32,6 +31,10 @@ class ListingsFeedScreen extends PureComponent {
     }
   }
 
+  state = {
+    modalActive: false
+  }
+
   componentDidDisappear() {
     const {
       listingsFeed: {loading, updateBlacklists}
@@ -46,16 +49,7 @@ class ListingsFeedScreen extends PureComponent {
     if (!loading) fetchMore()
   }
 
-  onOpenMap = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: MapScreen.screenName,
-        passProps: this.props
-      }
-    })
-  }
-
-  onOpenSearch = () => {
+  onOpenFilters = () => {
     Navigation.push(this.props.componentId, {
       component: {
         name: SearchScreen.screenName,
@@ -63,6 +57,9 @@ class ListingsFeedScreen extends PureComponent {
       }
     })
   }
+
+  onToggleLocationSearch = () =>
+    this.setState({modalActive: !this.state.modalActive})
 
   onSelect = (id) => {
     Navigation.push(this.props.componentId, {
@@ -77,16 +74,18 @@ class ListingsFeedScreen extends PureComponent {
     const {
       listingsFeed: {loading, data, remainingCount}
     } = this.props
+    const {modalActive} = this.state
     return (
       <Shell
         testID="@listings.Feed"
         bottomTabs={{
-          icon: 'map-marker-alt',
-          onPress: this.onPressTabButton
+          icon: modalActive ? 'check' : 'map-marker-alt',
+          onPress: this.onToggleLocationSearch
         }}
       >
+        <LocationSearch visible={modalActive} zIndex={2} />
         <Header>
-          <SearchHeader onPress={this.onOpenSearch} />
+          <SearchHeader onPress={this.onOpenFilters} />
         </Header>
         <Body loading={loading} style={styles.container}>
           <InfiniteScroll
@@ -106,7 +105,6 @@ class ListingsFeedScreen extends PureComponent {
               />
             </BottomTabsAvoidingScrollView>
           </InfiniteScroll>
-          <MapButton style={styles.mapButton} onPress={this.onOpenMap} />
         </Body>
       </Shell>
     )

@@ -1,9 +1,8 @@
-import {get} from 'lodash/fp'
 import {PureComponent} from 'react'
 import styled from 'styled-components'
 import {themeGet, zIndex} from 'styled-system'
-import {Animated, Easing, Dimensions} from 'react-native'
-import {View} from '@emcasa/ui-native'
+import {Animated, Easing, Dimensions, TouchableOpacity} from 'react-native'
+import {View, Icon} from '@emcasa/ui-native'
 import {compose} from 'recompose'
 
 import {animate, withAnimation} from '@/components/shared/Animation'
@@ -16,7 +15,7 @@ const Body = styled.View`
   margin-horizontal: 30px;
   margin-bottom: 45px;
   padding: 30px;
-  border-radius: 10px;
+  border-radius: 25px;
   background-color: rgba(60, 72, 88, 0.9);
 `
 
@@ -41,7 +40,6 @@ const Background = compose(
   top: 0;
   flex: 1;
   padding: 30px;
-  border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.8);
 `)
 
@@ -55,10 +53,21 @@ const Overlay = styled(View)`
   right: 0;
 `
 
+const CloseButton = styled((props) => (
+  <TouchableOpacity {...props}>
+    <Icon name="times" type="light" size={18} color="white" />
+  </TouchableOpacity>
+))`
+  position: absolute;
+  top: 15;
+  right: 15;
+`
+
 export default class LocationSearch extends PureComponent {
   state = {
     activeView: City,
-    visible: false
+    visible: false,
+    value: {}
   }
 
   onStart = () => this.setState({visible: true})
@@ -66,7 +75,7 @@ export default class LocationSearch extends PureComponent {
   onEnd = () => this.setState({visible: false})
 
   render() {
-    const {zIndex} = this.props
+    const {zIndex, onDismiss} = this.props
     const {activeView: Component} = this.state
     return (
       <Overlay
@@ -78,9 +87,12 @@ export default class LocationSearch extends PureComponent {
           onEnterStart={this.onStart}
           onLeaveEnd={this.onEnd}
         >
-          <Body>
-            <Component />
-          </Body>
+          {this.state.visible && (
+            <Body>
+              <CloseButton onPress={onDismiss} />
+              <Component />
+            </Body>
+          )}
         </Background>
       </Overlay>
     )

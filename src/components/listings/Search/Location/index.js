@@ -23,7 +23,7 @@ const Background = compose(
   withAnimation({
     useNativeDriver: true,
     easing: Easing.inOut(Easing.cubic),
-    timeout: 800
+    timeout: 600
   }),
   animate((value) => ({
     opacity: value,
@@ -31,7 +31,7 @@ const Background = compose(
       {
         translateY: value.interpolate({
           inputRange: [0, 1],
-          outputRange: [Dimensions.get('window').height, 0]
+          outputRange: [Dimensions.get('window').height - 100, 0]
         })
       }
     ]

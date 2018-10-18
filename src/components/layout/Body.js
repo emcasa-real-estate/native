@@ -70,7 +70,7 @@ export default class Body extends PureComponent {
   }
 
   render() {
-    const {style, scroll, loading, testID, ...props} = this.props
+    const {style, scroll, loading, testID, hasBottomTabs, ...props} = this.props
     const {children} = this.state
     const ViewComponent = scroll ? ScrollView : View
 

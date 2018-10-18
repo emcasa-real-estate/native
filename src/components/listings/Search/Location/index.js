@@ -1,12 +1,14 @@
 import {PureComponent} from 'react'
 import styled from 'styled-components'
 import {themeGet, zIndex} from 'styled-system'
-import {Animated, Easing, Dimensions, TouchableOpacity} from 'react-native'
-import {View, Icon} from '@emcasa/ui-native'
+import {Animated, Easing, Dimensions} from 'react-native'
+import {View} from '@emcasa/ui-native'
 import {compose} from 'recompose'
 
 import {animate, withAnimation} from '@/components/shared/Animation'
+import IconButton from '@/components/shared/IconButton'
 import City from './City'
+import Neighborhood from './Neighborhood'
 
 const Body = styled.View`
   position: absolute;
@@ -53,19 +55,9 @@ const Overlay = styled(View)`
   right: 0;
 `
 
-const CloseButton = styled((props) => (
-  <TouchableOpacity {...props}>
-    <Icon name="times" type="light" size={18} color="white" />
-  </TouchableOpacity>
-))`
-  position: absolute;
-  top: 15;
-  right: 15;
-`
-
 export default class LocationSearch extends PureComponent {
   state = {
-    activeView: City,
+    activeView: Neighborhood,
     visible: false,
     value: {}
   }
@@ -89,7 +81,14 @@ export default class LocationSearch extends PureComponent {
         >
           {this.state.visible && (
             <Body>
-              <CloseButton onPress={onDismiss} />
+              <View alignItems="flex-end" mt={-10} mr={-10}>
+                <IconButton
+                  name="times"
+                  type="light"
+                  color="white"
+                  onPress={onDismiss}
+                />
+              </View>
               <Component />
             </Body>
           )}

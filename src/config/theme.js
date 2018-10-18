@@ -9,6 +9,7 @@ export default {
   fontSizes: theme.fontSizes.map((size) =>
     PixelRatio.roundToNearestPixel(size * 0.85)
   ),
+  space: [],
   icons: {
     default: fas,
     solid: fas,

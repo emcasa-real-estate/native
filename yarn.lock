@@ -1211,11 +1211,11 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@emcasa/ui-native@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@emcasa/ui-native/-/ui-native-0.4.1.tgz#8050431a84e4f2810cf525dc607949e96715d1db"
+"@emcasa/ui-native@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@emcasa/ui-native/-/ui-native-0.5.0.tgz#711009257c857c0e05f9e082cb91743ac334c025"
   dependencies:
-    "@emcasa/ui" "^0.4.1"
+    "@emcasa/ui" "^0.5.0"
     lodash.omit "^4.5.0"
     lodash.pick "^4.4.0"
     react-native-svg "^7.1.2"
@@ -1223,11 +1223,12 @@
     styled-icons "3.0.0"
     styled-system "3.1.6"
 
-"@emcasa/ui@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@emcasa/ui/-/ui-0.4.1.tgz#d69fd3791b1b403b17675216480bef9b3ee5b92a"
+"@emcasa/ui@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@emcasa/ui/-/ui-0.5.0.tgz#920979edd0751af3086da07459ccab5bc4c8c04b"
   dependencies:
     "@fortawesome/free-solid-svg-icons" "^5.4.1"
+    lodash.toarray "^4.4.0"
     styled-components "3.4.9"
     styled-icons "3.0.0"
     styled-system "3.1.6"
@@ -6372,6 +6373,10 @@ lodash.templatesettings@^3.0.0:
 lodash.throttle@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
+
+lodash.toarray@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/lodash.toarray/-/lodash.toarray-4.4.0.tgz#24c4bfcd6b2fba38bfd0594db1179d8e9b656561"
 
 lodash@4.x.x, lodash@^4.16.6, lodash@^4.17.10:
   version "4.17.10"

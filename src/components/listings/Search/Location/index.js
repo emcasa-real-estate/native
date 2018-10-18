@@ -57,7 +57,7 @@ const Overlay = styled(View)`
 
 export default class LocationSearch extends PureComponent {
   state = {
-    activeView: Neighborhood,
+    activeView: City,
     visible: false,
     value: {}
   }

@@ -12,7 +12,7 @@ export default function City({value, onChange}) {
         flexDirection="row"
         flexWrap="wrap"
         renderOption={(option) => (
-          <View mb="10px" ml="10px">
+          <View mb={10} mr={10}>
             {option}
           </View>
         )}

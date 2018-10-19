@@ -5,6 +5,8 @@ const omitEmpty = _.omitBy(_.isEmpty)
 
 export const getSearchScreen = (state) => state.screens.listings.Search
 
+export const getSearchState = (state) => getSearchScreen(state).state
+
 export const getSearchFilters = (state) =>
   omitEmpty(getSearchScreen(state).filters || {})
 

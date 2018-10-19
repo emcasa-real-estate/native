@@ -14,7 +14,7 @@ function DistrictsQuery({nameSlug, citySlug, stateSlug, ...props}) {
 }
 
 export const withDistricts = (getOptions) => (Target) => (props) => (
-  <DistrictsQuery {...getOptions}>
+  <DistrictsQuery {...(getOptions ? getOptions(props) : {})}>
     {(response) => (
       <Target
         {...props}

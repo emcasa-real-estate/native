@@ -1,11 +1,11 @@
 import {PureComponent} from 'react'
 import {Animated} from 'react-native'
-import {mapProps} from 'recompose'
 
 const noop = () => null
 
 export default class Animation extends PureComponent {
   static defaultProps = {
+    lazy: false,
     onEnterStart: noop,
     onEnterEnd: noop,
     onLeaveStart: noop,
@@ -14,48 +14,54 @@ export default class Animation extends PureComponent {
 
   static State = Object.freeze({
     ENTER: 'Enter',
-    LEAVE: 'Leave'
+    EXIT: 'Exit'
   })
 
   static defaultProps = {
-    update(value, state, {easing, timeout, useNativeDriver}) {
+    update({value, active}, {easing, timeout, useNativeDriver}) {
       return Animated.timing(value, {
         easing,
         duration: timeout,
-        toValue: state ? 1 : 0,
+        toValue: active ? 1 : 0,
         useNativeDriver
       })
     }
   }
 
-  static getDerivedStateFromProps({initialValue, in: active}, state) {
-    if (state.animationValue) return null
-    let animationValue
-    if (typeof initialValue === 'function') animationValue = initialValue()
+  constructor(props) {
+    super(props)
+    const {initialValue} = props
+    this.state.active = props.in
+    this.state.visible = props.in
+    if (typeof initialValue === 'function') this.state.value = initialValue()
     else if (!isNaN(initialValue))
-      animationValue = new Animated.Value(initialValue)
-    else animationValue = new Animated.Value(0)
-    return {animationValue, animationState: active}
+      this.state.value = new Animated.Value(initialValue)
+    else this.state.value = new Animated.Value(props.in ? 1 : 0)
   }
 
   state = {
+    visible: undefined,
+    active: undefined,
     animation: undefined,
-    animationValue: undefined,
-    animationState: false
+    value: undefined
   }
 
-  update(animationState) {
-    const toState = Animation.State[animationState ? 'ENTER' : 'LEAVE']
-    let {animation, animationValue} = this.state
+  update(active) {
+    const toState = Animation.State[active ? 'ENTER' : 'EXIT']
+    let {animation, value} = this.state
     if (animation) animation.stop()
-    animation = this.props.update(animationValue, animationState, this.props)
+    animation = this.props.update({value, active}, this.props)
     this.setState(
       {
-        animationState,
+        visible: active || this.state.visible,
+        active,
         animation
       },
       () => {
-        animation.start(() => this._run(`on${toState}End`))
+        animation.start(() => {
+          this._run(`on${toState}End`)
+          if (!active) this.setState({visible: false})
+        })
         this._run(`on${toState}Start`)
       }
     )
@@ -71,33 +77,38 @@ export default class Animation extends PureComponent {
   }
 
   render() {
+    if (this.props.lazy && !this.state.visible) return null
     return this.props.children(this.state)
   }
 }
 
-export const withAnimation = (options = {}) => (Target) => ({
+const mapAnimationToProps = ({value, active}) => ({
+  animationState: active,
+  animationValue: value
+})
+
+export const withAnimation = (
+  getOptions = {},
+  getProps = mapAnimationToProps
+) => (Target) => ({
   onEnterStart,
   onEnterEnd,
-  onLeaveStart,
-  onLeaveEnd,
+  onExitStart,
+  onExitEnd,
   ...props
 }) => (
   <Animation
     in={props.in}
-    {...options}
+    {...(typeof getOptions === 'function'
+      ? getOptions(props)
+      : getOptions || {})}
     {...{
       onEnterStart,
       onEnterEnd,
-      onLeaveStart,
-      onLeaveEnd
+      onExitStart,
+      onExitEnd
     }}
   >
-    {(state) => <Target {...props} {...state} />}
+    {(state) => <Target {...props} {...getProps(state, props)} />}
   </Animation>
 )
-
-export const animate = (getStyle) =>
-  mapProps(({animationValue, ...props}) => ({
-    style: getStyle(animationValue, props),
-    ...props
-  }))

@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
+import * as frag from '@/graphql/fragments'
+
 const District = `
-  city
-  citySlug
   state
   stateSlug
   name
@@ -12,8 +12,11 @@ const District = `
 
 export const GET_ALL_DISTRICTS = gql`
   query districts {
-    ${District}
+    districts {
+      ...District
+    }
   }
+  ${frag.District}
 `
 
 export const GET_DISTRICTS = gql`
@@ -22,4 +25,5 @@ export const GET_DISTRICTS = gql`
       ${District}
     }
   }
+  ${frag.District}
 `

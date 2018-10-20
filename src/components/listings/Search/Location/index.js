@@ -3,12 +3,10 @@ import styled from 'styled-components'
 import {themeGet, zIndex} from 'styled-system'
 import {Animated, Easing, Dimensions} from 'react-native'
 import {View} from '@emcasa/ui-native'
-import {compose} from 'recompose'
 
-import {animate, withAnimation} from '@/components/shared/Animation'
+import {withAnimation} from '@/components/shared/Animation'
 import IconButton from '@/components/shared/IconButton'
-import City from './City'
-import Neighborhood from './Neighborhood'
+import Form from './Form'
 
 const Body = styled.View`
   position: absolute;
@@ -21,23 +19,26 @@ const Body = styled.View`
   background-color: rgba(60, 72, 88, 0.9);
 `
 
-const Background = compose(
-  withAnimation({
+const Background = withAnimation(
+  {
+    lazy: true,
     useNativeDriver: true,
     easing: Easing.inOut(Easing.cubic),
     timeout: 600
-  }),
-  animate((value) => ({
-    opacity: value,
-    transform: [
-      {
-        translateY: value.interpolate({
-          inputRange: [0, 1],
-          outputRange: [Dimensions.get('window').height - 100, 0]
-        })
-      }
-    ]
-  }))
+  },
+  ({value}) => ({
+    style: {
+      opacity: value,
+      transform: [
+        {
+          translateY: value.interpolate({
+            inputRange: [0, 1],
+            outputRange: [Dimensions.get('window').height - 100, 0]
+          })
+        }
+      ]
+    }
+  })
 )(styled(Animated.View)`
   top: 0;
   flex: 1;
@@ -57,7 +58,6 @@ const Overlay = styled(View)`
 
 export default class LocationSearch extends PureComponent {
   state = {
-    activeView: City,
     visible: false,
     value: {}
   }
@@ -68,7 +68,6 @@ export default class LocationSearch extends PureComponent {
 
   render() {
     const {zIndex, onDismiss} = this.props
-    const {activeView: Component} = this.state
     return (
       <Overlay
         zIndex={zIndex}
@@ -77,7 +76,7 @@ export default class LocationSearch extends PureComponent {
         <Background
           in={this.props.visible}
           onEnterStart={this.onStart}
-          onLeaveEnd={this.onEnd}
+          onExitEnd={this.onEnd}
         >
           {this.state.visible && (
             <Body>
@@ -89,7 +88,7 @@ export default class LocationSearch extends PureComponent {
                   onPress={onDismiss}
                 />
               </View>
-              <Component />
+              <Form {...this.props} />
             </Body>
           )}
         </Background>

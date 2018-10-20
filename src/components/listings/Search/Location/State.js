@@ -3,7 +3,7 @@ import {View, Text, Button} from '@emcasa/ui-native'
 
 import GhostButton from '@/components/shared/GhostButton'
 
-export default function City({value, onChange}) {
+export default function State({value, onChange}) {
   return (
     <View>
       <Text color="white">Você está procurando um imóvel em qual cidade?</Text>
@@ -11,6 +11,8 @@ export default function City({value, onChange}) {
         onChange={onChange}
         flexDirection="row"
         flexWrap="wrap"
+        selectedValue={value}
+        mt={15}
         renderOption={(option) => (
           <View mb={10} mr={10}>
             {option}

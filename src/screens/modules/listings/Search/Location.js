@@ -10,44 +10,38 @@ import {getSearchState, getSearchFilters} from './module/selectors'
 
 class LocationContainer extends PureComponent {
   state = {
-    neighborhoodSlugs: []
+    neighborhoodsSlugs: []
   }
 
   update() {
-    const {neighborhoodSlugs} = this.state
-    this.props.updateFilters({neighborhoodSlugs})
+    const {neighborhoodsSlugs} = this.state
+    this.props.updateFilters({neighborhoodsSlugs})
   }
-
-  /*
-  static getDerivedStateFromProps({neighborhoodSlugs}, state) {
-    if (_.isEqual(neighborhoodSlugs, state.neighborhoodSlugs)) return null
-    return {neighborhoodSlugs}
-  }
-  */
 
   componentDidUpdate(prev) {
-    if (!_.isEqual(prev.neighborhoodSlugs, this.props.neighborhoodSlugs)) {
-      this.setState({neighborhoodSlugs: this.props.neighborhoodSlugs})
-    }
     if (!_.isEqual(prev.visible, this.props.visible) && !this.props.visible) {
       this.update()
     }
   }
 
-  onChangeState = (stateSlug) => this.props.updateState({stateSlug})
+  onChangeState = (stateSlug) => {
+    const nextState = {}
+    if (stateSlug !== this.props.stateSlug) nextState.neighborhoodsSlugs = []
+    this.setState(nextState, () => this.props.updateState(stateSlug))
+  }
 
-  onChangeNeighborhoods = (neighborhoodSlugs) =>
-    this.setState({neighborhoodSlugs})
+  onChangeNeighborhoods = (neighborhoodsSlugs) =>
+    this.setState({neighborhoodsSlugs})
 
   render() {
     const {stateSlug, districts, ...props} = this.props
-    const {neighborhoodSlugs} = this.state
+    const {neighborhoodsSlugs} = this.state
     return (
       <Location
         {...props}
         districts={districts.data || []}
         selectedState={stateSlug}
-        selectedNeighborhoods={neighborhoodSlugs}
+        selectedNeighborhoods={neighborhoodsSlugs}
         onChangeState={this.onChangeState}
         onChangeNeighborhoods={this.onChangeNeighborhoods}
       />
@@ -59,7 +53,7 @@ export default compose(
   connect(
     (state) => ({
       stateSlug: getSearchState(state),
-      neighborhoodSlugs: getSearchFilters(state).neighborhoodSlugs || []
+      neighborhoodsSlugs: getSearchFilters(state).neighborhoodsSlugs || []
     }),
     {
       updateState,

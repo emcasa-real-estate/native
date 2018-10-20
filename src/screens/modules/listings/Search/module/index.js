@@ -16,11 +16,7 @@ const initialState = {
 export default function listingsMapScreenReducer(state = initialState, action) {
   switch (action.type) {
     case UPDATE_STATE:
-      return {
-        ...state,
-        state: action.state,
-        filters: _.omit(action.filters, 'neighborhoodSlugs')
-      }
+      return {...state, state: action.state}
     case UPDATE_FILTERS:
       return {...state, filters: action.filters}
     case CLEAR:

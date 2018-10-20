@@ -13,7 +13,6 @@ import LocationSearch from '../Search/Location'
 import SearchHeader from './Header'
 import ListEmpty from './ListEmpty'
 import ListHeader from './ListHeader'
-import styles from './styles'
 
 import SearchScreen from '@/screens/modules/listings/Search'
 import ListingScreen from '@/screens/modules/listing/Listing'
@@ -33,6 +32,11 @@ class ListingsFeedScreen extends PureComponent {
 
   state = {
     modalActive: false
+  }
+
+  constructor(props) {
+    super(props)
+    console.log('...')
   }
 
   componentDidDisappear() {
@@ -58,8 +62,9 @@ class ListingsFeedScreen extends PureComponent {
     })
   }
 
-  onToggleLocationSearch = () =>
-    this.setState({modalActive: !this.state.modalActive})
+  onOpenLocationSearch = () => this.setState({modalActive: true})
+
+  onCloseLocationSearch = () => this.setState({modalActive: false})
 
   onSelect = (id) => {
     Navigation.push(this.props.componentId, {
@@ -80,14 +85,20 @@ class ListingsFeedScreen extends PureComponent {
         testID="@listings.Feed"
         bottomTabs={{
           icon: modalActive ? 'check' : 'map-marker-alt',
-          onPress: this.onToggleLocationSearch
+          onPress: modalActive
+            ? this.onCloseLocationSearch
+            : this.onOpenLocationSearch
         }}
       >
-        <LocationSearch visible={modalActive} zIndex={2} />
+        <LocationSearch
+          visible={modalActive}
+          onDismiss={this.onCloseLocationSearch}
+          zIndex={2}
+        />
         <Header>
           <SearchHeader onPress={this.onOpenFilters} />
         </Header>
-        <Body loading={loading} style={styles.container}>
+        <Body loading={loading}>
           <InfiniteScroll
             loading={loading}
             hasNextPage={remainingCount > 0}

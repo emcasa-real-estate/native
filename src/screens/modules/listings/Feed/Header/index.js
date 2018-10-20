@@ -23,7 +23,7 @@ activeFilters.types = ([...value]) => {
   if (value.length) return `${result} e ${value.length}+`
   return result
 }
-activeFilters.garage_spots = ({min, max}) => {
+activeFilters.garageSpots = ({min, max}) => {
   if (!max || max >= 4) return `${min}+ vagas`
   return `${min}-${max >= 4 ? '4+' : max} vagas`
 }
@@ -39,7 +39,7 @@ activeFilters.area = ({min, max}) => {
   if (!max || max >= 1000) return `${min}m²+`
   return `${min}-${max}m²`
 }
-activeFilters.neighborhoods = ([...value]) => {
+activeFilters.neighborhoodsSlugs = ([...value]) => {
   const result = value.pop()
   if (value.length) return `${result} e ${value.length}+`
   return result
@@ -47,7 +47,7 @@ activeFilters.neighborhoods = ([...value]) => {
 
 const Icon = () => (
   <Image
-    style={[styles.icon, {width: 20, height: 33 * 20 / 54}]}
+    style={[styles.icon, {width: 20, height: (33 * 20) / 54}]}
     source={require('@/assets/img/filter-icon.png')}
   />
 )

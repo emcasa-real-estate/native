@@ -1,6 +1,6 @@
 import {Fragment} from 'react'
-import {View} from 'react-native'
-import styled, {withTheme} from 'styled-components/native'
+import {Image} from 'react-native'
+import styled from 'styled-components/native'
 import {themeGet} from 'styled-system'
 import {top, bottom, zIndex} from 'styled-system'
 import LinearGradient from 'react-native-linear-gradient'
@@ -57,7 +57,14 @@ const Button = styled(function Button({icon, type, active, ...props}) {
 
 export default touchable(Button)
 
-const BackgroundImage = styled.Image`
+const BackgroundImage = styled.Image.attrs({
+  source: {
+    ...Image.resolveAssetSource(
+      require('@/assets/img/bg-bottom-bar-floating-bt.png')
+    ),
+    cache: 'force-cache'
+  }
+})`
   resize-mode: stretch;
   width: ${themeGet('size.bottomTabsBg.width')};
   height: ${themeGet('size.bottomTabsBg.height')};
@@ -72,9 +79,7 @@ export const ButtonContainer = ({children}) => (
       {children}
     </Overlay>
     <Overlay zIndex={1} top={0} pointerEvents="none">
-      <BackgroundImage
-        source={require('@/assets/img/bg-bottom-bar-floating-bt.png')}
-      />
+      <BackgroundImage />
     </Overlay>
   </Fragment>
 )

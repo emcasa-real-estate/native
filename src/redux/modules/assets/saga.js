@@ -8,12 +8,7 @@ const images = [
 
 async function preloadImages() {
   await Promise.all(
-    images.map((img) =>
-      Image.prefetch({
-        ...Image.resolveAssetSource(img),
-        cache: 'force-cache'
-      })
-    )
+    images.map((img) => Image.prefetch(Image.resolveAssetSource(img).uri))
   )
 }
 

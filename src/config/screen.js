@@ -28,5 +28,8 @@ export default {
   bottomTabs: {
     visible: false,
     drawBehind: true
+  },
+  bottomTab: {
+    icon: require('@/assets/img/empty.png')
   }
 }

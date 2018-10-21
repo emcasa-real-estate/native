@@ -1,4 +1,3 @@
-import styled from 'styled-components'
 import {View, Text, Button} from '@emcasa/ui-native'
 
 import GhostButton from '@/components/shared/GhostButton'

@@ -3,7 +3,7 @@ import {PureComponent} from 'react'
 import {compose} from 'recompose'
 import {connect} from 'react-redux'
 import {withDistricts} from '@/graphql/containers'
-import Location from '@/components/listings/Search/Location'
+import Location from '@/components/listings/SearchLocation'
 
 import {updateState, updateFilters} from './module'
 import {getSearchState, getSearchFilters} from './module/selectors'

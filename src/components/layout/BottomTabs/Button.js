@@ -1,10 +1,11 @@
+import {__, flow, at, get} from 'lodash/fp'
 import {Fragment} from 'react'
 import {Image} from 'react-native'
 import styled from 'styled-components/native'
 import {themeGet} from 'styled-system'
 import {top, bottom, zIndex} from 'styled-system'
 import LinearGradient from 'react-native-linear-gradient'
-import {Icon} from '@emcasa/ui-native'
+import {View, Icon} from '@emcasa/ui-native'
 
 import {touchable} from '@/components/shared/Touchable'
 
@@ -15,7 +16,11 @@ const Overlay = styled.View`
   left: 50%;
   margin-left: ${({theme}) => -(theme.size.bottomTabsBg.width / 2)};
   width: ${themeGet('size.bottomTabsBg.width')}
-  height: ${themeGet('size.bottomTabs')};
+  height: ${flow(
+    at(['theme.size.bottomTabs', 'pv']),
+    ([h, pv]) => h + pv * 2
+  )};
+  padding-top: ${get('pv')};
   flex: 1;
   justify-content: flex-start;
   align-items: center;
@@ -25,6 +30,7 @@ const Overlay = styled.View`
 `
 
 Overlay.defaultProps = {
+  pv: 0,
   zIndex: 0
 }
 
@@ -75,7 +81,7 @@ const BackgroundImage = styled.Image.attrs({
  */
 export const ButtonContainer = ({children}) => (
   <Fragment>
-    <Overlay zIndex={3} bottom={30} pointerEvents="box-none">
+    <Overlay zIndex={3} bottom={20} pv={10} pointerEvents="box-none">
       {children}
     </Overlay>
     <Overlay zIndex={1} top={0} pointerEvents="none">

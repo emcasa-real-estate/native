@@ -42,9 +42,9 @@ const formatRange = (value) => (value ? value.max : null)
 
 const compareArray = (a, b) => isEqual((a || []).sort(), (b || []).sort())
 
-export default function SearchFilters({onChange, ...props}) {
+export default function SearchFilters({onChange, initialValues}) {
   return (
-    <Final.Form {...props} onSubmit={() => null}>
+    <Final.Form initialValues={initialValues} onSubmit={() => null}>
       {() => (
         <View pr="20px" pl="20px">
           <Label>Tipo de Imóvel</Label>

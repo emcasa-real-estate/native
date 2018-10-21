@@ -1,8 +1,8 @@
 import _ from 'lodash'
 
-export const UPDATE_STATE = 'screens/listings.Search/UPDATE_STATE'
-export const UPDATE_FILTERS = 'screens/listings.Search/UPDATE_FILTERS'
-export const CLEAR = 'screens/listings.Search/CLEAR'
+export const UPDATE_STATE = 'search/UPDATE_STATE'
+export const UPDATE_FILTERS = 'search/UPDATE_FILTERS'
+export const CLEAR = 'search/CLEAR'
 
 export const updateState = (state) => ({type: UPDATE_STATE, state})
 export const updateFilters = (filters) => ({type: UPDATE_FILTERS, filters})

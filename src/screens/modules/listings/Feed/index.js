@@ -4,17 +4,17 @@ import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
 import {withListingsFeed} from '@/graphql/containers'
-import {getSearchFiltersQuery} from '@/screens/modules/listings/Search/module/selectors'
+import {getSearchFiltersQuery} from '@/redux/modules/search/selectors'
 import {Shell, Body, Header} from '@/components/layout'
 import BottomTabsAvoidingScrollView from '@/containers/BottomTabsAvoidingScrollView'
 import InfiniteScroll from '@/containers/InfiniteScroll'
 import Feed from '@/components/listings/Feed/Listing'
-import LocationSearch from '../Search/Location'
+import SearchLocation from './Location'
 import SearchHeader from './Header'
 import ListEmpty from './ListEmpty'
 import ListHeader from './ListHeader'
 
-import SearchScreen from '@/screens/modules/listings/Search'
+import SearchFiltersScreen from '@/screens/modules/listings/Search'
 import ListingScreen from '@/screens/modules/listing/Listing'
 
 class ListingsFeedScreen extends PureComponent {
@@ -34,11 +34,6 @@ class ListingsFeedScreen extends PureComponent {
     modalActive: false
   }
 
-  constructor(props) {
-    super(props)
-    console.log('...')
-  }
-
   componentDidDisappear() {
     const {
       listingsFeed: {loading, updateBlacklists}
@@ -55,7 +50,7 @@ class ListingsFeedScreen extends PureComponent {
 
   onOpenFilters = () => {
     Navigation.showModal({
-      component: {name: SearchScreen.screenName}
+      component: {name: SearchFiltersScreen.screenName}
     })
   }
 
@@ -87,7 +82,7 @@ class ListingsFeedScreen extends PureComponent {
             : this.onOpenLocationSearch
         }}
       >
-        <LocationSearch
+        <SearchLocation
           visible={modalActive}
           onDismiss={this.onCloseLocationSearch}
           zIndex={2}
@@ -121,5 +116,9 @@ class ListingsFeedScreen extends PureComponent {
 
 export default composeWithRef(
   connect((state) => ({filters: getSearchFiltersQuery(state)})),
-  withListingsFeed({pageSize: 15, fetchPolicy: 'network-only'})
+  withListingsFeed(({filters}) => ({
+    filters,
+    pageSize: 15,
+    fetchPolicy: 'cache-and-network'
+  }))
 )(ListingsFeedScreen)

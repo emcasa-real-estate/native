@@ -4,7 +4,7 @@ import {View, TouchableOpacity} from 'react-native'
 import {connect} from 'react-redux'
 
 import {isWatchingPosition} from './module/selectors'
-import {getSearchFilters} from '@/screens/modules/listings/Search/module/selectors'
+import {getSearchFilters} from '@/redux/modules/search/selectors'
 import * as colors from '@/assets/colors'
 import Text from '@/components/shared/Text'
 import Icon from '@/components/shared/Icon'

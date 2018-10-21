@@ -1,11 +1,11 @@
-import _ from 'lodash'
+import {cloneDeep} from 'lodash'
 import {PureComponent} from 'react'
 import {Navigation} from 'react-native-navigation'
 import {connect} from 'react-redux'
 
-import {updateFilters} from './module'
-import {getSearchFilters} from './module/selectors'
-import {Modal, Body, Footer} from '@/components/layout'
+import {updateFilters} from '@/redux/modules/search'
+import {getSearchFilters} from '@/redux/modules/search/selectors'
+import {Modal, Body} from '@/components/layout'
 import SearchFilters from '@/components/listings/SearchFilters'
 
 class ListingSearchScreen extends PureComponent {
@@ -20,8 +20,15 @@ class ListingSearchScreen extends PureComponent {
   }
 
   state = {
+    initialValues: undefined,
     values: {},
     pristine: true
+  }
+
+  static getDerivedStateFromProps({filters}, {initialValues}) {
+    return {
+      initialValues: initialValues || cloneDeep(filters)
+    }
   }
 
   componentDidDisappear() {
@@ -36,11 +43,15 @@ class ListingSearchScreen extends PureComponent {
 
   render() {
     const {filters} = this.props
+    const {initialValues} = this.state
     return (
       <Modal bg="pink" opacity={0.9}>
         <Modal.Header onDismiss={this.onDismiss} />
         <Body scroll>
-          <SearchFilters initialValues={filters} onChange={this.onChange} />
+          <SearchFilters
+            initialValues={initialValues}
+            onChange={this.onChange}
+          />
         </Body>
       </Modal>
     )

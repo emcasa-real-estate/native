@@ -3,7 +3,7 @@ import {PureComponent} from 'react'
 import {View, Image, TouchableOpacity} from 'react-native'
 import {connect} from 'react-redux'
 
-import {getSearchFilters} from '@/screens/modules/listings/Search/module/selectors'
+import {getSearchFilters} from '@/redux/modules/search/selectors'
 import {abbrevPrice} from '@/assets/format'
 import Text from '@/components/shared/Text'
 import styles from './styles'

@@ -85,8 +85,10 @@ ListingsFeedQuery.defaultProps = {
   filters: {}
 }
 
-export const withListingsFeed = (options = {}) => (Target) => (props) => (
-  <ListingsFeedQuery {...props} {...options}>
+export const withListingsFeed = (getOptions = {}) => (Target) => (props) => (
+  <ListingsFeedQuery
+    {...(typeof getOptions === 'function' ? getOptions(props) : getOptions)}
+  >
     {({data: {listings}, ...response}) => (
       <Target
         {...props}

@@ -3,7 +3,7 @@ import {createSelector} from 'reselect'
 
 const omitEmpty = _.omitBy(_.isEmpty)
 
-export const getSearchScreen = (state) => state.screens.listings.Search
+export const getSearchScreen = (state) => state.search
 
 export const getSearchState = (state) => getSearchScreen(state).state
 

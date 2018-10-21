@@ -5,8 +5,11 @@ import {connect} from 'react-redux'
 import {withDistricts} from '@/graphql/containers'
 import Location from '@/components/listings/SearchLocation'
 
-import {updateState, updateFilters} from './module'
-import {getSearchState, getSearchFilters} from './module/selectors'
+import {updateState, updateFilters} from '@/redux/modules/search'
+import {
+  getSearchState,
+  getSearchFilters
+} from '@/redux/modules/search/selectors'
 
 class LocationContainer extends PureComponent {
   state = {

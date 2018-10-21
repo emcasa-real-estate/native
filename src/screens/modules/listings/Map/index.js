@@ -6,7 +6,7 @@ import {connect} from 'react-redux'
 import composeWithRef from '@/lib/composeWithRef'
 import {withPermission} from '@/containers/Permission'
 import {withListingsFeed} from '@/graphql/containers'
-import {getSearchFiltersQuery} from '@/screens/modules/listings/Search/module/selectors'
+import {getSearchFiltersQuery} from '@/redux/modules/search/selectors'
 import {
   watchPosition,
   unwatchPosition,

@@ -5,144 +5,51 @@ import {connect} from 'react-redux'
 
 import {updateFilters} from './module'
 import {getSearchFilters} from './module/selectors'
-import {Shell, Body, Footer} from '@/components/layout'
-import Button from '@/components/shared/Button'
-import Form from '@/components/listings/Search/Form'
-import Field from '@/components/listings/Search/Field'
-import FormButton from '@/components/account/FormButton'
-import HeaderButton from '@/screens/modules/shared/Header/TextButton'
-import Neighborhoods from './Neighborhoods'
-
-import BlacklistScreen from '@/screens/modules/account/Blacklist'
-
-const defaultValue = {
-  neighborhoods: [],
-  types: ['Casa', 'Apartamento', 'Cobertura'],
-  price: {min: undefined, max: undefined},
-  area: {min: undefined, max: undefined},
-  rooms: {min: undefined, max: undefined},
-  garage_spots: {min: undefined, max: undefined}
-}
-
-const compareDefaults = (value, defaultValue) => {
-  if (_.isArray(value) && _.isArray(defaultValue))
-    return !_.isEqual(value.sort(), defaultValue.sort())
-  else if (typeof value !== 'undefined') return !_.isEqual(value, defaultValue)
-  else return false
-}
+import {Modal, Body, Footer} from '@/components/layout'
+import SearchFilters from '@/components/listings/SearchFilters'
 
 class ListingSearchScreen extends PureComponent {
   static screenName = 'listings.Search'
 
   static options = {
-    topBar: {
-      title: {text: 'Filtrar busca'}
-    }
+    layout: {
+      backgroundColor: 'transparent'
+    },
+    screenBackgroundColor: 'transparent',
+    modalPresentationStyle: 'overCurrentContext'
   }
-
-  defaultValue = {}
 
   state = {
-    options: this.defaultValue
-  }
-
-  static getDerivedStateFromProps(props, state) {
-    return {
-      options: {
-        ...defaultValue,
-        ...props.options,
-        ...state.options
-      }
-    }
-  }
-
-  componentDidAppear() {
-    const {componentId} = this.props
-    const buttonProps = {
-      label: 'Limpar',
-      onPress: this.onReset
-    }
-    Navigation.mergeOptions(componentId, {
-      topBar: {
-        rightButtons: [
-          {
-            id: `${componentId}_resetButton`,
-            passProps: buttonProps,
-            component: {name: HeaderButton.screenName, passProps: buttonProps}
-          }
-        ]
-      }
-    })
+    values: {},
+    pristine: true
   }
 
   componentDidDisappear() {
     const {updateFilters} = this.props
-    const options = _.pickBy(this.state.options, (value, key) =>
-      compareDefaults(value, defaultValue[key])
-    )
-    if (!_.isEqual(options, this.props.options)) updateFilters(options)
+    const {values, pristine} = this.state
+    if (!pristine) updateFilters(values)
   }
 
-  onChange = (params) => this.setState({options: params})
+  onChange = (formState) => this.setState(formState)
 
-  onChangeNeighborhoods = (neighborhoods) =>
-    this.setState(({options}) => ({
-      options: {
-        ...options,
-        neighborhoods
-      }
-    }))
-
-  onReset = () => this.setState({options: {}})
-
-  onPressNeighborhoods = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: Neighborhoods.screenName,
-        passProps: {
-          value: this.state.options.neighborhoods,
-          onChange: this.onChangeNeighborhoods
-        }
-      }
-    })
-  }
-
-  onPressBlacklist = () => {
-    Navigation.push(this.props.componentId, {
-      component: {name: BlacklistScreen.screenName}
-    })
-  }
+  onDismiss = () => Navigation.dismissAllModals()
 
   render() {
-    const {options} = this.state
-
+    const {filters} = this.props
     return (
-      <Shell>
+      <Modal bg="pink" opacity={0.9}>
+        <Modal.Header onDismiss={this.onDismiss} />
         <Body scroll>
-          <Form
-            onChange={this.onChange}
-            onPressNeighborhoods={this.onPressNeighborhoods}
-            value={options}
-          />
-          <Field title="Imóveis ocultados">
-            <FormButton icon="eye-slash" onPress={this.onPressBlacklist}>
-              Imóveis que você ocultou da busca
-            </FormButton>
-          </Field>
+          <SearchFilters initialValues={filters} onChange={this.onChange} />
         </Body>
-        <Footer style={{padding: 15}}>
-          <Button onPress={() => Navigation.pop(this.props.componentId)}>
-            Filtrar resultados
-          </Button>
-        </Footer>
-      </Shell>
+      </Modal>
     )
   }
 }
 
 export default connect(
   (state) => ({
-    options: getSearchFilters(state)
+    filters: getSearchFilters(state)
   }),
   {updateFilters},
   null,

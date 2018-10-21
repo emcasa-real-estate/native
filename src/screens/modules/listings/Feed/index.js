@@ -54,11 +54,8 @@ class ListingsFeedScreen extends PureComponent {
   }
 
   onOpenFilters = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: SearchScreen.screenName,
-        passProps: this.props
-      }
+    Navigation.showModal({
+      component: {name: SearchScreen.screenName}
     })
   }
 

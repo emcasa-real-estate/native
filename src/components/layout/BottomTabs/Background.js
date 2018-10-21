@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import {Dimensions, View, Image} from 'react-native'
+import styled from 'styled-components/native'
+import {Dimensions, Image} from 'react-native'
 import {themeGet, left, right} from 'styled-system'
 
 const bgWidth = ({theme}) =>
@@ -8,9 +8,12 @@ const bgWidth = ({theme}) =>
 const bgColorHeight = ({theme}) =>
   theme.size.bottomTabs - theme.size.bottomTabsBg.height
 
-export const BackgroundImage = styled((props) => (
-  <Image {...props} source={require('@/assets/img/bg-bottom-bar.png')} />
-))`
+export const BackgroundImage = styled.Image.attrs({
+  source: {
+    ...Image.resolveAssetSource(require('@/assets/img/bg-bottom-bar.png')),
+    cache: 'force-cache'
+  }
+})`
   z-index: 1;
   position: absolute;
   resize-mode: stretch;

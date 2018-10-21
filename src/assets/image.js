@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import {Image} from 'react-native'
 import {CDN_URL} from '@/config/const'
 
 export const withRatio = (dimensions) => (options) => {

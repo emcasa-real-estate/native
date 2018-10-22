@@ -83,7 +83,7 @@ class EditProfileScreen extends PureComponent {
     const {value} = this.state
 
     return (
-      <Shell>
+      <Shell bottomtabs>
         <Body>
           <ProfileForm
             formRef={this.form}

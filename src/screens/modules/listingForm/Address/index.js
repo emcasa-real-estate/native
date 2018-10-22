@@ -159,7 +159,7 @@ class EditAddressScreen extends PureComponent {
       params: {id}
     } = this.props
     return (
-      <Shell testID="@listingForm.Address">
+      <Shell bottomTabs testID="@listingForm.Address">
         <Progress progress={1 / 3} />
         <Body loading={loading || (id && !value)}>
           <AddressForm

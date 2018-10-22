@@ -76,7 +76,7 @@ class EditPasswordScreen extends PureComponent {
     const {value, message} = this.state
 
     return (
-      <Shell>
+      <Shell bottomTabs>
         <Body scroll>
           <PasswordForm
             formRef={this.form}

@@ -3,6 +3,7 @@ import {TouchableOpacity} from 'react-native'
 import {Icon} from '@emcasa/ui-native'
 
 const touchableProps = [
+  'testID',
   'style',
   'onPress',
   'hitSlop',

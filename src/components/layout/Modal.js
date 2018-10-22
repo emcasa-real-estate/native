@@ -85,6 +85,7 @@ Modal.Header = styled(function ModalHeader({
 `
 
 Modal.Header.defaultProps = {
+  zIndex: 1,
   fontSize: 'large',
   iconColor: 'white'
 }

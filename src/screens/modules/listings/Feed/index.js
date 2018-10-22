@@ -96,6 +96,7 @@ class ListingsFeedScreen extends PureComponent {
           >
             <BottomTabsAvoidingScrollView>
               <Feed
+                testID="listing_feed"
                 automaticallyAdjustContentInsets={false}
                 data={data}
                 onSelect={this.onSelect}

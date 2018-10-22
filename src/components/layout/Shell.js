@@ -1,3 +1,4 @@
+import {isObject} from 'lodash'
 import React, {PureComponent} from 'react'
 import styled from 'styled-components'
 import {View, Keyboard, KeyboardAvoidingView, Platform} from 'react-native'
@@ -64,8 +65,10 @@ export default class Shell extends PureComponent {
           enabled={Platform.OS !== 'android' && behavior !== 'none'}
         >
           <View style={{flex: 1, display: 'flex'}}>
-            {React.Children.map(children, (node) =>
-              React.cloneElement(node, layoutInfo)
+            {React.Children.map(
+              children,
+              (node) =>
+                isObject(node) ? React.cloneElement(node, layoutInfo) : node
             )}
           </View>
         </KeyboardAvoidingView>

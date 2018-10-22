@@ -1,6 +1,6 @@
 import * as select from './selectors'
 
-describe('listings/results', () => {
+describe('listings.Feed', () => {
   beforeAll(async () => {
     await waitFor(element(select.feed())).toBeVisible()
   })
@@ -28,7 +28,7 @@ describe('listings/results', () => {
       await expect(likeButton).toHaveLabel('Remover dos favoritos')
       await likeButton.tap()
       await expect(likeButton).toHaveLabel('Adicionar aos favoritos')
-      if (i < iterations) await element(select.feed()).scroll(310, 'down')
+      if (i < iterations) await element(select.feed()).swipe('up', 'slow', 0.3)
     }
   })
 })

@@ -68,7 +68,9 @@ export default class Shell extends PureComponent {
             )}
           </View>
         </KeyboardAvoidingView>
-        {layoutInfo.hasBottomTabs && <AbsoluteBottomTabs {...bottomTabProps} />}
+        {layoutInfo.hasBottomTabs && (
+          <AbsoluteBottomTabs testID="bottom_tabs" {...bottomTabProps} />
+        )}
       </View>
     )
   }

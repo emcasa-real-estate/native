@@ -12,7 +12,7 @@ const SendMessageMutation = withUserProfile(function _SendMessageMutation({
   children,
   listing,
   receiver,
-  user,
+  user = {},
   ...options
 }) {
   return (

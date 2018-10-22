@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 
 import composeWithRef from '@/lib/composeWithRef'
 import {withRequestContactMutation} from '@/graphql/containers'
-import { withUserProfile } from '@/graphql/containers'
+import {withUserProfile} from '@/graphql/containers'
 import {Modal, Body, Footer} from '@/components/layout'
 import Button from '@/components/shared/Button'
 import ContactForm from '@/components/newListing/ContactForm'
@@ -12,6 +12,10 @@ import ContactForm from '@/components/newListing/ContactForm'
 import SuccessScreen from '@/screens/modules/shared/Success'
 
 class ContactScreen extends PureComponent {
+  static defaultProps = {
+    user: {}
+  }
+
   static screenName = 'listingForm.Contact'
 
   state = {
@@ -93,7 +97,6 @@ class ContactScreen extends PureComponent {
   }
 }
 
-export default composeWithRef(
-  withUserProfile,
-  withRequestContactMutation()
-)(ContactScreen)
+export default composeWithRef(withUserProfile, withRequestContactMutation())(
+  ContactScreen
+)

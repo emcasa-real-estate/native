@@ -17,6 +17,7 @@ const withAuthMutation = (mutationName, Mutation) => (Target) => (props) => (
     )}
   </Mutation>
 )
+
 export function SignInMutation({children}) {
   return (
     <Mutation ignoreResults mutation={STORE_CREDENTIALS}>

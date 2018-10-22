@@ -18,6 +18,7 @@ import SubmitButtonScreen from '@/screens/modules/listingForm/SubmitButton'
 
 class EditPropertiesScreen extends PureComponent {
   static defaultProps = {
+    user: {},
     params: {}
   }
 

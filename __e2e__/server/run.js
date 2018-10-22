@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 import {promisify} from 'util'
 import express from 'express'
-import {createApolloServer} from 'em-casa-mock-server'
+import {createApolloServer} from '@emcasa/mock-server'
 
 import apiMiddleware from './api'
 

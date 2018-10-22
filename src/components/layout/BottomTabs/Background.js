@@ -1,6 +1,6 @@
 import styled from 'styled-components/native'
 import {Dimensions, Image} from 'react-native'
-import {themeGet, left, right} from 'styled-system'
+import {themeGet, left, right, width} from 'styled-system'
 
 const bgWidth = ({theme}) =>
   (Dimensions.get('window').width - theme.size.bottomTabsBg.width) / 2
@@ -20,6 +20,7 @@ export const BackgroundImage = styled.Image.attrs({
   top: 0;
   height: ${themeGet('size.bottomTabsBg.height')};
   width: ${bgWidth};
+  ${width};
   ${left};
   ${right};
 `

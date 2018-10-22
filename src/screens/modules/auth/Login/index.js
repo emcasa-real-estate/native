@@ -3,14 +3,13 @@ import {View, ActivityIndicator, Platform} from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import AccountKit from 'react-native-facebook-account-kit'
 import {connect} from 'react-redux'
+import {Button, Text} from '@emcasa/ui-native'
 
 import composeWithRef from '@/lib/composeWithRef'
 import {withSignInMutation} from '@/graphql/containers'
 import {updateStackRoot} from '@/screens/modules/navigation'
 import {withPermission} from '@/containers/Permission'
 import {Shell, Body} from '@/components/layout'
-import Text from '@/components/shared/Text'
-import Button from '@/components/shared/Button'
 
 import styles from './styles'
 
@@ -22,9 +21,6 @@ class LoginScreen extends PureComponent {
   static options = {
     topBar: {
       title: {text: 'Login'}
-    },
-    bottomTab: {
-      title: 'Login'
     }
   }
 
@@ -135,7 +131,7 @@ class LoginScreen extends PureComponent {
 
   render() {
     return (
-      <Shell testID="@auth.Login">
+      <Shell testID="@auth.Login" bottomTabs>
         <Body>{this.renderBody()}</Body>
       </Shell>
     )

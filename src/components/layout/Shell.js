@@ -14,6 +14,7 @@ const AbsoluteBottomTabs = styled(BottomTabs)`
 
 export default class Shell extends PureComponent {
   static defaultProps = {
+    bottomTabs: false,
     behavior: 'padding'
   }
 

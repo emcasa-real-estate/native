@@ -13,12 +13,23 @@ import {
 
 class LocationContainer extends PureComponent {
   state = {
-    neighborhoodsSlugs: []
+    neighborhoodsSlugs: undefined
   }
 
   update() {
     const {neighborhoodsSlugs} = this.state
-    this.props.updateFilters({neighborhoodsSlugs})
+    this.props.updateFilters({
+      ...this.props.filters,
+      neighborhoodsSlugs
+    })
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (!state.neighborhoodsSlugs && props.filters)
+      return {
+        neighborhoodsSlugs: props.filters.neighborhoodsSlugs || []
+      }
+    return null
   }
 
   componentDidUpdate(prev) {
@@ -56,7 +67,7 @@ export default compose(
   connect(
     (state) => ({
       stateSlug: getSearchState(state),
-      neighborhoodsSlugs: getSearchFilters(state).neighborhoodsSlugs || []
+      filters: getSearchFilters(state)
     }),
     {
       updateState,

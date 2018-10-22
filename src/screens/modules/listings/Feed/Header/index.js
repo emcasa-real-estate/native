@@ -40,8 +40,9 @@ activeFilters.area = ({min, max}) => {
   return `${min}-${max}m²`
 }
 activeFilters.neighborhoodsSlugs = ([...value]) => {
-  const result = value.pop()
-  if (value.length) return `${result} e ${value.length}+`
+  const neighborhoods = value.map(_.upperFirst)
+  const result = neighborhoods.pop()
+  if (neighborhoods.length) return `${result} e ${neighborhoods.length}+`
   return result
 }
 

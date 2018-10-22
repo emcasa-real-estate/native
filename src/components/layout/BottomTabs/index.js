@@ -27,6 +27,7 @@ const Center = styled.View.attrs({
 `
 
 const BaseBottomTabs = function BottomTabs({
+  testID,
   tabs,
   tabIndex,
   onChange,
@@ -42,7 +43,7 @@ const BaseBottomTabs = function BottomTabs({
           <Button icon={icon} type={type} onPress={onPress} />
         </Center>
       )}
-      <Background hasButton={hasButton}>
+      <Background hasButton={hasButton} testID={testID}>
         <Tabs
           tabs={tabs}
           tabIndex={tabIndex}

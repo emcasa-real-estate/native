@@ -1,4 +1,5 @@
 import styled from 'styled-components/native'
+import {Fragment} from 'react'
 import {themeGet} from 'styled-system'
 import {connect} from 'react-redux'
 import {View} from '@emcasa/ui-native'
@@ -35,8 +36,14 @@ const BaseBottomTabs = styled(function BottomTabs({
         hasChildren={hasChildren}
         onChange={onChange}
       />
-      <BackgroundImage left={0} />
-      <BackgroundImage right={0} />
+      {hasChildren ? (
+        <Fragment>
+          <BackgroundImage left={0} />
+          <BackgroundImage right={0} />
+        </Fragment>
+      ) : (
+        <BackgroundImage width={1.0} />
+      )}
       <BackgroundColor />
     </View>
   )

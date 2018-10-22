@@ -38,7 +38,7 @@ class FavoritesScreen extends PureComponent {
   render() {
     const {favorites} = this.props
     return (
-      <Shell>
+      <Shell bottomTabs>
         <Body loading={favorites.loading}>
           <Feed
             data={favorites.data}

@@ -37,7 +37,7 @@ class AccountMenuScreen extends PureComponent {
   render() {
     const {userListings, unreadCount} = this.props
     return (
-      <Shell>
+      <Shell bottomTabs>
         <Header>
           <AccountHeader />
         </Header>

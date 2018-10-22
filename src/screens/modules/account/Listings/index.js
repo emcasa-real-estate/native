@@ -54,7 +54,7 @@ class UserListingsScreen extends PureComponent {
       userListings: {data, loading}
     } = this.props
     return (
-      <Shell>
+      <Shell bottomTabs>
         <Body loading={loading}>
           <Feed
             data={data}

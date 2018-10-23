@@ -23,8 +23,8 @@ const Background = withAnimation(
   {
     lazy: true,
     useNativeDriver: true,
-    easing: Easing.inOut(Easing.cubic),
-    timeout: 600
+    easing: Easing.out(Easing.exp),
+    timeout: 500
   },
   ({value}) => ({
     style: {

@@ -17,9 +17,7 @@ export default function Neighborhood({value, districts, onChange, onDismiss}) {
           />
         </Col>
         <Col flex={1}>
-          <Text color="white" fontWeight="600">
-            Selecione os bairros desejados
-          </Text>
+          <Text color="white">Selecione os bairros desejados</Text>
         </Col>
       </Row>
       <ScrollView style={{height: 200, marginRight: -10, marginTop: 15}}>

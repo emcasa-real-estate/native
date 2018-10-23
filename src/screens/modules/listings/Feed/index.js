@@ -8,14 +8,11 @@ import {getSearchFiltersQuery} from '@/screens/modules/listings/Search/module/se
 import {Shell, Body, Header} from '@/components/layout'
 import BottomTabsAvoidingScrollView from '@/containers/BottomTabsAvoidingScrollView'
 import InfiniteScroll from '@/containers/InfiniteScroll'
-import MapButton from '@/components/listings/Map/Button'
 import Feed from '@/components/listings/Feed/Listing'
 import SearchHeader from './Header'
 import ListEmpty from './ListEmpty'
 import ListHeader from './ListHeader'
-import styles from './styles'
 
-import MapScreen from '@/screens/modules/listings/Map'
 import SearchScreen from '@/screens/modules/listings/Search'
 import ListingScreen from '@/screens/modules/listing/Listing'
 
@@ -44,15 +41,6 @@ class ListingsFeedScreen extends PureComponent {
       listingsFeed: {loading, fetchMore}
     } = this.props
     if (!loading) fetchMore()
-  }
-
-  onOpenMap = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: MapScreen.screenName,
-        passProps: this.props
-      }
-    })
   }
 
   onOpenSearch = () => {
@@ -88,7 +76,7 @@ class ListingsFeedScreen extends PureComponent {
         <Header>
           <SearchHeader onPress={this.onOpenSearch} />
         </Header>
-        <Body loading={loading} style={styles.container}>
+        <Body loading={loading}>
           <InfiniteScroll
             loading={loading}
             hasNextPage={remainingCount > 0}
@@ -107,7 +95,6 @@ class ListingsFeedScreen extends PureComponent {
               />
             </BottomTabsAvoidingScrollView>
           </InfiniteScroll>
-          <MapButton style={styles.mapButton} onPress={this.onOpenMap} />
         </Body>
       </Shell>
     )

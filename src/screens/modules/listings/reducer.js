@@ -3,7 +3,6 @@ import {persistReducer} from 'redux-persist'
 import {AsyncStorage} from 'react-native'
 
 import {PERSIST_TIMEOUT} from '@/config/const'
-import Map from './Map/module'
 import Search from './Search/module'
 
 const persistent = (reducer, options = {}) =>
@@ -18,6 +17,5 @@ const persistent = (reducer, options = {}) =>
   )
 
 export default combineReducers({
-  Map: persistent(Map, {whitelist: ['watching', 'position']}),
   Search
 })

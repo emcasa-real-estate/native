@@ -2,7 +2,6 @@ import styled from 'styled-components/native'
 import {Fragment} from 'react'
 import {themeGet} from 'styled-system'
 import {connect} from 'react-redux'
-import {View} from '@emcasa/ui-native'
 
 import getBottomTabs from '@/config/tabs'
 import {switchTab} from '@/screens/modules/navigation'

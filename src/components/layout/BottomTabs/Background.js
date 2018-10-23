@@ -60,6 +60,7 @@ export default styled(function TabBackground({children, hasButton, ...props}) {
     <View {...props}>
       {hasButton && <FloatingBackgroundImage />}
       {children}
+      <BackgroundColor />
       {hasButton ? (
         <Fragment>
           <BarBackgroundImage left={0} />
@@ -68,10 +69,11 @@ export default styled(function TabBackground({children, hasButton, ...props}) {
       ) : (
         <BarBackgroundImage width={1.0} />
       )}
-      <BackgroundColor />
     </View>
   )
 })`
-  position: relative;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
   height: ${themeGet('size.bottomTabs')};
 `

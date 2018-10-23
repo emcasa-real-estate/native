@@ -7,7 +7,7 @@ import {
   Dimensions
 } from 'react-native'
 
-import BottomtabsAvoidingScrollView from '@/containers/BottomTabsAvoidingScrollView'
+import BottomTabsAvoidingScrollView from '@/containers/BottomTabsAvoidingScrollView'
 import * as colors from '@/assets/colors'
 
 const styles = StyleSheet.create({

@@ -2,7 +2,7 @@ import {View, Text, Button} from '@emcasa/ui-native'
 
 import GhostButton from '@/components/shared/GhostButton'
 
-export default function State({value, onChange}) {
+export default function City({value, cities, onChange}) {
   return (
     <View>
       <Text color="white">Você está procurando um imóvel em qual cidade?</Text>
@@ -18,8 +18,11 @@ export default function State({value, onChange}) {
           </View>
         )}
       >
-        <GhostButton value="rj">Rio de Janeiro</GhostButton>
-        <GhostButton value="sp">São Paulo</GhostButton>
+        {cities.map(({name, slug}) => (
+          <GhostButton key={slug} value={slug}>
+            {name}
+          </GhostButton>
+        ))}
       </Button.Group>
     </View>
   )

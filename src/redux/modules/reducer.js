@@ -27,7 +27,7 @@ const persistent = (reducer, options = {}) =>
 export default combineReducers({
   screens,
   network,
-  search: persistent(search, {whitelist: ['state']}),
+  search: persistent(search, {whitelist: ['city']}),
   auth: persistent(auth, {whitelist: ['user']}),
   firebase: persistent(firebase, {whitelist: ['messaging']}),
   relatedListings,

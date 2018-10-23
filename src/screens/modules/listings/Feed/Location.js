@@ -5,11 +5,8 @@ import {connect} from 'react-redux'
 import {withDistricts} from '@/graphql/containers'
 import Location from '@/components/listings/SearchLocation'
 
-import {updateState, updateFilters} from '@/redux/modules/search'
-import {
-  getSearchState,
-  getSearchFilters
-} from '@/redux/modules/search/selectors'
+import {updateCity, updateFilters} from '@/redux/modules/search'
+import {getSearchCity, getSearchFilters} from '@/redux/modules/search/selectors'
 
 class LocationContainer extends PureComponent {
   state = {
@@ -38,25 +35,25 @@ class LocationContainer extends PureComponent {
     }
   }
 
-  onChangeState = (stateSlug) => {
+  onChangeCity = (citySlug) => {
     const nextState = {}
-    if (stateSlug !== this.props.stateSlug) nextState.neighborhoodsSlugs = []
-    this.setState(nextState, () => this.props.updateState(stateSlug))
+    if (citySlug !== this.props.citySlug) nextState.neighborhoodsSlugs = []
+    this.setState(nextState, () => this.props.updateCity(citySlug))
   }
 
   onChangeNeighborhoods = (neighborhoodsSlugs) =>
     this.setState({neighborhoodsSlugs})
 
   render() {
-    const {stateSlug, districts, ...props} = this.props
+    const {citySlug, districts, ...props} = this.props
     const {neighborhoodsSlugs} = this.state
     return (
       <Location
         {...props}
         districts={districts.data || []}
-        selectedState={stateSlug}
+        selectedCity={citySlug}
         selectedNeighborhoods={neighborhoodsSlugs}
-        onChangeState={this.onChangeState}
+        onChangeCity={this.onChangeCity}
         onChangeNeighborhoods={this.onChangeNeighborhoods}
       />
     )
@@ -66,11 +63,11 @@ class LocationContainer extends PureComponent {
 export default compose(
   connect(
     (state) => ({
-      stateSlug: getSearchState(state),
+      citySlug: getSearchCity(state),
       filters: getSearchFilters(state)
     }),
     {
-      updateState,
+      updateCity,
       updateFilters
     }
   ),

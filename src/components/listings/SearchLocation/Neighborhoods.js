@@ -3,19 +3,26 @@ import {View, Row, Col, Text, Button} from '@emcasa/ui-native'
 import IconButton from '@/components/shared/IconButton'
 import GhostButton from '@/components/shared/GhostButton'
 
-export default function Neighborhood({value, districts, onChange, onDismiss}) {
+export default function Neighborhood({
+  value,
+  neighborhoods,
+  onChange,
+  onDismiss
+}) {
   return (
     <View>
       <Row alignItems="flex-start">
-        <Col pr={15} mt="5px">
-          <IconButton
-            onPress={onDismiss}
-            name="chevron-left"
-            type="light"
-            color="white"
-            size={20}
-          />
-        </Col>
+        {Boolean(onDismiss) && (
+          <Col pr={15} mt="5px">
+            <IconButton
+              onPress={onDismiss}
+              name="chevron-left"
+              type="light"
+              color="white"
+              size={20}
+            />
+          </Col>
+        )}
         <Col flex={1}>
           <Text color="white">Selecione os bairros desejados</Text>
         </Col>
@@ -33,8 +40,8 @@ export default function Neighborhood({value, districts, onChange, onDismiss}) {
             </View>
           )}
         >
-          {districts.map(({name, nameSlug}) => (
-            <GhostButton key={nameSlug} value={nameSlug}>
+          {neighborhoods.map(({name, slug}) => (
+            <GhostButton key={slug} value={slug}>
               {name}
             </GhostButton>
           ))}

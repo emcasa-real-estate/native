@@ -7841,8 +7841,8 @@ react-native-modal-dropdown@^0.6.2:
     prop-types "^15.6.0"
 
 react-native-navigation@^2.0.2607:
-  version "2.0.2607"
-  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-2.0.2607.tgz#b20d33e5a789a883d11d78d5b853febe93f26b5a"
+  version "2.0.2612"
+  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-2.0.2612.tgz#ed856b83d1ca70e55375038357c65b5da5fc1845"
   dependencies:
     hoist-non-react-statics "3.x.x"
     lodash "4.x.x"
@@ -7892,8 +7892,8 @@ react-native-svg@^6.4.1:
     pegjs "^0.10.0"
 
 react-native-svg@^7.1.2:
-  version "7.1.2"
-  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-7.1.2.tgz#ccc7676c5181945e7d1122b763f66b98fa9cdbfd"
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-7.2.0.tgz#4a43e843938eb5edcb6a7ec34f0387d301533315"
   dependencies:
     color "^2.0.1"
     lodash "^4.16.6"

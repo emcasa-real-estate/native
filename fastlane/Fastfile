@@ -60,7 +60,7 @@ platform :android do
     sh %Q{sed -#{opt} 's/#{VERSION_NAME_PATTERN}/\\1 "#{version}"/' #{gradle_build}}
   end
 
-  desc "Build akp file"
+  desc "Build apk file"
   lane :build do |signed: false, bump: false, **options|
     bump options if bump
     build_options = signed ? {print_command: false, properties: android_certificate} : {}
